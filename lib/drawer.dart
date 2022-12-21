@@ -119,7 +119,7 @@ class _DrawerState extends State<Drawer1> {
       token0 = '${widget.Token}';
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/security/login");
       var ressum;
-      if(widget.Token != null){
+      
  ressum = await http.post(urlsum,
           headers: {
             "Authorization": "Bearer $token0",
@@ -127,17 +127,8 @@ class _DrawerState extends State<Drawer1> {
           },
           body: jsonEncode(
               <String, dynamic>{"user": user, "password": password}));
-      }
-      else{
-        
-         ressum = await http.post(urlsum,
-          headers: {
-            "Authorization": "Bearer ${token0}",
-            'Content-Type': 'application/json'
-          },
-          body: jsonEncode(
-              <String, dynamic>{"user": user, "password": password}));
-      }
+     
+      
       if (ressum.statusCode == 200) {
         var result3 = json.decode(ressum.body)['result']['farm'];
         var id1 = json.decode(ressum.body)['result']['user'];

@@ -25,8 +25,9 @@ class _MainState extends State<Main1> {
   int Col1 = 0;
   int selected2 = 0;
   bool loading = true;
-  late var result0;
-  late var result2;
+  late List<dynamic>? result0;
+  late List<dynamic>? result2;
+  late List<dynamic>? result3;
    late var HOUSEnum;
     late var HOUSEname;
     late  List<dynamic>?   feed;
@@ -56,29 +57,114 @@ class _MainState extends State<Main1> {
             "Authorization": "Bearer ${widget.Token}",
             'Content-Type': 'application/json'
           },
-          body: jsonEncode(<String, dynamic>{"farm": widget.farmnum}));
+          body: jsonEncode(<String, dynamic>{"farm": 17}));
       if (ressum.statusCode == 200) {
 
         var result11 = jsonDecode(ressum.body);
         setState(() {
           result0 = result11['result']['view1'];
           result2 = result11['result']['view2'];
-          print(result2);
+            loading = false;
+          // print(result2);
+          late List<dynamic>  _products0 = List.generate(result2!.length, (i) {
+                return {
+                  'HOUSEname': ''
+                };
+              });
+         
+     
+        print('=========$result2') ;
+             print('=========$_products0') ;
+             _products0[0]['HOUSEname'] = result2![0]['c_name'];
+           for(int i = 1; i<result2!.length;i++) {
+             if(result2![i]['c_name'] != result2![i-1]['c_name']){
+             _products0[i]['HOUSEname'] = result2![i]['c_name'];
+             }
+           } 
+
+           List<dynamic> nowresult3_42_ =_products0.where((x) => ((x['HOUSEname']) != '')).toList();
+           
+            
+                late List<dynamic>  _products1 = List.generate(nowresult3_42_.length, (i) {
+                return {
+                  'HOUSEname': '',
+                  'n_day':'',
+                  'HOUSE': []
+                };
+              });
+              for(int i = 0; i<nowresult3_42_.length;i++){
+              for(int j = 0; j<result2!.length;j++) {
+             if(nowresult3_42_[i]['HOUSEname'] == result2![j]['c_name']){
+             _products1[i]['HOUSEname'] = nowresult3_42_[i]['HOUSEname'];
+             _products1[i]['n_day'] = result2![j]['n_day'];
+             _products1[i]['HOUSE'] += [result2![j]];
+             }
+           } }
+            // print('=========${_products1[3]}') ;
+              int numder = 16;
+              int sum = 0;
+              double a = _products1.length/numder;
+              String d1 = a.toStringAsFixed(1).toString().split('.').last;
+              String d2 = a.toStringAsFixed(1).toString().split('.').first;
+            if(d1 == '0'){
+              sum = int.parse('$d2');
+               }
+  else{
+    sum = int.parse('$d2')+1;
+  }
+  //   print('=========$d1') ;
+  //  print('=========$d2') ;
+  // print('=========$sum') ;
+
+    late List<dynamic>  _products2 = List.generate(sum, (i) {
+                return {
+                  'Numder': i+1,
+                  'HOUSE': []
+                };   });
+              int S = 0;
+              int D = 0;
+            
+                   for(int j = 0; j<_products2.length;j++) {
+                    //  print(j);
+                         for(int i= S; i<_products1.length;i++) {
+                            if(i < S+numder){
+                           print('$j$i');
+
+                         _products2[j]['HOUSE'] += [_products1[i]];
+                  }
+                   
+                } 
+               D = _products2[j]['HOUSE'].length;
+                 print('$D');
+                   
+                      S +=D;
+                }
+
+//                 
+            print('=========${_products2[0]}') ;
+            result3 = _products2;
+            // print('=========${_products1[0]['HOUSE'].length}') ;
           loading = false;
-          var num1 = result2.length / 2;
+          var num1 = result2!.length / 2;
           num = int.parse('${num1.toInt()}');
         });
+    
+        
 
-        if (result2[1]['n_index'] == 2) {
-          setState(() {
-            selected2 = 1;
-          });
-        }
-        if (result2[1]['n_index'] == 1) {
-          setState(() {
-            selected2 = 0;
-          });
-        }
+
+        
+
+        // if (result2![1]['n_index'] == 2) {
+        //   setState(() {
+        //     selected2 = 1;
+        //   });
+        // }
+        // if (result2![1]['n_index'] == 1) {
+        //   setState(() {
+        //     selected2 = 0;
+        //   });
+        // }
+        // print('${result2!.length}');
       //  print('${result2[0]['n_index']}   === ${result2[0 + 1]['n_index']}');
         // result2[0]['n_index'] != 2 &&result2[0 + 1]['n_index'] != 2
       } else {
@@ -155,7 +241,7 @@ class _MainState extends State<Main1> {
                                     shrinkWrap: true,
                                     key:
                                         Key('builder1 ${selected1.toString()}'),
-                                    itemCount: result0.length,
+                                    itemCount: result0!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Container(
@@ -209,7 +295,7 @@ class _MainState extends State<Main1> {
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
-                                        itemCount: num,
+                                        itemCount: result3!.length,
                                         //   separatorBuilder:  (context, index) {
                                         //   return const SizedBox(width: 2,);
                                         // },
@@ -235,7 +321,7 @@ class _MainState extends State<Main1> {
                                                   });
                                                 },
                                                 child: Text(
-                                                  '${index + 1}',
+                                                  '${result3![index]['Numder']}',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontFamily: 'Montserrat',
@@ -265,10 +351,12 @@ class _MainState extends State<Main1> {
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               key: Key('builder2 ${selected2.toString()}'),
-                              itemCount: result2.length,
-                              itemBuilder: (BuildContext context, int index) {
+                              itemCount: result3![Col1]['HOUSE'].length,
+                              itemBuilder: (BuildContext context, int index1) {
+                                
                                 return Container(
-                                  child: buildg2(index),
+                                  // child: Text('${result3![Col1]['HOUSE'][index1]['n_day']}')
+                                  child: buildg2(index1),
                                 );
                               }),
                         ],
@@ -306,7 +394,7 @@ class _MainState extends State<Main1> {
         },
         title: ListTile(
           title: Text(
-            '${result0[index]['c_formula']}',
+            '${result0![index]['c_formula']}',
             style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Montserrat',
@@ -336,9 +424,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Remain : ${result0[index]['a_remain'].toStringAsFixed(2)} kg')),
+                                    'Remain : ${result0![index]['a_remain'].toStringAsFixed(2)} kg')),
                             Text(
-                                'Usage : ${result0[index]['a_usage'].toStringAsFixed(2)} kg'),
+                                'Usage : ${result0![index]['a_usage'].toStringAsFixed(2)} kg'),
                           ],
                         ),
                       ),
@@ -349,9 +437,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Refll(Today) : ${result0[index]['a_refill'].toStringAsFixed(2)} kg')),
+                                    'Refll(Today) : ${result0![index]['a_refill'].toStringAsFixed(2)} kg')),
                             Text(
-                                'Refll(Yedterday) : ${result0[index]['b_refill'].toStringAsFixed(2)} kg'),
+                                'Refll(Yedterday) : ${result0![index]['b_refill'].toStringAsFixed(2)} kg'),
                           ],
                         ),
                       ),
@@ -368,24 +456,29 @@ class _MainState extends State<Main1> {
 
   var upper_percent1, lower_percent1;
   var upper_percent2, lower_percent2;
-  buildg2(int index) {
-    // //print(result2.length);
-    largestGeekValue = result2[0]['n_index'];
-    if (result2[index]['n_index'] == 1) {
-      var capacity1 = result2[index]['n_capacity'];
-      var remain1 = result2[index]['n_remain'];
-
-      name = result2[index]['c_name'];
-      if (result2[index]['n_day'] == ''||result2[index]['n_day'] == -1000) {
+  buildg2(int index1) {
+        name = result3![Col1]['HOUSE'][index1]['HOUSEname'];
+      if (result3![Col1]['HOUSE'][index1]['n_day'] == ''||result3![Col1]['HOUSE'][index1]['n_day'] == '-1000') {
         age = 'no live';
       } else {
-        age = 'age ${result2[index]['n_day']} day';
+        age = 'age ${result3![Col1]['HOUSE'][index1]['n_day']} day';
       }
 
-      E_Refill1 = result2[index]['e_refill'];
-      A_Refill1 = result2[index]['a_refill'];
-      upper_percent1 = result2[index]['n_upper_percent'];
-      lower_percent1 = result2[index]['n_lower_percent'];
+
+
+        //  largestGeekValue = result2![0]['n_index'];
+   
+  
+      if(result3![Col1]['HOUSE'][index1]['HOUSE'].length == 1){
+         var capacity1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_capacity'];
+      var remain1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'];
+
+     
+
+      E_Refill1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['e_refill'];
+      A_Refill1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['a_refill'];
+      upper_percent1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_upper_percent'];
+      lower_percent1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_lower_percent'];
       percent1 = (remain1 / capacity1) * 100;
       kg1 = percent1 * 100;
       sum = percent1 / 100;
@@ -405,82 +498,312 @@ class _MainState extends State<Main1> {
       //   else{
       //     Col11 = Color.fromARGB(255, 0, 255, 51);
       //   }
-      siloname1 = result2[index]['c_silo_name'];
+      siloname1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_silo_name'];
 
-      if (result2[index]['c_formula'] == '' ||
-          result2[index]['c_formula'] == null) {
+      if (result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'] == '' ||
+         result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'] == null) {
         formula1 = 'default';
       } else {
-        formula1 = result2[index]['c_formula'];
+        formula1 =result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'];
       }
-    } else if (result2[index]['n_index'] == 2) {
-      var capacity2 = result2[index]['n_capacity'];
-      var remain2 = result2[index]['n_remain'];
-      upper_percent2 = result2[index]['n_upper_percent'];
-      lower_percent2 = result2[index]['n_lower_percent'];
-      // //print(index);
-      
-      E_Refill2 = result2[index]['e_refill'];
-      A_Refill2 = result2[index]['a_refill'];
+      return ExpansionTile(
+          backgroundColor: Colors.white,
+          maintainState: true,
+          key: Key(index1.toString()),
+          initiallyExpanded: index1 == selected2,
+          onExpansionChanged: (value) {
+            if (value) {
+              setState(() {
+                Duration(seconds: 20000);
+                selected2 = index1;
+              });
+            } else {
+              setState(() {
+                selected2 = -1;
+              });
+            }
+          },
+          title: ListTile(
+            title: Text(
+              '$name [$age]1',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                  color: Color(0xff44bca3)),
+            ),
+          ),
+           children: 
+            
+           [
+  
+            Stack(
+              children: [
+                Container(
+                  color: Color.fromARGB(255, 30, 147, 124),
+                  height: 170,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 5),
+                  color: Colors.white,
+                  height: 170,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              width: 55,
+                              height: 70,
+                              child: CustomPaint(
+                                painter: ColorCircle(
+                                    S: percent1,
+                                    upper_percent: upper_percent1,
+                                    lower_percent: lower_percent1),
+                              ),
+                            ),
+                            Container(
+                              width:  (screenW * 0.85)-55,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              child: Column(
+                                children: [
+                                  Container(
+                                  width:  (screenW * 0.85)-55,
+                                    margin: EdgeInsets.only(top: 1),
+                                    child: Text(
+                                      '$siloname1($formula1)',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:  (screenW * 0.85)-55,
+                                    margin: EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      '${kg1.toStringAsFixed(2)} kg',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                  Container(
+                                   width:  (screenW * 0.85)-55,
+                                    margin: EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      '${percent1.toStringAsFixed(2)} %',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Text(
+                                'Estimate Refill :$E_Refill1 kg.',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 166, 165, 165)),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 5, right: 10),
+                              child: Text(
+                                'Actual Refill :$A_Refill1 kg.',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 166, 165, 165)),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 5,),
+                              height: 35,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: Colors.blueAccent,
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      // stops: [0.3, 1],
+                                      colors: [
+                                        Color.fromARGB(255, 160, 193, 238),
+                                        Color.fromARGB(255, 94, 157, 228)
+                                      ])),
+
+                              //  width: screenW*0.5,
+                              child: TextButton(
+                                onPressed: () {
+                                   for(int i = 0;i<widget.HOUSE!.length;i++){
+                                  if(result3![Col1]['HOUSE'][index1]['HOUSEname'] == widget.HOUSE![i]['name'])
+                                  {
+                                    setState(() {
+                                      HOUSEnum = widget.HOUSE![i]['id'];
+                                      HOUSEname = widget.HOUSE![i]['name'];
+                                      feed = widget.HOUSE![i]['feed'];
+                                    });
+                                    // //print(result2[index]['c_name'] );
+                                    // //print(HOUSEname);
+                                    // //print(HOUSEnum);
+                                    // //print(widget.farmnum);
+                                    // //print(widget.cropnum2);
+                                  }
+                                }
+                                                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                         builder: (context)=>   Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
+                                  // Navigator.pushReplacement(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //       Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
+                                  //     ));
+                                },
+                                child: Text(
+                                  'view',
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+           ]
+           );
+      }
+      else if(result3![Col1]['HOUSE'][index1]['HOUSE'].length == 2) {
+    //     //1
+            var capacity1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_capacity'];
+      var remain1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'];
+      upper_percent1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_upper_percent'];
+      lower_percent1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_lower_percent'];
+      //2
+      var capacity2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_capacity'];
+      var remain2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_remain'];
+      upper_percent2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_upper_percent'];
+      lower_percent2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_lower_percent'];
+    //   // //print(index);
+      //1
+      E_Refill1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['e_refill'];
+      A_Refill1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['a_refill'];
+      percent1 = (remain1 / capacity1) * 100;
+      kg1 = percent1 * 100;
+        sum = percent1 / 100;
+
+        if(sum < 0.0){
+          sum =0.0;
+        }
+        if(sum > 1.0){
+          sum =1.0;
+        }
+        if(percent1 >= upper_percent1){
+          Col11 = Color.fromARGB(255, 0, 25, 249);
+        }
+       else if(percent1 <= lower_percent1){
+            Col11 = Colors.red;
+        }
+        else{
+          Col11 = Color.fromARGB(255, 0, 255, 51);
+        }
+        siloname1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_silo_name'];
+
+
+      //2
+      // E_Refill2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['e_refill'];
+      // A_Refill2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['a_refill'];
       percent2 = (remain2 / capacity2) * 100;
       kg2 = percent2 * 100;
-      //   sum1 = percent2 / 100;
+        sum1 = percent2 / 100;
 
-      //   if(sum1 < 0.0){
-      //     sum1 =0.0;
-      //   }
-      //   if(sum1 > 1.0){
-      //     sum1 =1.0;
-      //   }
-      //   if(percent2 >= upper_percent2){
-      //     Col2 = Color.fromARGB(255, 0, 25, 249);
-      //   }
-      //  else if(percent2 <= lower_percent2){
-      //       Col2 = Colors.red;
-      //   }
-      //   else{
-      //     Col2 = Color.fromARGB(255, 0, 255, 51);
-      //   }
-      siloname2 = result2[index]['c_silo_name'];
+        if(sum1 < 0.0){
+          sum1 =0.0;
+        }
+        if(sum1 > 1.0){
+          sum1 =1.0;
+        }
+        if(percent2 >= upper_percent2){
+          Col2 = Color.fromARGB(255, 0, 25, 249);
+        }
+       else if(percent2 <= lower_percent2){
+            Col2 = Colors.red;
+        }
+        else{
+          Col2 = Color.fromARGB(255, 0, 255, 51);
+        }
+      siloname2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_silo_name'];
 
-      if (result2[index]['c_formula'] == '' ||
-          result2[index]['c_formula'] == null) {
+     // 1
+      if (result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'] == '' ||
+          result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'] == null) {
+        formula1 = 'default';
+      } else {
+        formula1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'];
+      }
+     // 2
+      if (result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_formula'] == '' ||
+          result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_formula'] == null) {
         formula2 = 'default';
       } else {
-        formula2 = result2[index]['c_formula'];
+        formula2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_formula'];
       }
-    }
-
-    if (result2[index]['n_index'] == 2 && result2[index - 1]['n_index'] == 1) {
-      selected2 == 1;
-      return ExpansionTile(
-        backgroundColor: Colors.white,
-        maintainState: true,
-        key: Key(index.toString()),
-        initiallyExpanded: index == selected2,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 20000);
-              selected2 = index;
-            });
-          } else {
-            setState(() {
-              selected2 = -1;
-            });
-          }
-        },
-        title: ListTile(
-          title: Text(
-            '$name [$age]',
-            style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Montserrat',
-                color: Color(0xff44bca3)),
+        return ExpansionTile(
+          backgroundColor: Colors.white,
+          maintainState: true,
+          key: Key(index1.toString()),
+          initiallyExpanded: index1 == selected2,
+          onExpansionChanged: (value) {
+            if (value) {
+              setState(() {
+                Duration(seconds: 20000);
+                selected2 = index1;
+              });
+            } else {
+              setState(() {
+                selected2 = -1;
+              });
+            }
+          },
+          title: ListTile(
+            title: Text(
+              '$name [$age]2',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                  color: Color(0xff44bca3)),
+            ),
           ),
-        ),
-        children: [
-          Stack(
+           children: 
+            
+           [
+                    Stack(
             children: [
               Container(
                 color: Color.fromARGB(255, 30, 147, 124),
@@ -675,7 +998,7 @@ class _MainState extends State<Main1> {
                             child: TextButton(
                               onPressed: () {
                                 for(int i = 0;i<widget.HOUSE!.length;i++){
-                                  if(result2[index]['c_name'] == widget.HOUSE![i]['name'])
+                                  if(result3![Col1]['HOUSE'][index1]['HOUSEname'] == widget.HOUSE![i]['name'])
                                   {
                                     setState(() {
                                       HOUSEnum = widget.HOUSE![i]['id'];
@@ -720,200 +1043,556 @@ class _MainState extends State<Main1> {
               ),
             ],
           ),
-        ],
-      );
-    }
-    try {
-      if (result2.length ==1 || result2[index]['n_index'] != 2 &&result2[index + 1]['n_index'] != 2) {
-        return ExpansionTile(
-          backgroundColor: Colors.white,
-          maintainState: true,
-          key: Key(index.toString()),
-          initiallyExpanded: index == selected2,
-          onExpansionChanged: (value) {
-            if (value) {
-              setState(() {
-                Duration(seconds: 20000);
-                selected2 = index;
-              });
-            } else {
-              setState(() {
-                selected2 = -1;
-              });
-            }
-          },
-          title: ListTile(
-            title: Text(
-              '$name [$age]',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Montserrat',
-                  color: Color(0xff44bca3)),
-            ),
-          ),
-          children: [
-            Stack(
-              children: [
-                Container(
-                  color: Color.fromARGB(255, 30, 147, 124),
-                  height: 170,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 5),
-                  color: Colors.white,
-                  height: 170,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              width: 55,
-                              height: 70,
-                              child: CustomPaint(
-                                painter: ColorCircle(
-                                    S: percent1,
-                                    upper_percent: upper_percent1,
-                                    lower_percent: lower_percent1),
-                              ),
-                            ),
-                            Container(
-                              width:  (screenW * 0.85)-55,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              child: Column(
-                                children: [
-                                  Container(
-                                  width:  (screenW * 0.85)-55,
-                                    margin: EdgeInsets.only(top: 1),
-                                    child: Text(
-                                      '$siloname1($formula1)',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                  Container(
-                                    width:  (screenW * 0.85)-55,
-                                    margin: EdgeInsets.only(top: 5),
-                                    child: Text(
-                                      '${kg1.toStringAsFixed(2)} kg',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                  Container(
-                                   width:  (screenW * 0.85)-55,
-                                    margin: EdgeInsets.only(top: 5),
-                                    child: Text(
-                                      '${percent1.toStringAsFixed(2)} %',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              child: Text(
-                                'Estimate Refill :$E_Refill1 kg.',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 166, 165, 165)),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5, right: 10),
-                              child: Text(
-                                'Actual Refill :$A_Refill1 kg.',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 166, 165, 165)),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 5,),
-                              height: 35,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  color: Colors.blueAccent,
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      // stops: [0.3, 1],
-                                      colors: [
-                                        Color.fromARGB(255, 160, 193, 238),
-                                        Color.fromARGB(255, 94, 157, 228)
-                                      ])),
 
-                              //  width: screenW*0.5,
-                              child: TextButton(
-                                onPressed: () {
-                                   for(int i = 0;i<widget.HOUSE!.length;i++){
-                                  if(result2[index]['c_name'] == widget.HOUSE![i]['name'])
-                                  {
-                                    setState(() {
-                                      HOUSEnum = widget.HOUSE![i]['id'];
-                                      HOUSEname = widget.HOUSE![i]['name'];
-                                      feed = widget.HOUSE![i]['feed'];
-                                    });
-                                    // //print(result2[index]['c_name'] );
-                                    // //print(HOUSEname);
-                                    // //print(HOUSEnum);
-                                    // //print(widget.farmnum);
-                                    // //print(widget.cropnum2);
-                                  }
-                                }
-                                                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                         builder: (context)=>   Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
-                                  // Navigator.pushReplacement(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //       Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
-                                  //     ));
-                                },
-                                child: Text(
-                                  'view',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 16,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
+
+           ]
+           );
       }
+    // //print(result2.length);
+    // largestGeekValue = result2![0]['n_index'];
+    // if (result3![Col1]['HOUSE'].length == 1) {
+    //   var capacity1 = result3![Col1]['HOUSE'][index]['n_capacity'];
+    //   var remain1 = result3![Col1]['HOUSE'][index]['n_remain'];
+
+    //   name = result3![Col1]['HOUSE'][index]['c_name'];
+    //   if (result3![Col1]['HOUSE'][index]['n_day'] == ''||result3![Col1]['HOUSE']['n_day'] == -1000) {
+    //     age = 'no live';
+    //   } else {
+    //     age = 'age ${result3![Col1]['HOUSE'][index]['n_day']} day';
+    //   }
+
+    //   E_Refill1 = result3![Col1]['HOUSE'][index]['e_refill'];
+    //   A_Refill1 = result3![Col1]['HOUSE'][index]['a_refill'];
+    //   upper_percent1 = result3![Col1]['HOUSE'][index]['n_upper_percent'];
+    //   lower_percent1 = result3![Col1]['HOUSE'][index]['n_lower_percent'];
+    //   percent1 = (remain1 / capacity1) * 100;
+    //   kg1 = percent1 * 100;
+    //   sum = percent1 / 100;
+    //   if (sum < 0.0) {
+    //     sum = 0.0;
+    //   }
+    //   if (sum > 1.0) {
+    //     sum = 1.0;
+    //   }
+    //   //   if(percent1 >= upper_percent1){
+    //   //     //print(upper_percent1);
+    //   //     Col11 = Color.fromARGB(255, 0, 25, 249);
+    //   //   }
+    //   //  else if(percent1 <= lower_percent1){
+    //   //       Col11 = Colors.red;
+    //   //   }
+    //   //   else{
+    //   //     Col11 = Color.fromARGB(255, 0, 255, 51);
+    //   //   }
+    //   siloname1 = result3![Col1]['HOUSE'][index]['c_silo_name'];
+
+    //   if (result3![Col1]['HOUSE'][index]['c_formula'] == '' ||
+    //      result3![Col1]['HOUSE'][index]['c_formula'] == null) {
+    //     formula1 = 'default';
+    //   } else {
+    //     formula1 = result3![Col1]['HOUSE'][index]['c_formula'];
+    //   }
+    // } else if (result3![Col1]['HOUSE'].length == 2) {
+    //   var capacity2 = result3![Col1]['HOUSE'][index]['n_capacity'];
+    //   var remain2 = result3![Col1]['HOUSE'][index]['n_remain'];
+    //   upper_percent2 = result3![Col1]['HOUSE'][index]['n_upper_percent'];
+    //   lower_percent2 = result3![Col1]['HOUSE'][index]['n_lower_percent'];
+    //   // //print(index);
+      
+    //   E_Refill2 = result3![Col1]['HOUSE'][index]['e_refill'];
+    //   A_Refill2 = result3![Col1]['HOUSE'][index]['a_refill'];
+    //   percent2 = (remain2 / capacity2) * 100;
+    //   kg2 = percent2 * 100;
+    //   //   sum1 = percent2 / 100;
+
+    //   //   if(sum1 < 0.0){
+    //   //     sum1 =0.0;
+    //   //   }
+    //   //   if(sum1 > 1.0){
+    //   //     sum1 =1.0;
+    //   //   }
+    //   //   if(percent2 >= upper_percent2){
+    //   //     Col2 = Color.fromARGB(255, 0, 25, 249);
+    //   //   }
+    //   //  else if(percent2 <= lower_percent2){
+    //   //       Col2 = Colors.red;
+    //   //   }
+    //   //   else{
+    //   //     Col2 = Color.fromARGB(255, 0, 255, 51);
+    //   //   }
+    //   siloname2 = result3![Col1]['HOUSE'][index]['c_silo_name'];
+
+    //   if (result3![Col1]['HOUSE'][index]['c_formula'] == '' ||
+    //       result3![Col1]['HOUSE'][index]['c_formula'] == null) {
+    //     formula2 = 'default';
+    //   } else {
+    //     formula2 = result3![Col1]['HOUSE'][index]['c_formula'];
+    //   }
+    // }
+
+    // if (result3![Col1]['HOUSE'][index]['HOUSE'].length == 2) {
+    //   selected2 == 1;
+    //   return ExpansionTile(
+    //     backgroundColor: Colors.white,
+    //     maintainState: true,
+    //     key: Key(index.toString()),
+    //     initiallyExpanded: index == selected2,
+    //     onExpansionChanged: (value) {
+    //       if (value) {
+    //         setState(() {
+    //           Duration(seconds: 20000);
+    //           selected2 = index;
+    //         });
+    //       } else {
+    //         setState(() {
+    //           selected2 = -1;
+    //         });
+    //       }
+    //     },
+    //     title: ListTile(
+    //       title: Text(
+    //         '$name [$age]',
+    //         style: TextStyle(
+    //             fontSize: 16,
+    //             fontFamily: 'Montserrat',
+    //             color: Color(0xff44bca3)),
+    //       ),
+    //     ),
+    //     children: [
+    //       Stack(
+    //         children: [
+    //           Container(
+    //             color: Color.fromARGB(255, 30, 147, 124),
+    //             height: 170,
+    //           ),
+    //           Container(
+    //             margin: EdgeInsets.only(left: 5),
+    //             color: Colors.white,
+    //             height: 170,
+    //             child: Padding(
+    //               padding: const EdgeInsets.only(top: 10),
+    //               child: Column(
+    //                 children: [
+    //                   Row(
+    //                     children: [
+    //                       Container(
+                
+    //                         width: screenW * 0.463,
+    //                         child: Row(
+    //                           mainAxisSize: MainAxisSize.max,
+    //                           children: [
+    //                             Container(
+    //                               margin: EdgeInsets.only(top: 10),
+    //                               width: 55,
+    //                               height: 70,
+                               
+    //                               child: CustomPaint(
+    //                                 painter: ColorCircle(
+    //                                     S: percent1,
+    //                                     upper_percent: upper_percent1,
+    //                                     lower_percent: lower_percent1),
+    //                               ),
+    //                             ),
+    //                             Container(
+                     
+    //                              width: (screenW * 0.46)-55,
+    //                               child: Column(
+    //                                 children: [
+    //                                   Container(
+    //                                    width: (screenW * 0.46)-55,
+                                       
+    //                                     margin: EdgeInsets.only(top: 1),
+    //                                     child: Text(
+    //                                       '$siloname1($formula1)',
+    //                                       style: TextStyle(
+    //                                           fontSize: 13,
+    //                                           fontFamily: 'Montserrat',
+    //                                           color: Colors.black),
+    //                                     ),
+    //                                   ),
+    //                                   Container(
+    //                                    width: (screenW * 0.46)-55,
+    //                                     margin: EdgeInsets.only(top: 5),
+    //                                     child: Text(
+    //                                       '${kg1.toStringAsFixed(2)} kg',
+    //                                       style: TextStyle(
+    //                                           fontSize: 13,
+    //                                           fontFamily: 'Montserrat',
+    //                                           color: Colors.black),
+    //                                     ),
+    //                                   ),
+    //                                   Container(
+    //                                     width: (screenW * 0.46)-55,
+    //                                     margin: EdgeInsets.only(top: 5),
+    //                                     child: Text(
+    //                                       '${percent1.toStringAsFixed(2)} %',
+    //                                       style: TextStyle(
+    //                                           fontSize: 13,
+    //                                           fontFamily: 'Montserrat',
+    //                                           color: Colors.black),
+    //                                     ),
+    //                                   ),
+    //                                 ],
+    //                               ),
+    //                             ),
+    //                           ],
+    //                         ),
+    //                       ),
+    //                       Container(
+              
+    //                         width: screenW * 0.463,
+    //                         child: Row(
+    //                           mainAxisSize: MainAxisSize.max,
+    //                           children: [
+    //                             Container(
+                      
+    //                               margin: EdgeInsets.only(top: 10),
+    //                               width: 55,
+    //                               height: 70,
+    //                               child: CustomPaint(
+    //                                 painter: ColorCircle(
+    //                                     S: percent2,
+    //                                     upper_percent: upper_percent2,
+    //                                     lower_percent: lower_percent2),
+    //                               ),
+    //                             ),
+    //                             Container(
+                  
+    //                                width: (screenW * 0.46)-55,
+    //                               child: Column(
+    //                                 children: [
+    //                                   Container(
+    //                                    width: (screenW * 0.46)-55,
+    //                                       height: 13,
+                                          
+    //                                       margin: EdgeInsets.only(top: 1),
+    //                                       child: Text(
+    //                                         '$siloname2($formula2)',
+    //                                         style: TextStyle(
+    //                                           // overflow: TextOverflow.ellipsis,
+    //                                             fontSize: 13,
+    //                                             fontFamily: 'Montserrat',
+    //                                             color: Colors.black),
+    //                                       ),
+    //                                     ),
+                                      
+    //                                   Container(
+    //                                   width: (screenW * 0.46)-55,
+    //                                     margin: EdgeInsets.only(top: 5),
+    //                                     child: Text(
+    //                                       '${kg2.toStringAsFixed(2)} kg',
+    //                                       style: TextStyle(
+    //                                           fontSize: 13,
+    //                                           fontFamily: 'Montserrat',
+    //                                           color: Colors.black),
+    //                                     ),
+    //                                   ),
+    //                                   Container(
+    //                                   width: (screenW * 0.46)-55,
+    //                                     margin: EdgeInsets.only(top: 5),
+    //                                     child: Text(
+    //                                       '${percent2.toStringAsFixed(2)} %',
+    //                                       style: TextStyle(
+    //                                           fontSize: 13,
+    //                                           fontFamily: 'Montserrat',
+    //                                           color: Colors.black),
+    //                                     ),
+    //                                   ),
+    //                                 ],
+    //                               ),
+    //                             ),
+    //                           ],
+    //                         ),
+    //                       ),
+    //                     ],
+    //                   ),
+    //                   Row(
+    //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                     children: [
+    //                       Container(
+    //                         margin: EdgeInsets.only(top: 5, left: 10),
+    //                         child: Text(
+    //                           'Estimate Refill :$E_Refill1 kg',
+    //                           style: TextStyle(
+    //                               fontSize: 13,
+    //                               fontFamily: 'Montserrat',
+    //                               color: Color.fromARGB(255, 166, 165, 165)),
+    //                         ),
+    //                       ),
+    //                       Container(
+    //                         margin: EdgeInsets.only(top: 5, right: 10),
+    //                         child: Text(
+    //                           'Actual Refill :$A_Refill1 kg.',
+    //                           style: TextStyle(
+    //                               fontSize: 13,
+    //                               fontFamily: 'Montserrat',
+    //                               color: Color.fromARGB(255, 166, 165, 165)),
+    //                         ),
+    //                       ),
+    //                     ],
+    //                   ),
+    //                   Row(
+    //                     mainAxisAlignment: MainAxisAlignment.end,
+    //                     children: [
+    //                       Container(
+    //                         margin: EdgeInsets.only(top: 10, right: 10),
+    //                         height: 35,
+    //                         width: 100,
+    //                         decoration: BoxDecoration(
+    //                             borderRadius: BorderRadius.circular(15.0),
+    //                             color: Colors.blueAccent,
+    //                             gradient: LinearGradient(
+    //                                 begin: Alignment.topLeft,
+    //                                 end: Alignment.bottomRight,
+    //                                 // stops: [0.3, 1],
+    //                                 colors: [
+    //                                   Color.fromARGB(255, 160, 193, 238),
+    //                                   Color.fromARGB(255, 94, 157, 228)
+    //                                 ])),
+
+    //                         //  width: screenW*0.5,
+    //                         child: TextButton(
+    //                           onPressed: () {
+    //                             for(int i = 0;i<widget.HOUSE!.length;i++){
+    //                               if(result2![index]['c_name'] == widget.HOUSE![i]['name'])
+    //                               {
+    //                                 setState(() {
+    //                                   HOUSEnum = widget.HOUSE![i]['id'];
+    //                                   HOUSEname = widget.HOUSE![i]['name'];
+    //                                     feed = widget.HOUSE![i]['feed'];
+    //                                 });
+    //                                 // //print(result2[index]['c_name'] );
+    //                                 // //print(HOUSEname);
+    //                                 // //print(HOUSEnum);
+    //                                 // //print(widget.farmnum);
+    //                                 // //print(widget.cropnum2);
+    //                               }
+    //                             }
+    //                             print('widget.cropnum');
+    //                             print(widget.cropnum);
+    //                             print(widget.cropnum1);
+    //                             print(widget.cropnum2);
+    //                             print('widget.cropnum');
+    //                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+    //                      builder: (context)=> Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
+    //                             // Navigator.pushReplacement(
+    //                             //     context,
+    //                             //     MaterialPageRoute(
+    //                             //       builder: (context) =>
+    //                             //           Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
+    //                             //     ));
+    //                           },
+    //                           child: Text(
+    //                             'view',
+    //                             style: TextStyle(
+    //                                 fontFamily: 'Montserrat',
+    //                                 fontSize: 16,
+    //                                 color: Colors.white),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                     ],
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ],
+    //   );
+    // }
+    try {
+      // if (result3![Col1]['HOUSE'][index]['HOUSE'].length == 1) {
+      //   return ExpansionTile(
+      //     backgroundColor: Colors.white,
+      //     maintainState: true,
+      //     key: Key(index.toString()),
+      //     initiallyExpanded: index == selected2,
+      //     onExpansionChanged: (value) {
+      //       if (value) {
+      //         setState(() {
+      //           Duration(seconds: 20000);
+      //           selected2 = index;
+      //         });
+      //       } else {
+      //         setState(() {
+      //           selected2 = -1;
+      //         });
+      //       }
+      //     },
+      //     title: ListTile(
+      //       title: Text(
+      //         '$name [$age]',
+      //         style: TextStyle(
+      //             fontSize: 16,
+      //             fontFamily: 'Montserrat',
+      //             color: Color(0xff44bca3)),
+      //       ),
+      //     ),
+      //     children: [
+      //       Stack(
+      //         children: [
+      //           Container(
+      //             color: Color.fromARGB(255, 30, 147, 124),
+      //             height: 170,
+      //           ),
+      //           Container(
+      //             margin: EdgeInsets.only(left: 5),
+      //             color: Colors.white,
+      //             height: 170,
+      //             child: Padding(
+      //               padding: const EdgeInsets.all(10.0),
+      //               child: Column(
+      //                 children: [
+      //                   Row(
+      //                     mainAxisSize: MainAxisSize.max,
+      //                     children: [
+      //                       Container(
+      //                         margin: EdgeInsets.only(top: 10),
+      //                         width: 55,
+      //                         height: 70,
+      //                         child: CustomPaint(
+      //                           painter: ColorCircle(
+      //                               S: percent1,
+      //                               upper_percent: upper_percent1,
+      //                               lower_percent: lower_percent1),
+      //                         ),
+      //                       ),
+      //                       Container(
+      //                         width:  (screenW * 0.85)-55,
+      //                         color: Color.fromARGB(255, 255, 255, 255),
+      //                         child: Column(
+      //                           children: [
+      //                             Container(
+      //                             width:  (screenW * 0.85)-55,
+      //                               margin: EdgeInsets.only(top: 1),
+      //                               child: Text(
+      //                                 '$siloname1($formula1)',
+      //                                 style: TextStyle(
+      //                                     fontSize: 13,
+      //                                     fontFamily: 'Montserrat',
+      //                                     color: Colors.black),
+      //                               ),
+      //                             ),
+      //                             Container(
+      //                               width:  (screenW * 0.85)-55,
+      //                               margin: EdgeInsets.only(top: 5),
+      //                               child: Text(
+      //                                 '${kg1.toStringAsFixed(2)} kg',
+      //                                 style: TextStyle(
+      //                                     fontSize: 13,
+      //                                     fontFamily: 'Montserrat',
+      //                                     color: Colors.black),
+      //                               ),
+      //                             ),
+      //                             Container(
+      //                              width:  (screenW * 0.85)-55,
+      //                               margin: EdgeInsets.only(top: 5),
+      //                               child: Text(
+      //                                 '${percent1.toStringAsFixed(2)} %',
+      //                                 style: TextStyle(
+      //                                     fontSize: 13,
+      //                                     fontFamily: 'Montserrat',
+      //                                     color: Colors.black),
+      //                               ),
+      //                             ),
+      //                           ],
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                   Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                     children: [
+      //                       Container(
+      //                         margin: EdgeInsets.only(top: 10),
+      //                         child: Text(
+      //                           'Estimate Refill :$E_Refill1 kg.',
+      //                           style: TextStyle(
+      //                               fontSize: 13,
+      //                               fontFamily: 'Montserrat',
+      //                               color: Color.fromARGB(255, 166, 165, 165)),
+      //                         ),
+      //                       ),
+      //                       Container(
+      //                         margin: EdgeInsets.only(top: 5, right: 10),
+      //                         child: Text(
+      //                           'Actual Refill :$A_Refill1 kg.',
+      //                           style: TextStyle(
+      //                               fontSize: 13,
+      //                               fontFamily: 'Montserrat',
+      //                               color: Color.fromARGB(255, 166, 165, 165)),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                   Row(
+      //                     mainAxisAlignment: MainAxisAlignment.end,
+      //                     children: [
+      //                       Container(
+      //                         margin: EdgeInsets.only(top: 5,),
+      //                         height: 35,
+      //                         width: 100,
+      //                         decoration: BoxDecoration(
+      //                             borderRadius: BorderRadius.circular(15.0),
+      //                             color: Colors.blueAccent,
+      //                             gradient: LinearGradient(
+      //                                 begin: Alignment.topLeft,
+      //                                 end: Alignment.bottomRight,
+      //                                 // stops: [0.3, 1],
+      //                                 colors: [
+      //                                   Color.fromARGB(255, 160, 193, 238),
+      //                                   Color.fromARGB(255, 94, 157, 228)
+      //                                 ])),
+
+      //                         //  width: screenW*0.5,
+      //                         child: TextButton(
+      //                           onPressed: () {
+      //                              for(int i = 0;i<widget.HOUSE!.length;i++){
+      //                             if(result2![index]['c_name'] == widget.HOUSE![i]['name'])
+      //                             {
+      //                               setState(() {
+      //                                 HOUSEnum = widget.HOUSE![i]['id'];
+      //                                 HOUSEname = widget.HOUSE![i]['name'];
+      //                                 feed = widget.HOUSE![i]['feed'];
+      //                               });
+      //                               // //print(result2[index]['c_name'] );
+      //                               // //print(HOUSEname);
+      //                               // //print(HOUSEnum);
+      //                               // //print(widget.farmnum);
+      //                               // //print(widget.cropnum2);
+      //                             }
+      //                           }
+      //                                                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      //                    builder: (context)=>   Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
+      //                             // Navigator.pushReplacement(
+      //                             //     context,
+      //                             //     MaterialPageRoute(
+      //                             //       builder: (context) =>
+      //                             //       Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
+      //                             //     ));
+      //                           },
+      //                           child: Text(
+      //                             'view',
+      //                             style: TextStyle(
+      //                                 fontFamily: 'Montserrat',
+      //                                 fontSize: 16,
+      //                                 color: Colors.white),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ],
+      //   );
+      // }
     } catch (e) {
       //print('e =====> ${e.toString()} ');
     }

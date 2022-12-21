@@ -1238,19 +1238,19 @@ class _WeightState extends State<Weight> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            "Farm": widget.farmnum,
-            "House": widget.num,
-            "Date_Start":
-                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
-            "Date_End":
-                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
-            "Date_Process":
-                "${dateTime_!.year}-${dateTime_!.month}-${dateTime_!.day}"
-            // "Farm": 5,
-            // "House": 82,
-            // "Date_Start": "2022-04-26 00:00:00",
-            // "Date_End": "2022-04-26 23:59:59",
-            // "Date_Process": "2022-12-12"
+            // "Farm": widget.farmnum,
+            // "House": widget.num,
+            // "Date_Start":
+            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
+            // "Date_End":
+            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
+            // "Date_Process":
+            //     "${dateTime_!.year}-${dateTime_!.month}-${dateTime_!.day}"
+  "Farm": 17,
+  "House": 146,
+  "Date_Start": "2022-09-06 00:00:00",
+  "Date_End": "2022-09-06 23:59:59",
+  "Date_Process": "2022-09-06"
           }));
       if (ressum.statusCode == 200) {
         var result6_1 = json.decode(ressum.body)['result']['view1'];

@@ -15,8 +15,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String Username = 'Orange';
-  String Password = 'SmartFarm@Orange2022';
+  // String Username = 'Orange';
+  // String Password = 'SmartFarm@Orange2022';
   double? screenW, screenH;
   String? Token;
   bool loading = true;
@@ -32,81 +32,9 @@ class _LoginState extends State<Login> {
     if (res.statusCode == 200) {
       print("token => ${res.body}");
       var token = jsonDecode(res.body);
-      setState(() {
+      setState(() async{
         Token = token['access_token'];
-        loading = false;
-      });
-
-      if (loading == false) {
-        showDialog(
-            barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
-                return Dialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Container(
-                      height: screenH! * 0.4,
-                      width: screenW! * 0.5,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(top: 15, left: 10),
-                                  height: screenH! * 0.06,
-                                  child: Text(
-                                    "ข้อมูล",
-                                    style: TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'THSarabun',
-                                        color: Color(0xff44bca3)),
-                                  )),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                //  color: Colors.white,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    'X',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            height: screenH! * 0.2,
-                            decoration: BoxDecoration(
-                              //  color: Colors.amberAccent
-                              image: DecorationImage(
-                                  image: AssetImage("images/B1.jpg"),
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                          Center(
-                            child: Text('ข้อมูลถูกต้อง',
-                                style: TextStyle(
-                                    fontFamily: 'THSarabun', fontSize: 23)),
-                          ),
-
-                          Container(
-                            child: TextButton(
-                              onPressed: () async {
-                                Usersharedpreferences _p =
+          Usersharedpreferences _p =
                                     Usersharedpreferences();
                                 // await Usersharedpreferences.init();
                                 await _p.setUserEmail(Username, Password);
@@ -121,59 +49,9 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                     (route) => false);
+        loading = false;
 
-                                setState(() {});
-                              },
-                              child: Text('OK',
-                                  style: TextStyle(fontFamily: 'Montserrat')),
-                            ),
-                          ),
-
-                          //                     ListTile(
-                          //   title: Text('ข้อมูล',
-                          //   style: TextStyle(fontFamily: 'THSarabun',color: Colors.green,fontSize: 23)
-                          //     ),
-                          //   subtitle: Text('ข้อมูลถูกต้อง',
-                          //   style: TextStyle(fontFamily: 'THSarabun',fontSize: 23)),
-
-                          // ),
-                        ],
-                      ),
-                    ));
-              });
-            });
-        //     showDialog(
-        //    barrierDismissible: false,
-        //   context: context,
-        //   builder: (context)
-        //   => SimpleDialog(
-        //     title: ListTile(
-        //       title: Text('ข้อมูล',
-        //       style: TextStyle(fontFamily: 'THSarabun',color: Colors.green,fontSize: 23)
-        //         ),
-        //       subtitle: Text('ข้อมูลถูกต้อง',
-        //       style: TextStyle(fontFamily: 'THSarabun',fontSize: 23)),
-
-        //     ),
-        //     children: [
-        //       TextButton(onPressed: () {
-        //             Navigator.pushReplacement(context, MaterialPageRoute(
-        //   builder: (context)=> Drawer1(Token: Token,User: Username,Password:Password,),));
-
-        //       setState(() {
-        //         // result = false;
-        //         // email ='';
-        //         // password1 ='';
-        //       });
-        //       }  , child: Text('OK', style: TextStyle(fontFamily: 'Montserrat')),)
-        //     ],
-        //   ),
-        // );
-      } else {
-        // normalDialog(context, 'ข้อมูล','อีเมลกับรหัสผ่านไม่ถูกต้อง');
-      }
-
-      //  getjaon1(token['access_token']);
+      });
     } else {
       showDialog(
           barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
@@ -263,20 +141,7 @@ class _LoginState extends State<Login> {
     }
   }
 
-  // Future<void> getjaon() async {
-  //   var url = Uri.parse("https://smartfarmpro.com/v1/api/security/token");
-  //   var resp = await http.post(url,
 
-  //   body: {
-  //     "Grant_Type": 'password', "Username": 'Orange', "Password": "SmartFarm@Orange2022"
-  //   });
-  //   _loginDb=loginDbFromJson(resp.body);
-  //   print(resp.body);
-  //   setState(() {
-  //     Token = _loginDb!.accessToken;
-  //     loading = false;
-  //   });
-  // }
 
   @override
   void initState() {

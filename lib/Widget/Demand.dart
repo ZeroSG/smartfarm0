@@ -127,7 +127,7 @@ class _DemandState extends State<Demand> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            "Farm": widget.farmnum,
+            "Farm": 5,
           }));
       if (ressum1.statusCode == 200) {
         var result1_1 = json.decode(ressum1.body)['result']['view1'];
@@ -151,6 +151,9 @@ class _DemandState extends State<Demand> {
 //               "Farm": 1,
 //  "Date_Start": "2021-10-04",
 //   "Date_End": "2021-10-04"
+  // "Farm": 1,
+  // "Date_Start": "2022-12-21",
+  // "Date_End": "2022-12-21"
             "Farm": widget.farmnum,
             "Date_Start": "$Y-$M-${_selectedValue.day}",
             "Date_End": "$Y-$M-${_selectedValue.day}"
@@ -273,7 +276,7 @@ class _DemandState extends State<Demand> {
                     _products1.where((x) => (x['Numder']) != 0).toList();
                 now1 = nowresult3_42_;
               }
-              print('====A ${now1}');
+              // print('====A ${_products1.length}');
               if (nowresult1_21[0]['n_tow'] == 2) {
                 for (int j = 0; j < _products1.length; j++) {
                   for (int i = S; i < nowresult1_1.length; i++) {
@@ -314,19 +317,12 @@ class _DemandState extends State<Demand> {
                 _products2 = List.generate(nowresult3_42_.length, (i) {
                   return {"Numder": 0, 'List': []};
                 });
-//  print('====${nowresult3_42_}');
+//  print('====${nowresult3_42_.length}');
 
                 for (int j = 0; j < _products2.length; j++) {
                   for (int i = S1; i < nowresult3_42_.length; i++) {
-                    if ((_products2[j]["Numder"] <
-                            ((nowresult1_21[0]['n_weight'] *
-                                    nowresult1_21[0]['n_box']) *
-                                nowresult1_21[0]['n_tow'])) &&
-                        ((_products2[j]["Numder"] +
-                                nowresult3_42_[i]['Numder']) <
-                            ((nowresult1_21[0]['n_weight'] *
-                                    nowresult1_21[0]['n_box']) *
-                                nowresult1_21[0]['n_tow']))) {
+                    if ((_products2[j]["Numder"] <((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow'])) &&
+                        ((_products2[j]["Numder"] +nowresult3_42_[i]['Numder']) <=((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow']))) {
                       //  print('====${ _products2}');
                       _products2[j]["List"] += [nowresult3_42_[i]];
                       _products2[j]["Numder"] += nowresult3_42_[i]['Numder'];
@@ -336,7 +332,7 @@ class _DemandState extends State<Demand> {
                   D1 = double.parse('${_products2[j]["List"].length}');
                   S1 += D1.toInt();
                 }
-                // print('====${_products2[0]}');
+                print('====${((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow'])}');
 
                 List<dynamic> nowresult3_42_1 =
                     _products2.where((x) => ((x['Numder']) != 0)).toList();

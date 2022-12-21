@@ -20,8 +20,8 @@ class _ViewchartsState extends State<Viewcharts> {
 
  List<Map<String, dynamic>> color = [];
  
-         List<Color>? color1 = [Color.fromARGB(255, 0, 132, 240),Color.fromARGB(255, 241, 145, 0),Color.fromARGB(255, 0, 0, 0),Color.fromARGB(255, 0, 246, 8),Color.fromARGB(255, 255, 17, 0),Color.fromARGB(255, 25, 0, 255),Color.fromARGB(255, 255, 0, 242)];
-         List<Color>? color2 = [Color.fromARGB(255, 128, 189, 238),Color.fromARGB(255, 252, 192, 104),Color.fromARGB(255, 133, 133, 133),Color.fromARGB(255, 132, 171, 133),Color.fromARGB(255, 244, 103, 93),Color.fromARGB(255, 93, 79, 225),Color.fromARGB(255, 220, 79, 194)];
+         List<Color>? color1 = [Color.fromARGB(255, 0, 132, 240),Color.fromARGB(255, 241, 145, 0),Color.fromARGB(255, 255, 0, 221),Color.fromARGB(255, 0, 246, 8),Color.fromARGB(255, 255, 17, 0),Color.fromARGB(255, 25, 0, 255),Color.fromARGB(255, 255, 0, 242)];
+         List<Color>? color2 = [Color.fromARGB(255, 128, 189, 238),Color.fromARGB(255, 252, 192, 104),Color.fromARGB(255, 202, 125, 191),Color.fromARGB(255, 132, 171, 133),Color.fromARGB(255, 244, 103, 93),Color.fromARGB(255, 93, 79, 225),Color.fromARGB(255, 220, 79, 194)];
  double sum = 0;
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class _ViewchartsState extends State<Viewcharts> {
                   )))
                   :  Column(children: [
           Container(
-            width: screenW*1,
+            width: screenW*0.8,
             height: 300,
           child:loading6?Container(
                   margin: EdgeInsets.only(top: 10),
@@ -141,12 +141,12 @@ class _ViewchartsState extends State<Viewcharts> {
                       ),
                   ),
                   SizedBox(width: 8,),
-                  Text('${data['c_size']}',
-                  style: TextStyle(
-                   fontSize: 16,
-                   fontWeight: FontWeight.bold,
-                   color: textC
-                  ),),
+                  // Text('${data['c_size']}',
+                  // style: TextStyle(
+                  //  fontSize: 16,
+                  //  fontWeight: FontWeight.bold,
+                  //  color: textC
+                  // ),),
                 ],
               ),
             )
@@ -158,25 +158,37 @@ class _ViewchartsState extends State<Viewcharts> {
     );
   }
 
+
+
   
  List<PieChartSectionData> showingSections()=>
        _nowresult6_1!.asMap().map<int,PieChartSectionData>((index, data) {      
          final isTouched = index == touchedIndex;
          final fontSize = isTouched ? 16.0 : 12.0;
-         final radius = isTouched ? 150.0 : 120.0;
+         final radius = isTouched ? 110.0 : 95.0;
          final date = isTouched ? '${data['n_percent']}' : '${data['n_percent']}';
          var value = PieChartSectionData(
            color: data['color'],
            value: double.parse('${data!['n_percent'].split(' %').first}'),
            title: date,
            radius: radius,
-            badgePositionPercentageOffset: .98,
+            badgeWidget: Container(
+     
+              child: Center(child: Text('${data['c_size']}:${data['n_percent']}',style: TextStyle(
+             fontSize: fontSize,
+             fontWeight: FontWeight.bold,
+             color: Color.fromARGB(255, 0, 0, 0),
+           ),))),
+            badgePositionPercentageOffset:1.3,
+            // titlePositionPercentageOffset:2.0,
+            showTitle : false,
            titleStyle: TextStyle(
              fontSize: fontSize,
              fontWeight: FontWeight.bold,
-             color: Color(0xffffffff),
+             color: Color.fromARGB(255, 0, 0, 0),
            ),
          );
-         return MapEntry(index, value);
+         return 
+         MapEntry(index, value);
        }).values.toList();
 }
