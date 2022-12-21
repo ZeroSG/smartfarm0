@@ -26,13 +26,24 @@ class _LoginState extends State<Login> {
       "Content-Type": "application/x-www-form-urlencoded"
     }, body: {
       "Grant_Type": 'password',
-      "Username": Username,
-      "Password": Password
+      "Username": 'Orange',
+      "Password": 'SmartFarm@Orange2022'
     });
     if (res.statusCode == 200) {
       print("token => ${res.body}");
       var token = jsonDecode(res.body);
-      setState(() async{
+      var urlsum = Uri.https("smartfarmpro.com", "/v1/api/security/login");
+      var ressum;
+      
+ ressum = await http.post(urlsum,
+          headers: {
+            "Authorization": "Bearer ${token['access_token']}",
+            'Content-Type': 'application/json'
+          },
+           body: jsonEncode(
+              <String, dynamic>{"user": Username, "password": Password}));
+               if (ressum.statusCode == 200) {
+                  setState(() async{
         Token = token['access_token'];
           Usersharedpreferences _p =
                                     Usersharedpreferences();
@@ -52,8 +63,9 @@ class _LoginState extends State<Login> {
         loading = false;
 
       });
-    } else {
-      showDialog(
+               }
+               else{
+                 showDialog(
           barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
           barrierDismissible: false,
           context: context,
@@ -138,6 +150,10 @@ class _LoginState extends State<Login> {
             });
           });
       throw Exception('Failed to download');
+               }
+     
+    } else {
+      
     }
   }
 
