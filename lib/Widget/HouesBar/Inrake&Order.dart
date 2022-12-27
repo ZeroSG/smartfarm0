@@ -676,27 +676,27 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   }
 
   Widget build1(BuildContext context) => ExpansionTile(
-        key: K1,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 0;
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              selected2 = -1;
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          }
-        },
+        // key: K1,
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 0;
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected2 = -1;
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   }
+        // },
         initiallyExpanded: 0 == selected2,
         title: Text(
           'Age lnformation',
@@ -1190,28 +1190,28 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       );
 
   Widget build2(BuildContext context) => ExpansionTile(
-        key: K2,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 1;
-              K1 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              selected2 = -1;
-              K1 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          }
-        },
-        initiallyExpanded: 1 == selected2,
+        // key: K2,
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 1;
+        //       K1 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected2 = -1;
+        //       K1 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   }
+        // },
+        // initiallyExpanded: 1 == selected2,
         maintainState: true,
         title: Text(
           'Formula',
@@ -2357,28 +2357,28 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   }
 
   Widget build3_2(BuildContext context) => ExpansionTile(
-        key: K3,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 2;
-              K2 = UniqueKey();
-              K1 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              selected2 = -1;
-              K2 = UniqueKey();
-              K1 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          }
-        },
-        initiallyExpanded: 2 == selected2,
+        // key: K3,
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 2;
+        //       K2 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected2 = -1;
+        //       K2 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   }
+        // },
+        // initiallyExpanded: 2 == selected2,
         maintainState: true,
         title: Text(
           'Report',
@@ -2948,28 +2948,28 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   }
 
   Widget build4(BuildContext context) => ExpansionTile(
-        key: K4,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 3;
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K1 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              selected2 = -1;
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K1 = UniqueKey();
-              K5 = UniqueKey();
-            });
-          }
-        },
-        initiallyExpanded: 3 == selected2,
+        // key: K4,
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 3;
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected2 = -1;
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K5 = UniqueKey();
+        //     });
+        //   }
+        // },
+        // initiallyExpanded: 3 == selected2,
         maintainState: true,
         title: Text(
           'Plot Graph',
@@ -3604,29 +3604,29 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   }
 
   Widget build5(BuildContext context) => ExpansionTile(
-        key: K5,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 4;
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K1 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              selected2 = -1;
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K1 = UniqueKey();
-            });
-          }
-          // //print(selected2);
-        },
-        initiallyExpanded: 4 == selected2,
+        // key: K5,
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 4;
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K1 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected2 = -1;
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K1 = UniqueKey();
+        //     });
+        //   }
+        //   // //print(selected2);
+        // },
+        // initiallyExpanded: 4 == selected2,
         maintainState: true,
         title: Text(
           'Daily Information Usage',

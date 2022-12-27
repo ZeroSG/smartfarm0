@@ -91,7 +91,7 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day}"
           }));
       if (ressum.statusCode == 200) {
-        print(json.decode(ressum.body)['result']['view2']);
+        print(json.decode(ressum.body)['result']['view1']);
         var result0_1 = json.decode(ressum.body)['result']['view1'];
         var result0_2 = json.decode(ressum.body)['result']['view2'];
         // print('fdfd${result0_1}');
@@ -167,6 +167,7 @@ class _WeightState extends State<Weight> {
           nowresult1_1 = result1_1;
           loading1 = false;
         });
+        print(loading1);
       } else {
         throw Exception('Failed to download');
       }
@@ -254,15 +255,19 @@ class _WeightState extends State<Weight> {
         // print('nowresult3_ =====> $result3_3');
         // print('nowresult4_ =====> $result3_4');
         //  print('nowresult4_ =====> ${nowresult1_1.length}');
-
+       List<String> uniquelist00 = [];
         for (int i = 0; i < nowresult1_1.length; i++) {
+
           if (nowresult1_1[i]["count_data"] != null) {
+
             setState(() {
-              uniquelist2 += [nowresult1_1[i]["device"]];
+              uniquelist00 += [nowresult1_1[i]["device"]];
+               print('uniquelist2$i =====> ${nowresult1_1[i]["device"]}');
               // uniquelist2.insert(i, nowresult1_1[i]["device"]);
             });
           }
         }
+        uniquelist2 = uniquelist00;
         print('nowresult4_ =====> ${uniquelist2}');
         List<dynamic> nowresult3_211 = result3_1
             .map((e) => {
@@ -312,6 +317,11 @@ class _WeightState extends State<Weight> {
                 })
             .toList();
 
+        //      print('nowresult1_ =====> $nowresult3_211');
+        // print('nowresult2_ =====> $nowresult3_212');
+        // print('nowresult3_ =====> $nowresult3_213');
+        // print('nowresult4_ =====> $nowresult3_214');
+
         List<dynamic> nowresult3_41_ =
             nowresult3_211.where((x) => x['device'] == 'ALL').toList();
         List<dynamic> nowresult3_42_ =
@@ -334,10 +344,10 @@ class _WeightState extends State<Weight> {
           nowresult3_4 = nowresult3_44_;
           loading3 = false;
         });
-        print('nowresult1_ =====> $nowresult3_1');
-        print('nowresult2_ =====> $nowresult3_2');
-        print('nowresult3_ =====> $nowresult3_3');
-        print('nowresult4_ =====> $nowresult3_4');
+        // print('nowresult1_ =====> $nowresult3_1');
+        // print('nowresult2_ =====> $nowresult3_2');
+        // print('nowresult3_ =====> $nowresult3_3');
+        // print('nowresult4_ =====> $nowresult3_4');
       } else {
         throw Exception('Failed to download');
       }
@@ -2173,35 +2183,35 @@ class _WeightState extends State<Weight> {
 
   bool Download0 = false;
   Widget build0(BuildContext context) => ExpansionTile(
-        key: K0,
+        // key: K0,
         onExpansionChanged: (value) {
           if (value == false) {
             setState(() {
               Download0 = true;
-              Duration(seconds: 1000);
-              selected2 = 6;
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
+              // Duration(seconds: 1000);
+              // selected2 = 6;
+              // K1 = UniqueKey();
+              // K2 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K5 = UniqueKey();
+              // K6 = UniqueKey();
             });
           } else {
             setState(() {
               Download0 = false;
 
-              Download2 = true;
+              // Download2 = true;
 
-              Download6 = true;
-              Download5 = true;
-              selected2 = -1;
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
+              // Download6 = true;
+              // Download5 = true;
+              // selected2 = -1;
+              // K1 = UniqueKey();
+              // K2 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K5 = UniqueKey();
+              // K6 = UniqueKey();
             });
           }
         },
@@ -2413,37 +2423,37 @@ class _WeightState extends State<Weight> {
   }
 
   Widget build1(BuildContext context) => ExpansionTile(
-        key: K1,
-        onExpansionChanged: (value) {
-          if (value == false) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 0;
-              K0 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              Download0 = true;
-              Download6 = true;
-              Download2 = true;
-              Download5 = true;
+        // key: K1,
+        // onExpansionChanged: (value) {
+        //   if (value == false) {
+        //     setState(() {
+        //       // Duration(seconds: 1000);
+        //       // selected2 = 0;
+        //       // K0 = UniqueKey();
+        //       // K2 = UniqueKey();
+        //       // K3 = UniqueKey();
+        //       // K4 = UniqueKey();
+        //       // K5 = UniqueKey();
+        //       // K6 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       Download0 = true;
+        //       Download6 = true;
+        //       Download2 = true;
+        //       Download5 = true;
 
-              selected2 = -1;
-              K0 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
-            });
-          }
-        },
-        initiallyExpanded: 0 == selected2,
+        //       selected2 = -1;
+        //       K0 = UniqueKey();
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //       K6 = UniqueKey();
+        //     });
+        //   }
+        // },
+        // initiallyExpanded: 0 == selected2,
         maintainState: true,
         title: Text(
           'Weight Scale Information',
@@ -2464,11 +2474,12 @@ class _WeightState extends State<Weight> {
                       Check1 = true;
                       dat1 = '00:00:00.000';
                       dat2 = "23:59:59.000";
-                      getjaon1_weight_device();
-                      getjaon2_weight_average_hourly();
-                      getjaon3_weight_results();
-                      getjaon4_weight_per_unit();
-                      getjaon5_weight_distribution_rate();
+    getjaon1_weight_device();
+    getjaon2_weight_average_hourly();
+    getjaon3_weight_results();
+    getjaon5_weight_distribution_rate();
+    getjaon4_weight_per_unit();
+    getjaon6_weight_estimate_size();
                     });
                   },
                 ),
@@ -2485,11 +2496,12 @@ class _WeightState extends State<Weight> {
                       Check1 = false;
                       dat1 = '08:00:00.000';
                       dat2 = "17:59:59.000";
-                      getjaon1_weight_device();
-                      getjaon2_weight_average_hourly();
-                      getjaon3_weight_results();
-                      getjaon4_weight_per_unit();
-                      getjaon5_weight_distribution_rate();
+    getjaon1_weight_device();
+    getjaon2_weight_average_hourly();
+    getjaon3_weight_results();
+    getjaon5_weight_distribution_rate();
+    getjaon4_weight_per_unit();
+    getjaon6_weight_estimate_size();
                     });
                   },
                 ),
@@ -2505,7 +2517,7 @@ class _WeightState extends State<Weight> {
                   margin: EdgeInsets.only(top: 10),
                   height: screenH * 0.30,
                   child: Center(child: CircularProgressIndicator()))
-              : nowresult1_1.length == 1
+              : nowresult1_1.length == 0
                   ? Container(
                       height: screenH * 0.40,
                       child: Center(
@@ -2676,136 +2688,7 @@ class _WeightState extends State<Weight> {
                           ),
                         ],
                       )
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       color: Colors.blueAccent,
-                      //       gradient: LinearGradient(
-                      //           begin: Alignment.topLeft,
-                      //           end: Alignment.bottomRight,
-                      //           // stops: [0.3, 1],
-                      //           colors: [
-                      //             Color.fromARGB(255, 160, 193, 238),
-                      //             Color.fromARGB(255, 94, 157, 228)
-                      //           ])),
-                      //   margin: EdgeInsets.only(top: 5),
-                      //   width: screenW * 1,
-                      //   height: 274,
-                      //   // child: SingleChildScrollView(
-
-                      //   child: DataTable2(
-                      //     headingRowHeight: 40.0,
-                      //     dataRowHeight: 60,
-                      //     dataRowColor: MaterialStateProperty.all(Colors.white),
-                      //     columnSpacing: 0,
-                      //     horizontalMargin: 15,
-                      //     minWidth: screenW * 0.9,
-                      //     columns: [
-                      //       DataColumn(
-                      //         label: Center(
-                      //           child: Text(
-                      //             "Device",
-                      //             style: TextStyle(
-                      //                 fontWeight: FontWeight.bold,
-                      //                 fontSize: 13,
-                      //                 fontFamily: 'Montserrat',
-                      //                 color:
-                      //                     Color.fromARGB(255, 255, 255, 255)),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       DataColumn(
-                      //         label: Center(
-                      //           child: Text(
-                      //             "Last Update.",
-                      //             style: TextStyle(
-                      //                 fontWeight: FontWeight.bold,
-                      //                 fontSize: 13,
-                      //                 fontFamily: 'Montserrat',
-                      //                 color:
-                      //                     Color.fromARGB(255, 255, 255, 255)),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       DataColumn(
-                      //         label: Center(
-                      //           child: Text(
-                      //             "Status",
-                      //             style: TextStyle(
-                      //                 fontWeight: FontWeight.bold,
-                      //                 fontSize: 13,
-                      //                 fontFamily: 'Montserrat',
-                      //                 color:
-                      //                     Color.fromARGB(255, 255, 255, 255)),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       DataColumn(
-                      //         label: Center(
-                      //           child: Text(
-                      //             "Sample Data",
-                      //             style: TextStyle(
-                      //                 fontWeight: FontWeight.bold,
-                      //                 fontSize: 13,
-                      //                 fontFamily: 'Montserrat',
-                      //                 color:
-                      //                     Color.fromARGB(255, 255, 255, 255)),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //     rows: nowresult1_1.map((item) {
-                      //       return DataRow(cells: [
-                      //         DataCell(Center(
-                      //             child: Column(
-                      //           children: [
-                      //             Container(
-                      //               margin: EdgeInsets.only(top: 5),
-                      //               height: 20,
-                      //               width: 10,
-                      //               child: Radio(
-                      //                 activeColor: Colors.green,
-                      //                 value: true,
-                      //                 groupValue: item['device'] == name,
-                      //                 onChanged: (val) {
-                      //                   setState(() {
-                      //                     name = item['device'];
-                      //                     //print(name);
-                      //                     getjaon2();
-                      //                   });
-                      //                 },
-                      //               ),
-                      //             ),
-                      //             Text(
-                      //               item['device'],
-                      //               style: TextStyle(
-                      //                 fontSize: 12,
-                      //                 fontFamily: 'Montserrat',
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ))),
-                      //         DataCell(Center(child: Text(item['last_date']))),
-                      //         DataCell(Center(
-                      //           child: Container(
-                      //             height: 10,
-                      //             width: 10,
-                      //             decoration: BoxDecoration(
-                      //                 // border: Border.all(color: Color(0xff83bb56), width: 5),
-                      //                 borderRadius: BorderRadius.circular(40),
-                      //                 color: item['status_now'] == 1
-                      //                     ? Color.fromARGB(255, 255, 0, 0)
-                      //                     : Color.fromARGB(255, 0, 255, 38)),
-                      //           ),
-                      //           // Container(child: Text(item['status_now'].toString()))
-                      //         )),
-                      //         DataCell(Center(
-                      //             child: Text(item['count_data'].toString()))),
-                      //       ]);
-                      //     }).toList(),
-                      //   ),
-                      //   // )
-                      // ),
+              
                       ),
           Container(
               margin: EdgeInsets.only(top: 10),
@@ -2845,41 +2728,39 @@ class _WeightState extends State<Weight> {
 
   bool Download2 = true;
   Widget build2(BuildContext context) => ExpansionTile(
-        key: K2,
+        // key: K2,
         onExpansionChanged: (value) {
           if (value == false) {
             setState(() {
               Download2 = true;
-              // Download5 = false;
-              //  = false;
-              // Download6 = false;
-              Duration(seconds: 1000);
-              selected2 = 1;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
+
+              // Duration(seconds: 1000);
+              // selected2 = 1;
+              // K0 = UniqueKey();
+              // K1 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K5 = UniqueKey();
+              // K6 = UniqueKey();
             });
           } else {
             setState(() {
               Download2 = false;
-              Download0 = true;
-              Download5 = true;
+              // Download0 = true;
+              // Download5 = true;
 
-              Download6 = true;
-              selected2 = -1;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
+              // Download6 = true;
+              // selected2 = -1;
+              // K0 = UniqueKey();
+              // K1 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K5 = UniqueKey();
+              // K6 = UniqueKey();
             });
           }
         },
-        initiallyExpanded: 1 == selected2,
+        // initiallyExpanded: 1 == selected2,
         maintainState: true,
         title: Download2
             ? Text(
@@ -2957,7 +2838,7 @@ class _WeightState extends State<Weight> {
                         margin: EdgeInsets.only(top: 10),
                         height: screenH * 0.30,
                         child: Center(child: CircularProgressIndicator()))
-                    : nowresult1_1[0]['count_data'] == null
+                    : nowresult1_1[0]['count_data'] == null ||  nowresult1_1.length == 1
                         ? Container(
                             height: screenH * 0.30,
                             child: Center(
@@ -3124,40 +3005,39 @@ class _WeightState extends State<Weight> {
         ],
       );
 
-  late String sView = 'View all day';
-  List<String> View = ['View all day', 'View by period'];
-  Widget build3(BuildContext context) => ExpansionTile(
-        key: K3,
-        onExpansionChanged: (value) {
-          if (value == false) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 2;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              Download2 = true;
 
-              Download6 = true;
-              Download0 = true;
-              Download5 = true;
-              selected2 = -1;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
-            });
-          }
-        },
-        initiallyExpanded: 2 == selected2,
+  Widget build3(BuildContext context) => ExpansionTile(
+        // key: K3,
+        // onExpansionChanged: (value) {
+        //   if (value == false) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 2;
+        //       K0 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K2 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //       K6 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       Download2 = true;
+
+        //       Download6 = true;
+        //       Download0 = true;
+        //       Download5 = true;
+        //       selected2 = -1;
+        //       K0 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K2 = UniqueKey();
+        //       K4 = UniqueKey();
+        //       K5 = UniqueKey();
+        //       K6 = UniqueKey();
+        //     });
+        //   }
+        // },
+        // initiallyExpanded: 2 == selected2,
         maintainState: true,
         title: Text(
           'Weight Results',
@@ -3665,37 +3545,37 @@ class _WeightState extends State<Weight> {
   late String sUnit = 'Weight Per Unit (All)';
   List<String> Unit = ['Weight Per Unit (All)'];
   Widget build4(BuildContext context) => ExpansionTile(
-        key: K4,
-        onExpansionChanged: (value) {
-          if (value == false) {
-            setState(() {
-              Duration(seconds: 1000);
-              selected2 = 3;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              Download0 = true;
-              Download6 = true;
-              Download2 = true;
-              Download5 = true;
+        // key: K4,
+        // onExpansionChanged: (value) {
+        //   if (value == false) {
+        //     setState(() {
+        //       Duration(seconds: 1000);
+        //       selected2 = 3;
+        //       K0 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K5 = UniqueKey();
+        //       K6 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       Download0 = true;
+        //       Download6 = true;
+        //       Download2 = true;
+        //       Download5 = true;
 
-              selected2 = -1;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K5 = UniqueKey();
-              K6 = UniqueKey();
-            });
-          }
-        },
-        initiallyExpanded: 3 == selected2,
+        //       selected2 = -1;
+        //       K0 = UniqueKey();
+        //       K1 = UniqueKey();
+        //       K2 = UniqueKey();
+        //       K3 = UniqueKey();
+        //       K5 = UniqueKey();
+        //       K6 = UniqueKey();
+        //     });
+        //   }
+        // },
+        // initiallyExpanded: 3 == selected2,
         maintainState: true,
         title: Text(
           'Plot Graph',
@@ -4085,38 +3965,38 @@ class _WeightState extends State<Weight> {
 
   bool Download5 = true;
   Widget build5(BuildContext context) => ExpansionTile(
-        key: K5,
+        // key: K5,
         onExpansionChanged: (value) {
           if (value == false) {
             setState(() {
               Download5 = true;
-              Duration(seconds: 1000);
-              selected2 = 4;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K6 = UniqueKey();
+              // Duration(seconds: 1000);
+              // selected2 = 4;
+              // K0 = UniqueKey();
+              // K1 = UniqueKey();
+              // K2 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K6 = UniqueKey();
             });
           } else {
             setState(() {
               Download5 = false;
-              Download0 = true;
-              Download2 = true;
+              // Download0 = true;
+              // Download2 = true;
 
-              Download6 = true;
-              selected2 = -1;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K6 = UniqueKey();
+              // Download6 = true;
+              // selected2 = -1;
+              // K0 = UniqueKey();
+              // K1 = UniqueKey();
+              // K2 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K6 = UniqueKey();
             });
           }
         },
-        initiallyExpanded: 4 == selected2,
+        // initiallyExpanded: 4 == selected2,
         maintainState: true,
         title: Download5
             ? Text(
@@ -4424,39 +4304,39 @@ class _WeightState extends State<Weight> {
   }
 
   Widget build6(BuildContext context) => ExpansionTile(
-        key: K6,
+        // key: K6,
         onExpansionChanged: (value) {
           if (value == false) {
             setState(() {
               Download6 = true;
 
-              Duration(seconds: 1000);
-              selected2 = 5;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
+              // Duration(seconds: 1000);
+              // selected2 = 5;
+              // K0 = UniqueKey();
+              // K1 = UniqueKey();
+              // K2 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K5 = UniqueKey();
             });
           } else {
             setState(() {
               Download6 = false;
-              Download0 = true;
-              Download2 = true;
+              // Download0 = true;
+              // Download2 = true;
 
-              Download5 = true;
-              selected2 = -1;
-              K0 = UniqueKey();
-              K1 = UniqueKey();
-              K2 = UniqueKey();
-              K3 = UniqueKey();
-              K4 = UniqueKey();
-              K5 = UniqueKey();
+              // Download5 = true;
+              // selected2 = -1;
+              // K0 = UniqueKey();
+              // K1 = UniqueKey();
+              // K2 = UniqueKey();
+              // K3 = UniqueKey();
+              // K4 = UniqueKey();
+              // K5 = UniqueKey();
             });
           }
         },
-        initiallyExpanded: 5 == selected2,
+        // initiallyExpanded: 5 == selected2,
         maintainState: true,
         title: Download6
             ? Text(

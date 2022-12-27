@@ -292,7 +292,8 @@ class _MainState extends State<Main1> {
                                     Container(
                                       width: 170,
                                       height: 60,
-                                      child: ListView.builder(
+                                      child: result3!.length == 1 ? Container()
+                                      :ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
                                         itemCount: result3!.length,

@@ -42,7 +42,9 @@ class _LoginState extends State<Login> {
           },
            body: jsonEncode(
               <String, dynamic>{"user": Username, "password": Password}));
+             
                if (ressum.statusCode == 200) {
+                 
                   setState(() async{
         Token = token['access_token'];
           Usersharedpreferences _p =
@@ -65,6 +67,7 @@ class _LoginState extends State<Login> {
       });
                }
                else{
+                 var Message = jsonDecode(ressum.body)['Message'];
                  showDialog(
           barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
           barrierDismissible: false,
@@ -125,9 +128,9 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Center(
-                          child: Text('ข้อมูลไม่ถูกต้อง',
+                          child: Text('$Message',
                               style: TextStyle(
-                                  fontFamily: 'THSarabun', fontSize: 23)),
+                                  fontFamily: 'Montserrat', fontSize: 16)),
                         ),
                         Container(
                           child: TextButton(

@@ -97,7 +97,7 @@ class _HouseState extends State<House> {
                     Container(
                     width: screenW*0.5,
                    height: screenH*0.05,
-                    margin: EdgeInsets.only(right: 10,top: screenH*0.008,bottom: screenH*0.01,),
+                    margin: EdgeInsets.only(right: screenW*0.05,top: screenH*0.008,bottom: screenH*0.01,),
                     child: Container(
                            height: screenH*0.04,
                           width: screenW*0.3,
@@ -197,7 +197,7 @@ class _HouseState extends State<House> {
            
                      Container(
                    width: screenW*0.9,
-                    height: screenH*0.05,
+                    height: screenH*0.065,
                    decoration: BoxDecoration(
                      color: Color.fromARGB(255, 198, 198, 198),
                      borderRadius: BorderRadius.circular(25.0)

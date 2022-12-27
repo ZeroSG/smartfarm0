@@ -218,36 +218,36 @@ class _DrawerState extends State<Drawer1> {
   }
 
 
- int starter = 0;
+//  int starter = 0;
 
-  void checkForNewSharedLists(){
+//   void checkForNewSharedLists(){
 
-     showNot('1','$starter');
-    // do request here
-    setState((){
-      starter = starter+1;
-      // change state according to result of request
-    });
+//      showNot('1','$starter');
+//     // do request here
+//     setState((){
+//       starter = starter+1;
+//       // change state according to result of request
+//     });
 
-  }
-  Timer? timer;
+//   }
+//   Timer? timer;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => checkForNewSharedLists());
+    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => checkForNewSharedLists());
     getjaon_login();
     // print(email1);
     // print(password1);
     // _createSampleData();
   }
 
-  @override
-void dispose() {
-  timer?.cancel();
-  super.dispose();
-}
+//   @override
+// void dispose() {
+//   timer?.cancel();
+//   super.dispose();
+// }
 
   GlobalKey? navigatorKeys = GlobalKey();
   @override
@@ -596,9 +596,12 @@ void dispose() {
                       Expanded(
                         child: Center(
                           child: Container(
+               
                             height: 220,
                             width: screenW * 0.75,
                             child: ListView.builder(
+                               physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
                               itemCount: farm0!.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
