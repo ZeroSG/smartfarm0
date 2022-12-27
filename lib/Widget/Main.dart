@@ -57,7 +57,7 @@ class _MainState extends State<Main1> {
             "Authorization": "Bearer ${widget.Token}",
             'Content-Type': 'application/json'
           },
-          body: jsonEncode(<String, dynamic>{"farm": 17}));
+          body: jsonEncode(<String, dynamic>{"farm": widget.farmnum}));
       if (ressum.statusCode == 200) {
 
         var result11 = jsonDecode(ressum.body);
@@ -378,20 +378,20 @@ class _MainState extends State<Main1> {
         backgroundColor: Colors.white,
         // trailing: SizedBox.shrink(),
         maintainState: true,
-        key: Key(index.toString()),
+        // key: Key(index.toString()),
         initiallyExpanded: index == selected1,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 20000);
-              selected1 = index;
-            });
-          } else {
-            setState(() {
-              selected1 = -1;
-            });
-          }
-        },
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 20000);
+        //       selected1 = index;
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected1 = -1;
+        //     });
+        //   }
+        // },
         title: ListTile(
           title: Text(
             '${result0![index]['c_formula']}',
@@ -458,7 +458,7 @@ class _MainState extends State<Main1> {
   var upper_percent2, lower_percent2;
   buildg2(int index1) {
         name = result3![Col1]['HOUSE'][index1]['HOUSEname'];
-      if (result3![Col1]['HOUSE'][index1]['n_day'] == ''||result3![Col1]['HOUSE'][index1]['n_day'] == '-1000') {
+      if (result3![Col1]['HOUSE'][index1]['n_day'] == ''||result3![Col1]['HOUSE'][index1]['n_day'] == -1000) {
         age = 'no live';
       } else {
         age = 'age ${result3![Col1]['HOUSE'][index1]['n_day']} day';
@@ -509,23 +509,23 @@ class _MainState extends State<Main1> {
       return ExpansionTile(
           backgroundColor: Colors.white,
           maintainState: true,
-          key: Key(index1.toString()),
+          // key: Key(index1.toString()),
           initiallyExpanded: index1 == selected2,
-          onExpansionChanged: (value) {
-            if (value) {
-              setState(() {
-                Duration(seconds: 20000);
-                selected2 = index1;
-              });
-            } else {
-              setState(() {
-                selected2 = -1;
-              });
-            }
-          },
+          // onExpansionChanged: (value) {
+          //   if (value) {
+          //     setState(() {
+          //       Duration(seconds: 20000);
+          //       selected2 = index1;
+          //     });
+          //   } else {
+          //     setState(() {
+          //       selected2 = -1;
+          //     });
+          //   }
+          // },
           title: ListTile(
             title: Text(
-              '$name [$age]1',
+              '$name [$age]',
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Montserrat',
@@ -777,23 +777,23 @@ class _MainState extends State<Main1> {
         return ExpansionTile(
           backgroundColor: Colors.white,
           maintainState: true,
-          key: Key(index1.toString()),
+          // key: Key(index1.toString()),
           initiallyExpanded: index1 == selected2,
-          onExpansionChanged: (value) {
-            if (value) {
-              setState(() {
-                Duration(seconds: 20000);
-                selected2 = index1;
-              });
-            } else {
-              setState(() {
-                selected2 = -1;
-              });
-            }
-          },
+          // onExpansionChanged: (value) {
+          //   if (value) {
+          //     setState(() {
+          //       Duration(seconds: 20000);
+          //       selected2 = index1;
+          //     });
+          //   } else {
+          //     setState(() {
+          //       selected2 = -1;
+          //     });
+          //   }
+          // },
           title: ListTile(
             title: Text(
-              '$name [$age]2',
+              '$name [$age]',
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Montserrat',

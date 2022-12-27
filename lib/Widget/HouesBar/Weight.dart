@@ -99,10 +99,10 @@ class _WeightState extends State<Weight> {
         if (result0_1 != null) {
           DateTime Date_Start = DateTime.parse(result0_1[0]['c_datestart']);
           DateTime Date_End = DateTime.parse(result0_1[0]['c_dateend']);
-
+     
           setState(() {
             nowresult0_2 = result0_2;
-
+           dateTime_ = Date_End;
             form = '${result0_1[0]['c_feedtype']}';
             day = '${result0_1[0]['n_age']}';
             Start = '${Date_Start.day}/${Date_Start.month}/${Date_Start.year}';
@@ -120,6 +120,7 @@ class _WeightState extends State<Weight> {
             Start = 'Non specified';
             End = 'Non specified';
             loading0 = false;
+            dateTime_ = DateTime.now();
           });
         }
 
@@ -1238,19 +1239,19 @@ class _WeightState extends State<Weight> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            // "Farm": widget.farmnum,
-            // "House": widget.num,
-            // "Date_Start":
-            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
-            // "Date_End":
-            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
-            // "Date_Process":
-            //     "${dateTime_!.year}-${dateTime_!.month}-${dateTime_!.day}"
-  "Farm": 17,
-  "House": 146,
-  "Date_Start": "2022-09-06 00:00:00",
-  "Date_End": "2022-09-06 23:59:59",
-  "Date_Process": "2022-09-06"
+            "Farm": widget.farmnum,
+            "House": widget.num,
+            "Date_Start":
+                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
+            "Date_End":
+                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
+            "Date_Process":
+                "${dateTime_!.year}-${dateTime_!.month}-${dateTime_!.day}"
+  // "Farm": 17,
+  // "House": 146,
+  // "Date_Start": "2022-09-06 00:00:00",
+  // "Date_End": "2022-09-06 23:59:59",
+  // "Date_Process": "2022-09-06"
           }));
       if (ressum.statusCode == 200) {
         var result6_1 = json.decode(ressum.body)['result']['view1'];
@@ -1335,6 +1336,9 @@ class _WeightState extends State<Weight> {
             Card(child: build5(context)),
             // // build6(context),
             Card(child: build6(context)),
+            Container(
+              height: 50,
+            )
           ],
         ),
       ),
@@ -1529,7 +1533,7 @@ class _WeightState extends State<Weight> {
                       }
                     },
                     child: Text(
-                      'Save Size',
+                      'Save',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -4207,6 +4211,11 @@ class _WeightState extends State<Weight> {
   Container LineChart5() {
     var largestGeekValue1 = nowresult5_1[0]['n_weight'];
     var largestGeekValue2 = nowresult5_1[0]['n_weight'];
+    var largestGeekValue0;
+
+      var largestGeekValue1_normdst = nowresult5_1[0]['n_normdst'];
+    var largestGeekValue2_normdst = nowresult5_1[0]['n_normdst'];
+    var largestGeekValue_normdst;
 
     for (int i = 0; i < nowresult5_1.length; i++) {
       if (nowresult5_1[i]['n_weight'] > largestGeekValue1) {
@@ -4217,7 +4226,36 @@ class _WeightState extends State<Weight> {
       if (nowresult5_1[i]['n_weight'] < largestGeekValue2) {
         largestGeekValue2 = nowresult5_1[i]['n_weight'];
       }
+
+      
     }
+
+    for (int i = 0; i < nowresult5_1.length; i++) {
+      if (nowresult5_1[i]['n_normdst'] > largestGeekValue1_normdst) {
+        largestGeekValue1_normdst = nowresult5_1[i]['n_normdst'];
+      }
+    }
+    for (int i = 0; i < nowresult5_1.length; i++) {
+      if (nowresult5_1[i]['n_normdst'] < largestGeekValue2_normdst) {
+        largestGeekValue2_normdst = nowresult5_1[i]['n_normdst'];
+      }
+
+      
+    }
+
+    if(largestGeekValue2_normdst < largestGeekValue1_normdst){
+      largestGeekValue_normdst = largestGeekValue1_normdst;
+    }else{
+      largestGeekValue_normdst = largestGeekValue2_normdst;
+    }
+    if(largestGeekValue2 < largestGeekValue1){
+      largestGeekValue0 = largestGeekValue1;
+    }else{
+      largestGeekValue0 = largestGeekValue2;
+    }
+   print(largestGeekValue0);
+    print(largestGeekValue_normdst);
+    
 
     return Container(
       height: screenH * 0.45,
@@ -4278,9 +4316,9 @@ class _WeightState extends State<Weight> {
                     NumberFormat.compact()),
             tickProviderSpec:
                 charts.StaticNumericTickProviderSpec(<charts.TickSpec<double>>[
-              for (var i = 0; i <= 20; i++)
-                if (i * 0.03 < largestGeekValue + 0.03)
-                  charts.TickSpec(i * 0.03),
+              for (var i = 0; i <= 15; i++)
+                if (i * largestGeekValue_normdst/7 < largestGeekValue + largestGeekValue_normdst/7)
+                  charts.TickSpec(i * largestGeekValue_normdst/7),
             ]),
             // tickProviderSpec: charts.BasicNumericTickProviderSpec(
             //       zeroBound: true,
@@ -4344,7 +4382,7 @@ class _WeightState extends State<Weight> {
   Color textC = Color(0xff505050);
   int? touchedIndex;
   bool Download6 = true;
-  DateTime? dateTime_ = DateTime.now();
+  DateTime? dateTime_ = DateTime.parse('2022-12-08');
   //  DateTime? dateTime6 = DateTime.utc(2022, 06, 27);
 
   Future<void> chooseDate6() async {

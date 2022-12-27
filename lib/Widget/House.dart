@@ -77,10 +77,190 @@ class _HouseState extends State<House> {
     
     }
       
-        return 
-        newDefaultTabController1(context);
+        return  newDefaultTabController2(context);
+        // newDefaultTabController1(context);
   }
-
+    Scaffold newDefaultTabController2(BuildContext context) {
+       return Scaffold(
+         body:  SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+           child: DefaultTabController(
+               initialIndex: numIndex!,
+               length: 3,
+               child: Column(children: [
+                       Container(
+                         margin: EdgeInsets.only(top: screenH*0.008,),
+                         child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                                Text(' '),
+                    Container(
+                    width: screenW*0.5,
+                   height: screenH*0.05,
+                    margin: EdgeInsets.only(right: 10,top: screenH*0.008,bottom: screenH*0.01,),
+                    child: Container(
+                           height: screenH*0.04,
+                          width: screenW*0.3,
+                          child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Color(0xfff1f1f1),
+                                    border: Border.all(color: Color(0xffe0eaeb), width: 3),
+                                    borderRadius: BorderRadius.circular(50),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color: Color.fromRGBO(0, 0, 0, 0.57), blurRadius: 5)
+                                    ]),
+                            child: Padding(
+                               padding: EdgeInsets.only(left: 10, right: 10),
+                              child: DropdownButtonHideUnderline(
+                                          child: 
+                                          widget.HOUSE == null 
+                                          ? DropdownButton<String>(
+                                             icon: Icon(
+                                  Icons.arrow_drop_down_circle,
+                                  size: 20,
+                                ),
+                                value: Noname,
+                                items:  NoList!
+                                    .map((NoHOUSE) => DropdownMenuItem<String>(
+                                        value: NoHOUSE,
+                                        child: Text(
+                                          NoHOUSE,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          fontFamily: 'Montserrat',
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Color.fromARGB(255, 25, 25, 25),
+                                          ),
+                                        )))
+                                    .toList(),
+                                onChanged: (NoHOUSE) {
+                                  
+                                })
+                                          :
+                                          DropdownButton<String>(
+                                             icon: Icon(
+                                  Icons.arrow_drop_down_circle,
+                                  size: 20,
+                                ),
+                                value: sHOUSE,
+                                items:  widget.HOUSE!
+                                    .map((HOUSE) => DropdownMenuItem<String>(
+                                        value: HOUSE['name'],
+                                        child: Text(
+                                          HOUSE['name'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          fontFamily: 'Montserrat',
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Color.fromARGB(255, 25, 25, 25),
+                                          ),
+                                        )))
+                                    .toList(),
+                                onChanged: (HOUSE) {
+                                  for(int i = 0;i<widget.HOUSE!.length;i++){
+                                        if(widget.HOUSE![i]['name'] == HOUSE){
+                                         setState(() {
+                                          //  //print(sHOUSE);
+                                          num = widget.HOUSE![i]['id'];
+                                          feed = widget.HOUSE![i]['feed'];
+                                          sHOUSE = HOUSE!; 
+                                         
+                                          // //print('sHOUSE $sHOUSE');
+                                          // //print('widget.cropnum1 ${widget.cropnum1}');
+                                          // //print('widget.cropnum2 ${widget.cropnum2}');
+                                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                             builder: (context)=>   Drawer1(Token: widget.Token, num1: 2,numIndex:numIndex,User: user,Password: password,HOUSE1:num,HOUSE2: sHOUSE,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
+                                          // Navigator.pushReplacement(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) =>
+                                          //        Drawer1(Token: widget.Token, num1: 2,numIndex:numIndex,User: user,Password: password,HOUSE1:num,HOUSE2: sHOUSE,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
+                                          //   ));
+                                         
+                                        } 
+                                      );
+                                      // //print(num);
+                                        }
+                                      
+                                     }
+                                }),
+                                        ),
+                            ),
+                          ),
+                      )
+                  ),
+             
+                         ],
+                     ),
+                       ),
+           
+                     Container(
+                   width: screenW*0.9,
+                    height: screenH*0.05,
+                   decoration: BoxDecoration(
+                     color: Color.fromARGB(255, 198, 198, 198),
+                     borderRadius: BorderRadius.circular(25.0)
+                   ),
+                   child:  TabBar(
+                     
+                     onTap :(value) {
+                       setState(() {
+                         numIndex = value;
+                       });
+                     },
+                     indicator: BoxDecoration(
+                       color: Color(0xff44bca3),
+                       borderRadius: BorderRadius.circular(25.0)
+                     ),
+                     labelColor: Colors.white,  
+                     unselectedLabelColor: Color.fromARGB(255, 74, 74, 74),
+                     tabs:  [
+                         Tab(text: 'Inrake&Order',),
+                         Tab(text: 'Device',),
+                         Tab(text: 'Weight',),
+                     ],
+                     
+                   ),
+                 ),
+                Container(
+                     margin: EdgeInsets.only(top: 5),
+                  width: screenW * 1,
+                  height: screenH * 0.001,
+                  color: Color.fromARGB(255, 112, 112, 112)),
+           
+                  Container(
+                    height: screenH*0.6,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TabBarView(
+                          physics: NeverScrollableScrollPhysics(),
+                children:<Widget> [
+                           Inrake_Order(Token: widget.Token,User: user,Password: password,num:num,farmnum: widget.farmnum,cropnum: widget.cropnum,cropnum1: widget.cropnum1,cropnum2: widget.cropnum2,samount1:widget.samount1,View:widget.View,day: widget.day,HOUSEname:sHOUSE,Feed: feed,),
+                           Device(Token: widget.Token),
+                           Weight(Token: widget.Token,num:num,farmnum: widget.farmnum,HOUSE2:sHOUSE),
+                         ],
+                   ),
+                    ),
+                  ),
+                 
+                  
+                  // TabBarView(
+                            
+                  //           physics: NeverScrollableScrollPhysics(),
+                  //    children:<Widget> [
+                  //      Inrake_Order(Token: widget.Token,User: user,Password: password,num:num,farmnum: widget.farmnum,cropnum: widget.cropnum,cropnum1: widget.cropnum1,cropnum2: widget.cropnum2,samount1:widget.samount1,View:widget.View,day: widget.day,HOUSEname:sHOUSE,Feed: feed,),
+                  //      Device(Token: widget.Token),
+                  //      Weight(Token: widget.Token,num:num,farmnum: widget.farmnum,HOUSE2:sHOUSE),
+                  //    ],
+                  // )
+                    ]),
+                    
+             ),
+         ),
+         
+       ) ;  
+    }
     Scaffold newDefaultTabController1(BuildContext context) {
     return Scaffold(
         body: DefaultTabController(

@@ -666,6 +666,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             Card(child: build3_2(context)),
             Card(child: build4(context)),
             Card(child: build5(context)),
+            Container(
+              height: 50,
+            )
           ],
         ),
       ),
@@ -3838,6 +3841,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               width: screenW * 1,
               height: screenH * 0.001,
               color: Color.fromARGB(255, 112, 112, 112)),
+              
         ],
       );
 

@@ -127,7 +127,7 @@ class _DemandState extends State<Demand> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            "Farm": 5,
+            "Farm": widget.farmnum,
           }));
       if (ressum1.statusCode == 200) {
         var result1_1 = json.decode(ressum1.body)['result']['view1'];
@@ -1164,7 +1164,7 @@ class _DemandState extends State<Demand> {
                           child: Stack(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(top: 40),
+                                margin: EdgeInsets.only(top: 21),
                                 child: Image(
                                   image: AssetImage(
                                     'images/s1.jpg',
@@ -1176,12 +1176,12 @@ class _DemandState extends State<Demand> {
                                 ),
                               ),
                               Container(
-                                width: 284,
+                                width: 265,
                                 // width: screenW*0.575,
-                                height: 200,
+                                height: 170,
                                 // color: Colors.amberAccent,64
                                 // margin: EdgeInsets.only(left: screenW*0.110),
-                                margin: EdgeInsets.only(left: 64),
+                                margin: EdgeInsets.only(left: 73),
                                 child: charts.BarChart(
                                   _createSampleDataBar1(index),
                                   animate: false,
@@ -1530,21 +1530,21 @@ class _DemandState extends State<Demand> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 35),
+                      margin: EdgeInsets.only(top:20),
                       child: Image(
                         image: AssetImage(
                           'images/s2.jpg',
                         ),
                         width: 180,
-                        height: 145,
+                        height: 143,
                         fit: BoxFit.fill,
                       ),
                     ),
                     Container(
-                      width: 163,
-                      height: 175,
+                      width: 150,
+                      height: 149,
                       margin: EdgeInsets.only(
-                        left: 20,
+                        left: 28,
                       ),
                       child: charts.BarChart(
                         _createSampleDataBar2(index, 0),
@@ -1570,26 +1570,26 @@ class _DemandState extends State<Demand> {
                   child: Stack(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 35, left: 180),
+                        margin: EdgeInsets.only(top: 21, left: 180),
                         child: Image(
                           image: AssetImage(
                             'images/s1_cleanup.jpg',
                           ),
                           width: 180,
                           //  width: screenW*0.7,
-                          height: 145,
+                          height: 143,
                           fit: BoxFit.fill,
                         ),
                       ),
                       Container(
-                        width: 185,
+                        width: 175,
                         // width: screenW*0.575,
-                        height: 175,
+                        height: 149,
                         // color: Colors.amberAccent,
                         // color: Colors.amberAccent,64
                         // margin: EdgeInsets.only(left: screenW*0.110),
                         margin: EdgeInsets.only(
-                          left: 175,
+                          left: 179,
                         ),
                         child: charts.BarChart(
                           _createSampleDataBar2(index, 0),
@@ -1631,21 +1631,21 @@ class _DemandState extends State<Demand> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 35),
+                      margin: EdgeInsets.only(top:20),
                       child: Image(
                         image: AssetImage(
                           'images/s2.jpg',
                         ),
-                        width: 180,
-                        height: 145,
+                        width: 190,
+                        height: 130,
                         fit: BoxFit.fill,
                       ),
                     ),
                     Container(
-                      width: 163,
-                      height: 175,
+                      width: 157,
+                      height: 138,
                       margin: EdgeInsets.only(
-                        left: 20,
+                        left: 30,
                       ),
                       child: charts.BarChart(
                         _createSampleDataBar2(index, 0),
@@ -1671,26 +1671,26 @@ class _DemandState extends State<Demand> {
                   child: Stack(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 35, left: 180),
+                        margin: EdgeInsets.only(top: 21, left: 190),
                         child: Image(
                           image: AssetImage(
                             'images/s1_cleanup.jpg',
                           ),
                           width: 180,
                           //  width: screenW*0.7,
-                          height: 145,
+                          height: 130,
                           fit: BoxFit.fill,
                         ),
                       ),
                       Container(
-                        width: 185,
+                        width: 175,
                         // width: screenW*0.575,
-                        height: 175,
+                        height: 140,
                         // color: Colors.amberAccent,
                         // color: Colors.amberAccent,64
                         // margin: EdgeInsets.only(left: screenW*0.110),
                         margin: EdgeInsets.only(
-                          left: 175,
+                          left: 188,
                         ),
                         child: charts.BarChart(
                           _createSampleDataBar2(index, 1),

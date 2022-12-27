@@ -284,17 +284,7 @@ class _SummaryState extends State<Summary> {
           // SingleChildScrollView(
           //   physics: BouncingScrollPhysics(),
           //   child:
-          screenH >= 609.5999755859375
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Card(child: build1(context)),
-                      Card(child: build2(context)),
-                    ],
-                  ),
-                )
-              : SingleChildScrollView(
+        SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -311,21 +301,21 @@ class _SummaryState extends State<Summary> {
   }
 
   Widget build1(BuildContext context) => ExpansionTile(
-        key: K2,
-        onExpansionChanged: (value) {
-          if (value == false) {
-            setState(() {
-              Age = false;
-              K1 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              Age = true;
-              Daily = false;
-              K1 = UniqueKey();
-            });
-          }
-        },
+        // key: K2,
+        // onExpansionChanged: (value) {
+        //   if (value == false) {
+        //     setState(() {
+        //       Age = false;
+        //       K1 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       Age = true;
+        //       Daily = false;
+        //       K1 = UniqueKey();
+        //     });
+        //   }
+        // },
         initiallyExpanded: Age,
         title: Text(
           'Age lnformation',
@@ -358,21 +348,21 @@ class _SummaryState extends State<Summary> {
         ],
       );
   Widget build2(BuildContext context) => ExpansionTile(
-        key: K1,
-        onExpansionChanged: (value) {
-          if (value == false) {
-            setState(() {
-              Daily = false;
-              K2 = UniqueKey();
-            });
-          } else {
-            setState(() {
-              Age = false;
-              Daily = true;
-              K2 = UniqueKey();
-            });
-          }
-        },
+        // key: K1,
+        // onExpansionChanged: (value) {
+        //   if (value == false) {
+        //     setState(() {
+        //       Daily = false;
+        //       K2 = UniqueKey();
+        //     });
+        //   } else {
+        //     setState(() {
+        //       Age = false;
+        //       Daily = true;
+        //       K2 = UniqueKey();
+        //     });
+        //   }
+        // },
         initiallyExpanded: Daily,
         maintainState: true,
         title: Text(
