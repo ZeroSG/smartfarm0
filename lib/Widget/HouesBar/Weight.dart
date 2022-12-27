@@ -112,7 +112,7 @@ class _WeightState extends State<Weight> {
           });
         }
         if (result0_1 == null) {
-          loading1 = true;
+
           setState(() {
             nowresult0_2 = result0_2;
             form = 'Non specified';
@@ -124,12 +124,7 @@ class _WeightState extends State<Weight> {
           });
         }
 
-        // setState(() {
 
-        //   nowresult0_1 = result0_1;
-
-        //   loading1 = false;
-        // });
       } else {
         throw Exception('Failed to download');
       }
@@ -167,7 +162,7 @@ class _WeightState extends State<Weight> {
           nowresult1_1 = result1_1;
           loading1 = false;
         });
-        print(loading1);
+
       } else {
         throw Exception('Failed to download');
       }
