@@ -356,6 +356,10 @@ class _OrderState extends State<Order> {
                   print(Order_Ref.text);
                   print("$Start");
                   print('$End');
+                              //      API_edit_order_edit(widget.Token,widget.farmnum,Order_Ref.text,"$Start",'$End',
+                //  nowresult1_1[index]['c_name_crop'],Ship_Conditionnameedit,Feed_Formulanameedit,int.parse(Number2.text),Unitnameedit,Remark2.text,widget.id);
+                getjaon1_order_information();
+                Navigator.pop(context);
                 }
                 print('=======2=========');
 
@@ -368,10 +372,7 @@ class _OrderState extends State<Order> {
                 print(Remark2.text);
                 print(widget.id);
 
-                //      API_edit_order_edit(widget.Token,widget.farmnum,Order_Ref.text,"$Start",'$End',
-                //  nowresult1_1[index]['c_name_crop'],Ship_Conditionnameedit,Feed_Formulanameedit,int.parse(Number2.text),Unitnameedit,Remark2.text,widget.id);
-                getjaon1_order_information();
-                Navigator.pop(context);
+    
               },
               child: Text(
                 'Save',

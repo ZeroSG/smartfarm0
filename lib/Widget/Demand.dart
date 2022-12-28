@@ -148,9 +148,9 @@ class _DemandState extends State<Demand> {
             //             "Farm": widget.farmnum,
             //  "Date_Start": "${_selectedValue.year}-${_selectedValue.month}-${_selectedValue.day}",
             //  "Date_End": "${_selectedValue.year}-${_selectedValue.month}-${_selectedValue.day}"
-//               "Farm": 1,
-//  "Date_Start": "2021-10-04",
-//   "Date_End": "2021-10-04"
+  // "Farm": 1,
+  // "Date_Start": "2022-11-17",
+  // "Date_End": "2022-11-17"
   // "Farm": 1,
   // "Date_Start": "2022-12-21",
   // "Date_End": "2022-12-21"
@@ -894,7 +894,7 @@ class _DemandState extends State<Demand> {
                                   image: AssetImage(
                                     'images/sacks3.png',
                                   ),
-                                  width: 200,
+                                  width: 280,
                                   //  width: screenW*0.7,
                                   height: 170,
                                   fit: BoxFit.fill,
