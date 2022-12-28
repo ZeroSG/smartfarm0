@@ -2057,18 +2057,18 @@ class _OrderState extends State<Order> {
         maintainState: true,
         key: Key(index.toString()),
         initiallyExpanded: index == selected1,
-        onExpansionChanged: (value) {
-          if (value) {
-            setState(() {
-              Duration(seconds: 20000);
-              selected1 = index;
-            });
-          } else {
-            setState(() {
-              selected1 = -1;
-            });
-          }
-        },
+        // onExpansionChanged: (value) {
+        //   if (value) {
+        //     setState(() {
+        //       Duration(seconds: 20000);
+        //       selected1 = index;
+        //     });
+        //   } else {
+        //     setState(() {
+        //       selected1 = -1;
+        //     });
+        //   }
+        // },
         title: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Column(

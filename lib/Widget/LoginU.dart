@@ -74,7 +74,7 @@ bool loading = true;
      body: loading? Container(
                 width: screenW! * 1,
                 height: screenW! * 1,
-                child: Center(child: CircularProgressIndicator()))
+                child: Center())
      :Container(),
     );
     

@@ -1072,13 +1072,16 @@ class _DrawerState extends State<Drawer1> {
                                           .map((crop) =>
                                               DropdownMenuItem<String>(
                                                   value: crop['name'],
-                                                  child: Text(
-                                                    crop['name'],
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: 'Montserrat',
-                                                      color: Color.fromARGB(
-                                                          255, 25, 25, 25),
+                                                  child: Container(
+                                                    width: screenW * 0.64,
+                                                    child: Text(
+                                                      crop['name'],
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontFamily: 'Montserrat',
+                                                        color: Color.fromARGB(
+                                                            255, 25, 25, 25),
+                                                      ),
                                                     ),
                                                   )))
                                           .toList(),
