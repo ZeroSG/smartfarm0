@@ -95,7 +95,6 @@ bool loading1 = true;
   
 
    
-  // print(widget.default_species![0]["name"].toString());
          
           // Speciesnum =nowresult1_1[0]["n_farm_type"];
           Speciesname =  widget.default_species![0]["name"];  
@@ -109,11 +108,7 @@ bool loading1 = true;
                           Speciesnum =  widget.default_species![i]["id"];  
                       
                       
-                //        print('i===${Species![i]["id"]}');
-                //  Speciesname =  '${Species![i]["name"]}';     
-                //  Speciesnum = i;
-                  //  Speciesnum =  widget.default_species![i]["id"];  
-                  //  Speciesname1.text =  Speciesname!; 
+         
            }
            else{
                  
@@ -140,9 +135,7 @@ bool loading1 = true;
            }}
             }
            
-         print(Speciesname);
-  
-  //  Ship_Conditionname = widget.default_species![0]["name"];
+
 
 
 

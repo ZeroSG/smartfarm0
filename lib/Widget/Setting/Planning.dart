@@ -12,6 +12,7 @@ import 'package:icofont_flutter/icofont_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../API_E_B/API_B.dart';
+import '../shared_preferences/shared_preferences.dart';
 
 class Planning extends StatefulWidget {
    String? Token;
@@ -25,7 +26,11 @@ class Planning extends StatefulWidget {
 
 class _PlanningState extends State<Planning> {
   late double screenW, screenH;
-  File? file;
+  File? file; 
+     late  List<String>? Plan10 = [];
+   late String Planname10;
+   Usersharedpreferences _p =
+                                    Usersharedpreferences();
   late List<dynamic>? Plan  = widget.default_planning;
    
  late String Planname = widget.default_planning![0]['name'];
@@ -51,7 +56,7 @@ late List<dynamic> _fileList =[];
         String namef = file2.split('/').last;
          
     File  file1 = File(file2);
-    //  print(file1.extension);
+
       var bytes = file1.readAsBytesSync();
       var excel = Excel.decodeBytes(bytes,);
     
@@ -61,7 +66,7 @@ late List<dynamic> _fileList =[];
         filename = namef;
         file = file1;
       });
-  //     //  print(selectedExcel["Sheet1"].sheetName);
+
       Sheet sheet = selectedExcel["Sheet1"];
       
        for (var table in excel.tables.keys) {
@@ -88,7 +93,7 @@ late List<dynamic> _fileList =[];
 
         }
       }
-     print("_fileList ${_fileList}");
+
     } else {
     }
   }
@@ -96,7 +101,8 @@ late List<dynamic> _fileList =[];
   bool loading1 = true;
   List<dynamic> nowresult1_1 = []; 
     Future<void> getjaon1_setting_planning() async {
-    try {
+      if(Planname != ''||Planname != null){
+         try {
       loading1 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/setting/setting-plan");
       var ressum = await http.post(urlsum,
@@ -106,7 +112,7 @@ late List<dynamic> _fileList =[];
           },
           body: jsonEncode(<String, dynamic>{
   "Farm": widget.farmnum,
-  "Plan": Planname
+  "Plan": Planname10
 }));
       if (ressum.statusCode == 200) {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
@@ -123,17 +129,35 @@ late List<dynamic> _fileList =[];
       }
     } catch (e) {
       //print(e.toString());
-    }
+    }  
+      }
+      else{
+        setState(() {
+          loading1 = true;
+            Planname = '';
+            Plan = [''];  
+          loading1 = false;
+        });
+        
+      }
+    
   }
 
    @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+        Planname10 = '';
+    Plan10 =  _p.getplanning();
+    Planname10 = Plan10![0];
+
     if(widget.default_planning != null){
        getjaon1_setting_planning();
     }
     else{
+      Planname = '';
+      Plan = [''];  
       loading1 = false;
     }
     // _createSampleData();
@@ -496,7 +520,7 @@ late List<dynamic> _fileList =[];
                         
                         
                     ], 
-                      rows: nowresult1_1 == null ?   _products1.map((item) {
+                      rows: nowresult1_1 == null || Planname == '' ?   _products1.map((item) {
                 return  DataRow(cells: [
                       DataCell(Center(child: Text(''))),
                       DataCell(Center(child: Text(''))),
@@ -558,7 +582,7 @@ late List<dynamic> _fileList =[];
                     child: Padding(
                        padding: EdgeInsets.only(left: 10, right: 10),
                       child: DropdownButtonHideUnderline(
-                                  child:widget.default_planning == null ? DropdownButton<String>(
+                                  child:widget.default_planning == null|| Planname == '' ? DropdownButton<String>(
                                          icon: Icon(
                               Icons.arrow_drop_down_circle,
                               size: 20,
@@ -586,13 +610,13 @@ late List<dynamic> _fileList =[];
                               Icons.arrow_drop_down_circle,
                               size: 20,
                             ),
-                        value: Planname,
-                        items:  Plan!
+                        value: Planname10,
+                        items:  Plan10!
                             .map((Plan) => DropdownMenuItem<String>(
                               
-                                value: Plan['name'],
+                                value: Plan,
                                 child: Text(
-                                  Plan['name'],
+                                  Plan,
                                   style: TextStyle(
                                     fontSize: 13,
                                   fontFamily: 'Montserrat',
@@ -603,7 +627,7 @@ late List<dynamic> _fileList =[];
                         onChanged: (Plan) {
                          setState(() {
                               
-                                    Planname = Plan!;
+                                    Planname10 = Plan!;
                                     getjaon1_setting_planning();
                                   });
                         }),
@@ -626,14 +650,14 @@ late List<dynamic> _fileList =[];
                           height: 40,
                           width: 40,
                           child: IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                                if(Plan!.length > 1) {    
-                                 print('=======1=========');
-                             print(widget.Token);
-                             print(widget.farmnum);
-                             print(Planname);
-                                print('1   $Plan');
-                                 //  API_button_delete_planning(widget.Token,widget.farmnum,Planname);
+                            //      print('=======1=========');
+                            //  print(widget.Token);
+                            //  print(widget.farmnum);
+                            //  print(Planname);
+                            //     print('1   $Plan');
+                                  API_button_delete_planning(widget.Token,widget.farmnum,Planname10);
                           late  List<dynamic> Plan0 = [];
                                  
                              for(int i = 0;i<Plan!.length;i++){
@@ -641,13 +665,35 @@ late List<dynamic> _fileList =[];
                                   Plan0 += [Plan![i]];
                                }
                              }
-                             print('2   $Plan0'); 
+                       
                               Planname = Plan0[0]['name'];
                              Plan = Plan0;
-                             print('3   $Plan'); 
+                         
                            
-                              getjaon1_setting_planning();
+                             
+                              late List<String> plan = [];
+              for(int i =0;i<Plan!.length;i++) {
+   
+     
+                plan += [Plan![i]['name']];
+      
+          }
+           await  _p.setListdefault_planning(plan);
+                           Plan10 =  plan;
+                           Planname10 = Plan10![0];
+                            getjaon1_setting_planning();
 
+                               }
+                               else if(Plan!.length == 1) {
+                                 late List<String> plan = [''];
+                                 API_button_delete_planning(widget.Token,widget.farmnum,Planname10);
+                                await  _p.setListdefault_planning(plan);
+                                   Planname = '';
+                             Plan = ['']; 
+                               Plan10 =  [''];
+                               Planname10 = ''; 
+                       
+                            getjaon1_setting_planning();
                                }
                         
                            

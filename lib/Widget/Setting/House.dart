@@ -266,14 +266,14 @@ class _HouseState extends State<House> {
                             int U_P = int.parse(Percent);
 
 
-                             print('=======2=========');
-                             print(Siloidnum);
-                             print(Siloname);
-                             print(Cap_acity);
-                             print(Top_up);
-                             print(Very_Lower1);
-                              print(L_ower);
-                               print(U_P);
+                            //  print('=======2=========');
+                            //  print(Siloidnum);
+                            //  print(Siloname);
+                            //  print(Cap_acity);
+                            //  print(Top_up);
+                            //  print(Very_Lower1);
+                            //   print(L_ower);
+                            //    print(U_P);
                              API_edit_setting_silo_2(widget.Token,widget.farmnum,Houseid,Siloidnum,Siloname,Cap_acity,Top_up,Very_Lower1,L_ower,U_P);
                             },
                             child: Text(
@@ -873,7 +873,7 @@ borderSide: BorderSide(color: Color(0xffcfcfcf)),
             onChanged: (bool? value) {
               setState(() {
                 Check = value!;
-                print(value);
+                // print(value);
                 if(value == true){
                   Checkid = 1;
                 }else{

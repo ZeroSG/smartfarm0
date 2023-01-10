@@ -99,7 +99,8 @@ class _DrawerState extends State<Drawer1> {
   int? id;
   late int? farmnum = widget.farmnum, cropnum2;
   // cropnum2 = widget.cropnum2;
-
+Usersharedpreferences _p =
+                                    Usersharedpreferences();
   bool Nocropbool = true;
 
   List<dynamic>? NocropnumList = ['Not StartCrop'];
@@ -134,7 +135,7 @@ class _DrawerState extends State<Drawer1> {
         var species = json.decode(ressum.body)['result']['default_species'];
         var ship = json.decode(ressum.body)['result']['default_ship'];
         var unit = json.decode(ressum.body)['result']['default_unit'];
-        setState(() {
+        setState(()  {
           if (cropnum1 == null) {
             cropnum1 = 0;
           }
@@ -150,7 +151,6 @@ class _DrawerState extends State<Drawer1> {
           if (widget.cropnum2 == null) {
             if (result3[cropnum1]['crop'] == null) {
               Nocropbool = false;
-              print('objectๅ222222222');
               cropnum2 = null;
             } else {
               Nocropbool = true;
@@ -165,9 +165,7 @@ class _DrawerState extends State<Drawer1> {
             crop = result3[cropnum1]['crop'];
             Nocropbool = true;
           }
-          print('cropnum1 $cropname');
-          print('cropnum1 $crop');
-          print('cropnum1 $cropnum1');
+
 
           //print('cropnum1 $cropnum1');
           farmname = result3[cropnum1]['name'];
@@ -197,6 +195,11 @@ class _DrawerState extends State<Drawer1> {
           house = result3[cropnum1]['house'];
           default_planning = result3[cropnum1]['default_planning'];
           default_formula = result3[cropnum1]['default_formula'];
+       
+          
+        
+
+
           default_ship = ship;
 
           // หน้า Order
@@ -208,6 +211,37 @@ class _DrawerState extends State<Drawer1> {
           loading = false;
           loading1 = false;
         });
+           if(default_formula != null){
+             late List<String> formula = [];
+              for(int i =0;i<default_formula!.length;i++) {
+   
+     
+                formula += [default_formula![i]["name"]];
+      
+          }
+         await  _p.setListdefault_formula(formula);
+          }else{
+            late List<String> formula = [''];
+          await  _p.setListdefault_formula(formula);
+          }
+            if(default_planning != null){
+             late List<String> planning = [];
+              for(int i =0;i<default_planning!.length;i++) {
+   
+     
+                planning += [default_planning![i]["name"]];
+      
+          }
+         await  _p.setListdefault_planning(planning);
+          }else{
+             late List<String> planning = [''];
+             await  _p.setListdefault_planning(planning);
+          }
+         late List<String>  NameCrop = [];
+          for(int i =0;i<cmiid!.length;i++){
+            NameCrop += [cmiid![i]];
+          }
+        await _p.setListNameCrop(NameCrop);
         // //print('ressum ========>  ${ressum.body}');
       } else {
         throw Exception('Failed to download');
@@ -236,18 +270,12 @@ class _DrawerState extends State<Drawer1> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => checkForNewSharedLists());
+
     getjaon_login();
-    // print(email1);
-    // print(password1);
-    // _createSampleData();
+
   }
 
-//   @override
-// void dispose() {
-//   timer?.cancel();
-//   super.dispose();
-// }
+
 
   GlobalKey? navigatorKeys = GlobalKey();
   @override
@@ -256,7 +284,7 @@ class _DrawerState extends State<Drawer1> {
     screenH = MediaQuery.of(context).size.height;
     if (num == null) {
       setState(() {
-        num = 0;
+        num = 3;
       });
     }
 
@@ -593,89 +621,88 @@ class _DrawerState extends State<Drawer1> {
                           ),
                         ),
                       )),
-                      Expanded(
-                        child: Center(
+                     Center(
                           child: Container(
-               
                             height: 220,
                             width: screenW * 0.75,
-                            child: ListView.builder(
-                               physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: farm0!.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                   title: Text(farm0![index]['name']),
-                                   onTap: () {
-                                     farmname = farm0![index]['name'];
-                                    //print(farm!.length);
-
-                                    for (int i = 0; i < farm!.length; i++) {
-                                      if (farm![i]['name'] == farm0![index]['name']) {
-                                        print(farm0![index]['name']);
-                                        setState(() {
-                                          cropnum1 = i;
-                                          print(cropnum1);
-                                          farmnum = farm![i]['id'];
-                                          print(farmnum);
-                                          if (farm![i]['crop'] == null) {
-                                            cropnum2 = null;
-                                          } else {
-                                            cropnum2 =
-                                                farm![i]['crop'][0]['id'];
-                                          }
-
-                                          //  print(farm![i]['crop']);
-                                          cropnum1 = i;
-                                          cropnum = 0;
-                                          // //print(farmnum);
-                                          // //print(cropnum2);
-                                          farmname = farm![i]['name'];
-                                          if (farm![i]['crop'] == null) {
-                                            cropname = null;
-                                          } else {
-                                            cropname =
-                                                farm![i]['crop'][0]['name'];
-                                          }
-
-                                          crop = farm![i]['crop'];
-
-                                          //  print(cropname);
-                                          //   print(crop);
-                                          Navigator.pop(context);
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => Drawer1(
-                                                    Token: widget.Token,
-                                                    User: user,
-                                                    Password: password,
-                                                    cropnum1: i,
-                                                    cropnum2: cropnum2,
-                                                    farmnum: farmnum,
-                                                    cropnum: cropnum),
-                                              ),
-                                              (route) => false);
-                                        });
+                            child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+                              child: ListView.builder(
+                                 physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: farm0!.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                     title: Text(farm0![index]['name']),
+                                     onTap: () {
+                                       farmname = farm0![index]['name'];
+                                      //print(farm!.length);
+                            
+                                      for (int i = 0; i < farm!.length; i++) {
+                                        if (farm![i]['name'] == farm0![index]['name']) {
+                                   
+                                          setState(() {
+                                            cropnum1 = i;
+                                        
+                                            farmnum = farm![i]['id'];
+                               
+                                            if (farm![i]['crop'] == null) {
+                                              cropnum2 = null;
+                                            } else {
+                                              cropnum2 =
+                                                  farm![i]['crop'][0]['id'];
+                                            }
+                            
+                             
+                                            cropnum1 = i;
+                                            cropnum = 0;
+                                            // //print(farmnum);
+                                            // //print(cropnum2);
+                                            farmname = farm![i]['name'];
+                                            if (farm![i]['crop'] == null) {
+                                              cropname = null;
+                                            } else {
+                                              cropname =
+                                                  farm![i]['crop'][0]['name'];
+                                            }
+                            
+                                            crop = farm![i]['crop'];
+                         
+                                            Navigator.pop(context);
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => Drawer1(
+                                                      Token: widget.Token,
+                                                      User: user,
+                                                      Password: password,
+                                                      cropnum1: i,
+                                                      cropnum2: cropnum2,
+                                                      farmnum: farmnum,
+                                                      cropnum: cropnum),
+                                                ),
+                                                (route) => false);
+                                          });
+                                        }
+                            
+                                        //  Navigator.pop(context);
+                                        // if(farm![i]['name'] == farm1){
+                                        //   setState(() {
+                                        //     cropnum1 = i;
+                                        //     farmnum = farm![i]['id'];
+                                        //     //print(farmnum);
+                                        //      Navigator.pop(context);
+                                        //   });
+                            
+                                        // }
                                       }
-
-                                      //  Navigator.pop(context);
-                                      // if(farm![i]['name'] == farm1){
-                                      //   setState(() {
-                                      //     cropnum1 = i;
-                                      //     farmnum = farm![i]['id'];
-                                      //     //print(farmnum);
-                                      //      Navigator.pop(context);
-                                      //   });
-
-                                      // }
-                                    }
-                                   },
-                                );
-                              }),
+                                     },
+                                  );
+                                }),
+                            ),
                           ),
                         ),
-                      )
+                    
                     ],
                   ),
                 ));
@@ -817,112 +844,7 @@ class _DrawerState extends State<Drawer1> {
                           // ),
                         )),
                       ),
-                      Center(
-                          child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        height: 40,
-                        width: screenW * 0.75,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: Color(0xfff1f1f1),
-                              border: Border.all(
-                                  color: Color(0xffe0eaeb), width: 3),
-                              borderRadius: BorderRadius.circular(50),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, 0.57),
-                                    blurRadius: 5)
-                              ]),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                  value: farmname,
-                                  items: farm!
-                                      .map((farm) => DropdownMenuItem<String>(
-                                          value: farm['name'],
-                                          child: Text(
-                                            farm['name'],
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat',
-                                              color: Color.fromARGB(
-                                                  255, 25, 25, 25),
-                                            ),
-                                          )))
-                                      .toList(),
-                                  // onTap:(){
-                                  //  from.text  = farmname!;
-                                  // },
-                                  onChanged: (farm1) {
-                                    farmname = farm1;
-                                    //print(farm!.length);
 
-                                    for (int i = 0; i < farm!.length; i++) {
-                                      if (farm![i]['name'] == farm1) {
-                                        print(farm1);
-                                        setState(() {
-                                          cropnum1 = i;
-                                          print(cropnum1);
-                                          farmnum = farm![i]['id'];
-                                          print(farmnum);
-                                          if (farm![i]['crop'] == null) {
-                                            cropnum2 = null;
-                                          } else {
-                                            cropnum2 =
-                                                farm![i]['crop'][0]['id'];
-                                          }
-
-                                          //  print(farm![i]['crop']);
-                                          cropnum1 = i;
-                                          cropnum = 0;
-                                          // //print(farmnum);
-                                          // //print(cropnum2);
-                                          farmname = farm![i]['name'];
-                                          if (farm![i]['crop'] == null) {
-                                            cropname = null;
-                                          } else {
-                                            cropname =
-                                                farm![i]['crop'][0]['name'];
-                                          }
-
-                                          crop = farm![i]['crop'];
-
-                                          //  print(cropname);
-                                          //   print(crop);
-                                          Navigator.pop(context);
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => Drawer1(
-                                                    Token: widget.Token,
-                                                    User: user,
-                                                    Password: password,
-                                                    cropnum1: i,
-                                                    cropnum2: cropnum2,
-                                                    farmnum: farmnum,
-                                                    cropnum: cropnum),
-                                              ),
-                                              (route) => false);
-                                        });
-                                      }
-
-                                      //  Navigator.pop(context);
-                                      // if(farm![i]['name'] == farm1){
-                                      //   setState(() {
-                                      //     cropnum1 = i;
-                                      //     farmnum = farm![i]['id'];
-                                      //     //print(farmnum);
-                                      //      Navigator.pop(context);
-                                      //   });
-
-                                      // }
-                                    }
-                                  }),
-                            ),
-                          ),
-                        ),
-                      )),
                       Container(
                         margin: EdgeInsets.only(
                           top: 20,
@@ -930,12 +852,27 @@ class _DrawerState extends State<Drawer1> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              email!,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 68, 188, 90),
+                            // Container(
+                            //   width: screenW * 0.3,
+                            //   child: Text(
+                            //     email!,
+                            //     style: TextStyle(
+                            //       fontSize: 15,
+                            //       fontFamily: 'Montserrat',
+                            //       color: Color.fromARGB(255, 68, 188, 90),
+                            //     ),
+                            //   ),
+                            // ),
+                             Container(
+                              width: screenW * 0.3,
+                              child: Text(
+                                email!,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Montserrat',
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Color.fromARGB(255, 68, 188, 90),
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -1135,7 +1072,7 @@ class _DrawerState extends State<Drawer1> {
                                                   )))
                                           .toList(),
                                       onChanged: (crop1) {
-                                        print(crop1);
+                                    
                                         // for (int i = 0; i < crop!.length; i++) {
                                         //   // cropname = crop1;
                                         //   if (crop![i]['name'] == crop1) {

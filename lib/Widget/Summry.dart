@@ -5,7 +5,7 @@ import 'dart:ui';
 
 import 'package:intl/intl.dart';
 
-import 'BarMmodel.dart';
+
 
 import 'DB/SummaryDb.dart';
 
@@ -16,6 +16,7 @@ import 'package:charts_flutter/src/text_element.dart' as chartText;
 import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 
 import 'downloadExcel/download.dart';
+import 'shared_preferences/shared_preferences.dart';
 
 class Summary extends StatefulWidget {
   String? Token;
@@ -137,7 +138,7 @@ class _SummaryState extends State<Summary> {
           body: jsonEncode(<String, dynamic>{
             "farm": widget.farmnum,
             "crop": widget.cropnum2,
-            "formula": ssex,
+            "formula": Formulaname,
             "view1": num1
           }));
       if (ressum.statusCode == 200) {
@@ -147,7 +148,7 @@ class _SummaryState extends State<Summary> {
           result1 = _summaryDb.result!.view1!;
           loading = false;
         });
-        print('sdsd${result1.length}');
+
       } else {
         throw Exception('Failed to download');
       }
@@ -164,7 +165,7 @@ class _SummaryState extends State<Summary> {
 
   Future<void> getjaon2_daily_information() async {
     try {
-      print(widget.cropnum2);
+   
       null2 = '';
       loading2 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/summary/daily-info");
@@ -179,13 +180,13 @@ class _SummaryState extends State<Summary> {
             "view1": num2
           }));
       if (ressum.statusCode == 200) {
-        // print('ffff${widget.cropnum2}');
+
         var result11 = json.decode(ressum.body)['result']['view1'];
         setState(() {
           result2 = result11;
           loading2 = false;
         });
-        print('ffff${result11}');
+
         // //print('index1========${result2.asMap().keys.toList()}');
         // for(int j = 0;j<result2.length;j++){
 
@@ -203,8 +204,12 @@ class _SummaryState extends State<Summary> {
     } catch (e) {
       print('e ===> ${e.toString()} ');
       if (e.toString() == "Exception: Failed to download") {
-        null2 = "ไม่มีค่า";
-        loading2 = true;
+        setState(() {
+            null2 = "ไม่มีค่า";
+            loading2 = true;
+
+        });
+
         //print('e ===> $null1 ');
       }
     }
@@ -254,12 +259,17 @@ class _SummaryState extends State<Summary> {
   }
 
   ReceivePort _port = ReceivePort();
-
+ Usersharedpreferences _p =Usersharedpreferences();
+    late  List<String>? Formula = [];
+   late String Formulaname;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    
+     Formulaname = '';
+    Formula =  _p.getformula();
+    Formulaname = Formula![0];
     if (widget.cropnum2 != null) {
       getjaon_summary_age_information();
       getjaon2_daily_information();
@@ -277,7 +287,7 @@ class _SummaryState extends State<Summary> {
     size = MediaQuery.of(context).size;
     if (widget.sex == null) {
     } else {
-      print('widget.sex111');
+
     }
     return Scaffold(
       body:
@@ -302,22 +312,66 @@ class _SummaryState extends State<Summary> {
 
   Widget build1(BuildContext context) => ExpansionTile(
         // key: K2,
-        // onExpansionChanged: (value) {
-        //   if (value == false) {
-        //     setState(() {
-        //       Age = false;
-        //       K1 = UniqueKey();
-        //     });
-        //   } else {
-        //     setState(() {
-        //       Age = true;
-        //       Daily = false;
-        //       K1 = UniqueKey();
-        //     });
-        //   }
-        // },
+        onExpansionChanged: (value) {
+          if (value == false) {
+            setState(() {
+              Age = false;
+              // K1 = UniqueKey();
+            });
+          } else {
+            setState(() {
+              Age = true;
+              // Daily = false;
+              // K1 = UniqueKey();
+            });
+          }
+        },
         initiallyExpanded: Age,
-        title: Text(
+        title: Age? Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Age lnformation',
+              style: TextStyle(
+                  fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
+            ),
+             Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blueAccent,
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            // stops: [0.3, 1],
+                            colors: [
+                              Color.fromARGB(255, 160, 193, 238),
+                              Color.fromARGB(255, 94, 157, 228)
+                            ])),
+                    height: 40,
+                    width: screenW * 0.25,
+                    margin: EdgeInsets.only(left: 10),
+                    child: TextButton(
+                      onPressed: () {
+                        saveExcelAgeinformation(result1, 'Agelnformation');
+                      },
+                      child: Text(
+                        'Download',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //     primary: Color(0xff44bca3),
+                      //     shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(20))),
+                    ),
+                  ),
+                ),
+          ],
+        )
+        : Text(
           'Age lnformation',
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
@@ -349,23 +403,67 @@ class _SummaryState extends State<Summary> {
       );
   Widget build2(BuildContext context) => ExpansionTile(
         // key: K1,
-        // onExpansionChanged: (value) {
-        //   if (value == false) {
-        //     setState(() {
-        //       Daily = false;
-        //       K2 = UniqueKey();
-        //     });
-        //   } else {
-        //     setState(() {
-        //       Age = false;
-        //       Daily = true;
-        //       K2 = UniqueKey();
-        //     });
-        //   }
-        // },
+        onExpansionChanged: (value) {
+          if (value == false) {
+            setState(() {
+              Daily = false;
+              // K2 = UniqueKey();
+            });
+          } else {
+            setState(() {
+              // Age = false;
+              Daily = true;
+              // K2 = UniqueKey();
+            });
+          }
+        },
         initiallyExpanded: Daily,
         maintainState: true,
-        title: Text(
+        title: Daily ? Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Daily Information',
+              style: TextStyle(
+                  fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
+            ),
+            Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blueAccent,
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            // stops: [0.3, 1],
+                            colors: [
+                              Color.fromARGB(255, 160, 193, 238),
+                              Color.fromARGB(255, 94, 157, 228)
+                            ])),
+                    height: 40,
+                    width: screenW * 0.25,
+                    margin: EdgeInsets.only(left: 10),
+                    child: TextButton(
+                      onPressed: () {
+                        saveExcelAgeinformation(result2, 'DailyInformation');
+                      },
+                      child: Text(
+                        'Download',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //     primary: Color(0xff44bca3),
+                      //     shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(20))),
+                    ),
+                  ),
+                ),
+          ],
+        )
+        :Text(
           'Daily Information',
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
@@ -425,135 +523,10 @@ class _SummaryState extends State<Summary> {
         num = 10;
       });
     }
-    //    int? maxRow,maxColumns;
-    // double i =0.0;
-    // // //print(screenW);
-    // // //print(screenW);
-    // // //print(screenH);
-    //  if (screenW >= 1000) {
-    //   maxColumns= 11;
-    //   i = screenW*0.005;
-    // }else if (screenW < 1000 && screenW >= 922) {
-    //   maxColumns= 10;
-    //   i = screenW*0.007;
-    //   if (screenW < 1000 && screenW >= 983)
-    //   i = screenW*0.008;
-    //   else if (screenW < 983 && screenW >= 961)
-    //   i = screenW*0.007;
-    //   else if (screenW < 961 && screenW >= 938)
-    //   i = screenW*0.006;
-    //   else if (screenW < 938 && screenW >= 922)
-    //   i = screenW*0.005;
-    // }else if (screenW < 922 && screenW >= 846) {
-    //  maxColumns= 9;
-    //  if (screenW < 922 && screenW >= 895)
-    //  i = screenW*0.009;
-    // else if (screenW < 895 && screenW >= 880)
-    //  i = screenW*0.008;
-    // else if (screenW < 880 && screenW >= 864)
-    //  i = screenW*0.007;
-    //  else if (screenW < 864 && screenW >= 846)
-    //  i = screenW*0.006;
-    // }else if (screenW < 846 && screenW >= 760) {
-    //    maxColumns= 8;
-    //    if (screenW < 846 && screenW >= 828)
-    //  i = screenW*0.012;
-    //    else if (screenW < 828 && screenW >= 815)
-    //  i = screenW*0.011;
-    //   else if (screenW < 815 && screenW >= 801)
-    //  i = screenW*0.010;
-    //  else if (screenW < 801 && screenW >= 785)
-    //  i = screenW*0.009;
-    //  else if (screenW < 785 && screenW >= 772)
-    //  i = screenW*0.008;
-    //  else if (screenW < 772 && screenW >= 756)
-    //  i = screenW*0.007;
-
-    // }else if (screenW < 760 && screenW >= 668) {
-    //    maxColumns= 7;
-    //      if (screenW < 760 && screenW >= 744)
-    //  i = screenW*0.015;
-    //    else if (screenW < 744 && screenW >= 732)
-    //  i = screenW*0.014;
-    //       else if (screenW < 732 && screenW >= 721)
-    //  i = screenW*0.013;
-    //   else if (screenW < 721 && screenW >= 709)
-    //  i = screenW*0.012;
-    //    else if (screenW < 709 && screenW >= 700)
-    //  i = screenW*0.011;
-    //         else if (screenW < 700 && screenW >= 689)
-    //  i = screenW*0.010;
-    //  else if (screenW < 689 && screenW >= 680)
-    //  i = screenW*0.009;
-    //  else if (screenW < 680 && screenW >= 668)
-    //  i = screenW*0.008;
-
-    // }else if (screenW < 668 && screenW >= 573) {
-    //    maxColumns= 6;
-    //     if (screenW < 668 && screenW >= 644)
-    //  i = screenW*0.018;
-    //    else if (screenW < 644 && screenW >= 628)
-    //  i = screenW*0.016;
-    //   else if (screenW < 628 && screenW >= 611)
-    //  i = screenW*0.014;
-    //  else if (screenW < 611 && screenW >= 596)
-    //  i = screenW*0.012;
-    //  else if (screenW < 596 && screenW >= 582)
-    //  i = screenW*0.010;
-    //  else if (screenW < 582 && screenW >= 573)
-    //  i = screenW*0.009;
-
-    // }else if (screenW < 573 && screenW >= 481) {
-    //    maxColumns= 5;
-    //      if (screenW < 573 && screenW >= 543)
-    //     i = screenW*0.022;
-    //    else if (screenW < 543 && screenW >= 531)
-    //  i = screenW*0.020;
-    //   else if (screenW < 531 && screenW >= 513)
-    //  i = screenW*0.017;
-    //  else if (screenW < 513 && screenW >= 499)
-    //  i = screenW*0.014;
-    //  else if (screenW < 499 && screenW >= 481)
-    //  i = screenW*0.011;
-
-    // }else if (screenW < 481 && screenW >= 387) {
-    //    maxColumns= 4;
-    //     if (screenW < 481 && screenW >= 445)
-    //     i = screenW*0.030;
-    //    else if (screenW < 445 && screenW >= 430)
-    //  i = screenW*0.026;
-    //   else if (screenW < 430 && screenW >= 416)
-    //  i = screenW*0.022;
-    //  else if (screenW < 416 && screenW >= 402)
-    //  i = screenW*0.018;
-    //  else if (screenW < 402 && screenW >= 387)
-    //  i = screenW*0.013;
-
-    // }else if (screenW < 387 && screenW >= 293) {
-    //    maxColumns= 3;
-    //    if (screenW < 387 && screenW >= 338)
-    //     i = screenW*0.039;
-    //    else if (screenW < 338 && screenW >= 320)
-    //  i = screenW*0.030;
-    //   else if (screenW < 320 && screenW >= 303)
-    //  i = screenW*0.021;
-    //  else if (screenW < 303 && screenW >= 293)
-    //  i = screenW*0.012;
-
-    // }else if (screenW < 293 && screenW >= 211) {
-    //    maxColumns= 2;
-    //     if (screenW < 293 && screenW >= 240)
-    //     i = screenW*0.070;
-    //    else if (screenW < 240 && screenW >= 211)
-    //  i = screenW*0.050;
-
-    // }else if (screenW < 211) {
-    //    maxColumns= 1;
-    //    i = screenW*0.070;
-    // }
+   
 
     double? Number;
-    print(result2.length);
+
     if (result2.length < 100) {
       Number = result2.length / 15;
     }
@@ -644,8 +617,9 @@ class _SummaryState extends State<Summary> {
               eventTrigger: charts.SelectionTrigger.pressHold),
           new charts.PanAndZoomBehavior(),
           new charts.SeriesLegend(
+            
             // legendDefaultMeasure: charts.LegendDefaultMeasure.average,
-            // // showMeasures: true,
+            // showMeasures: true,
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.black,
                 fontFamily: 'Montserrat',
@@ -654,7 +628,7 @@ class _SummaryState extends State<Summary> {
             desiredMaxColumns: 3,
             cellPadding: EdgeInsets.symmetric(horizontal: screenW * 0.02),
             // horizontalFirst: false,
-            outsideJustification: charts.OutsideJustification.start,
+            // outsideJustification: charts.OutsideJustification.start,
             // cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
           ),
         ],
@@ -722,7 +696,7 @@ class _SummaryState extends State<Summary> {
                 Center(
                     child: Container(
                   height: 40,
-                  width: screenW * 0.28,
+                  width: screenW * 0.40,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                         color: Color(0xfff1f1f1),
@@ -804,7 +778,7 @@ class _SummaryState extends State<Summary> {
                 Center(
                     child: Container(
                   height: 40,
-                  width: screenW * 0.28,
+                  width: screenW * 0.40,
                   margin: EdgeInsets.only(left: 10),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
@@ -847,40 +821,7 @@ class _SummaryState extends State<Summary> {
                     ),
                   ),
                 )),
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.blueAccent,
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            // stops: [0.3, 1],
-                            colors: [
-                              Color.fromARGB(255, 160, 193, 238),
-                              Color.fromARGB(255, 94, 157, 228)
-                            ])),
-                    height: 40,
-                    width: screenW * 0.25,
-                    margin: EdgeInsets.only(left: 10),
-                    child: TextButton(
-                      onPressed: () {
-                        saveExcelAgeinformation(result2, 'DailyInformation');
-                      },
-                      child: Text(
-                        'Download',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      // style: ElevatedButton.styleFrom(
-                      //     primary: Color(0xff44bca3),
-                      //     shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(20))),
-                    ),
-                  ),
-                ),
+                
               ],
             ),
           ),
@@ -996,132 +937,7 @@ class _SummaryState extends State<Summary> {
   }
 
   Container g() {
-    // int? maxRow,maxColumns;
-    // double i =0.0;
-    // // //print(screenW);
-    // // //print(screenW);
-    // // //print(screenH);
-    //  if (screenW >= 1000) {
-    //   maxColumns= 11;
-    //   i = screenW*0.005;
-    // }else if (screenW < 1000 && screenW >= 922) {
-    //   maxColumns= 10;
-    //   i = screenW*0.007;
-    //   if (screenW < 1000 && screenW >= 983)
-    //   i = screenW*0.008;
-    //   else if (screenW < 983 && screenW >= 961)
-    //   i = screenW*0.007;
-    //   else if (screenW < 961 && screenW >= 938)
-    //   i = screenW*0.006;
-    //   else if (screenW < 938 && screenW >= 922)
-    //   i = screenW*0.005;
-    // }else if (screenW < 922 && screenW >= 846) {
-    //  maxColumns= 9;
-    //  if (screenW < 922 && screenW >= 895)
-    //  i = screenW*0.009;
-    // else if (screenW < 895 && screenW >= 880)
-    //  i = screenW*0.008;
-    // else if (screenW < 880 && screenW >= 864)
-    //  i = screenW*0.007;
-    //  else if (screenW < 864 && screenW >= 846)
-    //  i = screenW*0.006;
-    // }else if (screenW < 846 && screenW >= 760) {
-    //    maxColumns= 8;
-    //    if (screenW < 846 && screenW >= 828)
-    //  i = screenW*0.012;
-    //    else if (screenW < 828 && screenW >= 815)
-    //  i = screenW*0.011;
-    //   else if (screenW < 815 && screenW >= 801)
-    //  i = screenW*0.010;
-    //  else if (screenW < 801 && screenW >= 785)
-    //  i = screenW*0.009;
-    //  else if (screenW < 785 && screenW >= 772)
-    //  i = screenW*0.008;
-    //  else if (screenW < 772 && screenW >= 756)
-    //  i = screenW*0.007;
-
-    // }else if (screenW < 760 && screenW >= 668) {
-    //    maxColumns= 7;
-    //      if (screenW < 760 && screenW >= 744)
-    //  i = screenW*0.015;
-    //    else if (screenW < 744 && screenW >= 732)
-    //  i = screenW*0.014;
-    //       else if (screenW < 732 && screenW >= 721)
-    //  i = screenW*0.013;
-    //   else if (screenW < 721 && screenW >= 709)
-    //  i = screenW*0.012;
-    //    else if (screenW < 709 && screenW >= 700)
-    //  i = screenW*0.011;
-    //         else if (screenW < 700 && screenW >= 689)
-    //  i = screenW*0.010;
-    //  else if (screenW < 689 && screenW >= 680)
-    //  i = screenW*0.009;
-    //  else if (screenW < 680 && screenW >= 668)
-    //  i = screenW*0.008;
-
-    // }else if (screenW < 668 && screenW >= 573) {
-    //    maxColumns= 6;
-    //     if (screenW < 668 && screenW >= 644)
-    //  i = screenW*0.018;
-    //    else if (screenW < 644 && screenW >= 628)
-    //  i = screenW*0.016;
-    //   else if (screenW < 628 && screenW >= 611)
-    //  i = screenW*0.014;
-    //  else if (screenW < 611 && screenW >= 596)
-    //  i = screenW*0.012;
-    //  else if (screenW < 596 && screenW >= 582)
-    //  i = screenW*0.010;
-    //  else if (screenW < 582 && screenW >= 573)
-    //  i = screenW*0.009;
-
-    // }else if (screenW < 573 && screenW >= 481) {
-    //    maxColumns= 5;
-    //      if (screenW < 573 && screenW >= 543)
-    //     i = screenW*0.022;
-    //    else if (screenW < 543 && screenW >= 531)
-    //  i = screenW*0.020;
-    //   else if (screenW < 531 && screenW >= 513)
-    //  i = screenW*0.017;
-    //  else if (screenW < 513 && screenW >= 499)
-    //  i = screenW*0.014;
-    //  else if (screenW < 499 && screenW >= 481)
-    //  i = screenW*0.011;
-
-    // }else if (screenW < 481 && screenW >= 387) {
-    //    maxColumns= 4;
-    //     if (screenW < 481 && screenW >= 445)
-    //     i = screenW*0.030;
-    //    else if (screenW < 445 && screenW >= 430)
-    //  i = screenW*0.026;
-    //   else if (screenW < 430 && screenW >= 416)
-    //  i = screenW*0.022;
-    //  else if (screenW < 416 && screenW >= 402)
-    //  i = screenW*0.018;
-    //  else if (screenW < 402 && screenW >= 387)
-    //  i = screenW*0.013;
-
-    // }else if (screenW < 387 && screenW >= 293) {
-    //    maxColumns= 3;
-    //    if (screenW < 387 && screenW >= 338)
-    //     i = screenW*0.039;
-    //    else if (screenW < 338 && screenW >= 320)
-    //  i = screenW*0.030;
-    //   else if (screenW < 320 && screenW >= 303)
-    //  i = screenW*0.021;
-    //  else if (screenW < 303 && screenW >= 293)
-    //  i = screenW*0.012;
-
-    // }else if (screenW < 293 && screenW >= 211) {
-    //    maxColumns= 2;
-    //     if (screenW < 293 && screenW >= 240)
-    //     i = screenW*0.070;
-    //    else if (screenW < 240 && screenW >= 211)
-    //  i = screenW*0.050;
-
-    // }else if (screenW < 211) {
-    //    maxColumns= 1;
-    //    i = screenW*0.070;
-    // }
+  
     double? Number;
     int? T;
     if (result1.length < 100) {
@@ -1139,6 +955,10 @@ class _SummaryState extends State<Summary> {
     if (result1.length > 100) {
       Number = result1.length / Number2;
       T = 5;
+    }
+     if (result1.length > 500) {
+      Number = result1.length / Number2;
+      T = 4;
     }
     Number1 = Number.toStringAsFixed(0);
     Number2 = int.parse('$Number1') + T!;
@@ -1212,7 +1032,7 @@ class _SummaryState extends State<Summary> {
             desiredMaxColumns: 3,
             cellPadding: EdgeInsets.symmetric(horizontal: screenW * 0.02),
             // horizontalFirst: false,
-            outsideJustification: charts.OutsideJustification.start,
+            // outsideJustification: charts.OutsideJustification.start,
             // cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
           ),
           new charts.ChartTitle(
@@ -1305,7 +1125,7 @@ class _SummaryState extends State<Summary> {
                 Center(
                     child: Container(
                   height: 40,
-                  width: screenW * 0.28,
+                  width: screenW * 0.40,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                         color: Color(0xfff1f1f1),
@@ -1316,59 +1136,76 @@ class _SummaryState extends State<Summary> {
                               color: Color.fromRGBO(0, 0, 0, 0.57),
                               blurRadius: 5)
                         ]),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: DropdownButtonHideUnderline(
-                        child: widget.sex == null
-                            ? DropdownButton<String>(
-                                icon: Icon(
-                                  Icons.arrow_drop_down_circle,
-                                  size: 20,
-                                ),
-                                value: Noname,
-                                items: NoList!
-                                    .map((Nosex) => DropdownMenuItem<String>(
-                                        value: Nosex,
-                                        child: Text(
-                                          Nosex,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Montserrat',
-                                            color:
-                                                Color.fromARGB(255, 25, 25, 25),
-                                          ),
-                                        )))
-                                    .toList(),
-                                onChanged: (Nosex) {
-                                  setState(() {});
-                                })
-                            : DropdownButton<String>(
-                                icon: Icon(
-                                  Icons.arrow_drop_down_circle,
-                                  size: 20,
-                                ),
-                                value: ssex,
-                                items: widget.sex!
-                                    .map((sex) => DropdownMenuItem<String>(
-                                        value: sex['name'],
-                                        child: Text(
-                                          sex['name'],
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Montserrat',
-                                            color:
-                                                Color.fromARGB(255, 25, 25, 25),
-                                          ),
-                                        )))
-                                    .toList(),
-                                onChanged: (sex) {
-                                  setState(() {
-                                    ssex = sex!;
-                                  });
-                                  getjaon_summary_age_information();
-                                  // _createSampleData();
-                                  // _generateData();
-                                }),
+                    child: Container(
+                     width: screenW * 0.25,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        child: DropdownButtonHideUnderline(
+                          
+                          child: widget.sex == null
+                              ? DropdownButton<String>(
+                              isExpanded: true,
+                                  icon: Icon(
+                                    Icons.arrow_drop_down_circle,
+                                    size: 20,
+                                  ),
+                                  value: Noname,
+                                  items: NoList!
+                                      .map((Nosex) => DropdownMenuItem<String>(
+                                          value: Nosex,
+                                          child: Text(
+                                            Nosex,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  Color.fromARGB(255, 25, 25, 25),
+                                            ),
+                                          )))
+                                      .toList(),
+                                  onChanged: (Nosex) {
+                                    setState(() {});
+                                  })
+                                  
+                              : ConstrainedBox(
+                                constraints: const BoxConstraints(maxHeight: 1.0),
+                                child: DropdownButton<String>(
+                                  
+                                  isExpanded: true,
+                                    icon: Icon(
+                                      Icons.arrow_drop_down_circle,
+                                      size: 20,
+                                    ),
+                                   
+                                    value: Formulaname,
+                                    items: Formula!
+                                        .map((sex) => DropdownMenuItem<String>(
+                                          
+                                            value: sex,
+                                            child:   SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                                              child: Text(
+                                                sex,
+                                                style: TextStyle(
+                                                  // overflow: TextOverflow.ellipsis,
+                                                  fontSize: 14,
+                                                  fontFamily: 'Montserrat',
+                                                  color:
+                                                      Color.fromARGB(255, 25, 25, 25),
+                                                ),
+                                              ),
+                                            )))
+                                        .toList(),
+                                    onChanged: (sex) {
+                                      setState(() {
+                                        Formulaname = sex!;
+                                      });
+                                      getjaon_summary_age_information();
+                                      // _createSampleData();
+                                      // _generateData();
+                                    }),
+                              ),
+                        ),
                       ),
                     ),
                   ),
@@ -1376,7 +1213,7 @@ class _SummaryState extends State<Summary> {
                 Center(
                     child: Container(
                   height: 40,
-                  width: screenW * 0.28,
+                  width: screenW * 0.40,
                   margin: EdgeInsets.only(left: 10),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
@@ -1426,6 +1263,7 @@ class _SummaryState extends State<Summary> {
                                         child: Text(
                                           type['name'],
                                           style: TextStyle(
+                                              overflow: TextOverflow.ellipsis,
                                             fontSize: 14,
                                             fontFamily: 'Montserrat',
                                             color:
@@ -1452,40 +1290,7 @@ class _SummaryState extends State<Summary> {
                     ),
                   ),
                 )),
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.blueAccent,
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            // stops: [0.3, 1],
-                            colors: [
-                              Color.fromARGB(255, 160, 193, 238),
-                              Color.fromARGB(255, 94, 157, 228)
-                            ])),
-                    height: 40,
-                    width: screenW * 0.25,
-                    margin: EdgeInsets.only(left: 10),
-                    child: TextButton(
-                      onPressed: () {
-                        saveExcelAgeinformation(result1, 'Agelnformation');
-                      },
-                      child: Text(
-                        'Download',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      // style: ElevatedButton.styleFrom(
-                      //     primary: Color(0xff44bca3),
-                      //     shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(20))),
-                    ),
-                  ),
-                ),
+                
               ],
             ),
           ),

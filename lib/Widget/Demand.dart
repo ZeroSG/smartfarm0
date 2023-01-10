@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'BarMmodel.dart';
+
 import 'downloadExcel/download.dart';
 
 class Demand extends StatefulWidget {
@@ -45,7 +45,7 @@ class _DemandState extends State<Demand> {
                   .toList(),
             })
         .toList();
-    // print(nowresult1_23);
+
     return nowresult1_23;
   }
 
@@ -68,7 +68,7 @@ class _DemandState extends State<Demand> {
 
   List<Color> C = [
     Colors.orange,
-    Colors.red,
+    Color.fromARGB(255, 255, 0, 128),
     Colors.blue,
     Colors.green,
     Colors.deepPurple,
@@ -94,7 +94,7 @@ class _DemandState extends State<Demand> {
     Color.fromARGB(255, 0, 255, 195),
     Color.fromARGB(255, 195, 255, 0),
     Color.fromARGB(255, 255, 208, 0),
-    Color.fromARGB(255, 255, 0, 13),
+    Color.fromARGB(255, 160, 50, 55),
     Color.fromARGB(255, 0, 63, 164),
     Color.fromARGB(255, 0, 0, 0),
     Color.fromARGB(255, 254, 72, 0),
@@ -118,7 +118,9 @@ class _DemandState extends State<Demand> {
   List<dynamic> now1 = [];
   List<dynamic> now2 = [];
   Future<void> getjaon1_demand_information() async {
+
     try {
+      loading1 = true;
       var urlsum1 =
           Uri.https("smartfarmpro.com", "/v1/api/setting/setting-farm");
       var ressum1 = await http.post(urlsum1,
@@ -171,7 +173,7 @@ class _DemandState extends State<Demand> {
             List uniquelist = nowresult1_1
                 .where((student) => seen.add(student['c_order']))
                 .toList();
-            // print('c_order===> $uniquelist');
+      
 
             setState(() {
               uniquelist1 = uniquelist;
@@ -197,7 +199,7 @@ class _DemandState extends State<Demand> {
               loading1 = false;
             });
           } else {
-            // print("ddddd $result1_2",);
+          
             var seen = Set<String>();
             List uniquelist = nowresult1_1
                 .where((student) => seen.add(student['c_order']))
@@ -236,10 +238,9 @@ class _DemandState extends State<Demand> {
 
               double D = 0.0, D1 = 0;
               int S = 0, S1 = 0;
-              //  _products1[0]["Numder"] += nowresult1_1[0]["n_refill"].split(' ').first.replaceAll(',', '');
-              //  _products1[0]["Numder"] += nowresult1_1[1]["n_refill"].split(' ').first.replaceAll(',', '');
+
               if (nowresult1_21[0]['n_tow'] == 1) {
-                // print('====A ${_products1}');
+         
                 for (int j = 0; j < _products1.length; j++) {
                   for (int i = S; i < nowresult1_1.length; i++) {
                     if ((_products1[j]["Numder"] <
@@ -261,22 +262,12 @@ class _DemandState extends State<Demand> {
                   D = double.parse('${_products1[j]["List"].length}');
                   S += D.toInt();
                 }
-                //  print(S);
-
-                //  List<dynamic> nowresult1_22 = _products1
-                //   .map((e) => {
-                //         'Numder': _products1.where((x) =>( x['Numder']) == (nowresult1_21[0]['n_weight']*nowresult1_21[0]['n_box'])).first["Numder"]??null,
-                //         'List': _products1.where((x) =>( x['Numder']) == (nowresult1_21[0]['n_weight']*nowresult1_21[0]['n_box'])).first["List"]??null,
-                //       })
-                //   .toList();
-                // print('====${ nowresult1_22[3]}');
-
-                // List<dynamic>   nowresult3_42_ = _products1.where((x) =>( x['Numder'])== (nowresult1_21[0]['n_weight']*nowresult1_21[0]['n_box'])).toList();
+               
                 List<dynamic> nowresult3_42_ =
                     _products1.where((x) => (x['Numder']) != 0).toList();
                 now1 = nowresult3_42_;
               }
-              // print('====A ${_products1.length}');
+      
               if (nowresult1_21[0]['n_tow'] == 2) {
                 for (int j = 0; j < _products1.length; j++) {
                   for (int i = S; i < nowresult1_1.length; i++) {
@@ -288,7 +279,7 @@ class _DemandState extends State<Demand> {
                                     '${nowresult1_1[i]["n_refill"].split(' ').first.replaceAll(',', '')}')) <=
                             (nowresult1_21[0]['n_weight'] *
                                 nowresult1_21[0]['n_box']))) {
-                      //  print('====A ${nowresult1_1[j]['c_house']}');
+                      
                       _products1[j]["List"] += [nowresult1_1[i]];
                       //       _products1[j]["List"] =nowresult1_1.map((e) => {
                       //  'c_order' : nowresult1_1.where((element) => element['c_order'].toString().compareTo(e['c_order'].toString()) == 0).first['c_order']?? null,
@@ -317,42 +308,29 @@ class _DemandState extends State<Demand> {
                 _products2 = List.generate(nowresult3_42_.length, (i) {
                   return {"Numder": 0, 'List': []};
                 });
-//  print('====${nowresult3_42_.length}');
+
 
                 for (int j = 0; j < _products2.length; j++) {
                   for (int i = S1; i < nowresult3_42_.length; i++) {
                     if ((_products2[j]["Numder"] <((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow'])) &&
                         ((_products2[j]["Numder"] +nowresult3_42_[i]['Numder']) <=((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow']))) {
-                      //  print('====${ _products2}');
+                   
                       _products2[j]["List"] += [nowresult3_42_[i]];
                       _products2[j]["Numder"] += nowresult3_42_[i]['Numder'];
-                      // _products1[0]["List"] += nowresult1_1[i]['n_refill'].split(' ').first.replaceAll(',', '');
+            
                     }
                   }
                   D1 = double.parse('${_products2[j]["List"].length}');
                   S1 += D1.toInt();
                 }
-                print('====${((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow'])}');
+           
 
                 List<dynamic> nowresult3_42_1 =
                     _products2.where((x) => ((x['Numder']) != 0)).toList();
 
-                print('====${nowresult3_42_1}');
+
                 now2 = nowresult3_42_1;
-                //  print('====${now2[0]['List'].length}');
-                //   print('====${now2[0]['List']}');
-                //  List<dynamic>   nowresult1_23 = _products1[0]["List"].map((e) => {
-                //        'c_order' : e['c_order'],
-                //        'c_formula' : e['c_formula'],
-                //        'house': _products1[0]["List"].where((element) => element['c_order'].toString().compareTo(e['c_order'].toString()) == 0).toList(),
-
-                //       }).toList();
-
-                //    print('====0${ nowresult1_23[0]}');
-                //    print('====1${ nowresult1_23[1]}');
-                //    if(nowresult1_23[0]=nowresult1_23[1]){
-
-                //    }
+        
               }
 
               loading1 = false;
@@ -374,6 +352,24 @@ class _DemandState extends State<Demand> {
     // TODO: implement initState
     super.initState();
     getjaon1_demand_information();
+    if(int.parse(M) >0&&int.parse(M) <10){
+        setState(() {
+          M = '0$M';
+        });
+    }
+
+     if (int.parse(Y) > 0 && int.parse(Y) < 10) {
+                                    Y = '000$Y';
+                                  }
+                                  if (int.parse(Y) >= 10 && int.parse(Y) < 100) {
+                                    Y = '00$Y';
+                                  }
+                                  if (int.parse(Y) >= 100 && int.parse(Y) < 1000) {
+                                    Y = '0$Y';
+                                  }
+                                  if (int.parse(Y) >= 1000) {
+                                    Y = '$Y';
+                                  }
     // _createSampleData();
   }
 
@@ -808,7 +804,7 @@ class _DemandState extends State<Demand> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             fontFamily: 'Montserrat',
-                                            color: C[index1]),
+                                            color: nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): C[index1]),
                                       ),
                                       Text(
                                         "${nowresult12_1[index]['house'][index1]['c_silo'] ?? ''}",
@@ -827,7 +823,7 @@ class _DemandState extends State<Demand> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                         fontFamily: 'Montserrat',
-                                        color: C[index1]),
+                                        color:nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):  C[index1]),
                                   ),
                                   Column(
                                     children: [
@@ -836,7 +832,7 @@ class _DemandState extends State<Demand> {
                                         style: new TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
-                                            color: C[index1]),
+                                            color: nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): C[index1]),
                                       ),
                                       Text(
                                         'Filling Date:${nowresult12_1[index]['house'][index1]['d_gdate']}',
@@ -894,7 +890,7 @@ class _DemandState extends State<Demand> {
                                   image: AssetImage(
                                     'images/sacks3.png',
                                   ),
-                                  width: 280,
+                                  width: 240,
                                   //  width: screenW*0.7,
                                   height: 170,
                                   fit: BoxFit.fill,
@@ -911,7 +907,7 @@ class _DemandState extends State<Demand> {
                             margin: EdgeInsets.only(right: 5),
                             width: 15,
                             height: 15,
-                            color: Colors.red,
+                            color: Color.fromARGB(255, 255, 0, 0),
                           ),
                           Container(
                             margin: EdgeInsets.only(right: 10),
@@ -942,7 +938,7 @@ class _DemandState extends State<Demand> {
               itemCount: now1.length,
               itemBuilder: (BuildContext context, int index) {
                 nowresult1_233(now1[index]["List"]);
-                // print(nowresult1_23);
+
                 return Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -1021,7 +1017,7 @@ class _DemandState extends State<Demand> {
                                                               fontSize: 15,
                                                               fontFamily:
                                                                   'Montserrat',
-                                                              color: index0 == 0
+                                                              color:nowresult1_23[index0]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): index0 == 0
                                                                   ? C[index1]
                                                                   : C[index1 +
                                                                       int.parse(
@@ -1053,7 +1049,7 @@ class _DemandState extends State<Demand> {
                                                           fontSize: 15,
                                                           fontFamily:
                                                               'Montserrat',
-                                                          color: index0 == 0
+                                                          color: nowresult1_23[index0]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): index0 == 0
                                                               ? C[index1]
                                                               : C[index1 +
                                                                   int.parse(
@@ -1068,7 +1064,7 @@ class _DemandState extends State<Demand> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              color: index0 == 0
+                                                              color:nowresult1_23[index0]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):  index0 == 0
                                                                   ? C[index1]
                                                                   : C[index1 +
                                                                       int.parse(
@@ -1237,7 +1233,7 @@ class _DemandState extends State<Demand> {
                               margin: EdgeInsets.only(right: 5),
                               width: 15,
                               height: 15,
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 255, 0, 0),
                             ),
                             Container(
                               margin: EdgeInsets.only(right: 10),
@@ -1364,7 +1360,7 @@ class _DemandState extends State<Demand> {
                                                                         fontWeight: FontWeight.bold,
                                                                         fontSize: 15,
                                                                         fontFamily: 'Montserrat',
-                                                                        color: index1 != 0
+                                                                        color: nowresult1_23[index0]['house'][index2]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):index1 != 0
                                                                             ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
                                                                             : index0 == 0
                                                                                 ? C[index2]
@@ -1396,7 +1392,7 @@ class _DemandState extends State<Demand> {
                                                                     fontWeight: FontWeight.bold,
                                                                     fontSize: 15,
                                                                     fontFamily: 'Montserrat',
-                                                                    color: index1 != 0
+                                                                    color:  nowresult1_23[index0]['house'][index2]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):index1 != 0
                                                                         ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
                                                                         : index0 == 0
                                                                             ? C[index2]
@@ -1409,7 +1405,7 @@ class _DemandState extends State<Demand> {
                                                                     style: new TextStyle(
                                                                         fontSize: 15.0,
                                                                         fontWeight: FontWeight.bold,
-                                                                        color: index1 != 0
+                                                                        color:  nowresult1_23[index0]['house'][index2]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):index1 != 0
                                                                             ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
                                                                             : index0 == 0
                                                                                 ? C[index2]
@@ -1487,7 +1483,7 @@ class _DemandState extends State<Demand> {
                                 margin: EdgeInsets.only(right: 5),
                                 width: 15,
                                 height: 15,
-                                color: Colors.red,
+                                color: Color.fromARGB(255, 255, 0, 0),
                               ),
                               Container(
                                 margin: EdgeInsets.only(right: 10),
@@ -1805,6 +1801,7 @@ class _DemandState extends State<Demand> {
         .map((e) => {
               for (int i = 0; i < now1[index]['List'].length; i++) 'int': '$i',
               'c_order': e['c_order'],
+               'c_house' :e['c_house'],
               'n_refill':
                   int.parse(e['n_refill'].split(' ').first.replaceAll(',', '')),
               'diff': e['diff'],
@@ -1825,6 +1822,14 @@ class _DemandState extends State<Demand> {
           nowresult1_22[i]['color'] = color[i]['color'];
         }
       }
+    }
+
+
+    for(int i = 0;i<nowresult1_22.length;i++){
+      if(nowresult1_22[i]['c_house']== null){
+        nowresult1_22[i]['color'] = Color.fromARGB(255, 255, 0, 0);
+      }
+
     }
     return [
       charts.Series<dynamic, String>(
@@ -1855,6 +1860,7 @@ class _DemandState extends State<Demand> {
         .map((e) => {
               for (int i = 0; i < now2[index]['List'][A]['List'].length; i++)
                 'int': '$i',
+                'c_house' :e['c_house'],
               'id': color
                       .where((element) =>
                           element['c_house']
@@ -1884,6 +1890,13 @@ class _DemandState extends State<Demand> {
           nowresult1_22[i]['color'] = color[i]['color'];
         }
       }
+    }
+    
+    for(int i = 0;i<nowresult1_22.length;i++){
+      if(nowresult1_22[i]['c_house']== null){
+        nowresult1_22[i]['color'] = Color.fromARGB(255, 255, 0, 0);
+      }
+
     }
 
     return [

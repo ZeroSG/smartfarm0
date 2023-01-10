@@ -11,6 +11,7 @@ import 'package:icofont_flutter/icofont_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../API_E_B/API_B.dart';
+import '../shared_preferences/shared_preferences.dart';
 
 class standard extends StatefulWidget {
   String? Token;
@@ -25,6 +26,10 @@ class standard extends StatefulWidget {
 class _standardState extends State<standard> {
   late double screenW, screenH;
   File? file;
+  Usersharedpreferences _p =Usersharedpreferences();
+
+   late  List<String>? Formula10 = [];
+   late String Formulaname10;
  late List<dynamic>? Formula  = widget.default_formula;
   late String Formulaname = widget.default_formula![0]['name'];
 
@@ -49,7 +54,7 @@ late List<dynamic> _fileList =[];
         String namef = file2.split('/').last;
          
     File  file1 = File(file2);
-    //  print(file1.extension);
+
       var bytes = file1.readAsBytesSync();
       var excel = Excel.decodeBytes(bytes,);
     
@@ -59,7 +64,7 @@ late List<dynamic> _fileList =[];
         filename = namef;
         file = file1;
       });
-  //     //  print(selectedExcel["Sheet1"].sheetName);
+
       Sheet sheet = selectedExcel["Sheet1"];
       
        for (var table in excel.tables.keys) {
@@ -86,7 +91,7 @@ late List<dynamic> _fileList =[];
 
         }
       }
-     print("_fileList ${_fileList}");
+
     } else {
     }
   }
@@ -106,13 +111,15 @@ late List<dynamic> _fileList =[];
           },
           body: jsonEncode(<String, dynamic>{
   "Farm": widget.farmnum,
-  "Formula": Formulaname
+  "Formula": Formulaname10
 }));
       if (ressum.statusCode == 200) {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
         
        setState(() {
-         print("standard ==> $result1_1",);
+
+                      // Formula10 =  _p.getformula();
+                      //  Formulaname10 = Formula10![0];
         //   //print("${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",);
          nowresult1_1 = result1_1;
          loading1 = false;
@@ -131,10 +138,21 @@ late List<dynamic> _fileList =[];
   void initState() {
     // TODO: implement initState
     super.initState();
+    // String? email = _p.getUserEmail();
+      // late  List<String>? Formula10 =_p.getformula();
+
+ 
+    Formulaname10 = '';
+    Formula10 =  _p.getformula();
+    Formulaname10 = Formula10![0];
+
     if(widget.default_formula != null){
        getjaon1_setting_formula();
     }
     else{
+       loading1 = true;
+            Formulaname = '';
+             Formula = [''];  
       loading1 = false;
     }
 
@@ -568,7 +586,7 @@ late List<dynamic> _fileList =[];
                       child: Padding(
                          padding: EdgeInsets.only(left: 10, right: 10),
                         child: DropdownButtonHideUnderline(
-                                    child: widget.default_formula == null || Formula == null || Formula == [] ? DropdownButton<String>(
+                                    child: widget.default_formula == null ||Formulaname == '' ? DropdownButton<String>(
                                          icon: Icon(
                               Icons.arrow_drop_down_circle,
                               size: 20,
@@ -596,12 +614,12 @@ late List<dynamic> _fileList =[];
                               Icons.arrow_drop_down_circle,
                               size: 20,
                             ),
-                          value: Formulaname,
-                          items:  Formula!
+                          value: Formulaname10,
+                          items:  Formula10!
                               .map((Formula) => DropdownMenuItem<String>(
-                                  value: Formula['name'],
+                                  value: Formula,
                                   child: Text(
-                                    Formula['name'],
+                                    Formula,
                                     style: TextStyle(
                                       fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -612,7 +630,7 @@ late List<dynamic> _fileList =[];
                           onChanged: (Formula) {
                            setState(() {
                                 
-                                      Formulaname = Formula!;
+                                      Formulaname10 = Formula!;
                                      getjaon1_setting_formula();
                                     });
                           }),
@@ -635,28 +653,55 @@ late List<dynamic> _fileList =[];
                             height: 40,
                             width: 40,
                             child: IconButton(
-                              onPressed: () {
-                                if(Formula!.length > 1) {    
-                                print('=======1=========');
-                             print(widget.Token);
-                             print(widget.farmnum);
-                             print(Formulaname);
-                                // API_button_delete_standard(widget.Token,widget.farmnum,Formulaname);
+                              onPressed: () async {
+                                if(Formula10!.length > 1) {    
+                            //     print('=======1=========');
+                            //  print(widget.Token);
+                            //  print(widget.farmnum);
+                            //  print(Formulaname);
+                                API_button_delete_standard(widget.Token,widget.farmnum,Formulaname10);
 
 
                                    late  List<dynamic> Formula0 = [];
                             
                              for(int i = 0;i<Formula!.length;i++){
-                               if(Formula![i]['name'] !=Formulaname){
+                               if(Formula![i]['name'] !=Formulaname10){
                                   Formula0 += [Formula![i]];
                                }
                              }
                               Formulaname = Formula0[0]['name'];
                              Formula = Formula0;
-                             print('3   $Formula'); 
-                           
-                              getjaon1_setting_formula();
+                     
+                              
+                              
+                              late List<String> formula = [];
+              for(int i =0;i<Formula!.length;i++) {
+   
+     
+                formula += [Formula![i]['name']];
+      
+          }
+                           await  _p.setListdefault_formula(formula);
+                           Formula10 =  formula;
+                           Formulaname10 = Formula10![0];
+                           getjaon1_setting_formula();
                             }
+                          
+
+                              else if(Formula10!.length == 1) {
+                                   API_button_delete_standard(widget.Token,widget.farmnum,Formulaname10);
+                                   Formulaname = '';
+                             Formula = [''];  
+                              late List<String> formula = [''];
+                   
+                            
+                           await  _p.setListdefault_formula(formula);
+                               Formula10 =  [''];
+                               Formulaname10 = '';
+                             
+                            getjaon1_setting_formula();
+                               }
+                        
                               },
                               icon: Icon(IcoFontIcons.uiDelete,
                                 color: Color.fromARGB(255, 242, 3, 3),

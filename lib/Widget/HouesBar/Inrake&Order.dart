@@ -9,12 +9,13 @@ import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:smartfarm2/drawer.dart';
 import 'dart:math';
 
-import '../../drawer.dart';
+// import '../../drawer.dart';
 import '../API_E_B/API_B.dart';
 import '../API_E_B/API_E.dart';
-import '../BarMmodel.dart';
+
 import 'package:intl/intl.dart';
 
 import '../downloadExcel/download.dart';
@@ -219,11 +220,12 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   late bool Crop1;
   late int Crop2;
 
-  late var percent1, upper_percent1, lower_percent1;
-  late var percent2, upper_percent2, lower_percent2;
+  late var sum1, percent1, upper_percent1, lower_percent1;
+  late var sum2, percent2, upper_percent2, lower_percent2;
   var silo1;
   var silo2;
   Future<void> getjaon1_house_information() async {
+
     try {
       loading1 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/house-info");
@@ -266,12 +268,33 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             silo2 = n_silo2;
             sFeed1 = result1_1[0]['c_formula'];
             sFeed2 = result1_1[1]['c_formula'];
+              if(widget.Feed !=null){
+                  if(sFeed1 == ''){
+               if(sFeed1 != widget.Feed![0]['name']){
+              sFeed1 = 'Default';
+            }else{
+           
+            }
+            }
+              if(sFeed2 == ''){
+               if(sFeed2 != widget.Feed![0]['name']){
+              sFeed2 = 'Default';
+            }else{
+           
+            }
+            }
+              }
+
+          
+
             upper_percent1 = result1_1[0]['n_upper_percent'];
             lower_percent1 = result1_1[0]['n_lower_percent'];
             percent1 = (remain1 / capacity1) * 100;
+            sum1 =remain1;
             upper_percent2 = result1_1[1]['n_upper_percent'];
             lower_percent2 = result1_1[1]['n_lower_percent'];
             percent2 = (remain2 / capacity2) * 100;
+            sum2 = remain2;
                if(result1_2 != null ){
             splitted = namef1!.split("-");
          }
@@ -292,12 +315,43 @@ class _Inrake_OrderState extends State<Inrake_Order> {
           var capacity1 = result1_1[0]['n_capacity'];
           var remain1 = result1_1[0]['n_remain'];
           // //print("ressum211 => ${result1_1}");
+          
           setState(() {
             silo1 = n_silo1;
             sFeed1 = result1_1[0]['c_formula'];
+ 
+            
+                if(widget.Feed !=null){
+                  if(sFeed1 == ''){
+               if(sFeed1 != widget.Feed![0]['name']){
+              sFeed1 = 'Default';
+            }else{
+           
+            }
+            }
+          
+              // if(widget.Feed!.length>0){
+          // for(int i = 0;i<widget.Feed!.length;i++){
+          //  if(sFeed1 == widget.Feed![i]['name']){
+          //     sFeed1 = 'Default';
+          //   }
+          //   else{
+          //      sFeed1 = result1_1[0]['c_formula'];
+          //     break;
+          //   }
+          //   }
+              // }
+
+            }
+           
+            // if(sFeed1 == widget.Feed![num]['name']){
+            //   sFeed1 = 'Default';
+            // }
+            
             upper_percent1 = result1_1[0]['n_upper_percent'];
             lower_percent1 = result1_1[0]['n_lower_percent'];
             percent1 = (remain1 / capacity1) * 100;
+            sum1 = remain1;
               if(result1_2 != null ){
             splitted = namef1!.split("-");
          }
@@ -358,7 +412,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               DateTime? dateTime1_ = DateTime.now();
               var newDate = new DateTime(
                   dateTime1_.year, dateTime1_.month - 8, dateTime1_.day - 10);
-              // print('nowresult2_1 ${nowresult2_1}');
+
               List<dynamic> _products1 = [];
               for (int i = 0; i < nowresult2_1.length; i++) {
                 var splitted = nowresult2_1[i]
@@ -366,10 +420,10 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     .split('(')
                     .first;
                 var splitted1 = splitted.split('-');
-                //  print('_products2 20${splitted1[2]}');
+      
                 if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                   _products1 += [nowresult2_1[i]];
-                  //  print('_products2 ${splitted1[2]}');
+      
                 }
                 if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                     (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -380,8 +434,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   _products1 += [nowresult2_1[i]];
                 }
               }
-              print('_products1 ${_products1}');
-              //  if(nowresult2_1)
+        
               List<dynamic> _products2 = [];
               for (int i = 0; i < nowresult2_2.length; i++) {
                 var splitted = nowresult2_2[i]
@@ -389,7 +442,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     .split('(')
                     .first;
                 var splitted1 = splitted.split('-');
-                //  print('_products2 ${splitted1[0]}');
+
                 if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                   _products2 += [nowresult2_2[i]];
                 }
@@ -402,7 +455,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   _products2 += [nowresult2_2[i]];
                 }
               }
-              print('_products2 ${_products2}');
+
 
               setState(() {
                 nowresult2_1 = _products1;
@@ -438,7 +491,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               DateTime? dateTime1_ = DateTime.now();
               var newDate = new DateTime(
                   dateTime1_.year, dateTime1_.month - 8, dateTime1_.day - 10);
-              // print('nowresult2_1 ${nowresult2_1}');
+  
               List<dynamic> _products1 = [];
               for (int i = 0; i < nowresult2_1.length; i++) {
                 var splitted = nowresult2_1[i]
@@ -446,10 +499,10 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     .split('(')
                     .first;
                 var splitted1 = splitted.split('-');
-                //  print('_products2 20${splitted1[2]}');
+
                 if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                   _products1 += [nowresult2_1[i]];
-                  //  print('_products2 ${splitted1[2]}');
+               
                 }
                 if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                     (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -460,7 +513,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   _products1 += [nowresult2_1[i]];
                 }
               }
-              print('_products1 ${_products1}');
+
 
               setState(() {
                 nowresult2_1 = _products1;
@@ -525,7 +578,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             DateTime? dateTime1_ = DateTime.now();
             var newDate = new DateTime(
                 dateTime1_.year, dateTime1_.month - 8, dateTime1_.day - 10);
-            // print('nowresult2_1 ${nowresult2_1}');
+     
             List<dynamic> _products1 = [];
             for (int i = 0; i < nowresult3.length; i++) {
               var splitted = nowresult3[i]['${nowresult3[i].keys.elementAt(0)}']
@@ -533,10 +586,10 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   .split('(')
                   .first;
               var splitted1 = splitted.split('-');
-              //  print('_products2 20${splitted1[2]}');
+        
               if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                 _products1 += [nowresult3[i]];
-                //  print('_products2 ${splitted1[2]}');
+           
               }
               if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                   (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -547,7 +600,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                 _products1 += [nowresult3[i]];
               }
             }
-            print('_products1 ${_products1}');
+      
 
             setState(() {
               nowresult3 = _products1;
@@ -566,7 +619,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.cropnum2);
+
     if (widget.cropnum2 != null) {
       getjaon1_house_information();
       getjaon2_house_compare();
@@ -742,7 +795,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         items: widget.Feed!
                                             .map((Feed1) =>
                                                 DropdownMenuItem<String>(
-                                                    value: Feed1["code"],
+                                                    value: Feed1["name"],
                                                     child: Text(
                                                       Feed1["name"],
                                                       style: TextStyle(
@@ -817,7 +870,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       ? Row(
                           children: [
                             Container(
-                              width: screenW * 0.45,
+                              width: screenW * 0.47,
                               height: 170,
                               child: Column(
                                 children: [
@@ -849,7 +902,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                               items: widget.Feed!
                                                   .map((Feed1) =>
                                                       DropdownMenuItem<String>(
-                                                          value: Feed1["code"],
+                                                          value: Feed1["name"],
                                                           child: Text(
                                                             Feed1["name"],
                                                             style: TextStyle(
@@ -892,7 +945,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '${(percent1 * 100).toStringAsFixed(2)}kg.',
+                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg.',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -954,7 +1007,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                               items: widget.Feed!
                                                   .map((Feed1) =>
                                                       DropdownMenuItem<String>(
-                                                          value: Feed1["code"],
+                                                          value: Feed1["name"],
                                                           child: Text(
                                                             Feed1["name"],
                                                             style: TextStyle(
@@ -976,12 +1029,10 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                     i++) {
                                                   if (widget.Feed![i]['name'] ==
                                                       Feed1) {
-                                                    print(widget.farmnum);
-                                                    print(widget.num);
-                                                    print(silo1);
+                                            
                                                     String? F =
                                                         widget.Feed![i]['code'];
-                                                    print(F);
+                                            
 
                                                     API_edit_house_silo(
                                                         widget.Token,
@@ -1020,7 +1071,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${(percent1 * 100).toStringAsFixed(2)}kg.',
+                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg.',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1082,7 +1133,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                               items: widget.Feed!
                                                   .map((Feed2) =>
                                                       DropdownMenuItem<String>(
-                                                          value: Feed2["code"],
+                                                          value: Feed2["name"],
                                                           child: Text(
                                                             Feed2["name"],
                                                             style: TextStyle(
@@ -1143,7 +1194,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${(percent2 * 100).toStringAsFixed(2)}kg.',
+                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg.',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1998,7 +2049,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                           color = Colors.red;
                           Crop1 = true;
                           Crop2 = 0;
-                          print(Crop2);
+            
                         });
                       } else if (Crop2 == 0) {
                         setState(() {
@@ -2006,7 +2057,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                           color = Colors.green;
                           Crop1 = false;
                           Crop2 = 1;
-                          print(Crop2);
+                   
                         });
                       }
                     }),
@@ -3301,7 +3352,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                       setState(() {
                                         numamount2 = widget.samount1![i]['id'];
                                         samount2 = samount22!;
-                                        // print(numamount2);
+                                  
                                         if (samount22.contains('ต่อตัว')) {
                                           kg2 = 'gram/ea.';
                                         }
@@ -3407,7 +3458,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
     }
 
     double? Number;
-    print(nowresult2_1.length);
+    
     if (nowresult2_1.length < 30) {
       Number = nowresult2_1.length / 11;
     }
@@ -3419,7 +3470,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
     }
     String Number1 = Number!.toStringAsFixed(0);
     int Number2 = int.parse('$Number1');
-    print(Number2);
+   
     return Container(
       margin: EdgeInsets.only(top: 10),
       height: screenH * 0.57,
@@ -3491,9 +3542,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               eventTrigger: charts.SelectionTrigger.pressHold),
           new charts.PanAndZoomBehavior(),
           new charts.SeriesLegend(
-            cellPadding: EdgeInsets.symmetric(horizontal: n),
+            cellPadding: EdgeInsets.symmetric(horizontal: screenW * 0.065),
             position: charts.BehaviorPosition.bottom,
-            desiredMaxColumns: sC,
+            desiredMaxColumns: 2,
             entryTextStyle: charts.TextStyleSpec(
                 color: charts.MaterialPalette.black,
                 fontFamily: 'Montserrat',
@@ -3847,7 +3898,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
 
   charts.BarChart BarChart5() {
     double? Number;
-    print(nowresult3.length);
+
     if (nowresult3.length < 100) {
       Number = nowresult3.length / 15;
     }
@@ -3856,7 +3907,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
     }
     String Number1 = Number!.toStringAsFixed(0);
     int Number2 = int.parse('$Number1');
-    print(Number2);
+
     return charts.BarChart(
       _createSampleDataBar(),
       animate: false,

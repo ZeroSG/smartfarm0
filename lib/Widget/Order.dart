@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'API_E_B/API_B.dart';
 import 'API_E_B/API_E.dart';
 import 'downloadExcel/download.dart';
+import 'shared_preferences/shared_preferences.dart';
 
 class Order extends StatefulWidget {
   String? Token;
@@ -50,10 +52,11 @@ class _OrderState extends State<Order> {
   late TextEditingController Number2 = TextEditingController();
   late TextEditingController Remark2 = TextEditingController();
   late TextEditingController Order_Ref = TextEditingController();
+   
 
-  late List<dynamic>? Name_Crop = widget.cmiid;
-  late String? Name_Cropname = widget.cmiid![0];
-  late String? Name_Cropnameedit = widget.cmiid![0];
+ Usersharedpreferences _p =  Usersharedpreferences();
+   late List<String>? Name_Crop =[];
+  late String? Name_Cropname;
   late List<dynamic>? Ship_Condition = widget.default_ship;
   late String? Ship_Conditionname = widget.default_ship![0]['code'];
   late String? Ship_Conditionnameedit = widget.default_ship![0]['code'];
@@ -86,8 +89,9 @@ class _OrderState extends State<Order> {
           nowresultFeed = result1_1;
           Feed_Formula = nowresultFeed;
           Feed_Formulaname = nowresultFeed[0]["FEED"];
-
+  
           loading0 = false;
+          
         });
       } else {
         throw Exception('Failed to download');
@@ -117,10 +121,7 @@ class _OrderState extends State<Order> {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
 
         setState(() {
-          print(
-            "${result1_1.length}",
-          );
-          //   //print("${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",);
+
           nowresult1_1 = result1_1;
           loading1 = false;
           Number1.text = '0';
@@ -164,9 +165,11 @@ class _OrderState extends State<Order> {
             //  if(nowresult1_1[i]['n_confirm']==2&&nowresult1_1[i]['c_flag_api']=='N'){
             //   Col![i]['color'] = Color.fromARGB(255, 83, 83, 83);
             //  }
-
+          
           }
-          // print('$Col');
+          Name_Crop = _p.getListNameCrop();
+          Name_Cropname = Name_Crop![0];
+
         });
       } else {
         throw Exception('Failed to download');
@@ -195,7 +198,9 @@ class _OrderState extends State<Order> {
     super.initState();
     getFeed();
     getjaon1_order_information();
+    
 
+    
     // _createSampleData();
   }
 
@@ -350,27 +355,27 @@ class _OrderState extends State<Order> {
                 if (by == true) {
                   Navigator.pop(context);
                 } else {
-                  print('=======1=========');
-                  print(widget.Token);
-                  print(widget.farmnum);
-                  print(Order_Ref.text);
-                  print("$Start");
-                  print('$End');
-                              //      API_edit_order_edit(widget.Token,widget.farmnum,Order_Ref.text,"$Start",'$End',
-                //  nowresult1_1[index]['c_name_crop'],Ship_Conditionnameedit,Feed_Formulanameedit,int.parse(Number2.text),Unitnameedit,Remark2.text,widget.id);
+                  // print('=======1=========');
+                  // print(widget.Token);
+                  // print(widget.farmnum);
+                  // print(Order_Ref.text);
+                  // print("$Start");
+                  // print('$End');
+                                   API_edit_order_edit(widget.Token,widget.farmnum,Order_Ref.text,"$Start",'$End',
+                 nowresult1_1[index]['c_name_crop'],Ship_Conditionnameedit,Feed_Formulanameedit,int.parse(Number2.text),Unitnameedit,Remark2.text,widget.id);
                 getjaon1_order_information();
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 }
-                print('=======2=========');
+                // print('=======2=========');
 
-                print(nowresult1_1[index]['c_name_crop']);
-                print(Ship_Conditionnameedit);
-                print(Feed_Formulanameedit);
-                print(Number2.text);
+                // print(nowresult1_1[index]['c_name_crop']);
+                // print(Ship_Conditionnameedit);
+                // print(Feed_Formulanameedit);
+                // print(Number2.text);
 
-                print(Unitnameedit);
-                print(Remark2.text);
-                print(widget.id);
+                // print(Unitnameedit);
+                // print(Remark2.text);
+                // print(widget.id);
 
     
               },
@@ -636,12 +641,9 @@ class _OrderState extends State<Order> {
                             ],
                           )
                         : DropdownButtonHideUnderline(
-                            child: widget.default_ship == null
+                            child: widget.default_ship == null || Ship_Condition == null
                                 ? DropdownButton<String>(
-                                    icon: Icon(
-                                      Icons.arrow_drop_down_circle,
-                                      size: 20,
-                                    ),
+                                    
                                     value: Noname,
                                     items: NoList!
                                         .map((NoView_by) =>
@@ -730,10 +732,7 @@ class _OrderState extends State<Order> {
                         : DropdownButtonHideUnderline(
                             child: Feed_Formula == null
                                 ? DropdownButton<String>(
-                                    icon: Icon(
-                                      Icons.arrow_drop_down_circle,
-                                      size: 20,
-                                    ),
+                                   
                                     value: Noname,
                                     items: NoList!
                                         .map((NoView_by) =>
@@ -1240,21 +1239,37 @@ class _OrderState extends State<Order> {
             //  width: screenW*0.5,
             child: TextButton(
               onPressed: () {
-                //    print('=======1=========');
-                //  print(widget.Token);
-                //  print(widget.farmnum);
-                //  print("${dateTimeStart!.year}-${dateTimeStart!.month}-${dateTimeStart!.day}");
-                //  print('${dateTimeEnd!.year}-${dateTimeEnd!.month}-${dateTimeEnd!.day}');
+                  //  print('=======1=========');
+                //  print('1=${widget.Token}');
+                //  print('2=${widget.farmnum}');
+                 
+                DateTime? dateTimeStart0 = DateTime.parse("${dateTimeStart!.year.toString().padLeft(4, '0')}-${dateTimeStart!.month.toString().padLeft(2, '0')}-${dateTimeStart!.day.toString().padLeft(2, '0')}");
+                 DateTime? dateTimeEnd0 = DateTime.parse("${dateTimeEnd!.year.toString().padLeft(4, '0')}-${dateTimeEnd!.month.toString().padLeft(2, '0')}-${dateTimeEnd!.day.toString().padLeft(2, '0')}");
+                //        print("3=$dateTimeStart0");
+                //  print('4=$dateTimeEnd0');
                 //    print('=======2=========');
-                //  print(Name_Cropname);
-                //  print(Ship_Conditionname);
-                //  print(Feed_Formulaname);
-                //  print(Number1.text);
-                //  print(Unitname);
-                //  print(Remark1.text);
-                //  print(widget.id);
-                //  API_edit_order_create(widget.Token,widget.farmnum,"${dateTimeStart!.year}-${dateTimeStart!.month}-${dateTimeStart!.day}","${dateTimeEnd!.year}-${dateTimeEnd!.month}-${dateTimeEnd!.day}",
-                // Name_Cropname,Ship_Conditionname,Feed_Formulaname,Number1.text,Unitname,Remark1.text,widget.id);
+                //  print('5=$Name_Cropname');
+                //  print('6=$Ship_Conditionname');
+                //  print('7=$Feed_Formulaname');
+                //  print('8=${Number1.text}');
+                //  print('9=$Unitname');
+                //  print('10=${Remark1.text}');
+                //  print('11=${widget.id}');
+                 API_edit_order_create(widget.Token,widget.farmnum,"$dateTimeStart0","$dateTimeEnd0",
+                Name_Cropname,Ship_Conditionname,Feed_Formulaname,Number1.text,Unitname,Remark1.text,widget.id);
+                 
+
+                 var duration = Duration(seconds:2);
+                            
+                              Navigator.pop(context);
+
+                              
+
+                            route(){
+getjaon1_order_information();
+}
+ Timer(duration, route);
+                
               },
               child: Text(
                 'Save',
@@ -1493,10 +1508,7 @@ class _OrderState extends State<Order> {
                     child: DropdownButtonHideUnderline(
                       child: widget.default_ship == null
                           ? DropdownButton<String>(
-                              icon: Icon(
-                                Icons.arrow_drop_down_circle,
-                                size: 20,
-                              ),
+                            
                               value: Noname,
                               items: NoList!
                                   .map((NoView_by) => DropdownMenuItem<String>(
@@ -1571,10 +1583,7 @@ class _OrderState extends State<Order> {
                     child: DropdownButtonHideUnderline(
                       child: Feed_Formula == null
                           ? DropdownButton<String>(
-                              icon: Icon(
-                                Icons.arrow_drop_down_circle,
-                                size: 20,
-                              ),
+                            
                               value: Noname,
                               items: NoList!
                                   .map((NoView_by) => DropdownMenuItem<String>(
@@ -1654,12 +1663,9 @@ class _OrderState extends State<Order> {
             child: Padding(
               padding: EdgeInsets.only(left: 10, right: 10),
               child: DropdownButtonHideUnderline(
-                child: widget.cmiid == null
+                child: Name_Crop == null
                     ? DropdownButton<String>(
-                        icon: Icon(
-                          Icons.arrow_drop_down_circle,
-                          size: 20,
-                        ),
+                     
                         value: Noname,
                         items: NoList!
                             .map((NoView_by) => DropdownMenuItem<String>(
@@ -1966,7 +1972,7 @@ class _OrderState extends State<Order> {
                               EdgeInsets.only(top: 5, right: 10, bottom: 10),
                           child: TextButton(
                             onPressed: () {
-                              // API_button_order_send(widget.Token,widget.farmnum,widget.id);
+                              API_button_order_send(widget.Token,widget.farmnum,widget.id);
                             },
                             child: Text(
                               'Confirm Order & Send API Now!',
@@ -2004,6 +2010,7 @@ class _OrderState extends State<Order> {
                                       return Container(
                                         color: ColBg![index]['color']!,
                                         child: build1(index),
+                                          // child: Text('index'),
                                       );
                                     }),
                               ],
@@ -2035,7 +2042,7 @@ class _OrderState extends State<Order> {
 
     Start = DateTime.parse('${nowresult1_1[index]['c_preorder']}');
     OOO1 = DateTime.now();
-    OOO2 = DateTime.parse('${OOO1!.year}-${OOO1!.month}-${OOO1!.day}');
+    OOO2 = DateTime.parse('${OOO1!.year.toString().padLeft(4, '0')}-${OOO1!.month.toString().padLeft(2, '0')}-${OOO1!.day.toString().padLeft(2, '0')}');
 
     //  print(object)
     //  if((nowresult1_1[index]['n_confirm'] == 0)&&End!.compareTo(DateTime.now()) < 0){
@@ -2227,7 +2234,21 @@ class _OrderState extends State<Order> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              //       print('${widget.id}');
+              // print('${nowresult1_1[index]['c_order_refer']}');
+              API_button_order_confirm(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
+                 var duration = Duration(seconds:1);
+                            
+                      
+
+                              
+
+                            route(){
+  getjaon1_order_information();
+}
+ Timer(duration, route);
+            },
             icon: Icon(
               Icons.check,
               color: Color.fromARGB(255, 3, 242, 23),
@@ -2235,7 +2256,21 @@ class _OrderState extends State<Order> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              //  print('${widget.id}');
+              // print('${nowresult1_1[index]['c_order_refer']}');
+              API_button_order_cancel(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
+                 var duration = Duration(seconds:1);
+                            
+                     
+
+                              
+
+                            route(){
+  getjaon1_order_information();
+}
+ Timer(duration, route);
+            },
             icon: Icon(
               Icons.close,
               color: Color.fromARGB(255, 242, 3, 3),
@@ -2251,7 +2286,19 @@ class _OrderState extends State<Order> {
         children: [
           IconButton(
             onPressed: () {
-              // DialogOrder1(context,index);
+              //      print('${widget.id}');
+              // print('${nowresult1_1[index]['c_order_refer']}');
+              API_button_order_cancel(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
+                 var duration = Duration(seconds:1);
+                            
+                  
+
+                              
+
+                            route(){
+  getjaon1_order_information();
+}
+ Timer(duration, route);
             },
             icon: Icon(
               Icons.close,
@@ -2268,7 +2315,20 @@ class _OrderState extends State<Order> {
         children: [
           IconButton(
             onPressed: () {
-              // DialogOrder1(context,index);
+              //      print('${widget.id}');
+              // print('${nowresult1_1[index]['c_order_refer']}');
+              API_button_order_confirm(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
+          
+               var duration = Duration(seconds:1);
+                            
+                      
+
+                              
+
+                            route(){
+  getjaon1_order_information();
+}
+ Timer(duration, route);
             },
             icon: Icon(
               Icons.check,

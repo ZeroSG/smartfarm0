@@ -67,7 +67,13 @@ class _LoginState extends State<Login> {
       });
                }
                else{
-                 var Message = jsonDecode(ressum.body)['Message'];
+                  var Message;
+                 if (ressum.statusCode == 500) {
+                           Message = jsonDecode(ressum.body)['Message'];
+                 }
+                  else{
+                    Message = jsonDecode(ressum.body)['message'];
+                  }
                  showDialog(
           barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
           barrierDismissible: false,
@@ -502,7 +508,7 @@ class _LoginState extends State<Login> {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-          print('1');
+        
           getToken(_emailController.text, _password1Controller.text);
           // getToken(_emailController.text,_password1Controller.text);
         },

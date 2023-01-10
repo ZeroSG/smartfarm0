@@ -57,18 +57,15 @@ class _HouseState extends State<House> {
     }
       
    
-          // print('2332$feed');
+  
         if(num==null){
       setState(() {
         num = widget.HOUSE![0]['id'];
         
-        // sHOUSE = widget.HOUSE![0]['name'];
+
       });
     }
-    // setState(() {
-    //   feed = widget.HOUSE![num!]['feed'];
-    //   print(feed);
-    // });
+
       if(sHOUSE==null){
       setState(() {
         sHOUSE = widget.HOUSE![0]['name'];

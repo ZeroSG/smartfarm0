@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../API_E_B/API_B.dart';
 import '../API_E_B/API_E.dart';
+import '../shared_preferences/shared_preferences.dart';
 
 class Production extends StatefulWidget {
    String? Token;
@@ -20,10 +22,9 @@ class Production extends StatefulWidget {
 }
 
 class _ProductionState extends State<Production> {
- late  String Crop = 'start crop';
-  late Color color = Colors.green;
-
-  bool Crop1 = false;
+ late  String? Crop;
+  late Color? color;
+ late bool Crop1;
    List<dynamic>? NoList =[''];
    String? Noname ='';
 
@@ -34,7 +35,9 @@ class _ProductionState extends State<Production> {
   late TextEditingController 	Number_Of_animal = TextEditingController();
   late TextEditingController Age = TextEditingController();
 String? _chosenValue;
-
+Usersharedpreferences _p =Usersharedpreferences();
+   late  List<String>? Plan = [];
+   late  List<String>? Formula = [];
  late List<dynamic>? Silo  = widget.default_planning;
  late String Siloname;
    late List<dynamic>? Standard  = widget.default_formula;
@@ -237,10 +240,18 @@ String? _chosenValue;
                             API_edit_setting_production(widget.Token,widget.farmnum,int.parse(name_h!),Sub_Crop.text,
                             '$yearS-$monthS-$dayS 00:00:00.000','$yearE-$monthE-$dayE 00:00:00.000',
                             Standardname,Siloname,M_A,AGE);
+                                
 
-                            getjaon1_settin_production();
+                                 var duration = Duration(seconds:2);
+                            
                               Navigator.pop(context);
 
+                              
+
+                            route(){
+  getjaon1_settin_production();
+}
+ Timer(duration, route);
 
                             },
                             child: Text(
@@ -501,11 +512,11 @@ width: screenW*0.35,
                             ),
                           // value:nowresult1_1[index]['c_feedtype'] == null ? Standardname: nowresult1_1[index]['c_feedtype'],
                           value: Standardname,
-                          items:  Standard!
+                          items:  Formula!
                               .map((Standard) => DropdownMenuItem<String>(
-                                  value: Standard['name'],
+                                  value: Standard,
                                   child: Text(
-                                    Standard['name'],
+                                    Standard,
                                     style: TextStyle(
                                       fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -580,11 +591,11 @@ width: screenW*0.35,
                               size: 20,
                             ),
                             value: Siloname,
-                          items:  Silo! 
+                          items:  Plan! 
                               .map((Silo) => DropdownMenuItem<String>(
-                                  value: Silo['name'],
+                                  value: Silo,
                                   child: Text(
-                                    Silo['name'],
+                                    Silo,
                                     style: TextStyle(
                                       fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -779,7 +790,7 @@ child: Padding(
       ChooseDateTime2_1 = await showDatePicker(
        
        context: context,
-       firstDate: DateTime(DateTime.now().year - 5),
+       firstDate: DateTime(dateTimeEnd!.year - 5),
        lastDate: DateTime(DateTime.now().year + 5),
        initialDate: dateTimeEnd!,
        builder: (context, child) {
@@ -1137,7 +1148,7 @@ child: Padding(
                               
                               setState(() {
                          name_h = nowresult1_1[index]['n_house'].toStringAsFixed(0);
-                        //  print(name_h);
+               
           if(nowresult1_1[index]['c_namecrop']==null){
              Sub_Crop.text = '${dateTime.year}-${dateTime.month}';
           }    
@@ -1177,36 +1188,67 @@ child: Padding(
 
 
     //
-       if(widget.default_formula == null){
+       if(Formula == null){
            
        }
        else{
          if(nowresult1_1[index]['c_feedtype'] != null){
-       setState(() {
-          Standardname = nowresult1_1[index]['c_feedtype'];
+           setState(() {
+            Standardname = nowresult1_1[index]['c_feedtype'];
+         });
+
+          String? Standardname0;
+            for(int i = 0;i<Formula!.length;i++){
+             if(nowresult1_1[index]['c_feedtype'] == Formula![i]){
+       
+                setState(() {
+          Standardname0 = Formula![i];
+
        });
+             }
+            }
+             if(Standardname0 != Standardname){
+            Standardname = Formula![0];
+            }
+    
       
      }
      else{
        setState(() {
-         Standardname = widget.default_formula![0]['name'];
+         Standardname = Formula![0];
        });
      }
        }
-     if(widget.default_planning == null){
+     if(Plan == null){
            
        }
        else{
           if(nowresult1_1[index]['c_plan'] != null){
-       setState(() {
-          Siloname = nowresult1_1[index]['c_plan'];
-            // Siloname = widget.default_planning![0]['name'];
+            
+         setState(() {
+           Siloname = nowresult1_1[index]['c_plan'];
+         });
+        String? Siloname0;
+            for(int i = 0;i<Plan!.length;i++){
+             if(nowresult1_1[index]['c_plan'] == Plan![i]){
+        
+                setState(() {
+          Siloname0 = Plan![i];
+
        });
+             }
+            }
+            if(Siloname0 != Siloname){
+            Siloname = Plan![0];
+            }
+       
+      
+   
       
      }
      else{
        setState(() {
-         Siloname = widget.default_planning![0]['name'];
+         Siloname = Plan![0];
        });
      }
        }     
@@ -1341,49 +1383,60 @@ bool loading1 = true;
 }));
       if (ressum.statusCode == 200) {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
+        var result1_0 = json.decode(ressum.body)['result']['active'];
         
        setState(() {
-         //print("Production ==> $result1_1",);
-        //   //print("${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",);
+
+
+     
+         if(result1_0 == 1){
+                      
+                        
+                        Crop ='press to end crop';
+                        color = Colors.red;
+                        Crop1 = true;
+               
+                      print(Check);
+                       print('start');
+                      //  API_button_production_start(widget.Token,widget.farmnum,Check); 
+                     
+                    }
+                    else if(result1_0 == 0){
+             
+                        
+                         Crop ='start crop';
+                         color = Colors.green;
+                          Crop1 = false;
+                
+           
+                       
+                      print('stop');
+                      //  API_button_production_stop(widget.Token,widget.farmnum);
+                    }
          nowresult1_1 = result1_1;
+
          loading1 = false;
        });
-    //     for(int index = 0 ; index< nowresult1_1.length;index++){
-    //         if(nowresult1_1[index]['c_feedtype'] != null){
-    //    setState(() {
-    //       Standardname = nowresult1_1[index]['c_feedtype'];
-    //    });
-      
-    //  }
-    //  else{
-    //    setState(() {
-    //      Standardname = widget.default_planning![0]['c_feedtype'];
-    //    });
-    //  }
-    //     }
-//                if(nowresult1_1[index]['c_feedtype'] != null){
-//                  setState(() {
-//                    Standardname = nowresult1_1[index]['c_feedtype'];
-//                  });
-//     }else{
-//       setState(() {
-//         Standardname =  widget.default_formula![0]['name'];
-//       });
+       
+          late List<String>  NameCrop = ['1'];
+          for(int i =0;i<nowresult1_1.length;i++){
+            if(nowresult1_1[i]['c_namecrop'] != null || nowresult1_1[i]['c_namecrop'] != ''){
+             NameCrop += [nowresult1_1[i]['c_namecrop']];
+            }
+            
+          }
+          NameCrop.removeWhere((element) => element == null);
+          if(NameCrop.length > 1){
+            NameCrop.removeWhere((element) => element == '1');
 
-//     }
-//     if(nowresult1_1[index]['c_plan'] != null){
-//       setState(() {
-//          Siloname = nowresult1_1[index]['c_plan'];
-//       });
-//     }else {
-//  setState(() {
-//      Siloname = widget.default_planning![0]['name'];
+          }else{
+            NameCrop[0] = '';
 
-//  });
+          }
 
+        NameCrop =  NameCrop.toSet().toList();
 
-//     }
-//          }
+  await _p.setListNameCrop(NameCrop);
           
       } else {
         throw Exception('Failed to download');
@@ -1398,6 +1451,8 @@ bool loading1 = true;
   void initState() {
     // TODO: implement initState
     super.initState();
+     Plan =  _p.getplanning();
+     Formula = _p.getformula();
     getjaon1_settin_production();
     // _createSampleData();
   }
@@ -1410,7 +1465,9 @@ bool loading1 = true;
         physics: BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
+              child:
+             loading1 ? Container()
+             : Container(
                 child: Column(
                   children: [
                     Row(
@@ -1452,26 +1509,42 @@ bool loading1 = true;
                   onTap: (() {
                     if(Crop1 == false){
                       setState(() {
-                        
+                        //    print('--------start--------');
+                        // print(widget.farmnum);
+                        //  print(Check);
+                   
                         Crop ='press to end crop';
                         color = Colors.red;
                         Crop1 = true;
+                        API_button_production_start(widget.Token,widget.farmnum,Check);
                       });
-                      print(Check);
-                       print('start');
-                      //  API_button_production_start(widget.Token,widget.farmnum,Check); 
+                        var duration = Duration(seconds:2);
+                            
+                            route(){
+  getjaon1_settin_production();
+}
+ Timer(duration, route);
                      
                     }
                     else if(Crop1 == true){
                        setState(() {
+                        //  print('--------stop--------');
+                        //   print(widget.farmnum);
                         
                          Crop ='start crop';
                          color = Colors.green;
                           Crop1 = false;
+                          API_button_production_stop(widget.Token,widget.farmnum);
                        });
-           
-                       
-                      print('stop');
+                          var duration = Duration(seconds:2);
+                            
+                            route() async {
+  getjaon1_settin_production();
+ 
+}
+ Timer(duration, route);
+                      //  getjaon1_settin_production();
+             
                       //  API_button_production_stop(widget.Token,widget.farmnum);
                     }
                   }),
@@ -1487,7 +1560,7 @@ bool loading1 = true;
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child:Text(
-                              Crop,
+                              Crop!,
                               style: new TextStyle(
                                fontFamily: 'Montserrat',
                                 color: Color.fromARGB(255, 0, 0, 0),

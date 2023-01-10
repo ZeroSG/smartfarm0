@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'Setting/Farm.dart';
@@ -7,6 +9,8 @@ import 'Setting/Planning.dart';
 import 'Setting/Production.dart';
 import 'Setting/standard.dart';
 
+
+import 'package:http/http.dart' as http;
 
 
 
@@ -34,6 +38,50 @@ class _SettingState extends State<Setting> {
     late  List <dynamic>? default_planning = widget.default_planning;
     late  List <dynamic>? default_formula = widget.default_formula;
      late double screenW, screenH;
+
+     bool loading1 = true;
+  List<dynamic> nowresult1_1 = []; 
+    Future<void> getjaon1_setting_farm() async {
+    try {
+      loading1 = true;
+      var urlsum = Uri.https("smartfarmpro.com", "/v1/api/setting/setting-farm");
+      var ressum = await http.post(urlsum,
+          headers: {
+            "Authorization": "Bearer ${widget.Token}",
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode(<String, dynamic>{
+         "Farm": widget.farmnum,
+}));
+      if (ressum.statusCode == 200) {
+        var result1_1 = json.decode(ressum.body)['result']['view1'];
+        
+       setState(() {
+
+         nowresult1_1 = result1_1;
+  
+ 
+  loading1 = false;
+       });
+
+       
+       
+      } else {
+        throw Exception('Failed to download');
+      }
+    } catch (e) {
+      //print(e.toString());
+    }
+  }
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getjaon1_setting_farm();
+    // _createSampleData();
+  }
+
   @override
   Widget build(BuildContext context) {
        //print('widget.default_species===${widget.default_planning}');
@@ -94,8 +142,8 @@ class _SettingState extends State<Setting> {
                          width: screenW*0.9,
                          child: Padding(
                            padding: const EdgeInsets.all(10.0),
-                           child: Text(
-                    '(บ.บีเอฟไอบรอยเลอร์ฟาร์ม จำกัด) ที่อยู่ ซอย 14 ตำบล ช่องสาริกา อำเภอ พัฒนานิคม จังหวัด ลพบุรี 15220',
+                           child: loading1? Text(''): Text(
+                    '${nowresult1_1[0]['c_address']}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                         fontSize: 18,

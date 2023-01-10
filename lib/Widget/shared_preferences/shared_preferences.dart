@@ -19,12 +19,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 // }
 class Usersharedpreferences {
   static  SharedPreferences? _preferences;
+    static  SharedPreferences? _preferences1;
 
 
 
 
  Future<void> init() async{
      _preferences = await SharedPreferences.getInstance();
+          _preferences1 = await SharedPreferences.getInstance();
     
   }
 
@@ -34,6 +36,29 @@ class Usersharedpreferences {
        print(Email);
         print(Password);
   }
+
+    Future setListdefault_planning(List<String>? Planning) async{
+     await _preferences!.setStringList('Planning', Planning!);
+
+       print('List $Planning');
+
+  }
+
+  
+      Future setListdefault_formula(List<String>? Formula) async{
+     await _preferences!.setStringList('Formula',  Formula!);
+
+      print('List $Formula');
+
+  }
+
+
+      Future setListNameCrop(List<String>? NameCrop) async{
+     await _preferences!.setStringList('NameCrop', NameCrop!);
+
+       print('List $NameCrop');
+
+  }
   //  static Future setUserPassword(String Password) async{
 
   //      await _preferences1!.setString(_keyPassword, Password);
@@ -42,8 +67,9 @@ class Usersharedpreferences {
   // static Future setUserToken(String Token) async{
   //    await _preferences!.setString(_keyToken, Token);
   // }
-
-
+   List<String>? getformula() => _preferences!.getStringList('Formula');
+   List<String>? getplanning() => _preferences!.getStringList('Planning');
+   List<String>? getListNameCrop() => _preferences!.getStringList('NameCrop');
    String? getUserEmail() => _preferences!.getString('Email');
    String? getUserPassword() => _preferences!.getString('Password');
   // static String? getUserToken() => _preferences!.getString(_keyToken);

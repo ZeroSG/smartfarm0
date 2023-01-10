@@ -62,6 +62,60 @@ import 'notifications.dart';
     }
   }
 
+   //button order confirm
+   Future<void> API_button_order_confirm(String? Token,var Farm, var user,var order_ref ) async {
+    try {
+      var urlsum = Uri.https("smartfarmpro.com", "/v1/api/button/order-confirm");
+      var ressum = await http.post(urlsum,
+          headers: {
+            "Authorization": "Bearer $Token",
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode(<String, dynamic>{
+              "farm": Farm,
+              "order_ref": order_ref,
+              "user": user
+          }));
+      if (ressum.statusCode == 200) {
+         showNot('order confirm','${jsonDecode(ressum.body)['message']}');
+        print('successfully');
+      } else {
+         showNot('order confirm','${jsonDecode(ressum.body)['message']}');
+        throw Exception('Failed to download');
+      }
+    } catch (e) {
+
+    }
+  }
+
+
+   //button order cancel
+   Future<void> API_button_order_cancel(String? Token,var Farm, var user,var order_ref ) async {
+    try {
+      var urlsum = Uri.https("smartfarmpro.com", "/v1/api/button/order-cancel");
+      var ressum = await http.post(urlsum,
+          headers: {
+            "Authorization": "Bearer $Token",
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode(<String, dynamic>{
+              "farm": Farm,
+              "order_ref": order_ref,
+              "user": user
+          }));
+      if (ressum.statusCode == 200) {
+         showNot('order cancel','${jsonDecode(ressum.body)['message']}');
+        print('successfully');
+      } else {
+         showNot('order cancel','${jsonDecode(ressum.body)['message']}');
+        throw Exception('Failed to download');
+      }
+    } catch (e) {
+
+    }
+  }
+
+
 
   //button setting feed
    Future<void> API_button_setting_feed(String? Token,var Farm, var feed) async {
@@ -81,6 +135,32 @@ import 'notifications.dart';
         print('successfully');
       } else {
         showNot('setting feed','${jsonDecode(ressum.body)['message']}');
+        throw Exception('Failed to download');
+      }
+    } catch (e) {
+
+    }
+  }
+
+  
+  //button delete feed
+   Future<void> API_button_delete_feed(String? Token,var Farm, var feed) async {
+    try {
+      var urlsum = Uri.https("smartfarmpro.com", "/v1/api/button/delete-feed");
+      var ressum = await http.post(urlsum,
+          headers: {
+            "Authorization": "Bearer $Token",
+            'Content-Type': 'application/json'
+          },
+          body: jsonEncode(<String, dynamic>{
+              "farm": Farm,
+               "feed": feed
+          }));
+      if (ressum.statusCode == 200) {
+        showNot('delete feed','${jsonDecode(ressum.body)['message']}');
+        print('successfully');
+      } else {
+        showNot('delete feed','${jsonDecode(ressum.body)['message']}');
         throw Exception('Failed to download');
       }
     } catch (e) {
@@ -153,10 +233,10 @@ Future<void> API_button_production_start(String? Token,var Farm, var truck_allow
                  "truck_allow": truck_allow
           }));
       if (ressum.statusCode == 200) {
-         showNot('production start','${jsonDecode(ressum.body)['message']}');
-        print('successfully');
+        //  showNot('production start','${jsonDecode(ressum.body)['message']}');
+        // print('successfully');
       } else {
-          showNot('production start','${jsonDecode(ressum.body)['message']}');
+          // showNot('production start','${jsonDecode(ressum.body)['message']}');
         throw Exception('Failed to download');
       }
     } catch (e) {
@@ -188,3 +268,6 @@ Future<void> API_button_production_stop(String? Token,var Farm) async {
 
     }
   }
+
+
+  

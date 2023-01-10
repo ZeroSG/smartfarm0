@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../drawer.dart';
 
@@ -39,7 +40,7 @@ class _MainState extends State<Main1> {
   var formula1 = 'default', formula2 = 'default';
   var E_Refill1, E_Refill2;
   var A_Refill1, A_Refill2;
-  var percent1, percent2;
+  double? percent1, percent2;
   var siloname1, siloname2;
   var kg1, kg2;
   Color? Col11, Col2;
@@ -49,7 +50,7 @@ class _MainState extends State<Main1> {
   
   Future<void> getjaon_feed_information() async {
     try {
-      
+
       loading = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/main/main-info");
       var ressum = await http.post(urlsum,
@@ -65,16 +66,18 @@ class _MainState extends State<Main1> {
           result0 = result11['result']['view1'];
           result2 = result11['result']['view2'];
             loading = false;
-          // print(result2);
-          late List<dynamic>  _products0 = List.generate(result2!.length, (i) {
+
+          if(result2==null){
+           result3 = null;
+          }else{
+            late List<dynamic>  _products0 = List.generate(result2!.length, (i) {
                 return {
                   'HOUSEname': ''
                 };
               });
          
      
-        print('=========$result2') ;
-             print('=========$_products0') ;
+
              _products0[0]['HOUSEname'] = result2![0]['c_name'];
            for(int i = 1; i<result2!.length;i++) {
              if(result2![i]['c_name'] != result2![i-1]['c_name']){
@@ -100,7 +103,7 @@ class _MainState extends State<Main1> {
              _products1[i]['HOUSE'] += [result2![j]];
              }
            } }
-            // print('=========${_products1[3]}') ;
+  
               int numder = 16;
               int sum = 0;
               double a = _products1.length/numder;
@@ -112,9 +115,7 @@ class _MainState extends State<Main1> {
   else{
     sum = int.parse('$d2')+1;
   }
-  //   print('=========$d1') ;
-  //  print('=========$d2') ;
-  // print('=========$sum') ;
+
 
     late List<dynamic>  _products2 = List.generate(sum, (i) {
                 return {
@@ -125,48 +126,31 @@ class _MainState extends State<Main1> {
               int D = 0;
             
                    for(int j = 0; j<_products2.length;j++) {
-                    //  print(j);
+            
                          for(int i= S; i<_products1.length;i++) {
                             if(i < S+numder){
-                           print('$j$i');
+             
 
                          _products2[j]['HOUSE'] += [_products1[i]];
                   }
                    
                 } 
                D = _products2[j]['HOUSE'].length;
-                 print('$D');
+      
                    
                       S +=D;
                 }
 
 //                 
-            print('=========${_products2[0]}') ;
+        
             result3 = _products2;
-            // print('=========${_products1[0]['HOUSE'].length}') ;
+
           loading = false;
           var num1 = result2!.length / 2;
           num = int.parse('${num1.toInt()}');
+          }
+          
         });
-    
-        
-
-
-        
-
-        // if (result2![1]['n_index'] == 2) {
-        //   setState(() {
-        //     selected2 = 1;
-        //   });
-        // }
-        // if (result2![1]['n_index'] == 1) {
-        //   setState(() {
-        //     selected2 = 0;
-        //   });
-        // }
-        // print('${result2!.length}');
-      //  print('${result2[0]['n_index']}   === ${result2[0 + 1]['n_index']}');
-        // result2[0]['n_index'] != 2 &&result2[0 + 1]['n_index'] != 2
       } else {
         throw Exception('Failed to download');
       }
@@ -252,7 +236,8 @@ class _MainState extends State<Main1> {
                             ),
                           ),
                         ),
-                  Card(
+                result3 == null ? Container()
+                           :  Card(
                     elevation: 10,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -292,7 +277,7 @@ class _MainState extends State<Main1> {
                                     Container(
                                       width: 170,
                                       height: 60,
-                                      child: result3!.length == 1 ? Container()
+                                      child:   result3!.length == 1 ? Container()
                                       :ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
@@ -348,7 +333,7 @@ class _MainState extends State<Main1> {
                                   ],
                                 ),
                               )),
-                          ListView.builder(
+                         ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               key: Key('builder2 ${selected2.toString()}'),
@@ -425,9 +410,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Remain : ${result0![index]['a_remain'].toStringAsFixed(2)} kg')),
+                                    'Remain : ${NumberFormat("#,###,##0.00").format(result0![index]['a_remain'])}kg')),
                             Text(
-                                'Usage : ${result0![index]['a_usage'].toStringAsFixed(2)} kg'),
+                                'Usage : ${NumberFormat("#,###,##0.00").format(result0![index]['a_usage'])}kg'),
                           ],
                         ),
                       ),
@@ -438,9 +423,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Refll(Today) : ${result0![index]['a_refill'].toStringAsFixed(2)} kg')),
+                                    'Refll(Today) : ${NumberFormat("#,###,##0.00").format(result0![index]['a_refill'])}kg')),
                             Text(
-                                'Refll(Yedterday) : ${result0![index]['b_refill'].toStringAsFixed(2)} kg'),
+                                'Refll(Yedterday) : ${NumberFormat("#,###,##0.00").format(result0![index]['b_refill'])}kg'),
                           ],
                         ),
                       ),
@@ -481,24 +466,15 @@ class _MainState extends State<Main1> {
       upper_percent1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_upper_percent'];
       lower_percent1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_lower_percent'];
       percent1 = (remain1 / capacity1) * 100;
-      kg1 = percent1 * 100;
-      sum = percent1 / 100;
+      kg1 = percent1! * 100;
+      sum = percent1! / 100;
       if (sum < 0.0) {
         sum = 0.0;
       }
       if (sum > 1.0) {
         sum = 1.0;
       }
-      //   if(percent1 >= upper_percent1){
-      //     //print(upper_percent1);
-      //     Col11 = Color.fromARGB(255, 0, 25, 249);
-      //   }
-      //  else if(percent1 <= lower_percent1){
-      //       Col11 = Colors.red;
-      //   }
-      //   else{
-      //     Col11 = Color.fromARGB(255, 0, 255, 51);
-      //   }
+      
       siloname1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_silo_name'];
 
       if (result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_formula'] == '' ||
@@ -585,7 +561,7 @@ class _MainState extends State<Main1> {
                                     width:  (screenW * 0.85)-55,
                                     margin: EdgeInsets.only(top: 5),
                                     child: Text(
-                                      '${kg1.toStringAsFixed(2)} kg',
+                                      '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg',
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -596,7 +572,7 @@ class _MainState extends State<Main1> {
                                    width:  (screenW * 0.85)-55,
                                     margin: EdgeInsets.only(top: 5),
                                     child: Text(
-                                      '${percent1.toStringAsFixed(2)} %',
+                                      '${percent1!.toStringAsFixed(2)} %',
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -614,7 +590,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: Text(
-                                'Estimate Refill :$E_Refill1 kg.',
+                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg.',
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -624,7 +600,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, right: 10),
                               child: Text(
-                                'Actual Refill :$A_Refill1 kg.',
+                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.',
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -672,12 +648,7 @@ class _MainState extends State<Main1> {
                                 }
                                                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                          builder: (context)=>   Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
-                                  // Navigator.pushReplacement(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //       Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
-                                  //     ));
+                          
                                 },
                                 child: Text(
                                   'view',
@@ -716,8 +687,8 @@ class _MainState extends State<Main1> {
       E_Refill1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['e_refill'];
       A_Refill1 = result3![Col1]['HOUSE'][index1]['HOUSE'][0]['a_refill'];
       percent1 = (remain1 / capacity1) * 100;
-      kg1 = percent1 * 100;
-        sum = percent1 / 100;
+      kg1 = percent1! * 100;
+        sum = percent1! / 100;
 
         if(sum < 0.0){
           sum =0.0;
@@ -725,10 +696,10 @@ class _MainState extends State<Main1> {
         if(sum > 1.0){
           sum =1.0;
         }
-        if(percent1 >= upper_percent1){
+        if(percent1! >= upper_percent1){
           Col11 = Color.fromARGB(255, 0, 25, 249);
         }
-       else if(percent1 <= lower_percent1){
+       else if(percent1! <= lower_percent1){
             Col11 = Colors.red;
         }
         else{
@@ -741,8 +712,8 @@ class _MainState extends State<Main1> {
       // E_Refill2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['e_refill'];
       // A_Refill2 = result3![Col1]['HOUSE'][index1]['HOUSE'][1]['a_refill'];
       percent2 = (remain2 / capacity2) * 100;
-      kg2 = percent2 * 100;
-        sum1 = percent2 / 100;
+      kg2 = percent2! * 100;
+        sum1 = percent2! / 100;
 
         if(sum1 < 0.0){
           sum1 =0.0;
@@ -750,10 +721,10 @@ class _MainState extends State<Main1> {
         if(sum1 > 1.0){
           sum1 =1.0;
         }
-        if(percent2 >= upper_percent2){
+        if(percent2! >= upper_percent2){
           Col2 = Color.fromARGB(255, 0, 25, 249);
         }
-       else if(percent2 <= lower_percent2){
+       else if(percent2! <= lower_percent2){
             Col2 = Colors.red;
         }
         else{
@@ -859,7 +830,7 @@ class _MainState extends State<Main1> {
                                        width: (screenW * 0.46)-55,
                                         margin: EdgeInsets.only(top: 5),
                                         child: Text(
-                                          '${kg1.toStringAsFixed(2)} kg',
+                                          '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg',
                                           style: TextStyle(
                                               fontSize: 13,
                                               fontFamily: 'Montserrat',
@@ -870,7 +841,7 @@ class _MainState extends State<Main1> {
                                         width: (screenW * 0.46)-55,
                                         margin: EdgeInsets.only(top: 5),
                                         child: Text(
-                                          '${percent1.toStringAsFixed(2)} %',
+                                          '${percent1!.toStringAsFixed(2)} %',
                                           style: TextStyle(
                                               fontSize: 13,
                                               fontFamily: 'Montserrat',
@@ -925,7 +896,7 @@ class _MainState extends State<Main1> {
                                       width: (screenW * 0.46)-55,
                                         margin: EdgeInsets.only(top: 5),
                                         child: Text(
-                                          '${kg2.toStringAsFixed(2)} kg',
+                                          '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_remain'])} kg',
                                           style: TextStyle(
                                               fontSize: 13,
                                               fontFamily: 'Montserrat',
@@ -936,7 +907,7 @@ class _MainState extends State<Main1> {
                                       width: (screenW * 0.46)-55,
                                         margin: EdgeInsets.only(top: 5),
                                         child: Text(
-                                          '${percent2.toStringAsFixed(2)} %',
+                                          '${percent2!.toStringAsFixed(2)} %',
                                           style: TextStyle(
                                               fontSize: 13,
                                               fontFamily: 'Montserrat',
@@ -957,7 +928,7 @@ class _MainState extends State<Main1> {
                           Container(
                             margin: EdgeInsets.only(top: 5, left: 10),
                             child: Text(
-                              'Estimate Refill :$E_Refill1 kg',
+                              'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg',
                               style: TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Montserrat',
@@ -967,7 +938,7 @@ class _MainState extends State<Main1> {
                           Container(
                             margin: EdgeInsets.only(top: 5, right: 10),
                             child: Text(
-                              'Actual Refill :$A_Refill1 kg.',
+                              'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.',
                               style: TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Montserrat',
@@ -1013,11 +984,7 @@ class _MainState extends State<Main1> {
                                     // //print(widget.cropnum2);
                                   }
                                 }
-                                print('widget.cropnum');
-                                print(widget.cropnum);
-                                print(widget.cropnum1);
-                                print(widget.cropnum2);
-                                print('widget.cropnum');
+                      
                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                          builder: (context)=> Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
                                 // Navigator.pushReplacement(
@@ -1049,554 +1016,7 @@ class _MainState extends State<Main1> {
            ]
            );
       }
-    // //print(result2.length);
-    // largestGeekValue = result2![0]['n_index'];
-    // if (result3![Col1]['HOUSE'].length == 1) {
-    //   var capacity1 = result3![Col1]['HOUSE'][index]['n_capacity'];
-    //   var remain1 = result3![Col1]['HOUSE'][index]['n_remain'];
-
-    //   name = result3![Col1]['HOUSE'][index]['c_name'];
-    //   if (result3![Col1]['HOUSE'][index]['n_day'] == ''||result3![Col1]['HOUSE']['n_day'] == -1000) {
-    //     age = 'no live';
-    //   } else {
-    //     age = 'age ${result3![Col1]['HOUSE'][index]['n_day']} day';
-    //   }
-
-    //   E_Refill1 = result3![Col1]['HOUSE'][index]['e_refill'];
-    //   A_Refill1 = result3![Col1]['HOUSE'][index]['a_refill'];
-    //   upper_percent1 = result3![Col1]['HOUSE'][index]['n_upper_percent'];
-    //   lower_percent1 = result3![Col1]['HOUSE'][index]['n_lower_percent'];
-    //   percent1 = (remain1 / capacity1) * 100;
-    //   kg1 = percent1 * 100;
-    //   sum = percent1 / 100;
-    //   if (sum < 0.0) {
-    //     sum = 0.0;
-    //   }
-    //   if (sum > 1.0) {
-    //     sum = 1.0;
-    //   }
-    //   //   if(percent1 >= upper_percent1){
-    //   //     //print(upper_percent1);
-    //   //     Col11 = Color.fromARGB(255, 0, 25, 249);
-    //   //   }
-    //   //  else if(percent1 <= lower_percent1){
-    //   //       Col11 = Colors.red;
-    //   //   }
-    //   //   else{
-    //   //     Col11 = Color.fromARGB(255, 0, 255, 51);
-    //   //   }
-    //   siloname1 = result3![Col1]['HOUSE'][index]['c_silo_name'];
-
-    //   if (result3![Col1]['HOUSE'][index]['c_formula'] == '' ||
-    //      result3![Col1]['HOUSE'][index]['c_formula'] == null) {
-    //     formula1 = 'default';
-    //   } else {
-    //     formula1 = result3![Col1]['HOUSE'][index]['c_formula'];
-    //   }
-    // } else if (result3![Col1]['HOUSE'].length == 2) {
-    //   var capacity2 = result3![Col1]['HOUSE'][index]['n_capacity'];
-    //   var remain2 = result3![Col1]['HOUSE'][index]['n_remain'];
-    //   upper_percent2 = result3![Col1]['HOUSE'][index]['n_upper_percent'];
-    //   lower_percent2 = result3![Col1]['HOUSE'][index]['n_lower_percent'];
-    //   // //print(index);
-      
-    //   E_Refill2 = result3![Col1]['HOUSE'][index]['e_refill'];
-    //   A_Refill2 = result3![Col1]['HOUSE'][index]['a_refill'];
-    //   percent2 = (remain2 / capacity2) * 100;
-    //   kg2 = percent2 * 100;
-    //   //   sum1 = percent2 / 100;
-
-    //   //   if(sum1 < 0.0){
-    //   //     sum1 =0.0;
-    //   //   }
-    //   //   if(sum1 > 1.0){
-    //   //     sum1 =1.0;
-    //   //   }
-    //   //   if(percent2 >= upper_percent2){
-    //   //     Col2 = Color.fromARGB(255, 0, 25, 249);
-    //   //   }
-    //   //  else if(percent2 <= lower_percent2){
-    //   //       Col2 = Colors.red;
-    //   //   }
-    //   //   else{
-    //   //     Col2 = Color.fromARGB(255, 0, 255, 51);
-    //   //   }
-    //   siloname2 = result3![Col1]['HOUSE'][index]['c_silo_name'];
-
-    //   if (result3![Col1]['HOUSE'][index]['c_formula'] == '' ||
-    //       result3![Col1]['HOUSE'][index]['c_formula'] == null) {
-    //     formula2 = 'default';
-    //   } else {
-    //     formula2 = result3![Col1]['HOUSE'][index]['c_formula'];
-    //   }
-    // }
-
-    // if (result3![Col1]['HOUSE'][index]['HOUSE'].length == 2) {
-    //   selected2 == 1;
-    //   return ExpansionTile(
-    //     backgroundColor: Colors.white,
-    //     maintainState: true,
-    //     key: Key(index.toString()),
-    //     initiallyExpanded: index == selected2,
-    //     onExpansionChanged: (value) {
-    //       if (value) {
-    //         setState(() {
-    //           Duration(seconds: 20000);
-    //           selected2 = index;
-    //         });
-    //       } else {
-    //         setState(() {
-    //           selected2 = -1;
-    //         });
-    //       }
-    //     },
-    //     title: ListTile(
-    //       title: Text(
-    //         '$name [$age]',
-    //         style: TextStyle(
-    //             fontSize: 16,
-    //             fontFamily: 'Montserrat',
-    //             color: Color(0xff44bca3)),
-    //       ),
-    //     ),
-    //     children: [
-    //       Stack(
-    //         children: [
-    //           Container(
-    //             color: Color.fromARGB(255, 30, 147, 124),
-    //             height: 170,
-    //           ),
-    //           Container(
-    //             margin: EdgeInsets.only(left: 5),
-    //             color: Colors.white,
-    //             height: 170,
-    //             child: Padding(
-    //               padding: const EdgeInsets.only(top: 10),
-    //               child: Column(
-    //                 children: [
-    //                   Row(
-    //                     children: [
-    //                       Container(
-                
-    //                         width: screenW * 0.463,
-    //                         child: Row(
-    //                           mainAxisSize: MainAxisSize.max,
-    //                           children: [
-    //                             Container(
-    //                               margin: EdgeInsets.only(top: 10),
-    //                               width: 55,
-    //                               height: 70,
-                               
-    //                               child: CustomPaint(
-    //                                 painter: ColorCircle(
-    //                                     S: percent1,
-    //                                     upper_percent: upper_percent1,
-    //                                     lower_percent: lower_percent1),
-    //                               ),
-    //                             ),
-    //                             Container(
-                     
-    //                              width: (screenW * 0.46)-55,
-    //                               child: Column(
-    //                                 children: [
-    //                                   Container(
-    //                                    width: (screenW * 0.46)-55,
-                                       
-    //                                     margin: EdgeInsets.only(top: 1),
-    //                                     child: Text(
-    //                                       '$siloname1($formula1)',
-    //                                       style: TextStyle(
-    //                                           fontSize: 13,
-    //                                           fontFamily: 'Montserrat',
-    //                                           color: Colors.black),
-    //                                     ),
-    //                                   ),
-    //                                   Container(
-    //                                    width: (screenW * 0.46)-55,
-    //                                     margin: EdgeInsets.only(top: 5),
-    //                                     child: Text(
-    //                                       '${kg1.toStringAsFixed(2)} kg',
-    //                                       style: TextStyle(
-    //                                           fontSize: 13,
-    //                                           fontFamily: 'Montserrat',
-    //                                           color: Colors.black),
-    //                                     ),
-    //                                   ),
-    //                                   Container(
-    //                                     width: (screenW * 0.46)-55,
-    //                                     margin: EdgeInsets.only(top: 5),
-    //                                     child: Text(
-    //                                       '${percent1.toStringAsFixed(2)} %',
-    //                                       style: TextStyle(
-    //                                           fontSize: 13,
-    //                                           fontFamily: 'Montserrat',
-    //                                           color: Colors.black),
-    //                                     ),
-    //                                   ),
-    //                                 ],
-    //                               ),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ),
-    //                       Container(
-              
-    //                         width: screenW * 0.463,
-    //                         child: Row(
-    //                           mainAxisSize: MainAxisSize.max,
-    //                           children: [
-    //                             Container(
-                      
-    //                               margin: EdgeInsets.only(top: 10),
-    //                               width: 55,
-    //                               height: 70,
-    //                               child: CustomPaint(
-    //                                 painter: ColorCircle(
-    //                                     S: percent2,
-    //                                     upper_percent: upper_percent2,
-    //                                     lower_percent: lower_percent2),
-    //                               ),
-    //                             ),
-    //                             Container(
-                  
-    //                                width: (screenW * 0.46)-55,
-    //                               child: Column(
-    //                                 children: [
-    //                                   Container(
-    //                                    width: (screenW * 0.46)-55,
-    //                                       height: 13,
-                                          
-    //                                       margin: EdgeInsets.only(top: 1),
-    //                                       child: Text(
-    //                                         '$siloname2($formula2)',
-    //                                         style: TextStyle(
-    //                                           // overflow: TextOverflow.ellipsis,
-    //                                             fontSize: 13,
-    //                                             fontFamily: 'Montserrat',
-    //                                             color: Colors.black),
-    //                                       ),
-    //                                     ),
-                                      
-    //                                   Container(
-    //                                   width: (screenW * 0.46)-55,
-    //                                     margin: EdgeInsets.only(top: 5),
-    //                                     child: Text(
-    //                                       '${kg2.toStringAsFixed(2)} kg',
-    //                                       style: TextStyle(
-    //                                           fontSize: 13,
-    //                                           fontFamily: 'Montserrat',
-    //                                           color: Colors.black),
-    //                                     ),
-    //                                   ),
-    //                                   Container(
-    //                                   width: (screenW * 0.46)-55,
-    //                                     margin: EdgeInsets.only(top: 5),
-    //                                     child: Text(
-    //                                       '${percent2.toStringAsFixed(2)} %',
-    //                                       style: TextStyle(
-    //                                           fontSize: 13,
-    //                                           fontFamily: 'Montserrat',
-    //                                           color: Colors.black),
-    //                                     ),
-    //                                   ),
-    //                                 ],
-    //                               ),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                   Row(
-    //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                     children: [
-    //                       Container(
-    //                         margin: EdgeInsets.only(top: 5, left: 10),
-    //                         child: Text(
-    //                           'Estimate Refill :$E_Refill1 kg',
-    //                           style: TextStyle(
-    //                               fontSize: 13,
-    //                               fontFamily: 'Montserrat',
-    //                               color: Color.fromARGB(255, 166, 165, 165)),
-    //                         ),
-    //                       ),
-    //                       Container(
-    //                         margin: EdgeInsets.only(top: 5, right: 10),
-    //                         child: Text(
-    //                           'Actual Refill :$A_Refill1 kg.',
-    //                           style: TextStyle(
-    //                               fontSize: 13,
-    //                               fontFamily: 'Montserrat',
-    //                               color: Color.fromARGB(255, 166, 165, 165)),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                   Row(
-    //                     mainAxisAlignment: MainAxisAlignment.end,
-    //                     children: [
-    //                       Container(
-    //                         margin: EdgeInsets.only(top: 10, right: 10),
-    //                         height: 35,
-    //                         width: 100,
-    //                         decoration: BoxDecoration(
-    //                             borderRadius: BorderRadius.circular(15.0),
-    //                             color: Colors.blueAccent,
-    //                             gradient: LinearGradient(
-    //                                 begin: Alignment.topLeft,
-    //                                 end: Alignment.bottomRight,
-    //                                 // stops: [0.3, 1],
-    //                                 colors: [
-    //                                   Color.fromARGB(255, 160, 193, 238),
-    //                                   Color.fromARGB(255, 94, 157, 228)
-    //                                 ])),
-
-    //                         //  width: screenW*0.5,
-    //                         child: TextButton(
-    //                           onPressed: () {
-    //                             for(int i = 0;i<widget.HOUSE!.length;i++){
-    //                               if(result2![index]['c_name'] == widget.HOUSE![i]['name'])
-    //                               {
-    //                                 setState(() {
-    //                                   HOUSEnum = widget.HOUSE![i]['id'];
-    //                                   HOUSEname = widget.HOUSE![i]['name'];
-    //                                     feed = widget.HOUSE![i]['feed'];
-    //                                 });
-    //                                 // //print(result2[index]['c_name'] );
-    //                                 // //print(HOUSEname);
-    //                                 // //print(HOUSEnum);
-    //                                 // //print(widget.farmnum);
-    //                                 // //print(widget.cropnum2);
-    //                               }
-    //                             }
-    //                             print('widget.cropnum');
-    //                             print(widget.cropnum);
-    //                             print(widget.cropnum1);
-    //                             print(widget.cropnum2);
-    //                             print('widget.cropnum');
-    //                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-    //                      builder: (context)=> Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
-    //                             // Navigator.pushReplacement(
-    //                             //     context,
-    //                             //     MaterialPageRoute(
-    //                             //       builder: (context) =>
-    //                             //           Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
-    //                             //     ));
-    //                           },
-    //                           child: Text(
-    //                             'view',
-    //                             style: TextStyle(
-    //                                 fontFamily: 'Montserrat',
-    //                                 fontSize: 16,
-    //                                 color: Colors.white),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ],
-    //   );
-    // }
-    try {
-      // if (result3![Col1]['HOUSE'][index]['HOUSE'].length == 1) {
-      //   return ExpansionTile(
-      //     backgroundColor: Colors.white,
-      //     maintainState: true,
-      //     key: Key(index.toString()),
-      //     initiallyExpanded: index == selected2,
-      //     onExpansionChanged: (value) {
-      //       if (value) {
-      //         setState(() {
-      //           Duration(seconds: 20000);
-      //           selected2 = index;
-      //         });
-      //       } else {
-      //         setState(() {
-      //           selected2 = -1;
-      //         });
-      //       }
-      //     },
-      //     title: ListTile(
-      //       title: Text(
-      //         '$name [$age]',
-      //         style: TextStyle(
-      //             fontSize: 16,
-      //             fontFamily: 'Montserrat',
-      //             color: Color(0xff44bca3)),
-      //       ),
-      //     ),
-      //     children: [
-      //       Stack(
-      //         children: [
-      //           Container(
-      //             color: Color.fromARGB(255, 30, 147, 124),
-      //             height: 170,
-      //           ),
-      //           Container(
-      //             margin: EdgeInsets.only(left: 5),
-      //             color: Colors.white,
-      //             height: 170,
-      //             child: Padding(
-      //               padding: const EdgeInsets.all(10.0),
-      //               child: Column(
-      //                 children: [
-      //                   Row(
-      //                     mainAxisSize: MainAxisSize.max,
-      //                     children: [
-      //                       Container(
-      //                         margin: EdgeInsets.only(top: 10),
-      //                         width: 55,
-      //                         height: 70,
-      //                         child: CustomPaint(
-      //                           painter: ColorCircle(
-      //                               S: percent1,
-      //                               upper_percent: upper_percent1,
-      //                               lower_percent: lower_percent1),
-      //                         ),
-      //                       ),
-      //                       Container(
-      //                         width:  (screenW * 0.85)-55,
-      //                         color: Color.fromARGB(255, 255, 255, 255),
-      //                         child: Column(
-      //                           children: [
-      //                             Container(
-      //                             width:  (screenW * 0.85)-55,
-      //                               margin: EdgeInsets.only(top: 1),
-      //                               child: Text(
-      //                                 '$siloname1($formula1)',
-      //                                 style: TextStyle(
-      //                                     fontSize: 13,
-      //                                     fontFamily: 'Montserrat',
-      //                                     color: Colors.black),
-      //                               ),
-      //                             ),
-      //                             Container(
-      //                               width:  (screenW * 0.85)-55,
-      //                               margin: EdgeInsets.only(top: 5),
-      //                               child: Text(
-      //                                 '${kg1.toStringAsFixed(2)} kg',
-      //                                 style: TextStyle(
-      //                                     fontSize: 13,
-      //                                     fontFamily: 'Montserrat',
-      //                                     color: Colors.black),
-      //                               ),
-      //                             ),
-      //                             Container(
-      //                              width:  (screenW * 0.85)-55,
-      //                               margin: EdgeInsets.only(top: 5),
-      //                               child: Text(
-      //                                 '${percent1.toStringAsFixed(2)} %',
-      //                                 style: TextStyle(
-      //                                     fontSize: 13,
-      //                                     fontFamily: 'Montserrat',
-      //                                     color: Colors.black),
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                   Row(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                     children: [
-      //                       Container(
-      //                         margin: EdgeInsets.only(top: 10),
-      //                         child: Text(
-      //                           'Estimate Refill :$E_Refill1 kg.',
-      //                           style: TextStyle(
-      //                               fontSize: 13,
-      //                               fontFamily: 'Montserrat',
-      //                               color: Color.fromARGB(255, 166, 165, 165)),
-      //                         ),
-      //                       ),
-      //                       Container(
-      //                         margin: EdgeInsets.only(top: 5, right: 10),
-      //                         child: Text(
-      //                           'Actual Refill :$A_Refill1 kg.',
-      //                           style: TextStyle(
-      //                               fontSize: 13,
-      //                               fontFamily: 'Montserrat',
-      //                               color: Color.fromARGB(255, 166, 165, 165)),
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                   Row(
-      //                     mainAxisAlignment: MainAxisAlignment.end,
-      //                     children: [
-      //                       Container(
-      //                         margin: EdgeInsets.only(top: 5,),
-      //                         height: 35,
-      //                         width: 100,
-      //                         decoration: BoxDecoration(
-      //                             borderRadius: BorderRadius.circular(15.0),
-      //                             color: Colors.blueAccent,
-      //                             gradient: LinearGradient(
-      //                                 begin: Alignment.topLeft,
-      //                                 end: Alignment.bottomRight,
-      //                                 // stops: [0.3, 1],
-      //                                 colors: [
-      //                                   Color.fromARGB(255, 160, 193, 238),
-      //                                   Color.fromARGB(255, 94, 157, 228)
-      //                                 ])),
-
-      //                         //  width: screenW*0.5,
-      //                         child: TextButton(
-      //                           onPressed: () {
-      //                              for(int i = 0;i<widget.HOUSE!.length;i++){
-      //                             if(result2![index]['c_name'] == widget.HOUSE![i]['name'])
-      //                             {
-      //                               setState(() {
-      //                                 HOUSEnum = widget.HOUSE![i]['id'];
-      //                                 HOUSEname = widget.HOUSE![i]['name'];
-      //                                 feed = widget.HOUSE![i]['feed'];
-      //                               });
-      //                               // //print(result2[index]['c_name'] );
-      //                               // //print(HOUSEname);
-      //                               // //print(HOUSEnum);
-      //                               // //print(widget.farmnum);
-      //                               // //print(widget.cropnum2);
-      //                             }
-      //                           }
-      //                                                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-      //                    builder: (context)=>   Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),), (route) => false);
-      //                             // Navigator.pushReplacement(
-      //                             //     context,
-      //                             //     MaterialPageRoute(
-      //                             //       builder: (context) =>
-      //                             //       Drawer1(Token: widget.Token, num1: 2,User: user,Password: password,HOUSE1:HOUSEnum,HOUSE2: HOUSEname,cropnum1: widget.cropnum1,cropnum:widget.cropnum,cropnum2:widget.cropnum2,farmnum:widget.farmnum,Feed: feed,),
-      //                             //     ));
-      //                           },
-      //                           child: Text(
-      //                             'view',
-      //                             style: TextStyle(
-      //                                 fontFamily: 'Montserrat',
-      //                                 fontSize: 16,
-      //                                 color: Colors.white),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ],
-      //   );
-      // }
-    } catch (e) {
-      //print('e =====> ${e.toString()} ');
-    }
+   
   }
 }
 
@@ -1623,6 +1043,7 @@ class ColorCircle extends CustomPainter {
     if (S! <= lower_percent!) {
       paint1.color = Colors.red;
     }
+    
     var path = new Path();
     path.moveTo(10, -0);
     path.lineTo(10, 45);

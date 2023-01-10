@@ -21,6 +21,8 @@ void main() async{
 
    String? email = _p.getUserEmail();
   String? password = _p.getUserPassword();
+  // List<String>? Formula10 =_p.getformula();
+  // print(Formula10);
  late String? Token;
  late bool? loading = true;
   if(email == null&&password==null||email == ''&&password==''){

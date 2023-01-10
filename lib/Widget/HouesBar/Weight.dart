@@ -9,7 +9,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:icofont_flutter/icofont_flutter.dart';
 import 'package:intl/intl.dart';
 import '../API_E_B/API_E.dart';
-import '../BarMmodel.dart';
+
 import 'package:charts_flutter/src/text_element.dart' as chartText;
 import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 
@@ -91,10 +91,10 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day}"
           }));
       if (ressum.statusCode == 200) {
-        print(json.decode(ressum.body)['result']['view1']);
+        //print(json.decode(ressum.body)['result']['view1']);
         var result0_1 = json.decode(ressum.body)['result']['view1'];
         var result0_2 = json.decode(ressum.body)['result']['view2'];
-        // print('fdfd${result0_1}');
+
 
         if (result0_1 != null) {
           DateTime Date_Start = DateTime.parse(result0_1[0]['c_datestart']);
@@ -136,6 +136,9 @@ class _WeightState extends State<Weight> {
   List<dynamic> nowresult1_1 = [];
   Future<void> getjaon1_weight_device() async {
     try {
+      //print('Farm${widget.farmnum}');
+      //print('House${widget.num}');
+      
       loading1 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/weight-device");
       var ressum = await http.post(urlsum,
@@ -150,16 +153,92 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-            //                  "Farm": 17,
-            // "House": 145,
-            // "Date_Start": "2022-09-06 00:00:00.000",
-            // "Date_End": "2022-09-06 23:59:59.000"
+  // "Farm": 5,
+  // "House": 82,
+  // "Date_Start": "2022-09-06 00:00:00.000",
+  // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
 
         setState(() {
           nowresult1_1 = result1_1;
+ 
+             List<dynamic> colors = [];
+           
+              //       late  DateTime now = DateTime.now();
+              // late List<DateTime> now1 = [DateTime.parse(nowresult1_1[i]['last_date'])];
+              //    List<int>? difference=[];
+              //    List<Color>? Colors=[];
+              //    List<String>? ColorsS=[];
+                //   difference[i] = now1[i].difference(now).inMinutes;
+                //  if(nowresult1_1[i]['status_now'] == 0){
+                //      Colors[i] = Color.fromARGB(255, 133, 133, 133);
+                //    ColorsS[i] = 'เทา';
+                //  }else{
+                //  if(difference[i] > 5){
+                //    Colors[i] = Color.fromARGB(255, 0, 255, 38);
+                //    ColorsS[i] = 'เขียว';
+                //  }else{
+                //     Colors[i] = Color.fromARGB(255, 255, 0, 0);
+                //     ColorsS[i] = 'แดง';
+                //  }
+                //  }
+             colors = List.generate(nowresult1_1.length, (i) {
+       
+                
+                 return {
+                  "device": nowresult1_1[i]['device'],
+                  'color':   Colors.grey,
+                  'color1': 'เทา',
+                };
+                
+              });
+
+               for(int i = 0;i< nowresult1_1.length;i++){
+                    DateTime now = DateTime.now();
+                   DateTime now1 = DateTime.parse(nowresult1_1[i]['last_date']);
+
+                int difference=now1.difference(now).inMinutes;
+                 
+
+                
+                if(nowresult1_1[i]['status_now'] == 0){
+      
+                 }else if(nowresult1_1[i]['status_now'] == 1){
+                 if(difference > -5){
+                   colors[i]['color'] = Colors.green;
+                   colors[i]['color1'] = 'เขียว';
+                 }else{
+                    colors[i]['color'] = Colors.red;
+                    colors[i]['color1'] = 'แดง';
+                 }
+                 }else if(nowresult1_1[i]['status_now'] >= 2){
+                     colors[i]['color'] = Colors.orange;
+                    colors[i]['color1'] = 'แดง';
+                 }
+            
+             }
+
+
+               List<dynamic> nowresult2_ = nowresult1_1
+              .map((e) => {
+                    for (int i = 0; i < nowresult1_1[0].keys.length; i++)
+                      '${nowresult1_1[0].keys.elementAt(i)}': e['${nowresult1_1[0].keys.elementAt(i)}'],
+                      'color': colors
+                              .where((element) =>
+                                  element['device']
+                                      .toString()
+                                      .compareTo(
+                                          e['device']
+                                              .toString()) ==
+                                  0)
+                              .first['color'] ??
+                          null,
+                  })
+              .toList();
+           nowresult1_1 = nowresult2_;
+
           loading1 = false;
         });
 
@@ -239,17 +318,13 @@ class _WeightState extends State<Weight> {
             // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
-        print('object');
+       
         var result3_1 = json.decode(ressum.body)['result']['view1'];
         var result3_2 = json.decode(ressum.body)['result']['view2'];
         var result3_3 = json.decode(ressum.body)['result']['view3'];
         var result3_4 = json.decode(ressum.body)['result']['view4'];
 
-        // print('nowresult1_ =====> $result3_1');
-        //    print('nowresult2_ =====> $result3_2');
-        // print('nowresult3_ =====> $result3_3');
-        // print('nowresult4_ =====> $result3_4');
-        //  print('nowresult4_ =====> ${nowresult1_1.length}');
+
        List<String> uniquelist00 = [];
         for (int i = 0; i < nowresult1_1.length; i++) {
 
@@ -257,13 +332,13 @@ class _WeightState extends State<Weight> {
 
             setState(() {
               uniquelist00 += [nowresult1_1[i]["device"]];
-               print('uniquelist2$i =====> ${nowresult1_1[i]["device"]}');
+            
               // uniquelist2.insert(i, nowresult1_1[i]["device"]);
             });
           }
         }
         uniquelist2 = uniquelist00;
-        print('nowresult4_ =====> ${uniquelist2}');
+
         List<dynamic> nowresult3_211 = result3_1
             .map((e) => {
                   '${result3_1[0].keys.elementAt(0)}':
@@ -312,10 +387,7 @@ class _WeightState extends State<Weight> {
                 })
             .toList();
 
-        //      print('nowresult1_ =====> $nowresult3_211');
-        // print('nowresult2_ =====> $nowresult3_212');
-        // print('nowresult3_ =====> $nowresult3_213');
-        // print('nowresult4_ =====> $nowresult3_214');
+
 
         List<dynamic> nowresult3_41_ =
             nowresult3_211.where((x) => x['device'] == 'ALL').toList();
@@ -339,10 +411,7 @@ class _WeightState extends State<Weight> {
           nowresult3_4 = nowresult3_44_;
           loading3 = false;
         });
-        // print('nowresult1_ =====> $nowresult3_1');
-        // print('nowresult2_ =====> $nowresult3_2');
-        // print('nowresult3_ =====> $nowresult3_3');
-        // print('nowresult4_ =====> $nowresult3_4');
+
       } else {
         throw Exception('Failed to download');
       }
@@ -385,7 +454,7 @@ class _WeightState extends State<Weight> {
 
         if (sPlot == 'แสดงถึงวันปัจจุบัน') {
           DateTime? dateTime1_ = DateTime.now();
-          // print('nowresult2_1 ${nowresult2_1}');
+     
           List<dynamic> _products1 = [];
           for (int i = 0; i < nowresult4_1.length; i++) {
             var splitted = nowresult4_1[i]
@@ -393,25 +462,29 @@ class _WeightState extends State<Weight> {
                 .split('(')
                 .first;
             var splitted1 = splitted.split('-');
-            //  print('_products2 20${splitted1[2]}');
+
             if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
               _products1 += [nowresult4_1[i]];
-              //  print('_products2 ${splitted1[2]}');
+  
             }
-            if ((int.parse(splitted1[1]) < dateTime1_.month - 3) &&
+            if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                 (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
               _products1 += [nowresult4_1[i]];
             }
             if ((int.parse(splitted1[0]) <= dateTime1_.day &&
-                int.parse(splitted1[1]) == dateTime1_.month - 3)) {
+                int.parse(splitted1[1]) == dateTime1_.month)) {
               _products1 += [nowresult4_1[i]];
             }
           }
-          print('_products1 ${_products1}');
+
 
           setState(() {
             nowresult4_1 = _products1;
           });
+
+
+
+            
         }
         //  //print('object =====> ${nowresult4_1}');
       } else {
@@ -473,10 +546,7 @@ class _WeightState extends State<Weight> {
           }));
       if (ressum.statusCode == 200) {
         var result5_1 = json.decode(ressum.body)['result']['view1'];
-        // print('result5_1 =====> $result5_1');
 
-        // var over21s = result5_1.where((result5_1) => result5_1['c_device'] =='132600468794188');
-        //   print('over21s   ========>$over21s');
 
         setState(() {
           uniquelist1 = [];
@@ -510,9 +580,9 @@ class _WeightState extends State<Weight> {
         for (int i = 0; i < nowresult1_1.length; i++) {
           if (nowresult1_1[i]["count_data"] != null) {
             setState(() {
-              //  print('nowresult5_1====${nowresult1_1[i]["device"]}');
+
               uniquelist1 += [nowresult1_1[i]["device"]];
-              // uniquelist1.insert(i, nowresult1_1[i]["device"]);
+
             });
           }
         }
@@ -520,14 +590,14 @@ class _WeightState extends State<Weight> {
         for (int i = 0; i < nowresult5_1.length; i++) {
           if (nowresult5_1[i]['c_device'] == nowresult5_1[0]['c_device']) {
             setState(() {
-              //  print('nowresult5_1====${nowresult5_1[i]["c_device"]}');
+    
               nowresult5__ += [nowresult5_1[i]["c_device"]];
-              // uniquelist1.insert(i, nowresult1_1[i]["device"]);
+
             });
-            // nowresult5__ += nowresult5_1[i]['c_device'];
+ 
           }
         }
-        // print('nowresult5_====${nowresult5__}');
+
         List<dynamic> color = [
           for (int i = 0; i < uniquelist1.length; i++)
             {
@@ -1260,12 +1330,7 @@ class _WeightState extends State<Weight> {
           }));
       if (ressum.statusCode == 200) {
         var result6_1 = json.decode(ressum.body)['result']['view1'];
-        print(result6_1);
-        print(widget.num);
-
-        print(
-          "${dateTime_!.year}-${dateTime_!.month}-${dateTime_!.day} 00:00:00",
-        );
+ 
         setState(() {
           nowresult6_1 = result6_1;
           loading6 = false;
@@ -1356,7 +1421,7 @@ class _WeightState extends State<Weight> {
   Future<dynamic> DialogStandard(
     BuildContext context,
   ) {
-    print(nowresult0_2);
+   
     if (nowresult0_2 == null) {
       EndE = '$hourE:$minuteE';
       EndS = '$hourS:$minuteS';
@@ -2665,10 +2730,9 @@ class _WeightState extends State<Weight> {
                                             // border: Border.all(color: Color(0xff83bb56), width: 5),
                                             borderRadius:
                                                 BorderRadius.circular(40),
-                                            color: item['status_now'] == 1
-                                                ? Color.fromARGB(255, 255, 0, 0)
-                                                : Color.fromARGB(
-                                                    255, 0, 255, 38)),
+                                            color: item['color']
+                                                
+                                                    ),
                                       ),
                                       // Container(child: Text(item['status_now'].toString()))
                                     )),
@@ -3721,7 +3785,7 @@ class _WeightState extends State<Weight> {
                     margin: EdgeInsets.only(top: 10),
                     height: screenH * 0.57,
                     child: Center(child: CircularProgressIndicator()))
-                : nowresult4_1 == null
+                : nowresult4_1 == null || nowresult4_1[0]['n_day'] == null
                     ? Container(
                         height: screenH * 0.57,
                         child: Center(
@@ -3742,7 +3806,7 @@ class _WeightState extends State<Weight> {
   charts.BarChart LineChart4() {
     double? Number;
     int? T;
-    print(nowresult4_1.length);
+
     if (nowresult4_1.length < 50) {
       Number = nowresult4_1.length / 10;
     }
@@ -4128,8 +4192,7 @@ class _WeightState extends State<Weight> {
     }else{
       largestGeekValue0 = largestGeekValue2;
     }
-   print(largestGeekValue0);
-    print(largestGeekValue_normdst);
+
     
 
     return Container(
