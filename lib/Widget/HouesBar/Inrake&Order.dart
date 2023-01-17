@@ -671,7 +671,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             color: Color.fromARGB(255, 194, 194, 194),
                             width: screenW * 0.005),
                         color: Color.fromARGB(255, 235, 235, 235)),
-                    height: 40,
+                    height: 50,
                     width: 100,
                     child: TextButton(
                       onPressed: () {
@@ -833,7 +833,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '0kg.',
+                                      '0kg',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -842,7 +842,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                       ),
                                     ),
                                     Text(
-                                      '0.00%.',
+                                      '0.00%',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Montserrat',
@@ -945,7 +945,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg.',
+                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -955,7 +955,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             ),
                                           ),
                                           Text(
-                                            '${percent1.toStringAsFixed(2)}%.',
+                                            '${percent1.toStringAsFixed(2)}%',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'Montserrat',
@@ -1071,7 +1071,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg.',
+                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1084,7 +1084,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${percent1.toStringAsFixed(2)}%.',
+                                              '${percent1.toStringAsFixed(2)}%',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -1194,7 +1194,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg.',
+                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1207,7 +1207,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${percent2.toStringAsFixed(2)}%.',
+                                              '${percent2.toStringAsFixed(2)}%',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -1232,11 +1232,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               height: screenH * 0.001,
               color: Color(0xfffff1f1f1)),
 
-          // Container(
-          //     margin: EdgeInsets.only(top: 10),
-          //     width: screenW * 1,
-          //     height: screenH * 0.001,
-          //     color: Color.fromARGB(255, 112, 112, 112)),
+
         ],
       );
 

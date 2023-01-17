@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+
 import 'API_E_B/API_B.dart';
 import 'API_E_B/API_E.dart';
 import 'downloadExcel/download.dart';
@@ -55,8 +56,8 @@ class _OrderState extends State<Order> {
    
 
  Usersharedpreferences _p =  Usersharedpreferences();
-   late List<String>? Name_Crop =[];
-  late String? Name_Cropname;
+   late List<String>? Name_Crop =[''];
+  late String? Name_Cropname = '';
   late List<dynamic>? Ship_Condition = widget.default_ship;
   late String? Ship_Conditionname = widget.default_ship![0]['code'];
   late String? Ship_Conditionnameedit = widget.default_ship![0]['code'];
@@ -123,12 +124,12 @@ class _OrderState extends State<Order> {
         setState(() {
 
           nowresult1_1 = result1_1;
-          loading1 = false;
+         
           Number1.text = '0';
           ColBg = List.generate(nowresult1_1.length, (i) {
             return {"color": Color.fromARGB(255, 255, 255, 255)};
           });
-
+            
           for (int i = 0; i < nowresult1_1.length; i++) {
             if (nowresult1_1[i]['n_confirm'] == 0) {
               if (nowresult1_1[i]['c_flag_api'] == 'Y') {
@@ -167,8 +168,9 @@ class _OrderState extends State<Order> {
             //  }
           
           }
-          Name_Crop = _p.getListNameCrop();
-          Name_Cropname = Name_Crop![0];
+              
+           loading1 = false;
+           
 
         });
       } else {
@@ -196,10 +198,23 @@ class _OrderState extends State<Order> {
   void initState() {
     // TODO: implement initState
     super.initState();
+   
     getFeed();
     getjaon1_order_information();
-    
 
+ 
+      var duration = Duration(seconds:1);
+                            
+      
+
+                              
+
+                            route(){
+  Name_Crop = _p.getNameCrop();
+          Name_Cropname = Name_Crop![0];
+          print('Name_Crop $Name_Crop');
+}
+ Timer(duration, route);
     
     // _createSampleData();
   }
@@ -208,14 +223,67 @@ class _OrderState extends State<Order> {
     start: DateTime.now(),
     end: DateTime.now().add(Duration(days: 7)),
   );
-  Future pickDateRange() async {
-    showCustomDateRangePicker(
+  Future pickDateRange(double W,double H) async {
+    if(W > H){
+     DateTimeRange? newDateTimeRange = await showDateRangePicker(
+      context: context, 
+      initialDateRange: _selectedDateRange, 
+      firstDate: DateTime(DateTime.now().year - 5), 
+      lastDate: DateTime(DateTime.now().year + 5), 
+       builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xff44bca3),
+              onPrimary: Color.fromARGB(255, 255, 255, 255),
+              onSurface: Color.fromARGB(255, 0, 0, 0),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+     );
+
+     if(newDateTimeRange == null){
+      setState(() {
+          end = end;
+          yearE = end!.day.toString().padLeft(2, '0');
+          monthE = end!.month.toString().padLeft(2, '0');
+          dayE = end!.year.toString().padLeft(4, '0');
+          start = start;
+          yearS = start!.day.toString().padLeft(2, '0');
+          monthS = start!.month.toString().padLeft(2, '0');
+          dayS = start!.year.toString().padLeft(4, '0');
+        });
+     }else{
+         setState(() {
+          _selectedDateRange =  newDateTimeRange;
+          end = newDateTimeRange.end;
+          yearS = newDateTimeRange.start.day.toString().padLeft(2, '0');
+          monthS = newDateTimeRange.start.month.toString().padLeft(2, '0');
+          dayS = newDateTimeRange.start.year.toString().padLeft(4, '0');
+          start = newDateTimeRange.start;
+          yearE = newDateTimeRange.end.day.toString().padLeft(2, '0');
+          monthE = newDateTimeRange.end.month.toString().padLeft(2, '0');
+          dayE = newDateTimeRange.end.year.toString().padLeft(4, '0');
+          getjaon1_order_information();
+        });
+     }
+    }
+   else{
+  showCustomDateRangePicker(
       context,
-      dismissible: true,
+      dismissible: false,
       minimumDate: DateTime(DateTime.now().year - 5),
       maximumDate: DateTime(DateTime.now().year + 5),
       endDate: end,
       startDate: start,
+      
       onApplyClick: (start1, end1) {
         setState(() {
           end = end1;
@@ -242,6 +310,9 @@ class _OrderState extends State<Order> {
         });
       },
     );
+   }
+  
+ 
     // DateTimeRange? newDateRange = await showDateRangePicker(
     //   context: context,
     //   initialDateRange: _selectedDateRange,
@@ -255,6 +326,7 @@ class _OrderState extends State<Order> {
   }
 
   Future<dynamic> DialogOrder1(BuildContext context, int index, bool by) {
+    
     return showDialog(
       barrierDismissible: false,
       context: context,
@@ -276,7 +348,7 @@ class _OrderState extends State<Order> {
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 15, left: 10),
-                              height: screenH * 0.04,
+                              // height: screenH * 0.04,
                               child: Text(
                                 'Create Order',
                                 style: TextStyle(
@@ -785,48 +857,56 @@ class _OrderState extends State<Order> {
 
   Container Name_Crop3(StateSetter setState, int index) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Column(children: [
-        Container(
-          width: screenW * 0.75,
-          child: Text(
-            'Name Crop :',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Montserrat',
-              color: Color.fromARGB(255, 25, 25, 25),
-            ),
-          ),
-        ),
-        Center(
-            child: Container(
-          margin: EdgeInsets.only(top: 10),
-          height: 40,
-          width: screenW * 0.75,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xffcfcfcf), width: 1.5),
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${nowresult1_1[index]['c_name_crop']}'),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: Color.fromARGB(255, 78, 78, 78),
-                    size: 28,
+       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: screenW * 0.74,
+            child: Column(children: [
+              Container(
+                width: screenW * 0.74,
+                child: Text(
+                  'Name Crop :',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                    color: Color.fromARGB(255, 25, 25, 25),
                   ),
-                ],
+                ),
               ),
-            ),
+              Center(
+                  child: Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 40,
+                width: screenW * 0.74,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xffcfcfcf), width: 1.5),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('${nowresult1_1[index]['c_name_crop']}'),
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: Color.fromARGB(255, 78, 78, 78),
+                          size: 28,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )),
+            ]),
           ),
-        )),
-      ]),
+        ],
+      ),
     );
   }
 
@@ -1164,7 +1244,7 @@ class _OrderState extends State<Order> {
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 15, left: 10),
-                              height: screenH * 0.04,
+                   
                               child: Text(
                                 'Create Order',
                                 style: TextStyle(
@@ -1635,77 +1715,87 @@ getjaon1_order_information();
 
   Container Name_Crop2(StateSetter setState) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Column(children: [
-        Container(
-          width: screenW * 0.75,
-          child: Text(
-            'Name Crop :',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Montserrat',
-              color: Color.fromARGB(255, 25, 25, 25),
-            ),
-          ),
-        ),
-        Center(
-            child: Container(
-          margin: EdgeInsets.only(top: 10),
-          height: 40,
-          width: screenW * 0.75,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xffcfcfcf), width: 1.5),
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: DropdownButtonHideUnderline(
-                child: Name_Crop == null
-                    ? DropdownButton<String>(
-                     
-                        value: Noname,
-                        items: NoList!
-                            .map((NoView_by) => DropdownMenuItem<String>(
-                                value: NoView_by,
-                                child: Text(
-                                  NoView_by,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 25, 25, 25),
-                                  ),
-                                )))
-                            .toList(),
-                        onChanged: (NoView_by) {
-                          setState(() {});
-                        })
-                    : DropdownButton<String>(
-                        value: Name_Cropname,
-                        items: Name_Crop!
-                            .map((Name_Crop) => DropdownMenuItem<String>(
-                                value: Name_Crop,
-                                child: Text(
-                                  Name_Crop,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 25, 25, 25),
-                                  ),
-                                )))
-                            .toList(),
-                        onChanged: (Name_Crop) {
-                          setState(() {
-                            Name_Cropname = Name_Crop!;
-                          });
-                        }),
+       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
+ 
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: screenW * 0.74,
+            child: Column(
+              children: [
+              Container(
+                 width: screenW * 0.74,
+                child: Text(
+                  'Name Crop :',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                    color: Color.fromARGB(255, 25, 25, 25),
+                  ),
+                ),
               ),
-            ),
+              Center(
+                  child: Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 40,
+                width: screenW * 0.75,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xffcfcfcf), width: 1.5),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: DropdownButtonHideUnderline(
+                      child: Name_Crop == null
+                          ? DropdownButton<String>(
+                           
+                              value: Noname,
+                              items: NoList!
+                                  .map((NoView_by) => DropdownMenuItem<String>(
+                                      value: NoView_by,
+                                      child: Text(
+                                        NoView_by,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat',
+                                          color: Color.fromARGB(255, 25, 25, 25),
+                                        ),
+                                      )))
+                                  .toList(),
+                              onChanged: (NoView_by) {
+                                setState(() {});
+                              })
+                          : DropdownButton<String>(
+                              value: Name_Cropname,
+                              items: Name_Crop!
+                                  .map((Name_Crop) => DropdownMenuItem<String>(
+                                      value: Name_Crop,
+                                      child: Text(
+                                        Name_Crop,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Montserrat',
+                                          color: Color.fromARGB(255, 25, 25, 25),
+                                        ),
+                                      )))
+                                  .toList(),
+                              onChanged: (Name_Crop) {
+                                setState(() {
+                                  Name_Cropname = Name_Crop!;
+                                });
+                              }),
+                    ),
+                  ),
+                ),
+              )),
+            ]),
           ),
-        )),
-      ]),
+        ],
+      ),
     );
   }
 
@@ -1847,12 +1937,12 @@ getjaon1_order_information();
                                   color: Color.fromARGB(255, 194, 194, 194),
                                   width: screenW * 0.005),
                               color: Color.fromARGB(255, 235, 235, 235)),
-                          height: 40,
-                          width: 170,
+                          height: 50,
+                         width: 170,
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                pickDateRange();
+                                pickDateRange(screenW,screenH);
                               },
                               child: Row(
                                 children: [

@@ -72,6 +72,10 @@ dependencies:
   flutter_local_notifications: ^9.1.4
 
 
+  scrollable_positioned_list: ^0.3.5
+  
+
+
 
 
 dev_dependencies:
@@ -82,7 +86,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_icons:
-  image_path: "images/icon_smartfarm.jpg"
+  image_path: "images/smarfarmpro.png"
   # image_path_android:"images/specify_android.png"
   # image_path_ios:"images/specify_ios.png"
   android: true

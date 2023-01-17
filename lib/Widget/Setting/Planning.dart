@@ -246,7 +246,7 @@ late List<dynamic> _fileList =[];
                       loading1
             ? Container(
                 width: screenW * 0.5,
-                height: screenW * 0.5,
+                height: screenH * 0.5,
                 child: Center(child: CircularProgressIndicator()))
             :   newDataTable(), 
                   ],

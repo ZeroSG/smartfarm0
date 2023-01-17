@@ -380,7 +380,7 @@ class _SummaryState extends State<Summary> {
           Age_lnformation(),
           widget.cropnum2 == null
               ? Container(
-                  height: screenH >= 609.5999755859375 ? screenH * 0.45 : 250,
+                  height:  250,
                   child: Center(
                       child: Text(
                     'No data to display.',
@@ -389,8 +389,7 @@ class _SummaryState extends State<Summary> {
                 )
               : null1 == "ไม่มีค่า"
                   ? Container(
-                      height:
-                          screenH >= 609.5999755859375 ? screenH * 0.45 : 250,
+                      height:250,
                       child: Center(
                           child: Text(
                         'ไม่มีค่า',
@@ -472,7 +471,7 @@ class _SummaryState extends State<Summary> {
           Daily_Information(),
           widget.cropnum2 == null
               ? Container(
-                  height: screenH >= 609.5999755859375 ? screenH * 0.45 : 250,
+                  height: 250,
                   child: Center(
                       child: Text(
                     'No data to display.',
@@ -481,8 +480,7 @@ class _SummaryState extends State<Summary> {
                 )
               : null2 == "ไม่มีค่า"
                   ? Container(
-                      height:
-                          screenH >= 609.5999755859375 ? screenH * 0.45 : 250,
+                      height:250,
                       child: Center(
                           child: Text(
                         'ไม่มีค่า',
@@ -491,23 +489,7 @@ class _SummaryState extends State<Summary> {
                   : loading2
                       ? CircularProgressIndicator()
                       : kg(),
-          // widget.cropnum2 == null ? Container(
-          //   height: screenH >= 609.5999755859375 ?  screenH*0.45 : 250,
-          //   child: Center(child: Text('No data to display.',
-          //    style: TextStyle(
-          //     fontSize: 16, fontFamily: 'Montserrat'),)),
-          // )
-          // :  null2 == "ไม่มีค่า"
-          //     ? Container(
-          //        height: screenH >= 609.5999755859375 ?  screenH*0.45 : 250,
-          //         child: Center(
-          //             child: Text(
-          //           'ไม่มีค่า',
-          //           style: TextStyle(fontSize: 18),
-          //         )))
-          //     :loading2
-          //         ? CircularProgressIndicator()
-          //         :  kg(),
+       
         ],
       );
 
@@ -538,7 +520,7 @@ class _SummaryState extends State<Summary> {
 
     return Container(
       margin: EdgeInsets.only(top: 10),
-      height: screenH >= 609.5999755859375 ? screenH * 0.45 : 250,
+      height: 250,
       child: charts.BarChart(
         _createSampleData1(),
         animate: false,
@@ -965,7 +947,7 @@ class _SummaryState extends State<Summary> {
 
     return Container(
       margin: EdgeInsets.only(top: 10),
-      height: screenH >= 609.5999755859375 ? screenH * 0.45 : 250,
+      height: 250,
       child: charts.LineChart(
         _createSampleData(),
         animate: false,

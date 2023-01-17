@@ -1,4 +1,4 @@
-package com.flutterthailand.smartfarm2
+package com.SmartFarmPro.smartfarmpro
 
 import io.flutter.embedding.android.FlutterActivity
 

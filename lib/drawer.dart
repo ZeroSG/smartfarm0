@@ -238,10 +238,17 @@ Usersharedpreferences _p =
              await  _p.setListdefault_planning(planning);
           }
          late List<String>  NameCrop = [];
-          for(int i =0;i<cmiid!.length;i++){
+          if(cmiid == null){
+             NameCrop = [''];
+              await _p.setListNameCrop(NameCrop);
+          }else{
+            for(int i =0;i<cmiid!.length;i++){
             NameCrop += [cmiid![i]];
+            await _p.setListNameCrop(NameCrop);
           }
-        await _p.setListNameCrop(NameCrop);
+          }
+          
+        
         // //print('ressum ========>  ${ressum.body}');
       } else {
         throw Exception('Failed to download');
@@ -284,7 +291,7 @@ Usersharedpreferences _p =
     screenH = MediaQuery.of(context).size.height;
     if (num == null) {
       setState(() {
-        num = 3;
+        num = 0;
       });
     }
 
@@ -411,10 +418,15 @@ Usersharedpreferences _p =
           activeColor: Color.fromARGB(255, 253, 253, 253),
           backgroundColor: Color(0xff44bca3),
           onTap: (int i) {
+            setState(() {
+              num = i; 
+            });
+           
             //print('click index=$i');
             if (i == 0) {
               setState(() {
                 name = 'Main';
+                
               });
             }
             if (i == 1) {
@@ -516,7 +528,7 @@ Usersharedpreferences _p =
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                  height: 350,
+                  height: screenH * 0.4,
                   width: screenW * 1,
                   child: Column(
                     children: [
@@ -525,7 +537,7 @@ Usersharedpreferences _p =
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 15, left: 10),
-                              height: screenH * 0.06,
+                              height: 40,
                               child: Text(
                                 "Choose search From",
                                 style: TextStyle(
@@ -623,7 +635,8 @@ Usersharedpreferences _p =
                       )),
                      Center(
                           child: Container(
-                            height: 220,
+                            margin: EdgeInsets.only(top: 5),
+                            height: screenH * 0.2,
                             width: screenW * 0.75,
                             child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -673,6 +686,7 @@ Usersharedpreferences _p =
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => Drawer1(
+                                                    num1: num,
                                                       Token: widget.Token,
                                                       User: user,
                                                       Password: password,
@@ -820,28 +834,6 @@ Usersharedpreferences _p =
                                   )),
                             ),
                           ),
-                          //                 child: TextField(
-                          //                   onTap: () {
-                          //                    from.text = '';
-                          //                   },
-                          //    controller: from,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                          //   decoration: InputDecoration(
-                          //     // filled: true,
-                          //     contentPadding: EdgeInsets.only(top: 10,left: 10),
-                          //     border: InputBorder.none,
-                          //     hintStyle: TextStyle(color: Color(0xff7d7d7d)),
-                          //     enabledBorder: OutlineInputBorder(
-                          //       borderRadius: BorderRadius.circular(25),
-                          //       borderSide: BorderSide(color: Color(0xffcfcfcf)),
-                          //     ),
-                          //     focusedBorder: OutlineInputBorder(
-                          //       borderRadius: BorderRadius.circular(25),
-                          //       borderSide: BorderSide(color: Color(0xffcfcfcf)),
-                          //     ),
-                          //   ),
-                          // ),
                         )),
                       ),
 
@@ -850,29 +842,23 @@ Usersharedpreferences _p =
                           top: 20,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            // Container(
-                            //   width: screenW * 0.3,
-                            //   child: Text(
-                            //     email!,
-                            //     style: TextStyle(
-                            //       fontSize: 15,
-                            //       fontFamily: 'Montserrat',
-                            //       color: Color.fromARGB(255, 68, 188, 90),
-                            //     ),
-                            //   ),
-                            // ),
                              Container(
-                              width: screenW * 0.3,
-                              child: Text(
-                                email!,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'Montserrat',
-                                  overflow: TextOverflow.ellipsis,
-                                  color: Color.fromARGB(255, 68, 188, 90),
-                                ),
+                              width: screenW * 0.49,
+                              child: Row(
+                                 mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    email!,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Montserrat',
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Color.fromARGB(255, 68, 188, 90),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             SizedBox(
@@ -941,7 +927,7 @@ Usersharedpreferences _p =
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                  height: 150,
+                  height: 200,
                   width: screenW * 1,
                   child: Column(
                     children: [
@@ -950,7 +936,7 @@ Usersharedpreferences _p =
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 15, left: 10),
-                              height: screenH * 0.06,
+                              height: 40,
                               child: Text(
                                 "Choose Crop",
                                 style: TextStyle(
@@ -1037,6 +1023,7 @@ Usersharedpreferences _p =
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         Drawer1(
+                                                          num1: num,
                                                             Token: widget.Token,
                                                             User: user,
                                                             Password: password,
@@ -1072,25 +1059,6 @@ Usersharedpreferences _p =
                                                   )))
                                           .toList(),
                                       onChanged: (crop1) {
-                                    
-                                        // for (int i = 0; i < crop!.length; i++) {
-                                        //   // cropname = crop1;
-                                        //   if (crop![i]['name'] == crop1) {
-                                        //     setState(() {
-                                        //       cropnum2 = crop![i]['id'];
-                                        //       cropnum = i;
-                                        //       // //print(cropnum2);
-                                        //       getjaon();
-                                        //       Navigator.pop(context);
-
-                                        //        Navigator.pushReplacement(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) => Drawer1(Token: widget.Token,User: user,Password: password,cropnum1:cropnum1,cropnum2:cropnum2,farmnum:farmnum,cropnum:i),
-                                        //   ));
-                                        //     });
-                                        //   }
-                                        // }
                                       }),
                             ),
                           ),

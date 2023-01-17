@@ -377,7 +377,7 @@ class _LoginState extends State<Login> {
                                 ],
                               ),
                               newMethodEmail(),
-                              newMethodPassword(),
+                              newMethodPassword(setState),
                               newMethodLogin()
                             ],
                           ),
@@ -411,8 +411,9 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+     late bool? statusRedEye = true;
+  Container newMethodPassword(StateSetter setState) {
 
-  Container newMethodPassword() {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xffcfcfcf), width: 1),
@@ -424,7 +425,7 @@ class _LoginState extends State<Login> {
       width: screenW! * 0.7,
       child: TextField(
         controller: _password1Controller,
-        obscureText: true,
+        obscureText: statusRedEye!, //ไม่ให้เห็นข้อความ
         obscuringCharacter: '●',
         // enableIMEPersonalizedLearning          :false,
         keyboardType: TextInputType.emailAddress,
@@ -433,6 +434,18 @@ class _LoginState extends State<Login> {
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: 16),
         decoration: InputDecoration(
+            suffixIcon:
+             IconButton(
+                //ทำปุ่ม RedEye
+                icon: statusRedEye!
+                    ? Icon(Icons.remove_red_eye)
+                    : Icon(Icons.remove_red_eye_outlined),
+                onPressed: () {
+                  setState(() {
+                    statusRedEye = !statusRedEye!;
+                  });
+                  print('$statusRedEye');
+                }),
           filled: true,
           contentPadding: EdgeInsets.only(top: 10),
           border: InputBorder.none,

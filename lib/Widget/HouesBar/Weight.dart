@@ -166,24 +166,6 @@ class _WeightState extends State<Weight> {
  
              List<dynamic> colors = [];
            
-              //       late  DateTime now = DateTime.now();
-              // late List<DateTime> now1 = [DateTime.parse(nowresult1_1[i]['last_date'])];
-              //    List<int>? difference=[];
-              //    List<Color>? Colors=[];
-              //    List<String>? ColorsS=[];
-                //   difference[i] = now1[i].difference(now).inMinutes;
-                //  if(nowresult1_1[i]['status_now'] == 0){
-                //      Colors[i] = Color.fromARGB(255, 133, 133, 133);
-                //    ColorsS[i] = 'เทา';
-                //  }else{
-                //  if(difference[i] > 5){
-                //    Colors[i] = Color.fromARGB(255, 0, 255, 38);
-                //    ColorsS[i] = 'เขียว';
-                //  }else{
-                //     Colors[i] = Color.fromARGB(255, 255, 0, 0);
-                //     ColorsS[i] = 'แดง';
-                //  }
-                //  }
              colors = List.generate(nowresult1_1.length, (i) {
        
                 
@@ -641,55 +623,7 @@ class _WeightState extends State<Weight> {
           nowresult515_,
           nowresult516_
         ];
-        //   //print('da1 === ${da1.length}');
-        //   //print('C1 === ${C1.length}');
-        //   //print('C2 === ${C2.length}');
-
-        //     for(int i=0;i<uniquelist1.length;i++){
-        //       da1[i]= nowresult5_1.where((x) => x['c_device']  == uniquelist1[i]).toList();
-
-        //            setState(() {
-        //        nowresult51_ =da1[0];
-        //         da[1] =da1[1];
-        //          da[2] =da1[2];
-        //           da[3] =da1[3];
-        //  });
-        //     }
-        //      //print('da1 === ${da[1]}');
-
-        //       List<dynamic>   nowresult5_ =nowresult5_1.map((e) => {
-        //         for (int i = 0; i < nowresult5_1[0].keys.length; i++)
-        //   '${nowresult5_1[0].keys.elementAt(i)}' : e['${nowresult5_1[0].keys.elementAt(i)}'],
-        //   'color' : color.where((element) => element['c_device'].toString().compareTo(e['c_device'].toString()) == 0).first['color']?? null,
-        //   'color1' : color.where((element) => element['c_device'].toString().compareTo(e['c_device'].toString()) == 0).first['color1']?? null,
-
-        //          }).toList();
-        //          List<dynamic>   nowresult51_ = nowresult5_1.where((x) => x['c_device']  == uniquelist1[0]).toList();
-        //         List<dynamic>   nowresult52_ = nowresult5_1.where((x) => x['c_device']  == uniquelist1[1]).toList();
-        //         List<dynamic>   nowresult53_ = nowresult5_1.where((x) => x['c_device']  == uniquelist1[2]).toList();
-        //              setState(() {
-        //      nowresult5_11 =nowresult51_;
-        //      nowresult5_12 =nowresult52_;
-        //      nowresult5_13 =nowresult53_;
-        //    });
-        //  List da = [nowresult5_11,nowresult5_12,nowresult5_13];
-
-        //         List<dynamic>   nowresult35_ =nowresult5_.map((e) => {
-        //       // for (int i = 0; i < nowresult5_[0].keys.length; i++)
-        // '${nowresult5_1[0].keys.elementAt(0)}' : e['${nowresult5_1[0].keys.elementAt(0)}'],
-        // for (int i = 0; i < uniquelist1.length; i++)
-        // 'n_weight$i' : da[i].where((element) => element['c_device'].toString().compareTo(e['c_device'].toString()) == 0).first['n_weight']?? null,
-        // for (int i = 0; i < uniquelist1.length; i++)
-        //  'n_normdst$i' : da[i].where((element) => element['c_device'].toString().compareTo(e['c_device'].toString()) == 0).first['n_normdst']?? null,
-        // 'color' : e['color'],
-        // 'color1' : e['color1'],
-
-        //        }).toList();
-        //          //print('nowresult5_====$nowresult5_11');
-        //  setState(() {
-        //    nowresult5_11 =nowresult5_;
-        //  });
-        // // //print('nowresult5_====$nowresult5_11');
+      
 
         if (uniquelist1.length == 1) {
           nowresult51_ = nowresult5_1
@@ -1381,8 +1315,8 @@ class _WeightState extends State<Weight> {
                           color: Color.fromARGB(255, 194, 194, 194),
                           width: screenW * 0.005),
                       color: Color.fromARGB(255, 235, 235, 235)),
-                  height: 40,
-                  width: screenW * 0.3,
+                  height: 50,
+                  width: 150,
                   child: TextButton(
                     onPressed: () {
                       chooseDate1();
@@ -1556,12 +1490,12 @@ class _WeightState extends State<Weight> {
           Container(
             margin: EdgeInsets.only(right: 10, left: 10, bottom: 20),
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.only(top: 10, right: 10),
                   height: 35,
-                  width: screenW * 0.715,
+                  width: screenW * 0.75,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
                       color: Colors.blueAccent,
@@ -4421,8 +4355,8 @@ class _WeightState extends State<Weight> {
                             color: Color.fromARGB(255, 194, 194, 194),
                             width: screenW * 0.005),
                         color: Color.fromARGB(255, 235, 235, 235)),
-                    height: 40,
-                    width: screenW * 0.22,
+       height: 50,
+                  width: 150,
                     child: TextButton(
                       onPressed: () {
                         chooseDate6();

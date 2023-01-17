@@ -69,7 +69,7 @@ class Usersharedpreferences {
   // }
    List<String>? getformula() => _preferences!.getStringList('Formula');
    List<String>? getplanning() => _preferences!.getStringList('Planning');
-   List<String>? getListNameCrop() => _preferences!.getStringList('NameCrop');
+   List<String>? getNameCrop() => _preferences!.getStringList('NameCrop');
    String? getUserEmail() => _preferences!.getString('Email');
    String? getUserPassword() => _preferences!.getString('Password');
   // static String? getUserToken() => _preferences!.getString(_keyToken);

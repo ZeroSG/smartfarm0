@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 
 import 'downloadExcel/download.dart';
@@ -347,6 +348,62 @@ class _DemandState extends State<Demand> {
     }
   }
 
+ late var itemController = ItemScrollController();
+  int item = 0;
+  DateTime itemdmy = DateTime.now();
+  DateTime itemdmy1 = DateTime.now();
+  Future scrollToitem() async{
+    print(item);
+    if(item == 0){
+     DateTime day1 = DateTime.now();
+      itemController.jumpTo(index: day1.day-1,alignment: 0.6);
+      setState(() {
+        
+        item =  day1.day;
+        itemdmy = DateTime.parse('$Y-$M-${item.toString().padLeft(2, '0')}');
+      });
+    }else{
+      if(day == 31){
+      if(item < 4 || item > 28){
+       
+      }else{
+         itemController.jumpTo(index:item,alignment: 0.6);    
+      }
+      }
+      if(day == 28){
+   if(item < 4 || item > 25){
+       
+      }else{
+         itemController.jumpTo(index:item,alignment: 0.6);    
+      }
+      }
+      if(day == 29){
+          if(item < 4 || item > 26){
+       
+      }else{
+         itemController.jumpTo(index:item,alignment: 0.6);    
+      }
+      }
+      if(day == 30){
+        if(item < 4 || item > 27){
+       
+      }else{
+         itemController.jumpTo(index:item,alignment: 0.6);    
+      }
+      }
+      
+      // if(item > 4){
+      //    itemController.jumpTo(index:item,alignment: 0.5);
+      // }if(item == 4){
+      //   itemController.jumpTo(index:item,alignment: 0.3);
+      // }if(item < 4){
+      //   itemController.jumpTo(index:item,alignment: 0.1);
+      // }
+    }
+
+   
+  }
+ 
   @override
   void initState() {
     // TODO: implement initState
@@ -356,6 +413,7 @@ class _DemandState extends State<Demand> {
         setState(() {
           M = '0$M';
         });
+    
     }
 
      if (int.parse(Y) > 0 && int.parse(Y) < 10) {
@@ -391,8 +449,13 @@ class _DemandState extends State<Demand> {
       case 2:
         setState(() {
           M2 = 'FEBRUARY';
-          late double DF = double.parse('${_selectedValue.year}');
+          // late double DF = double.parse('${_selectedValue.year}');
+          late double DF = YY.toDouble();
+            print(DF);
+          DF = YY/4.0;
           String DDF = DF.toStringAsFixed(2).toString();
+         
+          print(DDF);
           if ('${DDF.split('.').last}' == '00') {
             day = 29;
           } else {
@@ -464,12 +527,14 @@ class _DemandState extends State<Demand> {
         break;
     }
   }
-
+   
   @override
   Widget build(BuildContext context) {
+    scrollToitem();
     M3();
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
+    
     return Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -501,7 +566,7 @@ class _DemandState extends State<Demand> {
                               onTap: () {
                                 setState(() {
                                   YY--;
-                                  if (YY >= 1 && YY < 10) {
+                                  if (YY > 1 && YY < 10) {
                                     Y = '000$YY';
                                   }
                                   if (YY >= 10 && YY < 100) {
@@ -546,7 +611,7 @@ class _DemandState extends State<Demand> {
                                 onTap: () {
                                   setState(() {
                                     YY++;
-                                    if (YY >= 1 && YY < 10) {
+                                    if (YY > 1 && YY < 10) {
                                       Y = '000$YY';
                                     }
                                     if (YY >= 10 && YY < 100) {
@@ -576,18 +641,18 @@ class _DemandState extends State<Demand> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              if (MM >= 1) {
+                              if (MM > 1) {
                                 MM--;
-                                if (MM >= 1 && MM < 10) {
+                                if (MM > 0 && MM < 10) {
                                   M = '0$MM';
                                 } else if (MM >= 10) {
                                   M = '$MM';
                                 }
                               } else {
-                                setState(() {
-                                  MM = 1;
-                                  M = '0$MM';
-                                });
+                                // setState(() {
+                                //   MM = 1;
+                                //   M = '0$MM';
+                                // });
                               }
                               M3();
                             });
@@ -620,9 +685,9 @@ class _DemandState extends State<Demand> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              if (MM <= 11) {
+                              if (MM < 12) {
                                 MM++;
-                                if (MM >= 1 && MM < 10) {
+                                if (MM > 0 && MM < 10) {
                                   M = '0$MM';
                                 } else if (MM >= 10) {
                                   M = '$MM';
@@ -704,22 +769,92 @@ class _DemandState extends State<Demand> {
                 //  margin: EdgeInsets.all(20),
                 margin: EdgeInsets.only(top: 5),
                 height: 80,
-                child: DatePicker(
-                  DateTime.parse('$Y-$M-01'),
-                  initialSelectedDate: DateTime.now(),
-                  selectionColor: Color.fromARGB(255, 255, 0, 208),
-                  selectedTextColor: Color.fromARGB(255, 255, 255, 255),
-                  deactivatedColor: Color.fromARGB(255, 0, 47, 255),
-                  daysCount: day,
-                  onDateChange: (date) {
-                    // New date selected
-                    setState(() {
+                child: 
+                ScrollablePositionedList.builder(
+                   scrollDirection: Axis.horizontal,
+                   shrinkWrap: true,
+                  itemCount: day, 
+                  itemScrollController: itemController,
+                  itemBuilder: (BuildContext context, int index){
+                       return Center(
+                child: GestureDetector (
+                  onTap: () {
+                               setState(() {
+                              item = index+1;
+                              itemdmy = DateTime.parse('$Y-$M-${(index+1).toString().padLeft(2, '0')}');
+                                DateTime  date = DateTime.parse('$Y-$M-${(index+1).toString().padLeft(2, '0')}');
+                         
                       _selectedValue = date;
                       getjaon1_demand_information();
                     });
-                    //print(_selectedValue);
+                   
                   },
+                  child: Container(
+                    decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: itemdmy.year != YY ? Color.fromARGB(0, 255, 214, 64)
+                    :itemdmy.month != MM ?Color.fromARGB(0, 255, 214, 64)
+                    :itemdmy.day != (index+1) ? Color.fromARGB(0, 255, 214, 64)
+                    :Color.fromARGB(255, 255, 0, 208),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [
+                          0.3,
+                          1
+                        ],
+                        colors: [
+                          Color.fromARGB(255, 255, 0, 208),
+                          Color.fromARGB(255, 255, 255, 255)
+                        ])),
+                    width: 70,
+                    // height: 80,
+                    // margin: EdgeInsets.only(right: 10,left: 10),
+                    child: Center(
+                      child: Text('${index+1}',style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 40,
+                                    color: Color.fromARGB(255, 255, 255, 255)),),
+                    ),
+                  ),
                 ),
+              );
+                  })
+                
+            //     ListView.builder(
+            //       key: const PageStorageKey<String>('17'),
+            //       scrollDirection: Axis.horizontal,
+            // shrinkWrap: true,
+            // controller: _scrollController,
+            // itemCount: day,
+            // itemBuilder: (BuildContext context, int index) {
+            //   return Center(
+            //     child: Container(
+            //       margin: EdgeInsets.only(right: 10,left: 10),
+            //       child: Text('${index+1}',style: TextStyle(
+            //                     fontFamily: 'Montserrat',
+            //                     fontSize: 40,
+            //                     color: Color.fromARGB(255, 255, 255, 255)),),
+            //     ),
+            //   );
+            // }
+            //     )
+                // DatePicker(
+                //   DateTime.parse('$Y-$M-01'),
+                //   initialSelectedDate: DateTime.now(),
+                //   selectionColor: Color.fromARGB(255, 255, 0, 208),
+                //   selectedTextColor: Color.fromARGB(255, 255, 255, 255),
+                //   deactivatedColor: Color.fromARGB(255, 0, 47, 255),
+                //   daysCount: day,
+                //   onDateChange: (date) {
+                //     // New date selected
+                //     setState(() {
+                //       _selectedValue = date;
+                //       getjaon1_demand_information();
+                //     });
+                //     //print(_selectedValue);
+                //   },
+                // ),
               ),
               loading1
                   ? Container(

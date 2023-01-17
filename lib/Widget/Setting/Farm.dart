@@ -33,7 +33,7 @@ class _FarmState extends State<Farm> {
 
   late TextEditingController Serial_SmartEE = TextEditingController();
   late TextEditingController Central_ID = TextEditingController();
-
+      late TextEditingController Farm_Name = TextEditingController();
    late TextEditingController Name = TextEditingController();
   late TextEditingController BTG_Plant = TextEditingController();
   late TextEditingController Farm_ID = TextEditingController();
@@ -76,7 +76,7 @@ bool loading1 = true;
          nowresult1_1 = result1_1;
   
        
-  // FarmName.text = nowresult1_1[0]["c_name_ea"].toString();
+  Farm_Name.text = nowresult1_1[0]["c_name"].toString();
   if(nowresult1_1[0]["c_serial"] == null){
         Serial_SmartEE.text= ' ';
   }else{
@@ -308,6 +308,7 @@ bool loading1 = true;
                         ),      
                     ],
                   ),
+                  FarmName0(),
                   Species1(),
                   Name_BTG2(),
                   Farm_SerialSEE3(),
@@ -358,7 +359,7 @@ bool loading1 = true;
                           //  width: screenW*0.5,
                           child: TextButton(
                             onPressed: () {
-                              var name = nowresult1_1[0]["c_name"];
+                              var name = Farm_Name.text;
                             //    print('=======1=========');
                             //  print(widget.Token);
                             //  print(widget.farmnum);
@@ -1390,4 +1391,52 @@ child: TextField(
                 ]),
               );
   }
+  
+  Container FarmName0() {
+    return Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Column(children: [
+                  Container(
+                  width: screenW*0.95,
+                  child: Text('Farm Name',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color: Color.fromARGB(255, 25, 25, 25),
+                                        ),),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xffcfcfcf), width: 1.5),
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.white,
+        ),
+        height: 40,
+        width: screenW*0.95,
+        child: TextField(
+           controller: Farm_Name,
+          keyboardType: TextInputType.emailAddress,
+          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+          decoration: InputDecoration(
+            // filled: true,
+            contentPadding: EdgeInsets.only(top: 10,left: 10),
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: Color(0xff7d7d7d)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Color(0xffcfcfcf)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Color(0xffcfcfcf)),
+            ),
+          ),
+        ),
+      )
+                ]),
+              );
+  }
+
 }

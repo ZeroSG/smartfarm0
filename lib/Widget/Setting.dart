@@ -142,7 +142,7 @@ class _SettingState extends State<Setting> {
                          width: screenW*0.9,
                          child: Padding(
                            padding: const EdgeInsets.all(10.0),
-                           child: loading1? Text(''): Text(
+                           child: loading1?  Text(''): nowresult1_1[0]['c_address'] ==null ?Text(''):Text(
                     '${nowresult1_1[0]['c_address']}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

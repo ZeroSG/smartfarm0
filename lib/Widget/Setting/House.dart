@@ -22,8 +22,8 @@ class _HouseState extends State<House> {
    late List<dynamic>? House = widget.house;
  late String Housename = widget.house![0]['name'];
  late int Houseid = widget.house![0]['id'];
-  late List<dynamic>? Silo = nowresult1_2;
- late String? Siloname=nowresult1_2[0]['c_name'];
+  late List<dynamic>? Silo;
+ late String? Siloname;
   bool Check = false;
   late int Checkid = 0;
 
@@ -71,6 +71,7 @@ class _HouseState extends State<House> {
   Minimum_Weight.text= nowresult1_1[0]["n_min_weight_percent"].toString();
   Maximum_Weight.text= nowresult1_1[0]["n_max_weight_percent"].toString();
   Target_Weight.text= nowresult1_1[0]["n_target_weight"].toString();
+  
 
    
 
@@ -81,14 +82,19 @@ class _HouseState extends State<House> {
       Check = true; 
    } 
 
-  
+           Silo = nowresult1_2;
+           Siloname=nowresult1_2[0]['c_name'];
          Capacity.text= nowresult1_2[0]["n_capacity"].toString();
   Topup.text= nowresult1_2[0]["n_topup"].toString();
   Very_Lower.text= nowresult1_2[0]["n_verylower_percent"].toString();
   Lower.text= nowresult1_2[0]["n_lower_percent"].toString();
   Upper_Percent.text= nowresult1_2[0]["n_upper_percent"].toString();
    
-    
+          print('Target_Weight ${Target_Weight.text}');
+   if(Target_Weight.text == 'null' ||Target_Weight.text == ''||Target_Weight.text == null ){
+    Target_Weight.text = '0.0';
+   }
+   print('Target_Weight ${Target_Weight.text}');
          loading1 = false;
 
        });

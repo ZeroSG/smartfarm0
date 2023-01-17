@@ -223,8 +223,7 @@ class _MainState extends State<Main1> {
                                 ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    key:
-                                        Key('builder1 ${selected1.toString()}'),
+                                    key:Key('builder1 ${selected1.toString()}'),
                                     itemCount: result0!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
