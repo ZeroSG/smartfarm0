@@ -251,6 +251,8 @@ Usersharedpreferences _p =
         
         // //print('ressum ========>  ${ressum.body}');
       } else {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                         builder: (context)=>    Login(),), (route) => false);
         throw Exception('Failed to download');
       }
     } catch (e) {
@@ -849,13 +851,16 @@ Usersharedpreferences _p =
                               child: Row(
                                  mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text(
-                                    email!,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Montserrat',
-                                      overflow: TextOverflow.ellipsis,
-                                      color: Color.fromARGB(255, 68, 188, 90),
+                                  Container(
+                                    width: screenW * 0.40,
+                                    child: Text(
+                                      email!,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Montserrat',
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Color.fromARGB(255, 68, 188, 90),
+                                      ),
                                     ),
                                   ),
                                 ],

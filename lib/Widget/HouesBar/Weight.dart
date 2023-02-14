@@ -485,6 +485,7 @@ class _WeightState extends State<Weight> {
   late List<String> nowresult5__ = [];
   List<dynamic> nowresult5_1 = [];
   late List<String> uniquelist1 = [];
+  List<List<dynamic>> list = [];
   List<dynamic> nowresult5_11 = [];
   List<dynamic> nowresult5_12 = [];
   List<dynamic> nowresult5_13 = [];
@@ -541,16 +542,38 @@ class _WeightState extends State<Weight> {
           nowresult5_1 = result5_1;
           loading5 = false;
         });
-        var largestGeekValue1 = nowresult5_1[0]['n_normdst'];
+        var largestGeekValue1 = 0.0;
 
         for (int i = 0; i < nowresult5_1.length; i++) {
+        if(nowresult5_1[i]['n_normdst']==null){
+
+        }else{
           if (nowresult5_1[i]['n_normdst'] > largestGeekValue1) {
             largestGeekValue1 = nowresult5_1[i]['n_normdst'];
-          }
+          }}
         }
         setState(() {
           largestGeekValue = largestGeekValue1;
         });
+        print('largestGeekValue====$largestGeekValue');
+
+          for(int i = 0; i < nowresult5_1.length; i++){
+                 if(nowresult5_1[i]['n_weight'] == null){
+                 setState(() {
+                   nowresult5_1[i]['n_weight'] = 0.0;
+                 });
+                   
+               }
+            }
+
+        //     if(nowresult5_1[i]['c_device'] != nowresult5_1[i-1]['c_device']){
+        //           setState(() {
+        //      namedistribution_rate.add("${nowresult5_1[i]['c_device']}");
+        //   });
+        //      }
+        // }
+        //  print('name=====$namedistribution_rate');
+          //  print('nowresult5_1=====$nowresult5_1');
         //       List<dynamic>   nowresult5_ = nowresult5_1.map((e) => {
 
         // //  for (int f = 0; f < result5_1.length; f++)
@@ -558,16 +581,17 @@ class _WeightState extends State<Weight> {
         //   '${nowresult5_1[0].keys.elementAt(i)}' : nowresult5_1.where((x) => x['c_device']  == 'ALL'),//e['${result5_1[0].keys.elementAt(i)}'],
         //          }).toList();
         // List<dynamic> nowresult5__1 = nowresult5_1.where((country) => (country['c_device'])).toList();
-
-        for (int i = 0; i < nowresult1_1.length; i++) {
-          if (nowresult1_1[i]["count_data"] != null) {
+        uniquelist1 = [];
+        uniquelist1 += [nowresult5_1[0]["c_device"]];
+        for (int i = 1; i < nowresult5_1.length; i++) {
+          if (nowresult5_1[i]['c_device'] != nowresult5_1[i-1]['c_device']) {
             setState(() {
-
-              uniquelist1 += [nowresult1_1[i]["device"]];
+              uniquelist1 += [nowresult5_1[i]["c_device"]];
 
             });
           }
         }
+        print('uniquelist1====$uniquelist1');
 
         for (int i = 0; i < nowresult5_1.length; i++) {
           if (nowresult5_1[i]['c_device'] == nowresult5_1[0]['c_device']) {
@@ -588,645 +612,671 @@ class _WeightState extends State<Weight> {
               'color1': C2[i],
             },
         ];
-        List<dynamic> nowresult51_ = [],
-            nowresult52_ = [],
-            nowresult53_ = [],
-            nowresult54_ = [],
-            nowresult55_ = [],
-            nowresult56_ = [];
-        List<dynamic> nowresult57_ = [],
-            nowresult58_ = [],
-            nowresult59_ = [],
-            nowresult510_ = [],
-            nowresult511_ = [],
-            nowresult512_ = [];
-        List<dynamic> nowresult513_ = [],
-            nowresult514_ = [],
-            nowresult515_ = [],
-            nowresult516_ = [];
 
-        List<List<dynamic>> da1 = [
-          nowresult51_,
-          nowresult52_,
-          nowresult53_,
-          nowresult54_,
-          nowresult55_,
-          nowresult56_,
-          nowresult57_,
-          nowresult58_,
-          nowresult59_,
-          nowresult510_,
-          nowresult511_,
-          nowresult512_,
-          nowresult513_,
-          nowresult514_,
-          nowresult515_,
-          nowresult516_
-        ];
+
+         List<List<dynamic>> list1 =  List<List<dynamic>>.generate(uniquelist1.length, (i) => []);
+         int num =0;
+          list1[0] += [nowresult5_1[0]];
+         for (int i = 1; i < nowresult5_1.length; i++) {
+           if (nowresult5_1[i]['c_device'] == nowresult5_1[i-1]['c_device']) {
+            setState(() {
+              list1[num] += [nowresult5_1[i]];
+            });
+          }else{
+             setState(() {
+               num++;
+              list1[num] += [nowresult5_1[i]];
+            });
+          }
+         }
+        setState(() {
+          list = list1;
+        });
+    //        print('object=====${list[0]}');
+    // print('object=====${list[1]}');
+    // print('object=====${list[2]}');
+    // print('object=====${list[3]}');
+
+        //  print(list);
+        // List<dynamic> nowresult51_ = [],
+        //     nowresult52_ = [],
+        //     nowresult53_ = [],
+        //     nowresult54_ = [],
+        //     nowresult55_ = [],
+        //     nowresult56_ = [];
+        // List<dynamic> nowresult57_ = [],
+        //     nowresult58_ = [],
+        //     nowresult59_ = [],
+        //     nowresult510_ = [],
+        //     nowresult511_ = [],
+        //     nowresult512_ = [];
+        // List<dynamic> nowresult513_ = [],
+        //     nowresult514_ = [],
+        //     nowresult515_ = [],
+        //     nowresult516_ = [];
+
+        // List<List<dynamic>> da1 = [
+        //   nowresult51_,
+        //   nowresult52_,
+        //   nowresult53_,
+        //   nowresult54_,
+        //   nowresult55_,
+        //   nowresult56_,
+        //   nowresult57_,
+        //   nowresult58_,
+        //   nowresult59_,
+        //   nowresult510_,
+        //   nowresult511_,
+        //   nowresult512_,
+        //   nowresult513_,
+        //   nowresult514_,
+        //   nowresult515_,
+        //   nowresult516_
+        // ];
       
 
-        if (uniquelist1.length == 1) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
+        // if (uniquelist1.length == 1) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-          });
-        }
-        if (uniquelist1.length == 2) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-          });
-        } else if (uniquelist1.length == 3) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //   });
+        // }
+        // if (uniquelist1.length == 2) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //   });
+        // } else if (uniquelist1.length == 3) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-          });
-        } else if (uniquelist1.length == 4) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-          });
-        } else if (uniquelist1.length == 5) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-          });
-        } else if (uniquelist1.length == 6) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-          });
-        } else if (uniquelist1.length == 7) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-          });
-        } else if (uniquelist1.length == 8) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-          });
-        } else if (uniquelist1.length == 9) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-          });
-        } else if (uniquelist1.length == 10) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-          });
-        } else if (uniquelist1.length == 11) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          nowresult511_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[10])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //   });
+        // } else if (uniquelist1.length == 4) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //   });
+        // } else if (uniquelist1.length == 5) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //   });
+        // } else if (uniquelist1.length == 6) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //   });
+        // } else if (uniquelist1.length == 7) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //   });
+        // } else if (uniquelist1.length == 8) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //   });
+        // } else if (uniquelist1.length == 9) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //   });
+        // } else if (uniquelist1.length == 10) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //   });
+        // } else if (uniquelist1.length == 11) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   nowresult511_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[10])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-            nowresult5_111 = nowresult511_;
-          });
-        } else if (uniquelist1.length == 12) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          nowresult511_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[10])
-              .toList();
-          nowresult512_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[11])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //     nowresult5_111 = nowresult511_;
+        //   });
+        // } else if (uniquelist1.length == 12) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   nowresult511_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[10])
+        //       .toList();
+        //   nowresult512_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[11])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-            nowresult5_111 = nowresult511_;
-            nowresult5_112 = nowresult512_;
-          });
-        } else if (uniquelist1.length == 13) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          nowresult511_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[10])
-              .toList();
-          nowresult512_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[11])
-              .toList();
-          nowresult513_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[12])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //     nowresult5_111 = nowresult511_;
+        //     nowresult5_112 = nowresult512_;
+        //   });
+        // } else if (uniquelist1.length == 13) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   nowresult511_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[10])
+        //       .toList();
+        //   nowresult512_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[11])
+        //       .toList();
+        //   nowresult513_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[12])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-            nowresult5_111 = nowresult511_;
-            nowresult5_112 = nowresult512_;
-            nowresult5_113 = nowresult513_;
-          });
-        } else if (uniquelist1.length == 14) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          nowresult511_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[10])
-              .toList();
-          nowresult512_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[11])
-              .toList();
-          nowresult513_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[12])
-              .toList();
-          nowresult514_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[13])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //     nowresult5_111 = nowresult511_;
+        //     nowresult5_112 = nowresult512_;
+        //     nowresult5_113 = nowresult513_;
+        //   });
+        // } else if (uniquelist1.length == 14) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   nowresult511_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[10])
+        //       .toList();
+        //   nowresult512_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[11])
+        //       .toList();
+        //   nowresult513_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[12])
+        //       .toList();
+        //   nowresult514_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[13])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-            nowresult5_111 = nowresult511_;
-            nowresult5_112 = nowresult512_;
-            nowresult5_113 = nowresult513_;
-            nowresult5_114 = nowresult514_;
-          });
-        } else if (uniquelist1.length == 15) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          nowresult511_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[10])
-              .toList();
-          nowresult512_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[11])
-              .toList();
-          nowresult513_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[12])
-              .toList();
-          nowresult514_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[13])
-              .toList();
-          nowresult515_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[14])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //     nowresult5_111 = nowresult511_;
+        //     nowresult5_112 = nowresult512_;
+        //     nowresult5_113 = nowresult513_;
+        //     nowresult5_114 = nowresult514_;
+        //   });
+        // } else if (uniquelist1.length == 15) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   nowresult511_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[10])
+        //       .toList();
+        //   nowresult512_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[11])
+        //       .toList();
+        //   nowresult513_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[12])
+        //       .toList();
+        //   nowresult514_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[13])
+        //       .toList();
+        //   nowresult515_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[14])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-            nowresult5_111 = nowresult511_;
-            nowresult5_112 = nowresult512_;
-            nowresult5_113 = nowresult513_;
-            nowresult5_114 = nowresult514_;
-            nowresult5_115 = nowresult515_;
-          });
-        } else if (uniquelist1.length == 16) {
-          nowresult51_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[0])
-              .toList();
-          nowresult52_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[1])
-              .toList();
-          nowresult53_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[2])
-              .toList();
-          nowresult54_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[3])
-              .toList();
-          nowresult55_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[4])
-              .toList();
-          nowresult56_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[5])
-              .toList();
-          nowresult57_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[6])
-              .toList();
-          nowresult58_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[7])
-              .toList();
-          nowresult59_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[8])
-              .toList();
-          nowresult510_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[9])
-              .toList();
-          nowresult511_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[10])
-              .toList();
-          nowresult512_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[11])
-              .toList();
-          nowresult513_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[12])
-              .toList();
-          nowresult514_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[13])
-              .toList();
-          nowresult515_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[14])
-              .toList();
-          nowresult516_ = nowresult5_1
-              .where((x) => x['c_device'] == uniquelist1[15])
-              .toList();
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //     nowresult5_111 = nowresult511_;
+        //     nowresult5_112 = nowresult512_;
+        //     nowresult5_113 = nowresult513_;
+        //     nowresult5_114 = nowresult514_;
+        //     nowresult5_115 = nowresult515_;
+        //   });
+        // } else if (uniquelist1.length == 16) {
+        //   nowresult51_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[0])
+        //       .toList();
+        //   nowresult52_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[1])
+        //       .toList();
+        //   nowresult53_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[2])
+        //       .toList();
+        //   nowresult54_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[3])
+        //       .toList();
+        //   nowresult55_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[4])
+        //       .toList();
+        //   nowresult56_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[5])
+        //       .toList();
+        //   nowresult57_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[6])
+        //       .toList();
+        //   nowresult58_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[7])
+        //       .toList();
+        //   nowresult59_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[8])
+        //       .toList();
+        //   nowresult510_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[9])
+        //       .toList();
+        //   nowresult511_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[10])
+        //       .toList();
+        //   nowresult512_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[11])
+        //       .toList();
+        //   nowresult513_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[12])
+        //       .toList();
+        //   nowresult514_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[13])
+        //       .toList();
+        //   nowresult515_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[14])
+        //       .toList();
+        //   nowresult516_ = nowresult5_1
+        //       .where((x) => x['c_device'] == uniquelist1[15])
+        //       .toList();
 
-          setState(() {
-            nowresult5_11 = nowresult51_;
-            nowresult5_12 = nowresult52_;
-            nowresult5_13 = nowresult53_;
-            nowresult5_14 = nowresult54_;
-            nowresult5_15 = nowresult55_;
-            nowresult5_16 = nowresult56_;
-            nowresult5_17 = nowresult57_;
-            nowresult5_18 = nowresult58_;
-            nowresult5_19 = nowresult59_;
-            nowresult5_110 = nowresult510_;
-            nowresult5_111 = nowresult511_;
-            nowresult5_112 = nowresult512_;
-            nowresult5_113 = nowresult513_;
-            nowresult5_114 = nowresult514_;
-            nowresult5_115 = nowresult515_;
-            nowresult5_116 = nowresult516_;
-          });
-        }
+        //   setState(() {
+        //     nowresult5_11 = nowresult51_;
+        //     nowresult5_12 = nowresult52_;
+        //     nowresult5_13 = nowresult53_;
+        //     nowresult5_14 = nowresult54_;
+        //     nowresult5_15 = nowresult55_;
+        //     nowresult5_16 = nowresult56_;
+        //     nowresult5_17 = nowresult57_;
+        //     nowresult5_18 = nowresult58_;
+        //     nowresult5_19 = nowresult59_;
+        //     nowresult5_110 = nowresult510_;
+        //     nowresult5_111 = nowresult511_;
+        //     nowresult5_112 = nowresult512_;
+        //     nowresult5_113 = nowresult513_;
+        //     nowresult5_114 = nowresult514_;
+        //     nowresult5_115 = nowresult515_;
+        //     nowresult5_116 = nowresult516_;
+        //   });
+        // }
         // List<dynamic>   nowresult5_ = nowresult5_1.where((x) => x['c_device']  == uniquelist1[0]).toList();
         //      //print('nowresult5_ =====> ${nowresult5_.length}');
       } else {
@@ -3921,25 +3971,11 @@ class _WeightState extends State<Weight> {
   }
 
   List<charts.Series<dynamic, double>> _createSampleData1() {
-    List<List<dynamic>> da = [
-      nowresult5_11,
-      nowresult5_12,
-      nowresult5_13,
-      nowresult5_14,
-      nowresult5_15,
-      nowresult5_16,
-      nowresult5_17,
-      nowresult5_18,
-      nowresult5_19,
-      nowresult5_110,
-      nowresult5_111,
-      nowresult5_112,
-      nowresult5_113,
-      nowresult5_114,
-      nowresult5_115,
-      nowresult5_116
-    ];
-
+    List<List<dynamic>> da = list;
+  //  print('object=====${da[0]}');
+  //   print('object=====${da[1]}');
+  //   print('object=====${da[2]}');
+  //   print('object=====${da[3]}');
     return [
       for (int i = 0; i < uniquelist1.length; i++)
         charts.Series<dynamic, double>(
@@ -4086,36 +4122,48 @@ class _WeightState extends State<Weight> {
     var largestGeekValue2 = nowresult5_1[0]['n_weight'];
     var largestGeekValue0;
 
-      var largestGeekValue1_normdst = nowresult5_1[0]['n_normdst'];
-    var largestGeekValue2_normdst = nowresult5_1[0]['n_normdst'];
+      var largestGeekValue1_normdst = 0.0;
+    var largestGeekValue2_normdst = 0.0;
     var largestGeekValue_normdst;
 
     for (int i = 0; i < nowresult5_1.length; i++) {
+      if(nowresult5_1[i]['n_weight'] == null){
+
+      }else{
       if (nowresult5_1[i]['n_weight'] > largestGeekValue1) {
         largestGeekValue1 = nowresult5_1[i]['n_weight'];
-      }
+      }}
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
+      if(nowresult5_1[i]['n_weight'] == null){
+
+      }else{
       if (nowresult5_1[i]['n_weight'] < largestGeekValue2) {
         largestGeekValue2 = nowresult5_1[i]['n_weight'];
-      }
+      }}
 
       
     }
 
     for (int i = 0; i < nowresult5_1.length; i++) {
+      if(nowresult5_1[i]['n_normdst'] == null){
+
+      }else{
       if (nowresult5_1[i]['n_normdst'] > largestGeekValue1_normdst) {
         largestGeekValue1_normdst = nowresult5_1[i]['n_normdst'];
-      }
+      }}
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
+       if(nowresult5_1[i]['n_normdst'] == null){
+
+      }else{
       if (nowresult5_1[i]['n_normdst'] < largestGeekValue2_normdst) {
         largestGeekValue2_normdst = nowresult5_1[i]['n_normdst'];
-      }
+      }}
 
       
     }
-
+   
     if(largestGeekValue2_normdst < largestGeekValue1_normdst){
       largestGeekValue_normdst = largestGeekValue1_normdst;
     }else{
@@ -4126,7 +4174,17 @@ class _WeightState extends State<Weight> {
     }else{
       largestGeekValue0 = largestGeekValue2;
     }
+  print('largestGeekValue_normdst====$largestGeekValue_normdst');
+  print('largestGeekValue1_normdst====$largestGeekValue1_normdst');
+  print('largestGeekValue2_normdst====$largestGeekValue2_normdst');
 
+  // if(largestGeekValue1_normdst == 0.0){
+  //   largestGeekValue_normdst =0.2;
+  //  largestGeekValue =1;
+  // }
+  //  if(largestGeekValue == 0.0){
+  //   largestGeekValue =200;
+  // }
     
 
     return Container(
@@ -4174,7 +4232,7 @@ class _WeightState extends State<Weight> {
                     NumberFormat.compact()),
             tickProviderSpec: charts.BasicNumericTickProviderSpec(
               zeroBound: true,
-              desiredTickCount: 17,
+              desiredTickCount: 12,
             ),
             renderSpec: new charts.SmallTickRendererSpec(
               labelStyle: new charts.TextStyleSpec(
@@ -4188,16 +4246,16 @@ class _WeightState extends State<Weight> {
                     NumberFormat.compact()),
             tickProviderSpec:
                 charts.StaticNumericTickProviderSpec(<charts.TickSpec<double>>[
-              for (var i = 0; i <= 15; i++)
+              for (var i = 0; i < 15; i++)
                 if (i * largestGeekValue_normdst/7 < largestGeekValue + largestGeekValue_normdst/7)
                   charts.TickSpec(i * largestGeekValue_normdst/7),
             ]),
-            // tickProviderSpec: charts.BasicNumericTickProviderSpec(
-            //       zeroBound: true,
-            //       desiredTickCount : 6,
-            //       desiredMinTickCount : 1,
-            //       desiredMaxTickCount : 0
-            //     ),
+        //     // tickProviderSpec: charts.BasicNumericTickProviderSpec(
+        //     //       zeroBound: true,
+        //     //       desiredTickCount : 6,
+        //     //       desiredMinTickCount : 1,
+        //     //       desiredMaxTickCount : 0
+        //     //     ),
             renderSpec: new charts.GridlineRendererSpec(
                 labelStyle: new charts.TextStyleSpec(
                     fontSize: 13, fontFamily: 'Montserrat'),
