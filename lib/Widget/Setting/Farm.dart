@@ -378,12 +378,16 @@ bool loading1 = true;
                             double Chamber = double.parse(Chamber_Weight.text);
                             String Weight = Chamber.toStringAsFixed(0);
                             int C_W = int.parse(Weight);
-
-                            double Uniform = double.parse(Target_Uniform.text);
-                            String Target = Uniform.toStringAsFixed(0);
-                            int T_U = int.parse(Target);
-                            
-
+                              
+                           late int T_U;
+                            if(Target_Uniform.text == ''||Target_Uniform.text == null){
+                               T_U = 0;
+                            }else{
+                              double Uniform = double.parse(Target_Uniform.text);
+                              String Target = Uniform.toStringAsFixed(0);
+                               T_U = int.parse(Target);
+                            }
+                           
                             API_edit_setting_farm(widget.Token,widget.farmnum,name,Speciesnum,
                             Name.text,BTG_Plant.text,Farm_ID.text,Serial_SmartEE.text,
                             int.parse(Central_ID.text),int.parse(Default_Density.text),Farm_Address.text,Supervisor.text,
