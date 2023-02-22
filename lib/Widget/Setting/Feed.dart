@@ -11,8 +11,8 @@ import 'package:http/http.dart' as http;
 import '../API_E_B/API_B.dart';
 
 class Feed extends StatefulWidget {
-  String? Token;
-  int? farmnum;
+  String? Token; // Token
+  int? farmnum; // farm id
 
   Feed({Key? key, this.Token, this.farmnum}) : super(key: key);
 
@@ -37,6 +37,8 @@ class _FeedState extends State<Feed> {
   List<dynamic> nowresult1_1 = [];
   List<dynamic> nowresult1_2 = [];
   List<dynamic> nowresult1_3 = [];
+
+   //API setting_feeds
   Future<void> getjaon1_setting_feeds() async {
     try {
       loading1 = true;
@@ -53,8 +55,7 @@ class _FeedState extends State<Feed> {
         var result1_2 = json.decode(ressum.body)['result']['view2'];
         var result1_3 = json.decode(ressum.body)['result']['view3'];
         setState(() {
-          //  //print("Feed ===>$result1_1",);
-          //   //print("${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",);
+
           nowresult1_1 = result1_1;
           nowresult1_2 = result1_2;
           nowresult1_3 = result1_3;
@@ -109,7 +110,7 @@ class _FeedState extends State<Feed> {
     // TODO: implement initState
     super.initState();
     getjaon1_setting_feeds();
-    // _createSampleData();
+
   }
 
   @override
@@ -167,7 +168,7 @@ class _FeedState extends State<Feed> {
       ),
     );
   }
-
+   //Dropdown Feeds และ ปุ่มลบ
   Container Feeds1() {
     return Container(
       child: Row(
@@ -252,7 +253,7 @@ class _FeedState extends State<Feed> {
       ),
     );
   }
-
+   //DataTable Feed
   Stack DataTable() {
     return Stack(
       children: [
@@ -401,7 +402,7 @@ class _FeedState extends State<Feed> {
       ],
     );
   }
-
+  //DataTable Feedmills_Orders
   Container Feedmills_Orders3() {
     return Container(
       margin: EdgeInsets.only(top: 10),

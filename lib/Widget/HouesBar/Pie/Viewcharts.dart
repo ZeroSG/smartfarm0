@@ -37,7 +37,6 @@ class _ViewchartsState extends State<Viewcharts> {
          { 'c_size': widget.nowresult6_1![i]['c_size'],'color': color1![i], 'color1':color2![i],},
        ];
      
-     //print(color1);
        List<dynamic>   nowresult6_ = widget.nowresult6_1!.map((e) => {
     for (int i = 0; i < widget.nowresult6_1![0].keys.length; i++)
     '${widget.nowresult6_1![0].keys.elementAt(i)}' : e['${widget.nowresult6_1![0].keys.elementAt(i)}'],
@@ -56,15 +55,6 @@ class _ViewchartsState extends State<Viewcharts> {
       });
     }
 
-    // for(int i =0 ; i< widget.nowresult6_1!.length;i++){
-    //     List<dynamic>   nowresult6_ = widget.nowresult6_1!.map((e) => {
-    // for (int i = 0; i < widget.nowresult6_1![0].keys.length; i++)
-    // '${widget.nowresult6_1![0].keys.elementAt(i)}' : e['${widget.nowresult6_1![0].keys.elementAt(i)}'],
-    // 'color' : color3![i],
-    // 'color1' : color1![i],
-    
-    //        }).toList();
-    // }
         screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
   
@@ -72,8 +62,7 @@ class _ViewchartsState extends State<Viewcharts> {
     sum += double.parse('${_nowresult6_1![i]['n_percent'].split(' %').first}');
   }
 
-  //print("Sum : ${sum}");
-     
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: sum == 0
@@ -123,7 +112,6 @@ class _ViewchartsState extends State<Viewcharts> {
             children: _nowresult6_1!
             .map((data) =>   
             Container(
-              // padding: EdgeInsets.symmetric(vertical: 2),
               child: Row(
                 children: [
                    SizedBox(width: 8,),
@@ -132,21 +120,16 @@ class _ViewchartsState extends State<Viewcharts> {
                     height: 16,
                     decoration: BoxDecoration(
                       shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
-                      // color: data.color,
+
                       gradient: LinearGradient(
    begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      // stops: [0.3, 1],
+
       colors: [data['color'],data['color1']])
                       ),
                   ),
                   SizedBox(width: 8,),
-                  // Text('${data['c_size']}',
-                  // style: TextStyle(
-                  //  fontSize: 16,
-                  //  fontWeight: FontWeight.bold,
-                  //  color: textC
-                  // ),),
+
                 ],
               ),
             )
@@ -160,7 +143,7 @@ class _ViewchartsState extends State<Viewcharts> {
 
 
 
-  
+  // PieChar
  List<PieChartSectionData> showingSections()=>
        _nowresult6_1!.asMap().map<int,PieChartSectionData>((index, data) {      
          final isTouched = index == touchedIndex;
@@ -180,7 +163,7 @@ class _ViewchartsState extends State<Viewcharts> {
              color: Color.fromARGB(255, 0, 0, 0),
            ),))),
             badgePositionPercentageOffset:1.3,
-            // titlePositionPercentageOffset:2.0,
+     
             showTitle : false,
            titleStyle: TextStyle(
              fontSize: fontSize,

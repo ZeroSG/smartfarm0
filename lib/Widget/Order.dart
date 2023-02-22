@@ -1,12 +1,13 @@
+//หน้า Order
+
+
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 
 import 'API_E_B/API_B.dart';
 import 'API_E_B/API_E.dart';
@@ -14,19 +15,15 @@ import 'downloadExcel/download.dart';
 import 'shared_preferences/shared_preferences.dart';
 
 class Order extends StatefulWidget {
-  String? Token;
-  int? day;
-  String? day1;
-  int? farmnum;
-  List<dynamic>? default_ship;
-  List<dynamic>? default_unit;
-  List<dynamic>? cmiid;
-  int? id;
+  String? Token; // Token
+  int? farmnum; // farm id
+  List<dynamic>? default_ship; // data default_ship
+  List<dynamic>? default_unit; // data default_unit
+  List<dynamic>? cmiid; //data cmiid
+  int? id; //id user
   Order(
       {Key? key,
       this.Token,
-      this.day,
-      this.day1,
       this.default_ship,
       this.default_unit,
       this.farmnum,
@@ -44,7 +41,6 @@ class _OrderState extends State<Order> {
   List<dynamic>? ColBg;
   late double screenW, screenH;
   int selected1 = 0;
-  //  bool valuefirst = false;
   bool loading1 = true;
   bool loading0 = true;
   late TextEditingController Number1 = TextEditingController();
@@ -53,10 +49,9 @@ class _OrderState extends State<Order> {
   late TextEditingController Number2 = TextEditingController();
   late TextEditingController Remark2 = TextEditingController();
   late TextEditingController Order_Ref = TextEditingController();
-   
 
- Usersharedpreferences _p =  Usersharedpreferences();
-   late List<String>? Name_Crop =[''];
+  Usersharedpreferences _p = Usersharedpreferences();
+  late List<String>? Name_Crop = [''];
   late String? Name_Cropname = '';
   late List<dynamic>? Ship_Condition = widget.default_ship;
   late String? Ship_Conditionname = widget.default_ship![0]['code'];
@@ -70,7 +65,7 @@ class _OrderState extends State<Order> {
 
   List<dynamic> nowresult1_1 = [];
   List<dynamic> nowresultFeed = [];
-
+  //API setting Feed
   Future<void> getFeed() async {
     try {
       loading0 = true;
@@ -90,9 +85,8 @@ class _OrderState extends State<Order> {
           nowresultFeed = result1_1;
           Feed_Formula = nowresultFeed;
           Feed_Formulaname = nowresultFeed[0]["FEED"];
-  
+
           loading0 = false;
-          
         });
       } else {
         throw Exception('Failed to download');
@@ -102,6 +96,7 @@ class _OrderState extends State<Order> {
     }
   }
 
+  //API order_information
   Future<void> getjaon1_order_information() async {
     try {
       loading1 = true;
@@ -122,14 +117,13 @@ class _OrderState extends State<Order> {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
 
         setState(() {
-
           nowresult1_1 = result1_1;
-         
+
           Number1.text = '0';
           ColBg = List.generate(nowresult1_1.length, (i) {
             return {"color": Color.fromARGB(255, 255, 255, 255)};
           });
-            
+
           for (int i = 0; i < nowresult1_1.length; i++) {
             if (nowresult1_1[i]['n_confirm'] == 0) {
               if (nowresult1_1[i]['c_flag_api'] == 'Y') {
@@ -166,12 +160,10 @@ class _OrderState extends State<Order> {
             //  if(nowresult1_1[i]['n_confirm']==2&&nowresult1_1[i]['c_flag_api']=='N'){
             //   Col![i]['color'] = Color.fromARGB(255, 83, 83, 83);
             //  }
-          
-          }
-              
-           loading1 = false;
-           
 
+          }
+
+          loading1 = false;
         });
       } else {
         throw Exception('Failed to download');
@@ -183,8 +175,6 @@ class _OrderState extends State<Order> {
 
   late List<bool> valuefirst =
       List<bool>.generate(nowresult1_1.length, (i) => false);
-
-  //  DateTime? dateTimeto=DateTime.now();
 
   late DateTime? start = _selectedDateRange!.start;
   late var dayS = start!.day.toString().padLeft(2, '0');
@@ -198,59 +188,55 @@ class _OrderState extends State<Order> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   
+
     getFeed();
     getjaon1_order_information();
 
- 
-      var duration = Duration(seconds:1);
-                            
-      
+    var duration = Duration(seconds: 1);
 
-                              
+    route() {
+      Name_Crop = _p.getNameCrop();
+      Name_Cropname = Name_Crop![0];
+      print('Name_Crop $Name_Crop');
+    }
 
-                            route(){
-  Name_Crop = _p.getNameCrop();
-          Name_Cropname = Name_Crop![0];
-          print('Name_Crop $Name_Crop');
-}
- Timer(duration, route);
-    
-    // _createSampleData();
+    Timer(duration, route);
   }
 
   DateTimeRange? _selectedDateRange = DateTimeRange(
     start: DateTime.now(),
     end: DateTime.now().add(Duration(days: 7)),
   );
-  Future pickDateRange(double W,double H) async {
-    if(W > H){
-     DateTimeRange? newDateTimeRange = await showDateRangePicker(
-      context: context, 
-      initialDateRange: _selectedDateRange, 
-      firstDate: DateTime(DateTime.now().year - 5), 
-      lastDate: DateTime(DateTime.now().year + 5), 
-       builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Color(0xff44bca3),
-              onPrimary: Color.fromARGB(255, 255, 255, 255),
-              onSurface: Color.fromARGB(255, 0, 0, 0),
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Color.fromARGB(255, 0, 0, 0),
+
+  //ปฏิทิน
+  Future pickDateRange(double W, double H) async {
+    if (W > H) {
+      DateTimeRange? newDateTimeRange = await showDateRangePicker(
+        context: context,
+        initialDateRange: _selectedDateRange,
+        firstDate: DateTime(DateTime.now().year - 5),
+        lastDate: DateTime(DateTime.now().year + 5),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: Color(0xff44bca3),
+                onPrimary: Color.fromARGB(255, 255, 255, 255),
+                onSurface: Color.fromARGB(255, 0, 0, 0),
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  primary: Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
             ),
-          ),
-          child: child!,
-        );
-      },
-     );
+            child: child!,
+          );
+        },
+      );
 
-     if(newDateTimeRange == null){
-      setState(() {
+      if (newDateTimeRange == null) {
+        setState(() {
           end = end;
           yearE = end!.day.toString().padLeft(2, '0');
           monthE = end!.month.toString().padLeft(2, '0');
@@ -260,9 +246,9 @@ class _OrderState extends State<Order> {
           monthS = start!.month.toString().padLeft(2, '0');
           dayS = start!.year.toString().padLeft(4, '0');
         });
-     }else{
-         setState(() {
-          _selectedDateRange =  newDateTimeRange;
+      } else {
+        setState(() {
+          _selectedDateRange = newDateTimeRange;
           end = newDateTimeRange.end;
           yearS = newDateTimeRange.start.day.toString().padLeft(2, '0');
           monthS = newDateTimeRange.start.month.toString().padLeft(2, '0');
@@ -273,46 +259,43 @@ class _OrderState extends State<Order> {
           dayE = newDateTimeRange.end.year.toString().padLeft(4, '0');
           getjaon1_order_information();
         });
-     }
+      }
+    } else {
+      showCustomDateRangePicker(
+        context,
+        dismissible: false,
+        minimumDate: DateTime(DateTime.now().year - 5),
+        maximumDate: DateTime(DateTime.now().year + 5),
+        endDate: end,
+        startDate: start,
+        onApplyClick: (start1, end1) {
+          setState(() {
+            end = end1;
+            yearS = start1.day.toString().padLeft(2, '0');
+            monthS = start1.month.toString().padLeft(2, '0');
+            dayS = start1.year.toString().padLeft(4, '0');
+            start = start1;
+            yearE = end1.day.toString().padLeft(2, '0');
+            monthE = end1.month.toString().padLeft(2, '0');
+            dayE = end1.year.toString().padLeft(4, '0');
+            getjaon1_order_information();
+          });
+        },
+        onCancelClick: () {
+          setState(() {
+            end = end;
+            yearE = end!.day.toString().padLeft(2, '0');
+            monthE = end!.month.toString().padLeft(2, '0');
+            dayE = end!.year.toString().padLeft(4, '0');
+            start = start;
+            yearS = start!.day.toString().padLeft(2, '0');
+            monthS = start!.month.toString().padLeft(2, '0');
+            dayS = start!.year.toString().padLeft(4, '0');
+          });
+        },
+      );
     }
-   else{
-  showCustomDateRangePicker(
-      context,
-      dismissible: false,
-      minimumDate: DateTime(DateTime.now().year - 5),
-      maximumDate: DateTime(DateTime.now().year + 5),
-      endDate: end,
-      startDate: start,
-      
-      onApplyClick: (start1, end1) {
-        setState(() {
-          end = end1;
-          yearS = start1.day.toString().padLeft(2, '0');
-          monthS = start1.month.toString().padLeft(2, '0');
-          dayS = start1.year.toString().padLeft(4, '0');
-          start = start1;
-          yearE = end1.day.toString().padLeft(2, '0');
-          monthE = end1.month.toString().padLeft(2, '0');
-          dayE = end1.year.toString().padLeft(4, '0');
-          getjaon1_order_information();
-        });
-      },
-      onCancelClick: () {
-        setState(() {
-          end = end;
-          yearE = end!.day.toString().padLeft(2, '0');
-          monthE = end!.month.toString().padLeft(2, '0');
-          dayE = end!.year.toString().padLeft(4, '0');
-          start = start;
-          yearS = start!.day.toString().padLeft(2, '0');
-          monthS = start!.month.toString().padLeft(2, '0');
-          dayS = start!.year.toString().padLeft(4, '0');
-        });
-      },
-    );
-   }
-  
- 
+
     // DateTimeRange? newDateRange = await showDateRangePicker(
     //   context: context,
     //   initialDateRange: _selectedDateRange,
@@ -325,8 +308,8 @@ class _OrderState extends State<Order> {
     // });
   }
 
+  //DialogOrde Edit Order
   Future<dynamic> DialogOrder1(BuildContext context, int index, bool by) {
-    
     return showDialog(
       barrierDismissible: false,
       context: context,
@@ -399,6 +382,7 @@ class _OrderState extends State<Order> {
     );
   }
 
+  //ปุ่ม Save Edit
   Container Save7(StateSetter setState, bool by, int index) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 20),
@@ -433,10 +417,21 @@ class _OrderState extends State<Order> {
                   // print(Order_Ref.text);
                   // print("$Start");
                   // print('$End');
-                                   API_edit_order_edit(widget.Token,widget.farmnum,Order_Ref.text,"$Start",'$End',
-                 nowresult1_1[index]['c_name_crop'],Ship_Conditionnameedit,Feed_Formulanameedit,int.parse(Number2.text),Unitnameedit,Remark2.text,widget.id);
-                getjaon1_order_information();
-                // Navigator.pop(context);
+                  API_edit_order_edit(
+                      widget.Token,
+                      widget.farmnum,
+                      Order_Ref.text,
+                      "$Start",
+                      '$End',
+                      nowresult1_1[index]['c_name_crop'],
+                      Ship_Conditionnameedit,
+                      Feed_Formulanameedit,
+                      int.parse(Number2.text),
+                      Unitnameedit,
+                      Remark2.text,
+                      widget.id);
+                  getjaon1_order_information();
+                  // Navigator.pop(context);
                 }
                 // print('=======2=========');
 
@@ -448,8 +443,6 @@ class _OrderState extends State<Order> {
                 // print(Unitnameedit);
                 // print(Remark2.text);
                 // print(widget.id);
-
-    
               },
               child: Text(
                 'Save',
@@ -465,6 +458,7 @@ class _OrderState extends State<Order> {
     );
   }
 
+  //Edit Remark
   Container Remark6(StateSetter setState, int index, bool by) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -522,6 +516,7 @@ class _OrderState extends State<Order> {
     );
   }
 
+  //Edit Number and Unit
   Container Number_Unit5(StateSetter setState, int index, bool by) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -668,6 +663,7 @@ class _OrderState extends State<Order> {
     );
   }
 
+  //Edit Ship and Feed
   Container Ship_Feed4(StateSetter setState, int index, bool by) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -713,9 +709,9 @@ class _OrderState extends State<Order> {
                             ],
                           )
                         : DropdownButtonHideUnderline(
-                            child: widget.default_ship == null || Ship_Condition == null
+                            child: widget.default_ship == null ||
+                                    Ship_Condition == null
                                 ? DropdownButton<String>(
-                                    
                                     value: Noname,
                                     items: NoList!
                                         .map((NoView_by) =>
@@ -804,7 +800,6 @@ class _OrderState extends State<Order> {
                         : DropdownButtonHideUnderline(
                             child: Feed_Formula == null
                                 ? DropdownButton<String>(
-                                   
                                     value: Noname,
                                     items: NoList!
                                         .map((NoView_by) =>
@@ -855,9 +850,10 @@ class _OrderState extends State<Order> {
     );
   }
 
+//Edit Name and Crop
   Container Name_Crop3(StateSetter setState, int index) {
     return Container(
-       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
+      margin: EdgeInsets.only(top: 20, right: 10, left: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -912,6 +908,7 @@ class _OrderState extends State<Order> {
 
   DateTime? Start;
   DateTime? End;
+  //ปฏิทิน Editเวลา เริ่มต้น
   Future<void> DateStart(StateSetter setState, int index) async {
     //  setState(() {
     //      dateTime_  = dateTime6;
@@ -949,6 +946,7 @@ class _OrderState extends State<Order> {
     }
   }
 
+  //ปฏิทิน Editเวลา สิ้นสุด
   Future<void> DateEnd(StateSetter setState, int index) async {
     DateTime? ChooseDateTime2 = await showDatePicker(
       context: context,
@@ -984,6 +982,7 @@ class _OrderState extends State<Order> {
     }
   }
 
+  // ปุ่ม กด ปฏิทิน  Editเริ่มต้น และ สิ้นสุด
   Container dateTime2(StateSetter setState, int index, bool by) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -1091,6 +1090,7 @@ class _OrderState extends State<Order> {
     );
   }
 
+// EditOrder and Ref
   Container Order_Ref1(StateSetter setState, int index) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -1150,11 +1150,9 @@ class _OrderState extends State<Order> {
 
   DateTime? dateTimeStart = DateTime.now();
   DateTime? dateTimeEnd = DateTime.now().add(Duration(days: 3));
-  Future<void> TimeStart(StateSetter setState) async {
-    //  setState(() {
-    //      dateTime_  = dateTime6;
 
-    //    });
+  //ปฏิทิน Start
+  Future<void> TimeStart(StateSetter setState) async {
     DateTime? ChooseDateTime = await showDatePicker(
       context: context,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -1187,6 +1185,7 @@ class _OrderState extends State<Order> {
     }
   }
 
+  //ปฏิทิน End
   Future<void> TimeEnd(StateSetter setState) async {
     DateTime? ChooseDateTime2 = await showDatePicker(
       context: context,
@@ -1222,6 +1221,7 @@ class _OrderState extends State<Order> {
     }
   }
 
+  //DialogOrde Create Order
   Future<dynamic> DialogOrder(BuildContext context) {
     return showDialog(
       barrierDismissible: false,
@@ -1244,7 +1244,6 @@ class _OrderState extends State<Order> {
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 15, left: 10),
-                   
                               child: Text(
                                 'Create Order',
                                 style: TextStyle(
@@ -1294,6 +1293,7 @@ class _OrderState extends State<Order> {
     );
   }
 
+  //ปุ่ม Save
   Container Save6(StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 20),
@@ -1319,12 +1319,14 @@ class _OrderState extends State<Order> {
             //  width: screenW*0.5,
             child: TextButton(
               onPressed: () {
-                  //  print('=======1=========');
+                //  print('=======1=========');
                 //  print('1=${widget.Token}');
                 //  print('2=${widget.farmnum}');
-                 
-                DateTime? dateTimeStart0 = DateTime.parse("${dateTimeStart!.year.toString().padLeft(4, '0')}-${dateTimeStart!.month.toString().padLeft(2, '0')}-${dateTimeStart!.day.toString().padLeft(2, '0')}");
-                 DateTime? dateTimeEnd0 = DateTime.parse("${dateTimeEnd!.year.toString().padLeft(4, '0')}-${dateTimeEnd!.month.toString().padLeft(2, '0')}-${dateTimeEnd!.day.toString().padLeft(2, '0')}");
+
+                DateTime? dateTimeStart0 = DateTime.parse(
+                    "${dateTimeStart!.year.toString().padLeft(4, '0')}-${dateTimeStart!.month.toString().padLeft(2, '0')}-${dateTimeStart!.day.toString().padLeft(2, '0')}");
+                DateTime? dateTimeEnd0 = DateTime.parse(
+                    "${dateTimeEnd!.year.toString().padLeft(4, '0')}-${dateTimeEnd!.month.toString().padLeft(2, '0')}-${dateTimeEnd!.day.toString().padLeft(2, '0')}");
                 //        print("3=$dateTimeStart0");
                 //  print('4=$dateTimeEnd0');
                 //    print('=======2=========');
@@ -1335,21 +1337,28 @@ class _OrderState extends State<Order> {
                 //  print('9=$Unitname');
                 //  print('10=${Remark1.text}');
                 //  print('11=${widget.id}');
-                 API_edit_order_create(widget.Token,widget.farmnum,"$dateTimeStart0","$dateTimeEnd0",
-                Name_Cropname,Ship_Conditionname,Feed_Formulaname,Number1.text,Unitname,Remark1.text,widget.id);
-                 
+                API_edit_order_create(
+                    widget.Token,
+                    widget.farmnum,
+                    "$dateTimeStart0",
+                    "$dateTimeEnd0",
+                    Name_Cropname,
+                    Ship_Conditionname,
+                    Feed_Formulaname,
+                    Number1.text,
+                    Unitname,
+                    Remark1.text,
+                    widget.id);
 
-                 var duration = Duration(seconds:2);
-                            
-                              Navigator.pop(context);
+                var duration = Duration(seconds: 2);
 
-                              
+                Navigator.pop(context);
 
-                            route(){
-getjaon1_order_information();
-}
- Timer(duration, route);
-                
+                route() {
+                  getjaon1_order_information();
+                }
+
+                Timer(duration, route);
               },
               child: Text(
                 'Save',
@@ -1365,6 +1374,7 @@ getjaon1_order_information();
     );
   }
 
+  // Remark
   Container Remark5(StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -1421,6 +1431,7 @@ getjaon1_order_information();
     );
   }
 
+  // Number and Unit
   Container Number_Unit4(StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -1553,6 +1564,7 @@ getjaon1_order_information();
     );
   }
 
+  // Ship and Feed
   Container Ship_Feed3(StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -1588,7 +1600,6 @@ getjaon1_order_information();
                     child: DropdownButtonHideUnderline(
                       child: widget.default_ship == null
                           ? DropdownButton<String>(
-                            
                               value: Noname,
                               items: NoList!
                                   .map((NoView_by) => DropdownMenuItem<String>(
@@ -1663,7 +1674,6 @@ getjaon1_order_information();
                     child: DropdownButtonHideUnderline(
                       child: Feed_Formula == null
                           ? DropdownButton<String>(
-                            
                               value: Noname,
                               items: NoList!
                                   .map((NoView_by) => DropdownMenuItem<String>(
@@ -1713,19 +1723,18 @@ getjaon1_order_information();
     );
   }
 
+// Name and Crop
   Container Name_Crop2(StateSetter setState) {
     return Container(
-       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
- 
+      margin: EdgeInsets.only(top: 20, right: 10, left: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              width: screenW * 0.74,
-            child: Column(
-              children: [
+            width: screenW * 0.74,
+            child: Column(children: [
               Container(
-                 width: screenW * 0.74,
+                width: screenW * 0.74,
                 child: Text(
                   'Name Crop :',
                   style: TextStyle(
@@ -1752,7 +1761,6 @@ getjaon1_order_information();
                     child: DropdownButtonHideUnderline(
                       child: Name_Crop == null
                           ? DropdownButton<String>(
-                           
                               value: Noname,
                               items: NoList!
                                   .map((NoView_by) => DropdownMenuItem<String>(
@@ -1762,7 +1770,8 @@ getjaon1_order_information();
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(255, 25, 25, 25),
+                                          color:
+                                              Color.fromARGB(255, 25, 25, 25),
                                         ),
                                       )))
                                   .toList(),
@@ -1779,7 +1788,8 @@ getjaon1_order_information();
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(255, 25, 25, 25),
+                                          color:
+                                              Color.fromARGB(255, 25, 25, 25),
                                         ),
                                       )))
                                   .toList(),
@@ -1799,6 +1809,7 @@ getjaon1_order_information();
     );
   }
 
+  // ปุ่ม กด ปฏิทิน  เริ่มต้น และ สิ้นสุด
   Container dateTime1(StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -1938,11 +1949,11 @@ getjaon1_order_information();
                                   width: screenW * 0.005),
                               color: Color.fromARGB(255, 235, 235, 235)),
                           height: 50,
-                         width: 170,
+                          width: 170,
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                pickDateRange(screenW,screenH);
+                                pickDateRange(screenW, screenH);
                               },
                               child: Row(
                                 children: [
@@ -2062,7 +2073,8 @@ getjaon1_order_information();
                               EdgeInsets.only(top: 5, right: 10, bottom: 10),
                           child: TextButton(
                             onPressed: () {
-                              API_button_order_send(widget.Token,widget.farmnum,widget.id);
+                              API_button_order_send(
+                                  widget.Token, widget.farmnum, widget.id);
                             },
                             child: Text(
                               'Confirm Order & Send API Now!',
@@ -2099,8 +2111,8 @@ getjaon1_order_information();
                                         (BuildContext context, int index) {
                                       return Container(
                                         color: ColBg![index]['color']!,
-                                        child: build1(index),
-                                          // child: Text('index'),
+                                        child: Order1(index),
+                                        // child: Text('index'),
                                       );
                                     }),
                               ],
@@ -2115,7 +2127,8 @@ getjaon1_order_information();
 
   DateTime? OOO1;
   DateTime? OOO2;
-  build1(int index) {
+  // รายการ Order
+  Order1(int index) {
     DateTime? From;
     DateTime? To;
 
@@ -2132,20 +2145,9 @@ getjaon1_order_information();
 
     Start = DateTime.parse('${nowresult1_1[index]['c_preorder']}');
     OOO1 = DateTime.now();
-    OOO2 = DateTime.parse('${OOO1!.year.toString().padLeft(4, '0')}-${OOO1!.month.toString().padLeft(2, '0')}-${OOO1!.day.toString().padLeft(2, '0')}');
+    OOO2 = DateTime.parse(
+        '${OOO1!.year.toString().padLeft(4, '0')}-${OOO1!.month.toString().padLeft(2, '0')}-${OOO1!.day.toString().padLeft(2, '0')}');
 
-    //  print(object)
-    //  if((nowresult1_1[index]['n_confirm'] == 0)&&End!.compareTo(DateTime.now()) < 0){
-    //    return Container();
-
-    //   }
-
-    //     if(End!.compareTo(DateTime.now()) > 0){
-    //        print("น้อยกว่า $End");
-    //     }
-    //     if(End!.compareTo(DateTime.now()) == 0){
-    //        print("เท่ากัน");
-    //     }
     return Container(
       child: ExpansionTile(
         iconColor: Colors.black,
@@ -2154,18 +2156,6 @@ getjaon1_order_information();
         maintainState: true,
         key: Key(index.toString()),
         initiallyExpanded: index == selected1,
-        // onExpansionChanged: (value) {
-        //   if (value) {
-        //     setState(() {
-        //       Duration(seconds: 20000);
-        //       selected1 = index;
-        //     });
-        //   } else {
-        //     setState(() {
-        //       selected1 = -1;
-        //     });
-        //   }
-        // },
         title: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Column(
@@ -2273,6 +2263,7 @@ getjaon1_order_information();
     );
   }
 
+  // ปุ่มกด
   Row IconButtonXedit(int index) {
     if (Start!.compareTo(OOO2!) < 0) {
       return Row(
@@ -2327,17 +2318,15 @@ getjaon1_order_information();
             onPressed: () {
               //       print('${widget.id}');
               // print('${nowresult1_1[index]['c_order_refer']}');
-              API_button_order_confirm(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
-                 var duration = Duration(seconds:1);
-                            
-                      
+              API_button_order_confirm(widget.Token, widget.farmnum, widget.id,
+                  '${nowresult1_1[index]['c_order_refer']}');
+              var duration = Duration(seconds: 1);
 
-                              
+              route() {
+                getjaon1_order_information();
+              }
 
-                            route(){
-  getjaon1_order_information();
-}
- Timer(duration, route);
+              Timer(duration, route);
             },
             icon: Icon(
               Icons.check,
@@ -2349,17 +2338,15 @@ getjaon1_order_information();
             onPressed: () {
               //  print('${widget.id}');
               // print('${nowresult1_1[index]['c_order_refer']}');
-              API_button_order_cancel(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
-                 var duration = Duration(seconds:1);
-                            
-                     
+              API_button_order_cancel(widget.Token, widget.farmnum, widget.id,
+                  '${nowresult1_1[index]['c_order_refer']}');
+              var duration = Duration(seconds: 1);
 
-                              
+              route() {
+                getjaon1_order_information();
+              }
 
-                            route(){
-  getjaon1_order_information();
-}
- Timer(duration, route);
+              Timer(duration, route);
             },
             icon: Icon(
               Icons.close,
@@ -2378,17 +2365,15 @@ getjaon1_order_information();
             onPressed: () {
               //      print('${widget.id}');
               // print('${nowresult1_1[index]['c_order_refer']}');
-              API_button_order_cancel(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
-                 var duration = Duration(seconds:1);
-                            
-                  
+              API_button_order_cancel(widget.Token, widget.farmnum, widget.id,
+                  '${nowresult1_1[index]['c_order_refer']}');
+              var duration = Duration(seconds: 1);
 
-                              
+              route() {
+                getjaon1_order_information();
+              }
 
-                            route(){
-  getjaon1_order_information();
-}
- Timer(duration, route);
+              Timer(duration, route);
             },
             icon: Icon(
               Icons.close,
@@ -2407,18 +2392,16 @@ getjaon1_order_information();
             onPressed: () {
               //      print('${widget.id}');
               // print('${nowresult1_1[index]['c_order_refer']}');
-              API_button_order_confirm(widget.Token,widget.farmnum,widget.id,'${nowresult1_1[index]['c_order_refer']}');
-          
-               var duration = Duration(seconds:1);
-                            
-                      
+              API_button_order_confirm(widget.Token, widget.farmnum, widget.id,
+                  '${nowresult1_1[index]['c_order_refer']}');
 
-                              
+              var duration = Duration(seconds: 1);
 
-                            route(){
-  getjaon1_order_information();
-}
- Timer(duration, route);
+              route() {
+                getjaon1_order_information();
+              }
+
+              Timer(duration, route);
             },
             icon: Icon(
               Icons.check,

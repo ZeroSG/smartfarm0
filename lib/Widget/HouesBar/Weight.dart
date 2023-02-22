@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:icofont_flutter/icofont_flutter.dart';
+
 import 'package:intl/intl.dart';
 import '../API_E_B/API_E.dart';
 
@@ -75,6 +74,7 @@ class _WeightState extends State<Weight> {
   String? day = 'Non specified';
   String? Start = 'Non specified';
   String? End = 'Non specified';
+  //API weight_information
   Future<void> getjaon0_1_weight_information() async {
     try {
       loading0 = true;
@@ -95,14 +95,13 @@ class _WeightState extends State<Weight> {
         var result0_1 = json.decode(ressum.body)['result']['view1'];
         var result0_2 = json.decode(ressum.body)['result']['view2'];
 
-
         if (result0_1 != null) {
           DateTime Date_Start = DateTime.parse(result0_1[0]['c_datestart']);
           DateTime Date_End = DateTime.parse(result0_1[0]['c_dateend']);
-     
+
           setState(() {
             nowresult0_2 = result0_2;
-           dateTime_ = Date_End;
+            dateTime_ = Date_End;
             form = '${result0_1[0]['c_feedtype']}';
             day = '${result0_1[0]['n_age']}';
             Start = '${Date_Start.day}/${Date_Start.month}/${Date_Start.year}';
@@ -112,7 +111,6 @@ class _WeightState extends State<Weight> {
           });
         }
         if (result0_1 == null) {
-
           setState(() {
             nowresult0_2 = result0_2;
             form = 'Non specified';
@@ -123,8 +121,6 @@ class _WeightState extends State<Weight> {
             dateTime_ = DateTime.now();
           });
         }
-
-
       } else {
         throw Exception('Failed to download');
       }
@@ -134,11 +130,12 @@ class _WeightState extends State<Weight> {
   }
 
   List<dynamic> nowresult1_1 = [];
+  //API weight_device
   Future<void> getjaon1_weight_device() async {
     try {
       //print('Farm${widget.farmnum}');
       //print('House${widget.num}');
-      
+
       loading1 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/weight-device");
       var ressum = await http.post(urlsum,
@@ -153,77 +150,67 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-  // "Farm": 5,
-  // "House": 82,
-  // "Date_Start": "2022-09-06 00:00:00.000",
-  // "Date_End": "2022-09-06 23:59:59.000"
+            // "Farm": 5,
+            // "House": 82,
+            // "Date_Start": "2022-09-06 00:00:00.000",
+            // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
 
         setState(() {
           nowresult1_1 = result1_1;
- 
-             List<dynamic> colors = [];
-           
-             colors = List.generate(nowresult1_1.length, (i) {
-       
-                
-                 return {
-                  "device": nowresult1_1[i]['device'],
-                  'color':   Colors.grey,
-                  'color1': 'เทา',
-                };
-                
-              });
 
-               for(int i = 0;i< nowresult1_1.length;i++){
-                    DateTime now = DateTime.now();
-                   DateTime now1 = DateTime.parse(nowresult1_1[i]['last_date']);
+          List<dynamic> colors = [];
 
-                int difference=now1.difference(now).inMinutes;
-                 
+          colors = List.generate(nowresult1_1.length, (i) {
+            return {
+              "device": nowresult1_1[i]['device'],
+              'color': Colors.grey,
+              'color1': 'เทา',
+            };
+          });
 
-                
-                if(nowresult1_1[i]['status_now'] == 0){
-      
-                 }else if(nowresult1_1[i]['status_now'] == 1){
-                 if(difference > -5){
-                   colors[i]['color'] = Colors.green;
-                   colors[i]['color1'] = 'เขียว';
-                 }else{
-                    colors[i]['color'] = Colors.red;
-                    colors[i]['color1'] = 'แดง';
-                 }
-                 }else if(nowresult1_1[i]['status_now'] >= 2){
-                     colors[i]['color'] = Colors.orange;
-                    colors[i]['color1'] = 'แดง';
-                 }
-            
-             }
+          for (int i = 0; i < nowresult1_1.length; i++) {
+            DateTime now = DateTime.now();
+            DateTime now1 = DateTime.parse(nowresult1_1[i]['last_date']);
 
+            int difference = now1.difference(now).inMinutes;
 
-               List<dynamic> nowresult2_ = nowresult1_1
+            if (nowresult1_1[i]['status_now'] == 0) {
+            } else if (nowresult1_1[i]['status_now'] == 1) {
+              if (difference > -5) {
+                colors[i]['color'] = Colors.green;
+                colors[i]['color1'] = 'เขียว';
+              } else {
+                colors[i]['color'] = Colors.red;
+                colors[i]['color1'] = 'แดง';
+              }
+            } else if (nowresult1_1[i]['status_now'] >= 2) {
+              colors[i]['color'] = Colors.orange;
+              colors[i]['color1'] = 'แดง';
+            }
+          }
+
+          List<dynamic> nowresult2_ = nowresult1_1
               .map((e) => {
                     for (int i = 0; i < nowresult1_1[0].keys.length; i++)
-                      '${nowresult1_1[0].keys.elementAt(i)}': e['${nowresult1_1[0].keys.elementAt(i)}'],
-                      'color': colors
-                              .where((element) =>
-                                  element['device']
-                                      .toString()
-                                      .compareTo(
-                                          e['device']
-                                              .toString()) ==
-                                  0)
-                              .first['color'] ??
-                          null,
+                      '${nowresult1_1[0].keys.elementAt(i)}':
+                          e['${nowresult1_1[0].keys.elementAt(i)}'],
+                    'color': colors
+                            .where((element) =>
+                                element['device']
+                                    .toString()
+                                    .compareTo(e['device'].toString()) ==
+                                0)
+                            .first['color'] ??
+                        null,
                   })
               .toList();
-           nowresult1_1 = nowresult2_;
+          nowresult1_1 = nowresult2_;
 
           loading1 = false;
         });
-
       } else {
         throw Exception('Failed to download');
       }
@@ -233,7 +220,7 @@ class _WeightState extends State<Weight> {
   }
 
   List<dynamic> nowresult2_1 = [];
-
+  //API weight_average_hourly
   Future<void> getjaon2_weight_average_hourly() async {
     try {
       loading2 = true;
@@ -277,7 +264,7 @@ class _WeightState extends State<Weight> {
   List<dynamic> nowresult3_2 = [];
   List<dynamic> nowresult3_3 = [];
   List<dynamic> nowresult3_4 = [];
-
+  //API weight_results
   Future<void> getjaon3_weight_results() async {
     try {
       loading3 = true;
@@ -300,22 +287,16 @@ class _WeightState extends State<Weight> {
             // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
-       
         var result3_1 = json.decode(ressum.body)['result']['view1'];
         var result3_2 = json.decode(ressum.body)['result']['view2'];
         var result3_3 = json.decode(ressum.body)['result']['view3'];
         var result3_4 = json.decode(ressum.body)['result']['view4'];
 
-
-       List<String> uniquelist00 = [];
+        List<String> uniquelist00 = [];
         for (int i = 0; i < nowresult1_1.length; i++) {
-
           if (nowresult1_1[i]["count_data"] != null) {
-
             setState(() {
               uniquelist00 += [nowresult1_1[i]["device"]];
-            
-              // uniquelist2.insert(i, nowresult1_1[i]["device"]);
             });
           }
         }
@@ -369,8 +350,6 @@ class _WeightState extends State<Weight> {
                 })
             .toList();
 
-
-
         List<dynamic> nowresult3_41_ =
             nowresult3_211.where((x) => x['device'] == 'ALL').toList();
         List<dynamic> nowresult3_42_ =
@@ -380,11 +359,6 @@ class _WeightState extends State<Weight> {
         List<dynamic> nowresult3_44_ =
             nowresult3_214.where((x) => x['device'] == 'ALL').toList();
 
-        // List<dynamic>   nowresult3_214 = result3_4.map((e) => {
-        //  '${result3_4[0].keys.elementAt(0)}' : 'ALL',
-        //  '${result3_4[0].keys.elementAt(1)}' : e['${result3_4[0].keys.elementAt(1)}']?? null,
-        // }).toList();
-
         setState(() {
           uniquelist2 = [];
           nowresult3_1 = nowresult3_41_;
@@ -393,7 +367,6 @@ class _WeightState extends State<Weight> {
           nowresult3_4 = nowresult3_44_;
           loading3 = false;
         });
-
       } else {
         throw Exception('Failed to download');
       }
@@ -404,6 +377,7 @@ class _WeightState extends State<Weight> {
 
   List<dynamic> nowresult4_1 = [];
   String? null1;
+  //API weight_per_unit
   Future<void> getjaon4_weight_per_unit() async {
     try {
       loading4 = true;
@@ -436,7 +410,7 @@ class _WeightState extends State<Weight> {
 
         if (sPlot == 'แสดงถึงวันปัจจุบัน') {
           DateTime? dateTime1_ = DateTime.now();
-     
+
           List<dynamic> _products1 = [];
           for (int i = 0; i < nowresult4_1.length; i++) {
             var splitted = nowresult4_1[i]
@@ -447,7 +421,6 @@ class _WeightState extends State<Weight> {
 
             if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
               _products1 += [nowresult4_1[i]];
-  
             }
             if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                 (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -459,14 +432,9 @@ class _WeightState extends State<Weight> {
             }
           }
 
-
           setState(() {
             nowresult4_1 = _products1;
           });
-
-
-
-            
         }
         //  //print('object =====> ${nowresult4_1}');
       } else {
@@ -487,24 +455,9 @@ class _WeightState extends State<Weight> {
   late List<String> uniquelist1 = [];
   List<List<dynamic>> list = [];
   List<dynamic> nowresult5_11 = [];
-  List<dynamic> nowresult5_12 = [];
-  List<dynamic> nowresult5_13 = [];
-  List<dynamic> nowresult5_14 = [];
-  List<dynamic> nowresult5_15 = [];
-  List<dynamic> nowresult5_16 = [];
-  List<dynamic> nowresult5_17 = [];
-  List<dynamic> nowresult5_18 = [];
-  List<dynamic> nowresult5_19 = [];
-  List<dynamic> nowresult5_110 = [];
-  List<dynamic> nowresult5_111 = [];
-  List<dynamic> nowresult5_112 = [];
-  List<dynamic> nowresult5_113 = [];
-  List<dynamic> nowresult5_114 = [];
-  List<dynamic> nowresult5_115 = [];
-  List<dynamic> nowresult5_116 = [];
 
   var largestGeekValue;
-
+  //API weight_distribution_rate
   Future<void> getjaon5_weight_distribution_rate() async {
     try {
       loading5 = true;
@@ -530,755 +483,74 @@ class _WeightState extends State<Weight> {
       if (ressum.statusCode == 200) {
         var result5_1 = json.decode(ressum.body)['result']['view1'];
 
-
         setState(() {
           uniquelist1 = [];
-          nowresult5_11 = [];
-          nowresult5_12 = [];
-          nowresult5_13 = [];
-          nowresult5_14 == [];
-          nowresult5_15 = [];
-          nowresult5_16 = [];
           nowresult5_1 = result5_1;
+
+          var largestGeekValue1 = 0.0;
+
+          for (int i = 0; i < nowresult5_1.length; i++) {
+            if (nowresult5_1[i]['n_normdst'] == null) {
+            } else {
+              if (nowresult5_1[i]['n_normdst'] > largestGeekValue1) {
+                largestGeekValue1 = nowresult5_1[i]['n_normdst'];
+              }
+            }
+          }
+
+          largestGeekValue = largestGeekValue1;
+
+          print('largestGeekValue====$largestGeekValue');
+
+          for (int i = 0; i < nowresult5_1.length; i++) {
+            if (nowresult5_1[i]['n_weight'] == null) {
+              nowresult5_1[i]['n_weight'] = 0.0;
+            }
+          }
+
+          uniquelist1 = [];
+          uniquelist1 += [nowresult5_1[0]["c_device"]];
+          for (int i = 1; i < nowresult5_1.length; i++) {
+            if (nowresult5_1[i]['c_device'] !=
+                nowresult5_1[i - 1]['c_device']) {
+              uniquelist1 += [nowresult5_1[i]["c_device"]];
+            }
+          }
+          print('uniquelist1====$uniquelist1');
+
+          for (int i = 0; i < nowresult5_1.length; i++) {
+            if (nowresult5_1[i]['c_device'] == nowresult5_1[0]['c_device']) {
+              nowresult5__ += [nowresult5_1[i]["c_device"]];
+            }
+          }
+
+          List<dynamic> color = [
+            for (int i = 0; i < uniquelist1.length; i++)
+              {
+                'c_device': uniquelist1[i],
+                'color': C1[i],
+                'color1': C2[i],
+              },
+          ];
+
+          List<List<dynamic>> list1 =
+              List<List<dynamic>>.generate(uniquelist1.length, (i) => []);
+          int num = 0;
+          list1[0] += [nowresult5_1[0]];
+          for (int i = 1; i < nowresult5_1.length; i++) {
+            if (nowresult5_1[i]['c_device'] ==
+                nowresult5_1[i - 1]['c_device']) {
+              list1[num] += [nowresult5_1[i]];
+            } else {
+              num++;
+              list1[num] += [nowresult5_1[i]];
+            }
+          }
+
+          list = list1;
+
           loading5 = false;
         });
-        var largestGeekValue1 = 0.0;
-
-        for (int i = 0; i < nowresult5_1.length; i++) {
-        if(nowresult5_1[i]['n_normdst']==null){
-
-        }else{
-          if (nowresult5_1[i]['n_normdst'] > largestGeekValue1) {
-            largestGeekValue1 = nowresult5_1[i]['n_normdst'];
-          }}
-        }
-        setState(() {
-          largestGeekValue = largestGeekValue1;
-        });
-        print('largestGeekValue====$largestGeekValue');
-
-          for(int i = 0; i < nowresult5_1.length; i++){
-                 if(nowresult5_1[i]['n_weight'] == null){
-                 setState(() {
-                   nowresult5_1[i]['n_weight'] = 0.0;
-                 });
-                   
-               }
-            }
-
-        //     if(nowresult5_1[i]['c_device'] != nowresult5_1[i-1]['c_device']){
-        //           setState(() {
-        //      namedistribution_rate.add("${nowresult5_1[i]['c_device']}");
-        //   });
-        //      }
-        // }
-        //  print('name=====$namedistribution_rate');
-          //  print('nowresult5_1=====$nowresult5_1');
-        //       List<dynamic>   nowresult5_ = nowresult5_1.map((e) => {
-
-        // //  for (int f = 0; f < result5_1.length; f++)
-        //   for (int i = 1; i < nowresult5_1[0].keys.length; i++)
-        //   '${nowresult5_1[0].keys.elementAt(i)}' : nowresult5_1.where((x) => x['c_device']  == 'ALL'),//e['${result5_1[0].keys.elementAt(i)}'],
-        //          }).toList();
-        // List<dynamic> nowresult5__1 = nowresult5_1.where((country) => (country['c_device'])).toList();
-        uniquelist1 = [];
-        uniquelist1 += [nowresult5_1[0]["c_device"]];
-        for (int i = 1; i < nowresult5_1.length; i++) {
-          if (nowresult5_1[i]['c_device'] != nowresult5_1[i-1]['c_device']) {
-            setState(() {
-              uniquelist1 += [nowresult5_1[i]["c_device"]];
-
-            });
-          }
-        }
-        print('uniquelist1====$uniquelist1');
-
-        for (int i = 0; i < nowresult5_1.length; i++) {
-          if (nowresult5_1[i]['c_device'] == nowresult5_1[0]['c_device']) {
-            setState(() {
-    
-              nowresult5__ += [nowresult5_1[i]["c_device"]];
-
-            });
- 
-          }
-        }
-
-        List<dynamic> color = [
-          for (int i = 0; i < uniquelist1.length; i++)
-            {
-              'c_device': uniquelist1[i],
-              'color': C1[i],
-              'color1': C2[i],
-            },
-        ];
-
-
-         List<List<dynamic>> list1 =  List<List<dynamic>>.generate(uniquelist1.length, (i) => []);
-         int num =0;
-          list1[0] += [nowresult5_1[0]];
-         for (int i = 1; i < nowresult5_1.length; i++) {
-           if (nowresult5_1[i]['c_device'] == nowresult5_1[i-1]['c_device']) {
-            setState(() {
-              list1[num] += [nowresult5_1[i]];
-            });
-          }else{
-             setState(() {
-               num++;
-              list1[num] += [nowresult5_1[i]];
-            });
-          }
-         }
-        setState(() {
-          list = list1;
-        });
-    //        print('object=====${list[0]}');
-    // print('object=====${list[1]}');
-    // print('object=====${list[2]}');
-    // print('object=====${list[3]}');
-
-        //  print(list);
-        // List<dynamic> nowresult51_ = [],
-        //     nowresult52_ = [],
-        //     nowresult53_ = [],
-        //     nowresult54_ = [],
-        //     nowresult55_ = [],
-        //     nowresult56_ = [];
-        // List<dynamic> nowresult57_ = [],
-        //     nowresult58_ = [],
-        //     nowresult59_ = [],
-        //     nowresult510_ = [],
-        //     nowresult511_ = [],
-        //     nowresult512_ = [];
-        // List<dynamic> nowresult513_ = [],
-        //     nowresult514_ = [],
-        //     nowresult515_ = [],
-        //     nowresult516_ = [];
-
-        // List<List<dynamic>> da1 = [
-        //   nowresult51_,
-        //   nowresult52_,
-        //   nowresult53_,
-        //   nowresult54_,
-        //   nowresult55_,
-        //   nowresult56_,
-        //   nowresult57_,
-        //   nowresult58_,
-        //   nowresult59_,
-        //   nowresult510_,
-        //   nowresult511_,
-        //   nowresult512_,
-        //   nowresult513_,
-        //   nowresult514_,
-        //   nowresult515_,
-        //   nowresult516_
-        // ];
-      
-
-        // if (uniquelist1.length == 1) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //   });
-        // }
-        // if (uniquelist1.length == 2) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //   });
-        // } else if (uniquelist1.length == 3) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //   });
-        // } else if (uniquelist1.length == 4) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //   });
-        // } else if (uniquelist1.length == 5) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //   });
-        // } else if (uniquelist1.length == 6) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //   });
-        // } else if (uniquelist1.length == 7) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //   });
-        // } else if (uniquelist1.length == 8) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //   });
-        // } else if (uniquelist1.length == 9) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //   });
-        // } else if (uniquelist1.length == 10) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //   });
-        // } else if (uniquelist1.length == 11) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   nowresult511_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[10])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //     nowresult5_111 = nowresult511_;
-        //   });
-        // } else if (uniquelist1.length == 12) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   nowresult511_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[10])
-        //       .toList();
-        //   nowresult512_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[11])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //     nowresult5_111 = nowresult511_;
-        //     nowresult5_112 = nowresult512_;
-        //   });
-        // } else if (uniquelist1.length == 13) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   nowresult511_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[10])
-        //       .toList();
-        //   nowresult512_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[11])
-        //       .toList();
-        //   nowresult513_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[12])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //     nowresult5_111 = nowresult511_;
-        //     nowresult5_112 = nowresult512_;
-        //     nowresult5_113 = nowresult513_;
-        //   });
-        // } else if (uniquelist1.length == 14) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   nowresult511_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[10])
-        //       .toList();
-        //   nowresult512_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[11])
-        //       .toList();
-        //   nowresult513_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[12])
-        //       .toList();
-        //   nowresult514_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[13])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //     nowresult5_111 = nowresult511_;
-        //     nowresult5_112 = nowresult512_;
-        //     nowresult5_113 = nowresult513_;
-        //     nowresult5_114 = nowresult514_;
-        //   });
-        // } else if (uniquelist1.length == 15) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   nowresult511_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[10])
-        //       .toList();
-        //   nowresult512_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[11])
-        //       .toList();
-        //   nowresult513_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[12])
-        //       .toList();
-        //   nowresult514_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[13])
-        //       .toList();
-        //   nowresult515_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[14])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //     nowresult5_111 = nowresult511_;
-        //     nowresult5_112 = nowresult512_;
-        //     nowresult5_113 = nowresult513_;
-        //     nowresult5_114 = nowresult514_;
-        //     nowresult5_115 = nowresult515_;
-        //   });
-        // } else if (uniquelist1.length == 16) {
-        //   nowresult51_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[0])
-        //       .toList();
-        //   nowresult52_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[1])
-        //       .toList();
-        //   nowresult53_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[2])
-        //       .toList();
-        //   nowresult54_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[3])
-        //       .toList();
-        //   nowresult55_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[4])
-        //       .toList();
-        //   nowresult56_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[5])
-        //       .toList();
-        //   nowresult57_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[6])
-        //       .toList();
-        //   nowresult58_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[7])
-        //       .toList();
-        //   nowresult59_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[8])
-        //       .toList();
-        //   nowresult510_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[9])
-        //       .toList();
-        //   nowresult511_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[10])
-        //       .toList();
-        //   nowresult512_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[11])
-        //       .toList();
-        //   nowresult513_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[12])
-        //       .toList();
-        //   nowresult514_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[13])
-        //       .toList();
-        //   nowresult515_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[14])
-        //       .toList();
-        //   nowresult516_ = nowresult5_1
-        //       .where((x) => x['c_device'] == uniquelist1[15])
-        //       .toList();
-
-        //   setState(() {
-        //     nowresult5_11 = nowresult51_;
-        //     nowresult5_12 = nowresult52_;
-        //     nowresult5_13 = nowresult53_;
-        //     nowresult5_14 = nowresult54_;
-        //     nowresult5_15 = nowresult55_;
-        //     nowresult5_16 = nowresult56_;
-        //     nowresult5_17 = nowresult57_;
-        //     nowresult5_18 = nowresult58_;
-        //     nowresult5_19 = nowresult59_;
-        //     nowresult5_110 = nowresult510_;
-        //     nowresult5_111 = nowresult511_;
-        //     nowresult5_112 = nowresult512_;
-        //     nowresult5_113 = nowresult513_;
-        //     nowresult5_114 = nowresult514_;
-        //     nowresult5_115 = nowresult515_;
-        //     nowresult5_116 = nowresult516_;
-        //   });
-        // }
-        // List<dynamic>   nowresult5_ = nowresult5_1.where((x) => x['c_device']  == uniquelist1[0]).toList();
-        //      //print('nowresult5_ =====> ${nowresult5_.length}');
       } else {
         throw Exception('Failed to download');
       }
@@ -1288,6 +560,7 @@ class _WeightState extends State<Weight> {
   }
 
   List<dynamic> nowresult6_1 = [];
+    //API weight_estimate_size
   Future<void> getjaon6_weight_estimate_size() async {
     try {
       loading6 = true;
@@ -1306,15 +579,15 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
             "Date_Process":
                 "${dateTime_!.year}-${dateTime_!.month}-${dateTime_!.day}"
-  // "Farm": 17,
-  // "House": 146,
-  // "Date_Start": "2022-09-06 00:00:00",
-  // "Date_End": "2022-09-06 23:59:59",
-  // "Date_Process": "2022-09-06"
+            // "Farm": 17,
+            // "House": 146,
+            // "Date_Start": "2022-09-06 00:00:00",
+            // "Date_End": "2022-09-06 23:59:59",
+            // "Date_Process": "2022-09-06"
           }));
       if (ressum.statusCode == 200) {
         var result6_1 = json.decode(ressum.body)['result']['view1'];
- 
+
         setState(() {
           nowresult6_1 = result6_1;
           loading6 = false;
@@ -1369,7 +642,7 @@ class _WeightState extends State<Weight> {
                   width: 150,
                   child: TextButton(
                     onPressed: () {
-                      chooseDate1();
+                      chooseDateTime1();
                     },
                     child: Text(
                       '${dateTime1_!.day}-${dateTime1_!.month}-${dateTime1_!.year}',
@@ -1382,14 +655,14 @@ class _WeightState extends State<Weight> {
                 ),
               ],
             ),
-            Card(child: build0(context)),
-            Card(child: build1(context)),
-            Card(child: build2(context)),
-            Card(child: build3(context)),
-            Card(child: build4(context)),
-            Card(child: build5(context)),
+            Card(child: Standard_Formula0(context)),
+            Card(child: Weight_Scale_Information1(context)),
+            Card(child: Average_Hourly_Weight2(context)),
+            Card(child: Weight_Results3(context)),
+            Card(child: Plot_Graph4(context)),
+            Card(child: Distribustoin_Rate5(context)),
             // // build6(context),
-            Card(child: build6(context)),
+            Card(child: Estimate_Real_Size6(context)),
             Container(
               height: 50,
             )
@@ -1405,7 +678,6 @@ class _WeightState extends State<Weight> {
   Future<dynamic> DialogStandard(
     BuildContext context,
   ) {
-   
     if (nowresult0_2 == null) {
       EndE = '$hourE:$minuteE';
       EndS = '$hourS:$minuteS';
@@ -2226,7 +1498,8 @@ class _WeightState extends State<Weight> {
   }
 
   bool Download0 = false;
-  Widget build0(BuildContext context) => ExpansionTile(
+
+  Widget Standard_Formula0(BuildContext context) => ExpansionTile(
         // key: K0,
         onExpansionChanged: (value) {
           if (value == false) {
@@ -2344,31 +1617,7 @@ class _WeightState extends State<Weight> {
                                   fontFamily: 'Montserrat',
                                   color: Color.fromARGB(255, 0, 0, 0)),
                             ),
-                            // Container(
-                            //   child: Center(
-                            //     child: Card(
-                            //       elevation: 5,
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius: BorderRadius.circular(10),
-                            //       ),
-                            //       child: Container(
-                            //         height: 40,
-                            //         width: 40,
-                            //         child: IconButton(
-                            //           onPressed: () {
-                            //             DialogStandard(
-                            //                 context, nowresult0_1, nowresult0_2);
-                            //           },
-                            //           icon: Icon(
-                            //             Icons.settings,
-                            //             color: Color.fromARGB(255, 0, 0, 0),
-                            //             size: 25,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                
                           ],
                         ),
                       ),
@@ -2404,9 +1653,8 @@ class _WeightState extends State<Weight> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
-  List<charts.Series<dynamic, String>> _createSampleDataBar1(
-      List<dynamic> nowresult) {
+   //Chart Bar Weight_Results
+  List<charts.Series<dynamic, String>> _resultsDataBar1(List<dynamic> nowresult) {
     return [
       for (int i = 0; i < nowresult[0].keys.length; i++)
         if (nowresult[0].keys.elementAt(i) != 'device')
@@ -2426,7 +1674,7 @@ class _WeightState extends State<Weight> {
   }
 
   DateTime? dateTime1_ = DateTime.now();
-  Future<void> chooseDate1() async {
+  Future<void> chooseDateTime1() async {
     DateTime? ChooseDateTime = await showDatePicker(
       context: context,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -2465,8 +1713,8 @@ class _WeightState extends State<Weight> {
       });
     }
   }
-
-  Widget build1(BuildContext context) => ExpansionTile(
+  //Weight_Scale_Information
+  Widget Weight_Scale_Information1(BuildContext context) => ExpansionTile(
         // key: K1,
         // onExpansionChanged: (value) {
         //   if (value == false) {
@@ -2518,12 +1766,12 @@ class _WeightState extends State<Weight> {
                       Check1 = true;
                       dat1 = '00:00:00.000';
                       dat2 = "23:59:59.000";
-    getjaon1_weight_device();
-    getjaon2_weight_average_hourly();
-    getjaon3_weight_results();
-    getjaon5_weight_distribution_rate();
-    getjaon4_weight_per_unit();
-    getjaon6_weight_estimate_size();
+                      getjaon1_weight_device();
+                      getjaon2_weight_average_hourly();
+                      getjaon3_weight_results();
+                      getjaon5_weight_distribution_rate();
+                      getjaon4_weight_per_unit();
+                      getjaon6_weight_estimate_size();
                     });
                   },
                 ),
@@ -2540,12 +1788,12 @@ class _WeightState extends State<Weight> {
                       Check1 = false;
                       dat1 = '08:00:00.000';
                       dat2 = "17:59:59.000";
-    getjaon1_weight_device();
-    getjaon2_weight_average_hourly();
-    getjaon3_weight_results();
-    getjaon5_weight_distribution_rate();
-    getjaon4_weight_per_unit();
-    getjaon6_weight_estimate_size();
+                      getjaon1_weight_device();
+                      getjaon2_weight_average_hourly();
+                      getjaon3_weight_results();
+                      getjaon5_weight_distribution_rate();
+                      getjaon4_weight_per_unit();
+                      getjaon6_weight_estimate_size();
                     });
                   },
                 ),
@@ -2714,9 +1962,7 @@ class _WeightState extends State<Weight> {
                                             // border: Border.all(color: Color(0xff83bb56), width: 5),
                                             borderRadius:
                                                 BorderRadius.circular(40),
-                                            color: item['color']
-                                                
-                                                    ),
+                                            color: item['color']),
                                       ),
                                       // Container(child: Text(item['status_now'].toString()))
                                     )),
@@ -2730,9 +1976,7 @@ class _WeightState extends State<Weight> {
                             ),
                           ),
                         ],
-                      )
-              
-                      ),
+                      )),
           Container(
               margin: EdgeInsets.only(top: 10),
               width: screenW * 1,
@@ -2741,7 +1985,8 @@ class _WeightState extends State<Weight> {
         ],
       );
 
-  List<charts.Series<dynamic, String>> _createSampleDataBar() {
+  //Chart Bar  Average_Hourly_Weight
+  List<charts.Series<dynamic, String>> Average_HourlyDataBar() {
     return [
       charts.Series<dynamic, String>(
         data: nowresult2_1,
@@ -2770,7 +2015,8 @@ class _WeightState extends State<Weight> {
   }
 
   bool Download2 = true;
-  Widget build2(BuildContext context) => ExpansionTile(
+  //Average_Hourly_Weight
+  Widget Average_Hourly_Weight2(BuildContext context) => ExpansionTile(
         // key: K2,
         onExpansionChanged: (value) {
           if (value == false) {
@@ -2881,7 +2127,8 @@ class _WeightState extends State<Weight> {
                         margin: EdgeInsets.only(top: 10),
                         height: screenH * 0.30,
                         child: Center(child: CircularProgressIndicator()))
-                    : nowresult1_1[0]['count_data'] == null ||  nowresult1_1.length == 1
+                    : nowresult1_1[0]['count_data'] == null ||
+                            nowresult1_1.length == 1
                         ? Container(
                             height: screenH * 0.30,
                             child: Center(
@@ -2890,7 +2137,7 @@ class _WeightState extends State<Weight> {
                               style: TextStyle(fontSize: 18),
                             )))
                         : charts.BarChart(
-                            _createSampleDataBar(),
+                            Average_HourlyDataBar(),
                             animate: false,
                             defaultRenderer: new charts.BarRendererConfig(
                                 groupingType: charts.BarGroupingType.stacked,
@@ -3047,9 +2294,8 @@ class _WeightState extends State<Weight> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
-
-  Widget build3(BuildContext context) => ExpansionTile(
+  //Weight_Results
+  Widget Weight_Results3(BuildContext context) => ExpansionTile(
         // key: K3,
         // onExpansionChanged: (value) {
         //   if (value == false) {
@@ -3113,7 +2359,7 @@ class _WeightState extends State<Weight> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: charts.BarChart(
-                                    _createSampleDataBar1(nowresult3_1),
+                                    _resultsDataBar1(nowresult3_1),
                                     animate: false,
                                     animationDuration: Duration(seconds: 1),
                                     behaviors: [
@@ -3230,7 +2476,7 @@ class _WeightState extends State<Weight> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: charts.BarChart(
-                                    _createSampleDataBar1(nowresult3_2),
+                                    _resultsDataBar1(nowresult3_2),
                                     // _createSampleDataBar1(nowresult3_2_11,nowresult3_2_12,nowresult3_2_13,nowresult3_2_14,nowresult3_2_15,nowresult3_2_16),
                                     animate: false,
                                     animationDuration: Duration(seconds: 1),
@@ -3353,7 +2599,7 @@ class _WeightState extends State<Weight> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: charts.BarChart(
-                                    _createSampleDataBar1(nowresult3_3),
+                                    _resultsDataBar1(nowresult3_3),
                                     //  _createSampleDataBar1(nowresult3_3_11,nowresult3_3_12,nowresult3_3_13,nowresult3_3_14,nowresult3_3_15,nowresult3_3_16),
                                     animate: false,
                                     animationDuration: Duration(seconds: 1),
@@ -3471,7 +2717,7 @@ class _WeightState extends State<Weight> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: charts.BarChart(
-                                    _createSampleDataBar1(nowresult3_4),
+                                    _resultsDataBar1(nowresult3_4),
                                     //  _createSampleDataBar1(nowresult3_4_11,nowresult3_4_12,nowresult3_4_13,nowresult3_4_14,nowresult3_4_15,nowresult3_4_16),
                                     animate: false,
                                     animationDuration: Duration(seconds: 1),
@@ -3587,7 +2833,8 @@ class _WeightState extends State<Weight> {
   List<String> Plot = ['แสดงที้งหมด', 'แสดงถึงวันปัจจุบัน'];
   late String sUnit = 'Weight Per Unit (All)';
   List<String> Unit = ['Weight Per Unit (All)'];
-  Widget build4(BuildContext context) => ExpansionTile(
+  //Plot_Graph4
+  Widget Plot_Graph4(BuildContext context) => ExpansionTile(
         // key: K4,
         // onExpansionChanged: (value) {
         //   if (value == false) {
@@ -3786,7 +3033,7 @@ class _WeightState extends State<Weight> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
+  // Chart Plot_Graph
   charts.BarChart LineChart4() {
     double? Number;
     int? T;
@@ -3951,7 +3198,7 @@ class _WeightState extends State<Weight> {
     Color.fromARGB(255, 250, 114, 234),
     Color.fromARGB(255, 204, 255, 0)
   ];
-
+   //ข้อมูล Chart Plot_Graph
   List<charts.Series<dynamic, String>> _createSampleData4() {
     return [
       for (int i = 0; i < nowresult4_1[0].keys.length; i++)
@@ -3969,13 +3216,13 @@ class _WeightState extends State<Weight> {
           )..setAttribute(charts.rendererIdKey, 'customLine'),
     ];
   }
-
-  List<charts.Series<dynamic, double>> _createSampleData1() {
+     //ข้อมูล Chart Distribustoin_Rate
+  List<charts.Series<dynamic, double>> _createSampleData5() {
     List<List<dynamic>> da = list;
-  //  print('object=====${da[0]}');
-  //   print('object=====${da[1]}');
-  //   print('object=====${da[2]}');
-  //   print('object=====${da[3]}');
+    //  print('object=====${da[0]}');
+    //   print('object=====${da[1]}');
+    //   print('object=====${da[2]}');
+    //   print('object=====${da[3]}');
     return [
       for (int i = 0; i < uniquelist1.length; i++)
         charts.Series<dynamic, double>(
@@ -3993,7 +3240,8 @@ class _WeightState extends State<Weight> {
   }
 
   bool Download5 = true;
-  Widget build5(BuildContext context) => ExpansionTile(
+  //Distribustoin_Rate
+  Widget Distribustoin_Rate5(BuildContext context) => ExpansionTile(
         // key: K5,
         onExpansionChanged: (value) {
           if (value == false) {
@@ -4116,94 +3364,83 @@ class _WeightState extends State<Weight> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
+  //Chart Distribustoin_Rate
   Container LineChart5() {
     var largestGeekValue1 = nowresult5_1[0]['n_weight'];
     var largestGeekValue2 = nowresult5_1[0]['n_weight'];
     var largestGeekValue0;
 
-      var largestGeekValue1_normdst = 0.0;
+    var largestGeekValue1_normdst = 0.0;
     var largestGeekValue2_normdst = 0.0;
     var largestGeekValue_normdst;
 
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if(nowresult5_1[i]['n_weight'] == null){
-
-      }else{
-      if (nowresult5_1[i]['n_weight'] > largestGeekValue1) {
-        largestGeekValue1 = nowresult5_1[i]['n_weight'];
-      }}
+      if (nowresult5_1[i]['n_weight'] == null) {
+      } else {
+        if (nowresult5_1[i]['n_weight'] > largestGeekValue1) {
+          largestGeekValue1 = nowresult5_1[i]['n_weight'];
+        }
+      }
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if(nowresult5_1[i]['n_weight'] == null){
-
-      }else{
-      if (nowresult5_1[i]['n_weight'] < largestGeekValue2) {
-        largestGeekValue2 = nowresult5_1[i]['n_weight'];
-      }}
-
-      
+      if (nowresult5_1[i]['n_weight'] == null) {
+      } else {
+        if (nowresult5_1[i]['n_weight'] < largestGeekValue2) {
+          largestGeekValue2 = nowresult5_1[i]['n_weight'];
+        }
+      }
     }
 
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if(nowresult5_1[i]['n_normdst'] == null){
-
-      }else{
-      if (nowresult5_1[i]['n_normdst'] > largestGeekValue1_normdst) {
-        largestGeekValue1_normdst = nowresult5_1[i]['n_normdst'];
-      }}
+      if (nowresult5_1[i]['n_normdst'] == null) {
+      } else {
+        if (nowresult5_1[i]['n_normdst'] > largestGeekValue1_normdst) {
+          largestGeekValue1_normdst = nowresult5_1[i]['n_normdst'];
+        }
+      }
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
-       if(nowresult5_1[i]['n_normdst'] == null){
-
-      }else{
-      if (nowresult5_1[i]['n_normdst'] < largestGeekValue2_normdst) {
-        largestGeekValue2_normdst = nowresult5_1[i]['n_normdst'];
-      }}
-
-      
+      if (nowresult5_1[i]['n_normdst'] == null) {
+      } else {
+        if (nowresult5_1[i]['n_normdst'] < largestGeekValue2_normdst) {
+          largestGeekValue2_normdst = nowresult5_1[i]['n_normdst'];
+        }
+      }
     }
-   
-    if(largestGeekValue2_normdst < largestGeekValue1_normdst){
+
+    if (largestGeekValue2_normdst < largestGeekValue1_normdst) {
       largestGeekValue_normdst = largestGeekValue1_normdst;
-    }else{
+    } else {
       largestGeekValue_normdst = largestGeekValue2_normdst;
     }
-    if(largestGeekValue2 < largestGeekValue1){
+    if (largestGeekValue2 < largestGeekValue1) {
       largestGeekValue0 = largestGeekValue1;
-    }else{
+    } else {
       largestGeekValue0 = largestGeekValue2;
     }
-  print('largestGeekValue_normdst====$largestGeekValue_normdst');
-  print('largestGeekValue1_normdst====$largestGeekValue1_normdst');
-  print('largestGeekValue2_normdst====$largestGeekValue2_normdst');
+    print('largestGeekValue_normdst====$largestGeekValue_normdst');
+    print('largestGeekValue1_normdst====$largestGeekValue1_normdst');
+    print('largestGeekValue2_normdst====$largestGeekValue2_normdst');
 
-  // if(largestGeekValue1_normdst == 0.0){
-  //   largestGeekValue_normdst =0.2;
-  //  largestGeekValue =1;
-  // }
-  //  if(largestGeekValue == 0.0){
-  //   largestGeekValue =200;
-  // }
-    
+    // if(largestGeekValue1_normdst == 0.0){
+    //   largestGeekValue_normdst =0.2;
+    //  largestGeekValue =1;
+    // }
+    //  if(largestGeekValue == 0.0){
+    //   largestGeekValue =200;
+    // }
 
     return Container(
       height: screenH * 0.45,
       child: charts.LineChart(
-        _createSampleData1(),
+        _createSampleData5(),
         animate: false,
         defaultRenderer: charts.LineRendererConfig(
             includeArea: false,
             includeLine: false,
             includePoints: true,
             strokeWidthPx: 1),
-        //  defaultRenderer: charts.LineRendererConfig(
-        //               includeArea: false,
-        //               includeLine: false,
-        //               includePoints: true,
 
-        //               strokeWidthPx: 1
-        //             ),
         selectionModels: [
           charts.SelectionModelConfig(
               type: charts.SelectionModelType.info,
@@ -4247,15 +3484,11 @@ class _WeightState extends State<Weight> {
             tickProviderSpec:
                 charts.StaticNumericTickProviderSpec(<charts.TickSpec<double>>[
               for (var i = 0; i < 15; i++)
-                if (i * largestGeekValue_normdst/7 < largestGeekValue + largestGeekValue_normdst/7)
-                  charts.TickSpec(i * largestGeekValue_normdst/7),
+                if (i * largestGeekValue_normdst / 7 <
+                    largestGeekValue + largestGeekValue_normdst / 7)
+                  charts.TickSpec(i * largestGeekValue_normdst / 7),
             ]),
-        //     // tickProviderSpec: charts.BasicNumericTickProviderSpec(
-        //     //       zeroBound: true,
-        //     //       desiredTickCount : 6,
-        //     //       desiredMinTickCount : 1,
-        //     //       desiredMaxTickCount : 0
-        //     //     ),
+    
             renderSpec: new charts.GridlineRendererSpec(
                 labelStyle: new charts.TextStyleSpec(
                     fontSize: 13, fontFamily: 'Montserrat'),
@@ -4294,13 +3527,11 @@ class _WeightState extends State<Weight> {
                 color: charts.MaterialPalette.black,
                 fontFamily: 'Montserrat',
                 fontSize: 11),
-            // desiredMaxRows: 4,
             desiredMaxColumns: 3,
             cellPadding: EdgeInsets.symmetric(horizontal: screenW * 0.01),
             legendDefaultMeasure: charts.LegendDefaultMeasure.none,
             position: charts.BehaviorPosition.bottom,
           ),
-          // new charts.SelectNearest(eventTrigger: charts.SelectionTrigger.pressHold),
         ],
       ),
     );
@@ -4313,13 +3544,10 @@ class _WeightState extends State<Weight> {
   int? touchedIndex;
   bool Download6 = true;
   DateTime? dateTime_ = DateTime.parse('2022-12-08');
-  //  DateTime? dateTime6 = DateTime.utc(2022, 06, 27);
 
+  //ปฏิทิน
   Future<void> chooseDate6() async {
-    //  setState(() {
-    //      dateTime_  = dateTime6;
 
-    //    });
     DateTime? ChooseDateTime = await showDatePicker(
       context: context,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -4352,8 +3580,8 @@ class _WeightState extends State<Weight> {
       });
     }
   }
-
-  Widget build6(BuildContext context) => ExpansionTile(
+  //Estimate_Real_Size
+  Widget Estimate_Real_Size6(BuildContext context) => ExpansionTile(
         // key: K6,
         onExpansionChanged: (value) {
           if (value == false) {
@@ -4413,8 +3641,8 @@ class _WeightState extends State<Weight> {
                             color: Color.fromARGB(255, 194, 194, 194),
                             width: screenW * 0.005),
                         color: Color.fromARGB(255, 235, 235, 235)),
-       height: 50,
-                  width: 150,
+                    height: 50,
+                    width: 150,
                     child: TextButton(
                       onPressed: () {
                         chooseDate6();
@@ -4545,6 +3773,7 @@ class _WeightState extends State<Weight> {
 List? selectedDatum;
 String? unit2_1, unit2_2;
 
+// แสดงข้อมูลใน Chart Average Hourly Weight
 class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult2_1;
@@ -4676,6 +3905,7 @@ List? selectedDatum2;
 List? selectedDatum3;
 List? selectedDatum4;
 
+// แสดงข้อมูลใน Chart Weight_Results1
 class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult3_1;
@@ -4752,6 +3982,7 @@ class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
   }
 }
 
+// แสดงข้อมูลใน Chart Weight_Results2
 class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult3_1;
@@ -4827,7 +4058,7 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
     }
   }
 }
-
+// แสดงข้อมูลใน Chart Weight_Results3
 class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult3_1;
@@ -4903,7 +4134,7 @@ class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
     }
   }
 }
-
+// แสดงข้อมูลใน Chart Weight_Results4
 class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult3_1;
@@ -4981,7 +4212,7 @@ class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
 }
 
 String? unit4_1;
-
+// แสดงข้อมูลใน Chart Plot_Graph
 class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult4_1;
@@ -5089,6 +4320,7 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
 
 String? unit5_1;
 
+// แสดงข้อมูลใน Chart Distribustoin_Rate
 class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
   final Size? size;
   CustomCircleSymbolRenderer5({this.size});

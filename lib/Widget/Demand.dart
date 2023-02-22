@@ -1,3 +1,4 @@
+//หน้า Order
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -9,15 +10,11 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'downloadExcel/download.dart';
 
 class Demand extends StatefulWidget {
-  String? Token;
-  int? day;
-  String? day1;
-  int? farmnum;
+  String? Token;  //Token
+  int? farmnum; // farm id
   Demand({
     Key? key,
     this.Token,
-    this.day,
-    this.day1,
     this.farmnum,
   }) : super(key: key);
 
@@ -73,24 +70,6 @@ class _DemandState extends State<Demand> {
     Colors.blue,
     Colors.green,
     Colors.deepPurple,
-
-    //  Colors.orange,
-    // Colors.red,
-    // Colors.blue,
-    // Colors.green,
-    // Colors.deepPurple,
-
-    //  Colors.orange,
-    // Colors.red,
-    // Colors.blue,
-    // Colors.green,
-    // Colors.deepPurple,
-
-    //  Colors.orange,
-    // Colors.red,
-    // Colors.blue,
-    // Colors.green,
-    // Colors.deepPurple,
     Color.fromARGB(255, 156, 58, 183),
     Color.fromARGB(255, 0, 255, 195),
     Color.fromARGB(255, 195, 255, 0),
@@ -118,6 +97,8 @@ class _DemandState extends State<Demand> {
   late List<dynamic> _products2 = [];
   List<dynamic> now1 = [];
   List<dynamic> now2 = [];
+
+  //API demand_information
   Future<void> getjaon1_demand_information() async {
 
     try {
@@ -148,15 +129,6 @@ class _DemandState extends State<Demand> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            //             "Farm": widget.farmnum,
-            //  "Date_Start": "${_selectedValue.year}-${_selectedValue.month}-${_selectedValue.day}",
-            //  "Date_End": "${_selectedValue.year}-${_selectedValue.month}-${_selectedValue.day}"
-  // "Farm": 1,
-  // "Date_Start": "2022-11-17",
-  // "Date_End": "2022-11-17"
-  // "Farm": 1,
-  // "Date_Start": "2022-12-21",
-  // "Date_End": "2022-12-21"
             "Farm": widget.farmnum,
             "Date_Start": "$Y-$M-${_selectedValue.day}",
             "Date_End": "$Y-$M-${_selectedValue.day}"
@@ -257,7 +229,7 @@ class _DemandState extends State<Demand> {
                       _products1[j]["c_formula"] = nowresult1_1[S]['c_formula'];
                       _products1[j]["Numder"] += int.parse(
                           '${nowresult1_1[i]["n_refill"].split(' ').first.replaceAll(',', '')}');
-                      // _products1[0]["List"] += nowresult1_1[i]['n_refill'].split(' ').first.replaceAll(',', '');
+
                     }
                   }
                   D = double.parse('${_products1[j]["List"].length}');
@@ -282,22 +254,12 @@ class _DemandState extends State<Demand> {
                                 nowresult1_21[0]['n_box']))) {
                       
                       _products1[j]["List"] += [nowresult1_1[i]];
-                      //       _products1[j]["List"] =nowresult1_1.map((e) => {
-                      //  'c_order' : nowresult1_1.where((element) => element['c_order'].toString().compareTo(e['c_order'].toString()) == 0).first['c_order']?? null,
-                      //  'c_formula' : nowresult1_1.where((element) => element['c_order'].toString().compareTo(e['c_order'].toString()) == 0).first['c_formula']?? null,
-                      //  'house': nowresult1_1.where((element) => element['c_order'].toString().compareTo(e['c_order'].toString()) == 0).toList(),
-                      // }).toList();
-                      //       _products1[j]["List"] =    nowresult1_1[i].map((e) => {
-                      //  'c_order' : nowresult1_1[i]['c_order'],
-                      //  'c_formula' : nowresult1_1[i]['c_formula'],
-                      //  'house': nowresult1_1[i].where((element) => element['c_order'].toString().compareTo(e['c_order'].toString()) == 0).toList(),
-
-                      // }).toList();
+                 
                       _products1[j]["c_order"] = nowresult1_1[S]['c_order'];
                       _products1[j]["c_formula"] = nowresult1_1[S]['c_formula'];
                       _products1[j]["Numder"] += int.parse(
                           '${nowresult1_1[i]["n_refill"].split(' ').first.replaceAll(',', '')}');
-                      // _products1[0]["List"] += nowresult1_1[i]['n_refill'].split(' ').first.replaceAll(',', '');
+                 
                     }
                   }
                   D = double.parse('${_products1[j]["List"].length}');
@@ -344,7 +306,7 @@ class _DemandState extends State<Demand> {
         throw Exception('Failed to download');
       }
     } catch (e) {
-      //print(e.toString());
+
     }
   }
 
@@ -352,6 +314,7 @@ class _DemandState extends State<Demand> {
   int item = 0;
   DateTime itemdmy = DateTime.now();
   DateTime itemdmy1 = DateTime.now();
+  //กำหนดจำนวนวันของเดือน
   Future scrollToitem() async{
     print(item);
     if(item == 0){
@@ -391,14 +354,6 @@ class _DemandState extends State<Demand> {
          itemController.jumpTo(index:item,alignment: 0.6);    
       }
       }
-      
-      // if(item > 4){
-      //    itemController.jumpTo(index:item,alignment: 0.5);
-      // }if(item == 4){
-      //   itemController.jumpTo(index:item,alignment: 0.3);
-      // }if(item < 4){
-      //   itemController.jumpTo(index:item,alignment: 0.1);
-      // }
     }
 
    
@@ -437,7 +392,8 @@ class _DemandState extends State<Demand> {
   late String M2 = '${_selectedValue.month}';
   late int MM = int.parse('${_selectedValue.month}');
   late int day = 31;
-
+  
+   //กำหนดจำนวนวันเดือนปี
   void M3() {
     switch (MM) {
       case 1:
@@ -649,10 +605,6 @@ class _DemandState extends State<Demand> {
                                   M = '$MM';
                                 }
                               } else {
-                                // setState(() {
-                                //   MM = 1;
-                                //   M = '0$MM';
-                                // });
                               }
                               M3();
                             });
@@ -766,7 +718,7 @@ class _DemandState extends State<Demand> {
                           Color.fromARGB(255, 160, 193, 238),
                           Color.fromARGB(255, 94, 157, 228)
                         ])),
-                //  margin: EdgeInsets.all(20),
+     
                 margin: EdgeInsets.only(top: 5),
                 height: 80,
                 child: 
@@ -808,8 +760,6 @@ class _DemandState extends State<Demand> {
                           Color.fromARGB(255, 255, 255, 255)
                         ])),
                     width: 70,
-                    // height: 80,
-                    // margin: EdgeInsets.only(right: 10,left: 10),
                     child: Center(
                       child: Text('${index+1}',style: TextStyle(
                                     fontFamily: 'Montserrat',
@@ -820,41 +770,6 @@ class _DemandState extends State<Demand> {
                 ),
               );
                   })
-                
-            //     ListView.builder(
-            //       key: const PageStorageKey<String>('17'),
-            //       scrollDirection: Axis.horizontal,
-            // shrinkWrap: true,
-            // controller: _scrollController,
-            // itemCount: day,
-            // itemBuilder: (BuildContext context, int index) {
-            //   return Center(
-            //     child: Container(
-            //       margin: EdgeInsets.only(right: 10,left: 10),
-            //       child: Text('${index+1}',style: TextStyle(
-            //                     fontFamily: 'Montserrat',
-            //                     fontSize: 40,
-            //                     color: Color.fromARGB(255, 255, 255, 255)),),
-            //     ),
-            //   );
-            // }
-            //     )
-                // DatePicker(
-                //   DateTime.parse('$Y-$M-01'),
-                //   initialSelectedDate: DateTime.now(),
-                //   selectionColor: Color.fromARGB(255, 255, 0, 208),
-                //   selectedTextColor: Color.fromARGB(255, 255, 255, 255),
-                //   deactivatedColor: Color.fromARGB(255, 0, 47, 255),
-                //   daysCount: day,
-                //   onDateChange: (date) {
-                //     // New date selected
-                //     setState(() {
-                //       _selectedValue = date;
-                //       getjaon1_demand_information();
-                //     });
-                //     //print(_selectedValue);
-                //   },
-                // ),
               ),
               loading1
                   ? Container(
@@ -865,15 +780,15 @@ class _DemandState extends State<Demand> {
                       ))
                   : nowresult1_1 == null
                       ? Container()
-                      : N_tow(),
+                      : Demand(),
             ],
           ),
         ),
       ),
     );
   }
-
-  Container N_tow() {
+  // หน้าตารางข้อมูล Demand
+  Container Demand() {
     if (nowresult1_1[0]["n_refill"].split(' ').last == 'Bag') {
       return Container(
         child: ListView.builder(
@@ -892,7 +807,6 @@ class _DemandState extends State<Demand> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                  //  height: 100,
                   child: Column(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -980,7 +894,6 @@ class _DemandState extends State<Demand> {
                                       ),
                                     ],
                                   ),
-                                  //  Text('dddd'),
                                 ],
                               ),
                             );
@@ -1006,7 +919,6 @@ class _DemandState extends State<Demand> {
                     nowresult12_1[index]['c_house'] == null
                         ? Container(
                             width: 380,
-                            //  width: screenW*0.8,
                             height: 220,
                             child: Center(
                                 child: Text(
@@ -1015,7 +927,6 @@ class _DemandState extends State<Demand> {
                             )))
                         : Container(
                             width: 380,
-                            //  width: screenW*0.8,
                             height: 220,
 
                             child: Center(
@@ -1026,7 +937,6 @@ class _DemandState extends State<Demand> {
                                     'images/sacks3.png',
                                   ),
                                   width: 240,
-                                  //  width: screenW*0.7,
                                   height: 170,
                                   fit: BoxFit.fill,
                                 ),
@@ -1085,7 +995,6 @@ class _DemandState extends State<Demand> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                     ),
-                    //  height: 100,
                     child: Column(children: [
                       Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -1093,7 +1002,6 @@ class _DemandState extends State<Demand> {
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount:
-                                  //  now1[index]['List'].length,
                                   nowresult1_23.length,
                               itemBuilder: (BuildContext context, int index0) {
                                 return Container(
@@ -1130,7 +1038,6 @@ class _DemandState extends State<Demand> {
                                                 NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             itemCount:
-                                                //  now1[index]['List'].length,
                                                 nowresult1_23[index0]['house']
                                                     .length,
                                             itemBuilder: (BuildContext context,
@@ -1204,7 +1111,6 @@ class _DemandState extends State<Demand> {
                                                                   : C[index1 +
                                                                       int.parse(
                                                                           '${now1[index0]['List'].length}')]),
-                                                          // C[index1]),
                                                         ),
                                                         Text(
                                                           'Filling Date:${nowresult1_23[index0]['house'][index1]['d_gdate']}',
@@ -1224,7 +1130,6 @@ class _DemandState extends State<Demand> {
                                                         ),
                                                       ],
                                                     ),
-                                                    //  Text('dddd'),
                                                   ],
                                                 ),
                                               );
@@ -1234,30 +1139,8 @@ class _DemandState extends State<Demand> {
                                   ),
                                 );
                               })
-                          //   child: Row(
-                          //     mainAxisAlignment:
-                          //         MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Text(
-                          //         'Order : ${nowresult1_23[index]['c_order']}',
-                          //         style: TextStyle(
-                          //             fontWeight: FontWeight.bold,
-                          //             fontSize: 17,
-                          //             fontFamily: 'Montserrat',
-                          //             color: Color(0xff44bca3)),
-                          //       ),
-                          //       Text(
-                          //         'No.${nowresult1_23[index]['c_formula']}',
-                          //         style: TextStyle(
-                          //             fontWeight: FontWeight.bold,
-                          //             fontSize: 17,
-                          //             fontFamily: 'Montserrat',
-                          //             color: Color.fromARGB(255, 0, 0, 0)),
-                          //       ),
-                          //     ],
-                          //   ),
+                         
                           ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -1275,20 +1158,10 @@ class _DemandState extends State<Demand> {
                           ),
                         ],
                       ),
-                      // nowresult12_1[index]['c_house'] == null
-                      //     ? Container(
-                      //         width: 380,
-                      //         //  width: screenW*0.8,
-                      //         height: 220,
-                      //         child: Center(
-                      //             child: Text(
-                      //           'No data to display.',
-                      //           style: TextStyle(fontSize: 18),
-                      //         )))
-                      //     :
+                  
                       Container(
                         width: 380,
-                        //  width: screenW*0.8,
+                     
                         height: 220,
 
                         child: Center(
@@ -1308,10 +1181,9 @@ class _DemandState extends State<Demand> {
                               ),
                               Container(
                                 width: 265,
-                                // width: screenW*0.575,
+                              
                                 height: 170,
-                                // color: Colors.amberAccent,64
-                                // margin: EdgeInsets.only(left: screenW*0.110),
+            
                                 margin: EdgeInsets.only(left: 73),
                                 child: charts.BarChart(
                                   _createSampleDataBar1(index),
@@ -1338,25 +1210,7 @@ class _DemandState extends State<Demand> {
                             ],
                           ),
                         ),
-                        //   //        child: Container(
-                        //   //          width: screenW*0.70,
-                        //   //         height: 250,
-                        //   //         child: charts.BarChart(
-                        //   //           _createSampleDataBar(),
-                        //   //           animate: false,
-                        //   //           vertical: false,
-                        //   //           defaultRenderer: new charts.BarRendererConfig(
-                        //   //       groupingType: charts.BarGroupingType.stacked, strokeWidthPx: 2.0),
-                        //   //             behaviors: [
-                        //   //     new charts.PercentInjector<String>(
-                        //   //         totalType: charts.PercentInjectorTotalType.domain)
-                        //   // ],
-                        //   //     primaryMeasureAxis:
-                        //   //       new charts.NumericAxisSpec(renderSpec: new charts.NoneRenderSpec()),
-                        //   //  domainAxis: new charts.OrdinalAxisSpec(
-                        //   //       showAxisLine: false,
-                        //   //       renderSpec: new charts.NoneRenderSpec(
-                        //   //       )),),)
+                     
                       ),
 
                       Padding(
@@ -1408,7 +1262,7 @@ class _DemandState extends State<Demand> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                     ),
-                    //  height: 100,
+       
                     child: Column(
                       children: [
                         ListView.builder(
@@ -1438,7 +1292,7 @@ class _DemandState extends State<Demand> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      // 'Order : ${now2[index]['List'][index1]['c_order']}',
+                                                    
                                                       'Order : ${nowresult1_23[index0]['c_order']}',
                                                       style: TextStyle(
                                                           fontWeight:
@@ -1450,7 +1304,7 @@ class _DemandState extends State<Demand> {
                                                               0xff44bca3)),
                                                     ),
                                                     Text(
-                                                      // 'No.${now2[index]['List'][index1]['c_formula']}',
+                                                      
                                                       'No.${nowresult1_23[index0]['c_formula']}',
                                                       style: TextStyle(
                                                           fontWeight:
@@ -1474,7 +1328,7 @@ class _DemandState extends State<Demand> {
                                                           NeverScrollableScrollPhysics(),
                                                       shrinkWrap: true,
                                                       itemCount:
-                                                          // now2[index]['List'][index1]["List"].length,
+                                                         
                                                           nowresult1_23[index0]
                                                                   ['house']
                                                               .length,
@@ -1500,8 +1354,7 @@ class _DemandState extends State<Demand> {
                                                                             : index0 == 0
                                                                                 ? C[index2]
                                                                                 : C[index2 + int.parse('${now2[index0]['List'].length}')]),
-                                                                    // index1 == 0 ? C[index2]:
-                                                                    // C[index2+int.parse('${now2[index]['List'][index1-1]['List'].length}')]),
+                                                             
                                                                   ),
                                                                   Text(
                                                                     "${nowresult1_23[index0]['house'][index2]['c_silo'] ?? ''}",
@@ -1595,19 +1448,9 @@ class _DemandState extends State<Demand> {
                             ),
                           ],
                         ),
-                        // nowresult12_1[index]['c_house'] == null
-                        //             ? Container(
-                        //                 width: 380,
-                        //                 //  width: screenW*0.8,
-                        //                 height: 220,
-                        //                 child: Center(
-                        //                     child: Text(
-                        //                   'No data to display.',
-                        //                   style: TextStyle(fontSize: 18),
-                        //                 )))
-                        //             :
+                     
 
-                        DataBar2_1(index),
+                        DataChartBar2_1(index),
 
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -1646,8 +1489,9 @@ class _DemandState extends State<Demand> {
 
     return Container();
   }
-
-  Container DataBar2_1(int index) {
+  
+  // ChartBar และ รูปภาพ  Demand
+  Container DataChartBar2_1(int index) {
     if (now2[index]["List"].length == 1) {
       return Container(
         width: 380,
@@ -1714,11 +1558,7 @@ class _DemandState extends State<Demand> {
                       ),
                       Container(
                         width: 175,
-                        // width: screenW*0.575,
                         height: 149,
-                        // color: Colors.amberAccent,
-                        // color: Colors.amberAccent,64
-                        // margin: EdgeInsets.only(left: screenW*0.110),
                         margin: EdgeInsets.only(
                           left: 179,
                         ),
@@ -1815,11 +1655,7 @@ class _DemandState extends State<Demand> {
                       ),
                       Container(
                         width: 175,
-                        // width: screenW*0.575,
                         height: 140,
-                        // color: Colors.amberAccent,
-                        // color: Colors.amberAccent,64
-                        // margin: EdgeInsets.only(left: screenW*0.110),
                         margin: EdgeInsets.only(
                           left: 188,
                         ),
@@ -1853,80 +1689,7 @@ class _DemandState extends State<Demand> {
     }
   }
 
-  // Container newMethod() {
-  //   //print(screenW);
-  //   return Container(
-  //                             //  margin: EdgeInsets.only(left: screenW*0.156),
-  //                             //  color: Color.fromARGB(255, 33, 243, 75),
-  //           //  margin: EdgeInsets.only(top: screenH*0.08,left: screenW*0.2),
-  //            width: screenW*0.60,
-  //           height: 200,
-  //           child: charts.BarChart(
-  //             _createSampleDataBar(),
-  //             animate: false,
-  //             vertical: false,
-  //             defaultRenderer: new charts.BarRendererConfig(
-  //         groupingType: charts.BarGroupingType.stacked, strokeWidthPx: 2.0),
-  //               behaviors: [
-  //       new charts.PercentInjector<String>(
-  //           totalType: charts.PercentInjectorTotalType.domain)
-  //   ],
-  //       primaryMeasureAxis:
-  //         new charts.NumericAxisSpec(renderSpec: new charts.NoneRenderSpec()),
-  //    domainAxis: new charts.OrdinalAxisSpec(
-  //         showAxisLine: false,
-  //         renderSpec: new charts.NoneRenderSpec(
-  //         )),
-
-  //           ),
-  //         );
-  // }
-  //  List<charts.Series<BarMmodel, String>> _createSampleDataBar(int? index) {
-  //   final data = [
-  //     BarMmodel("1", double.parse('336 Kg.'.split(' Kg.').first),),
-  //   ];
-  //   final data1 = [
-  //     BarMmodel("1", double.parse('336 Kg.'.split(' Kg.').first),),
-  //   ];
-
-  //   return [
-  //     charts.Series<BarMmodel, String>(
-  //       data: data,
-  //       id: 'sales1',
-  //       colorFn: (_, __) =>
-  //           charts.ColorUtil.fromDartColor(C[0]),
-  //       domainFn: (BarMmodel BarMmodel, _) => BarMmodel.yearval,
-  //       measureFn: (BarMmodel BarMmodel, _) => BarMmodel.salesval,
-  //     ),
-  //      charts.Series<BarMmodel, String>(
-  //       data: data1,
-  //       id: 'sales2',
-  //           colorFn: (_, __) =>
-  //           charts.ColorUtil.fromDartColor(C[0]),
-  //       domainFn: (BarMmodel BarMmodel, _) => BarMmodel.yearval,
-  //       measureFn: (BarMmodel BarMmodel, _) => BarMmodel.salesval,
-  //     ),
-
-  //      charts.Series<BarMmodel, String>(
-  //       data: data,
-  //       id: 'sales1',
-  //       colorFn: (_, __) =>
-  //           charts.ColorUtil.fromDartColor(C[0]),
-  //       domainFn: (BarMmodel BarMmodel, _) => BarMmodel.yearval,
-  //       measureFn: (BarMmodel BarMmodel, _) => BarMmodel.salesval,
-  //     ),
-  //      charts.Series<BarMmodel, String>(
-  //       data: data1,
-  //       id: 'sales2',
-  //           colorFn: (_, __) =>
-  //           charts.ColorUtil.fromDartColor(C[0]),
-  //       domainFn: (BarMmodel BarMmodel, _) => BarMmodel.yearval,
-  //       measureFn: (BarMmodel BarMmodel, _) => BarMmodel.salesval,
-  //     ),
-
-  //   ];
-  // }
-
+  //ข้อมูล Chart Demand ที่เป็น Bag
   List<charts.Series<dynamic, String>> _createSampleDataBar1(int index) {
     List<dynamic> color = [
       for (int i = 0; i < now1[index]['List'].length; i++)
@@ -1977,6 +1740,7 @@ class _DemandState extends State<Demand> {
     ];
   }
 
+ //ข้อมูล Chart Demand ที่เป็น kg
   List<charts.Series<dynamic, String>> _createSampleDataBar2(int index, int A) {
     List<dynamic> color = [
       for (int i = 0; i < now2[index]['List'][A]['List'].length; i++)

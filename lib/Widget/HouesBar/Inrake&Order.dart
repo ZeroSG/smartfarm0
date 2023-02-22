@@ -9,10 +9,11 @@ import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:smartfarm2/drawer.dart';
+
 import 'dart:math';
 
-// import '../../drawer.dart';
+
+import '../../drawer.dart';
 import '../API_E_B/API_B.dart';
 import '../API_E_B/API_E.dart';
 
@@ -102,7 +103,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   String? Noname = '';
   var num;
   late double screenW, screenH;
-
+  
+  //ข้อมูล Chart Plot_Graph
   List<charts.Series<dynamic, String>> _createSampleData1() {
     if (numamount2 == 0 || numamount1 == numamount2) {
       for (int j = 0; j < widget.samount1!.length; j++) {
@@ -224,6 +226,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   late var sum2, percent2, upper_percent2, lower_percent2;
   var silo1;
   var silo2;
+      //API house_information
   Future<void> getjaon1_house_information() async {
 
     try {
@@ -330,23 +333,11 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             }
             }
           
-              // if(widget.Feed!.length>0){
-          // for(int i = 0;i<widget.Feed!.length;i++){
-          //  if(sFeed1 == widget.Feed![i]['name']){
-          //     sFeed1 = 'Default';
-          //   }
-          //   else{
-          //      sFeed1 = result1_1[0]['c_formula'];
-          //     break;
-          //   }
-          //   }
-              // }
+
 
             }
            
-            // if(sFeed1 == widget.Feed![num]['name']){
-            //   sFeed1 = 'Default';
-            // }
+
             
             upper_percent1 = result1_1[0]['n_upper_percent'];
             lower_percent1 = result1_1[0]['n_lower_percent'];
@@ -372,7 +363,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       //print(e.toString());
     }
   }
-
+    //API house_compare
   Future<void> getjaon2_house_compare() async {
     try {
       loading2 = true;
@@ -549,7 +540,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       //print(e.toString());
     }
   }
-
+     //API house_silo
   Future<void> getjaon3_house_silo() async {
     try {
       loading3 = true;
@@ -714,11 +705,11 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                 ],
               ),
             ),
-            Card(child: build1(context)),
-            Card(child: build2(context)),
-            Card(child: build3_2(context)),
-            Card(child: build4(context)),
-            Card(child: build5(context)),
+            Card(child: Age_lnformation1(context)),
+            Card(child: Formula2(context)),
+            Card(child: Report3(context)),
+            Card(child: Plot_Graph4(context)),
+            Card(child: Daily_Information_Usage5(context)),
             Container(
               height: 50,
             )
@@ -727,8 +718,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       ),
     );
   }
-
-  Widget build1(BuildContext context) => ExpansionTile(
+   //Age_lnformation
+  Widget Age_lnformation1(BuildContext context) => ExpansionTile(
         // key: K1,
         // onExpansionChanged: (value) {
         //   if (value) {
@@ -1235,8 +1226,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
 
         ],
       );
-
-  Widget build2(BuildContext context) => ExpansionTile(
+   //Formula
+  Widget Formula2(BuildContext context) => ExpansionTile(
         // key: K2,
         // onExpansionChanged: (value) {
         //   if (value) {
@@ -1515,7 +1506,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
+  // Manual Setting
   Future<dynamic> DialogManual(BuildContext context, dynamic nowresult) {
     List<String> clist = nowresult['d_pdate'].split("-");
     DateTime D = DateTime.parse('20${clist[2]}-${clist[1]}-${clist[0]}');
@@ -2403,7 +2394,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
     );
   }
 
-  Widget build3_2(BuildContext context) => ExpansionTile(
+  Widget Report3(BuildContext context) => ExpansionTile(
         // key: K3,
         // onExpansionChanged: (value) {
         //   if (value) {
@@ -2943,7 +2934,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
+  // Edit  Manual Setting  
   Center Edit(nowresult, BuildContext context) {
     DateTime now = DateTime.now();
     List<String> pdate = nowresult['d_pdate'].split("-");
@@ -2993,8 +2984,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       );
     }
   }
-
-  Widget build4(BuildContext context) => ExpansionTile(
+  //Plot_Graph
+  Widget Plot_Graph4(BuildContext context) => ExpansionTile(
         // key: K4,
         // onExpansionChanged: (value) {
         //   if (value) {
@@ -3410,7 +3401,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-
+   
+    // Chart Plot_Graph
   Container newMethodLine4() {
     double n = screenW * 0.065;
     int? sC, sF;
@@ -3649,8 +3641,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       ),
     );
   }
-
-  Widget build5(BuildContext context) => ExpansionTile(
+  //Daily_Information_Usage
+  Widget Daily_Information_Usage5(BuildContext context) => ExpansionTile(
         // key: K5,
         // onExpansionChanged: (value) {
         //   if (value) {
@@ -3891,7 +3883,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               
         ],
       );
-
+   // Chart Daily_Information_Usage
   charts.BarChart BarChart5() {
     double? Number;
 
@@ -4038,7 +4030,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   color: charts.MaterialPalette.black))),
     );
   }
-
+  //ข้อมูล Chart Daily_Information_Usage 
   List<charts.Series<dynamic, String>> _createSampleDataBar() {
     return [
       charts.Series<dynamic, String>(
@@ -4284,7 +4276,7 @@ String? unit1;
 String? unit2;
 String? unit3;
 
-//การฟแท่ง
+//การฟแท่ง // แสดงข้อมูลใน  Chart Daily_Information_Usage
 class CustomCircleSymbolRenderer1 extends charts.CircleSymbolRenderer {
   @override
   void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
@@ -4352,7 +4344,7 @@ String? unit1_;
 String? unit2_;
 int? samount2_;
 
-//กราฟเส้นซ้อน
+//กราฟเส้นซ้อน // แสดงข้อมูลใน  Chart Plot_Graph
 class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
   final Size? size;
   late String? samount1;

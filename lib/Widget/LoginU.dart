@@ -21,6 +21,7 @@ class _SignUpState extends State<SignUp> {
 
 
 bool loading = true;
+ // API Token
  Future<void> getToken(context,String Username,String Password) async{
    loading = true;
   var url = Uri.https("smartfarmpro.com", "/v1/api/security/token");

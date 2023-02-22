@@ -3,20 +3,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-// class Usersharedpreferences{
-//   Future createCache(String email) async{
-//      SharedPreferences _preferences = await SharedPreferences.getInstance();
-//      _preferences.setString('email', email);
-//   }
-//   Future readCache(String email) async{
-//      SharedPreferences _preferences = await SharedPreferences.getInstance();
-//      _preferences.getString('email');
-//   }
-//     Future removeCache(String email) async{
-//      SharedPreferences _preferences = await SharedPreferences.getInstance();
-//      _preferences.remove('email');
-//   }
-// }
+
 class Usersharedpreferences {
   static  SharedPreferences? _preferences;
     static  SharedPreferences? _preferences1;
@@ -59,19 +46,12 @@ class Usersharedpreferences {
        print('List $NameCrop');
 
   }
-  //  static Future setUserPassword(String Password) async{
 
-  //      await _preferences1!.setString(_keyPassword, Password);
-
-  // }
-  // static Future setUserToken(String Token) async{
-  //    await _preferences!.setString(_keyToken, Token);
-  // }
    List<String>? getformula() => _preferences!.getStringList('Formula');
    List<String>? getplanning() => _preferences!.getStringList('Planning');
    List<String>? getNameCrop() => _preferences!.getStringList('NameCrop');
    String? getUserEmail() => _preferences!.getString('Email');
    String? getUserPassword() => _preferences!.getString('Password');
-  // static String? getUserToken() => _preferences!.getString(_keyToken);
+
   
 }

@@ -1,3 +1,5 @@
+//หน้าเมนูหลัก
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -92,15 +94,14 @@ class _DrawerState extends State<Drawer1> {
   List<dynamic>? day;
   // หน้า House
   List<dynamic>? HOUSE;
-  List<dynamic>? farm,farm0, crop;
+  List<dynamic>? farm, farm0, crop;
   late int? cropnum1 = widget.cropnum1, cropnum = widget.cropnum;
   String? farmname, cropname;
   String? email;
   int? id;
   late int? farmnum = widget.farmnum, cropnum2;
   // cropnum2 = widget.cropnum2;
-Usersharedpreferences _p =
-                                    Usersharedpreferences();
+  Usersharedpreferences _p = Usersharedpreferences();
   bool Nocropbool = true;
 
   List<dynamic>? NocropnumList = ['Not StartCrop'];
@@ -113,6 +114,8 @@ Usersharedpreferences _p =
 //  late String? password1 = Usersharedpreferences1.getUserPassword();
 
   late TextEditingController from = TextEditingController();
+
+   // API login
   Future<void> getjaon_login() async {
     try {
       loading = true;
@@ -135,7 +138,7 @@ Usersharedpreferences _p =
         var species = json.decode(ressum.body)['result']['default_species'];
         var ship = json.decode(ressum.body)['result']['default_ship'];
         var unit = json.decode(ressum.body)['result']['default_unit'];
-        setState(()  {
+        setState(() {
           if (cropnum1 == null) {
             cropnum1 = 0;
           }
@@ -166,7 +169,6 @@ Usersharedpreferences _p =
             Nocropbool = true;
           }
 
-
           //print('cropnum1 $cropnum1');
           farmname = result3[cropnum1]['name'];
           farm = result3;
@@ -195,10 +197,6 @@ Usersharedpreferences _p =
           house = result3[cropnum1]['house'];
           default_planning = result3[cropnum1]['default_planning'];
           default_formula = result3[cropnum1]['default_formula'];
-       
-          
-        
-
 
           default_ship = ship;
 
@@ -207,59 +205,54 @@ Usersharedpreferences _p =
           default_ship = ship;
           default_unit = unit;
 
-      
           loading = false;
           loading1 = false;
         });
-           if(default_formula != null){
-             late List<String> formula = [];
-              for(int i =0;i<default_formula!.length;i++) {
-   
-     
-                formula += [default_formula![i]["name"]];
-      
+        if (default_formula != null) {
+          late List<String> formula = [];
+          for (int i = 0; i < default_formula!.length; i++) {
+            formula += [default_formula![i]["name"]];
           }
-         await  _p.setListdefault_formula(formula);
-          }else{
-            late List<String> formula = [''];
-          await  _p.setListdefault_formula(formula);
+          await _p.setListdefault_formula(formula);
+        } else {
+          late List<String> formula = [''];
+          await _p.setListdefault_formula(formula);
+        }
+        if (default_planning != null) {
+          late List<String> planning = [];
+          for (int i = 0; i < default_planning!.length; i++) {
+            planning += [default_planning![i]["name"]];
           }
-            if(default_planning != null){
-             late List<String> planning = [];
-              for(int i =0;i<default_planning!.length;i++) {
-   
-     
-                planning += [default_planning![i]["name"]];
-      
-          }
-         await  _p.setListdefault_planning(planning);
-          }else{
-             late List<String> planning = [''];
-             await  _p.setListdefault_planning(planning);
-          }
-         late List<String>  NameCrop = [];
-          if(cmiid == null){
-             NameCrop = [''];
-              await _p.setListNameCrop(NameCrop);
-          }else{
-            for(int i =0;i<cmiid!.length;i++){
+          await _p.setListdefault_planning(planning);
+        } else {
+          late List<String> planning = [''];
+          await _p.setListdefault_planning(planning);
+        }
+        late List<String> NameCrop = [];
+        if (cmiid == null) {
+          NameCrop = [''];
+          await _p.setListNameCrop(NameCrop);
+        } else {
+          for (int i = 0; i < cmiid!.length; i++) {
             NameCrop += [cmiid![i]];
             await _p.setListNameCrop(NameCrop);
           }
-          }
-          
-        
+        }
+
         // //print('ressum ========>  ${ressum.body}');
       } else {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                         builder: (context)=>    Login(),), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Login(),
+            ),
+            (route) => false);
         throw Exception('Failed to download');
       }
     } catch (e) {
       //print(e.toString());
     }
   }
-
 
 //  int starter = 0;
 
@@ -281,10 +274,7 @@ Usersharedpreferences _p =
     super.initState();
 
     getjaon_login();
-
   }
-
-
 
   GlobalKey? navigatorKeys = GlobalKey();
   @override
@@ -421,14 +411,13 @@ Usersharedpreferences _p =
           backgroundColor: Color(0xff44bca3),
           onTap: (int i) {
             setState(() {
-              num = i; 
+              num = i;
             });
-           
+
             //print('click index=$i');
             if (i == 0) {
               setState(() {
                 name = 'Main';
-                
               });
             }
             if (i == 1) {
@@ -593,35 +582,34 @@ Usersharedpreferences _p =
                               from.text = '';
                             },
                             onChanged: ((value) {
-                               farm0 = farm;    
-                             
-                                final sugges = farm0!.where((element) {
-      final farmtext = element['name']!.toLowerCase();
-      final index = value.toLowerCase();
+                              farm0 = farm;
 
-      return farmtext!.contains(index);
-    }).toList();
+                              final sugges = farm0!.where((element) {
+                                final farmtext = element['name']!.toLowerCase();
+                                final index = value.toLowerCase();
 
-    setState(() {
-      farm0 = sugges;
-    });
+                                return farmtext!.contains(index);
+                              }).toList();
+
+                              setState(() {
+                                farm0 = sugges;
+                              });
                             }),
                             controller: from,
                             keyboardType: TextInputType.emailAddress,
                             style:
                                 TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                             decoration: InputDecoration(
-                                prefixIcon: Icon(
-            Icons.search,
-            color: Color(0xffd4d4d4),
-          ),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Color(0xffd4d4d4),
+                              ),
                               // filled: true,
                               contentPadding:
                                   EdgeInsets.only(top: 10, left: 10),
                               border: InputBorder.none,
                               hintStyle: TextStyle(color: Color(0xff7d7d7d)),
                               enabledBorder: OutlineInputBorder(
-                                
                                 borderRadius: BorderRadius.circular(25),
                                 borderSide:
                                     BorderSide(color: Color(0xffcfcfcf)),
@@ -635,40 +623,39 @@ Usersharedpreferences _p =
                           ),
                         ),
                       )),
-                     Center(
-                          child: Container(
-                            margin: EdgeInsets.only(top: 5),
-                            height: screenH * 0.2,
-                            width: screenW * 0.75,
-                            child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-                              child: ListView.builder(
-                                 physics: NeverScrollableScrollPhysics(),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 5),
+                          height: screenH * 0.2,
+                          width: screenW * 0.75,
+                          child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: farm0!.length,
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                     title: Text(farm0![index]['name']),
-                                     onTap: () {
-                                       farmname = farm0![index]['name'];
+                                    title: Text(farm0![index]['name']),
+                                    onTap: () {
+                                      farmname = farm0![index]['name'];
                                       //print(farm!.length);
-                            
+
                                       for (int i = 0; i < farm!.length; i++) {
-                                        if (farm![i]['name'] == farm0![index]['name']) {
-                                   
+                                        if (farm![i]['name'] ==
+                                            farm0![index]['name']) {
                                           setState(() {
                                             cropnum1 = i;
-                                        
+
                                             farmnum = farm![i]['id'];
-                               
+
                                             if (farm![i]['crop'] == null) {
                                               cropnum2 = null;
                                             } else {
                                               cropnum2 =
                                                   farm![i]['crop'][0]['id'];
                                             }
-                            
-                             
+
                                             cropnum1 = i;
                                             cropnum = 0;
                                             // //print(farmnum);
@@ -680,15 +667,15 @@ Usersharedpreferences _p =
                                               cropname =
                                                   farm![i]['crop'][0]['name'];
                                             }
-                            
+
                                             crop = farm![i]['crop'];
-                         
+
                                             Navigator.pop(context);
                                             Navigator.pushAndRemoveUntil(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => Drawer1(
-                                                    num1: num,
+                                                      num1: num,
                                                       Token: widget.Token,
                                                       User: user,
                                                       Password: password,
@@ -700,7 +687,7 @@ Usersharedpreferences _p =
                                                 (route) => false);
                                           });
                                         }
-                            
+
                                         //  Navigator.pop(context);
                                         // if(farm![i]['name'] == farm1){
                                         //   setState(() {
@@ -709,16 +696,15 @@ Usersharedpreferences _p =
                                         //     //print(farmnum);
                                         //      Navigator.pop(context);
                                         //   });
-                            
+
                                         // }
                                       }
-                                     },
+                                    },
                                   );
                                 }),
-                            ),
                           ),
                         ),
-                    
+                      ),
                     ],
                   ),
                 ));
@@ -726,7 +712,7 @@ Usersharedpreferences _p =
         });
   }
 
-  void searchfarmname(String farmnameid){
+  void searchfarmname(String farmnameid) {
     final sugges = farm0!.where((element) {
       final farmtext = element['name']!.toLowerCase();
       final index = farmnameid.toLowerCase();
@@ -795,7 +781,6 @@ Usersharedpreferences _p =
                           color: Color.fromARGB(255, 220, 220, 220)),
                       GestureDetector(
                         onTap: () {
-                    
                           search(context);
                         },
                         child: Center(
@@ -838,7 +823,6 @@ Usersharedpreferences _p =
                           ),
                         )),
                       ),
-
                       Container(
                         margin: EdgeInsets.only(
                           top: 20,
@@ -846,10 +830,10 @@ Usersharedpreferences _p =
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                             Container(
+                            Container(
                               width: screenW * 0.49,
                               child: Row(
-                                 mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
                                     width: screenW * 0.40,
@@ -1006,7 +990,8 @@ Usersharedpreferences _p =
                                                       crop['name'],
                                                       style: TextStyle(
                                                         fontSize: 12,
-                                                        fontFamily: 'Montserrat',
+                                                        fontFamily:
+                                                            'Montserrat',
                                                         color: Color.fromARGB(
                                                             255, 25, 25, 25),
                                                       ),
@@ -1028,7 +1013,7 @@ Usersharedpreferences _p =
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         Drawer1(
-                                                          num1: num,
+                                                            num1: num,
                                                             Token: widget.Token,
                                                             User: user,
                                                             Password: password,
@@ -1063,8 +1048,7 @@ Usersharedpreferences _p =
                                                     ),
                                                   )))
                                           .toList(),
-                                      onChanged: (crop1) {
-                                      }),
+                                      onChanged: (crop1) {}),
                             ),
                           ),
                         ),

@@ -16,6 +16,7 @@ Future SetExcel(var excel, var EXcel) async {
 
   Directory? _appDocDirFolder;
   Directory? _appDocDirFolder1;
+  //ถ้าเป็น Android if แล้วถ้า ios else
   if (Platform.isAndroid) {
     documentDiresctory = await ExternalPath.getExternalStoragePublicDirectory(
         ExternalPath.DIRECTORY_DOWNLOADS);
@@ -50,17 +51,13 @@ Future SetExcel(var excel, var EXcel) async {
       print('e====> $e');
     }
   } else {
-    // showNot('Download File','Failed to download');
+
   }
   String? fileexcel =
       "$documentDiresctory/$EXcel${now.millisecond}${now.microsecond}.xlsx";
 
   OpenFilex.open(fileexcel);
   var duration = Duration(seconds: 1);
-  // showNot('Download File','Download Successfully');
-  // DownloadExcel(fileexcel);
-
-  print('d');
 }
 
 Future saveExcelAgeinformation(List<dynamic>? result, var EXcel) async {

@@ -7,10 +7,10 @@ import '../API_E_B/API_E.dart';
 
 
 class Farm extends StatefulWidget {
-   String? Token;
-   int? farmnum;
-   List<dynamic>? default_species;
-   List<dynamic>? default_ship;
+   String? Token; // Token
+   int? farmnum;  // farm id
+   List<dynamic>? default_species;//ข้อมูล default_species
+   List<dynamic>? default_ship;//ข้อมูล default_ship
    Farm({ Key? key,this.Token ,this.farmnum,this.default_species,this.default_ship}) : super(key: key);
  
   @override
@@ -18,8 +18,7 @@ class Farm extends StatefulWidget {
 }
 
 class _FarmState extends State<Farm> {
-  // List<String> Species = ['Broiler Parent stock','Fattening Pig'];
-  // String Speciesname = 'Broiler Parent stock';
+
  
     late double screenW, screenH;
      late List<dynamic>? Species = widget.default_species;
@@ -71,8 +70,6 @@ bool loading1 = true;
         var result1_1 = json.decode(ressum.body)['result']['view1'];
         
        setState(() {
-        //  //print("Farm ===>$result1_1",);
-        //   //print("${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",);
          nowresult1_1 = result1_1;
   
        
@@ -94,9 +91,6 @@ bool loading1 = true;
   }
   
 
-   
-         
-          // Speciesnum =nowresult1_1[0]["n_farm_type"];
           Speciesname =  widget.default_species![0]["name"];  
           Speciesnum =  widget.default_species![0]["id"];    
           for(int i = 0; i< Species!.length;i++){
@@ -111,11 +105,7 @@ bool loading1 = true;
          
            }
            else{
-                 
-                      // Speciesname =  widget.default_species![0]["name"];   
-                 
-           
-            //  Speciesnum =  widget.default_species![0]["id"];   
+
            }
            
            }
@@ -247,14 +237,6 @@ bool loading1 = true;
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
     return Scaffold(
-          //   appBar: AppBar(
-          // title: Text('Farm Name',style: TextStyle(
-          //                 fontSize: 17,
-          //                 fontFamily: 'Montserrat',
-          //                 fontWeight: FontWeight.bold,
-          //                   color: Color.fromARGB(255, 0, 0, 0)),),
-          
-          // backgroundColor: Color.fromARGB(255, 255, 255, 255)),
           body:  SingleChildScrollView(
          physics: BouncingScrollPhysics(),
             child: Padding(

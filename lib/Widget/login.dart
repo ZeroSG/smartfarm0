@@ -20,6 +20,8 @@ class _LoginState extends State<Login> {
   double? screenW, screenH;
   String? Token;
   bool loading = true;
+
+  // API Token
   Future<void> getToken(String Username, String Password) async {
     var url = Uri.https("smartfarmpro.com", "/v1/api/security/token");
     var res = await http.post(url, headers: <String, String>{
@@ -172,9 +174,7 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // getToken();
 
-    // _createSampleData();
   }
 
   final TextEditingController _emailController = TextEditingController();
@@ -184,13 +184,9 @@ class _LoginState extends State<Login> {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
     return Container(
-      //      decoration:  BoxDecoration(
-      //     image: DecorationImage(
-      //         image: AssetImage("images/Artboard1.jpg"),
-      //         fit: BoxFit.fill),
-      // ),
+
       child: Scaffold(
-        // backgroundColor: Colors.transparent,
+
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Stack(
@@ -198,11 +194,7 @@ class _LoginState extends State<Login> {
               Container(
                 height: screenH! * 1,
                 width: screenW! * 1,
-                //              decoration:  BoxDecoration(
-                //     image: DecorationImage(
-                //         image: AssetImage("assets/images/Artboard1.jpg"),
-                //         fit: BoxFit.fill),
-                // ),
+
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
                     center: Alignment(0, -0.33),
@@ -241,9 +233,7 @@ class _LoginState extends State<Login> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          // SizedBox(
-                          //   height: screenH!*0.35,
-                          // ),
+               
                           buildLogin(),
                           buildSignUp(),
                           SizedBox(
@@ -275,25 +265,7 @@ class _LoginState extends State<Login> {
         // ),
       ),
     );
-    // Scaffold(
-    //   body: Container(
-    //     decoration: BoxDecoration(
-    //       gradient: RadialGradient(
-    //         center: Alignment(0, -0.33),
-    //         radius: 1.0,
-    //         colors: <Color>[Colors.white, Colors.green],
-    //       ),
-    //     ),
-    //     child: Center(
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         children: [
-    //        buildLogin(),
-    //        buildSignUp(),
-    //       ],),
-    //     ),
-    //   ),
-    // );
+
   }
 
   Container buildLogo() {
@@ -384,18 +356,13 @@ class _LoginState extends State<Login> {
                         ));
                   });
                 });
-            //  getToken();
-            //print(loading);
-            //       loading? CircularProgressIndicator()
-            //       :
-            //       Navigator.pushReplacement(context, MaterialPageRoute(
-            // builder: (context)=> Drawer1(Token: Token,User: Username,Password:Password,),));
+           
           } catch (e) {
-            //print('e ===> ${e.toString()} ');
+       
           }
         },
 
-        //  Navigator.pushNamed(context, '/showMapPresent'),
+     
         child: Text(
           'Log In',
           style: TextStyle(
