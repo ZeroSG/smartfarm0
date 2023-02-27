@@ -1008,16 +1008,18 @@ class ColorCircle extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = new Paint();
-    paint.color = Color.fromARGB(255, 95, 95, 95);
+    
+    paint.color = Color(0xFF555555);
     paint.style = PaintingStyle.fill;
     var paint1 = new Paint();
-    paint1.color = Color.fromARGB(255, 0, 255, 51);
+    paint1.color = Color(0xFF48cb01);
     paint1.style = PaintingStyle.fill;
-    if (S! >= upper_percent!) {
-      paint1.color = Color.fromARGB(255, 0, 25, 249);
+   
+    if (S! > upper_percent!) {
+      paint1.color = Color(0xFF9cc833);
     }
     if (S! <= lower_percent!) {
-      paint1.color = Colors.red;
+      paint1.color = Color(0xFFfe0000);
     }
 
     var path = new Path();

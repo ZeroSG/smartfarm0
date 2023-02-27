@@ -1349,7 +1349,7 @@ class _ProductionState extends State<Production> {
                               child: SingleChildScrollView(
                                 physics: BouncingScrollPhysics(),
                                 child: Container(
-                                  height: 500,
+                                  // height: 500,
                                   width: screenW * 1,
                                   child: Column(
                                     children: <Widget>[

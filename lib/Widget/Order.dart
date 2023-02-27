@@ -320,7 +320,7 @@ class _OrderState extends State<Order> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Container(
-                height: 500,
+                // height: screenH,
                 width: screenW * 1,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
@@ -330,7 +330,7 @@ class _OrderState extends State<Order> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 15, left: 10),
+                              margin: EdgeInsets.only(top: 8, left: 10),
                               // height: screenH * 0.04,
                               child: Text(
                                 'Create Order',
@@ -1233,7 +1233,7 @@ class _OrderState extends State<Order> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Container(
-                height: 500,
+                // height: 500,
                 width: screenW * 1,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
@@ -1243,7 +1243,7 @@ class _OrderState extends State<Order> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 15, left: 10),
+                              margin: EdgeInsets.only(top: 8, left: 10),
                               child: Text(
                                 'Create Order',
                                 style: TextStyle(

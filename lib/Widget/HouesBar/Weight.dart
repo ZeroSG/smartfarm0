@@ -263,10 +263,10 @@ class _WeightState extends State<Weight> {
   }
 
   late List<String> uniquelist2 = [];
-  List<dynamic> nowresult3_1 = [];
-  List<dynamic> nowresult3_2 = [];
-  List<dynamic> nowresult3_3 = [];
-  List<dynamic> nowresult3_4 = [];
+ late List<dynamic> nowresult3_1 = [];
+ late List<dynamic> nowresult3_2 = [];
+ late List<dynamic> nowresult3_3 = [];
+  late List<dynamic> nowresult3_4 = [];
   //API weight_results
   Future<void> getjaon3_weight_results() async {
     print("Farm : ${widget.farmnum}");
@@ -288,13 +288,18 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-            //             "Farm": 17,
-            // "House": 145,
-            // "Date_Start": "2022-09-06 00:00:00.000",
-            // "Date_End": "2022-09-06 23:59:59.000"
+  //             "Farm": 17,
+  // "House": 145,
+  // "Date_Start": "2022-09-06 00:00:00.000",
+  // "Date_End": "2022-09-06 23:59:59.000"
+  //             "Farm": 64,
+  // "House": 240,
+  // "Date_Start": "2023-02-27 00:00:00.000",
+  // "Date_End": "2023-02-27 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result3_1 = json.decode(ressum.body)['result']['view1'];
+
         var result3_2 = json.decode(ressum.body)['result']['view2'];
         var result3_3 = json.decode(ressum.body)['result']['view3'];
         var result3_4 = json.decode(ressum.body)['result']['view4'];
@@ -356,7 +361,49 @@ class _WeightState extends State<Weight> {
                         null,
                 })
             .toList();
+                   print('===>$nowresult3_211');
+        //  print('===>$nowresult3_42_');
+        //  print('===>$nowresult3_43_');
+        //  print('===>$nowresult3_44_'); 
+        late List<dynamic> _products1 = List.generate(result3_1.length, (i) {
+                return {
+                  "name": '1',
+                  'device': result3_1[i]['device'],
+                  'n_avg': result3_1[i]['n_avg'],
+                    'C1' : C1[i],
+                  'C2' : C1[i]
+                };
+              });
+         late List<dynamic> _products2 = List.generate(result3_2.length, (i) {
+                return {
+                  "name": '2',
+                  'device': result3_2[i]['device'],
+                  'n_std': result3_2[i]['n_std'],
+                  'C1' : C1[i],
+                  'C2' : C1[i]
+                };
+              });  
+            late List<dynamic> _products3 = List.generate(result3_3.length, (i) {
+                return {
+                  "name": '3',
+                  'device': result3_3[i]['device'],
+                  'n_cv': result3_3[i]['n_cv'],
+                    'C1' : C1[i],
+                  'C2' : C1[i]
+                };
+              }); 
 
+               late List<dynamic> _products4 = List.generate(result3_4.length, (i) {
+                return {
+                  "name": '4',
+                  'device': result3_4[i]['device'],
+                  'n_uni': result3_4[i]['n_uni'],
+                    'C1' : C1[i],
+                  'C2' : C1[i]
+                };
+              });       
+
+                print('_products1===>$_products1');
         List<dynamic> nowresult3_41_ =
             nowresult3_211.where((x) => x['device'] == 'ALL').toList();
         List<dynamic> nowresult3_42_ =
@@ -365,13 +412,18 @@ class _WeightState extends State<Weight> {
             nowresult3_213.where((x) => x['device'] == 'ALL').toList();
         List<dynamic> nowresult3_44_ =
             nowresult3_214.where((x) => x['device'] == 'ALL').toList();
-
+      
+      // print('===>$nowresult3_41_');
+      //    print('===>$nowresult3_42_');
+      //    print('===>$nowresult3_43_');
+      //    print('===>$nowresult3_44_'); 
         setState(() {
           uniquelist2 = [];
-          nowresult3_1 = nowresult3_41_;
-          nowresult3_2 = nowresult3_42_;
-          nowresult3_3 = nowresult3_43_;
-          nowresult3_4 = nowresult3_44_;
+          nowresult3_1 = _products1;
+          nowresult3_2 = _products2;
+          nowresult3_3 = _products3;
+          nowresult3_4 = _products4;
+          
           loading3 = false;
         });
       } else {
@@ -482,10 +534,10 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-            //             "Farm": 17,
-            // "House": 145,
-            // "Date_Start": "2022-09-06 00:00:00.000",
-            // "Date_End": "2022-09-06 23:59:59.000"
+  //                        "Farm": 64,
+  // "House": 240,
+  // "Date_Start": "2023-02-27 00:00:00.000",
+  // "Date_End": "2023-02-27 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result5_1 = json.decode(ressum.body)['result']['view1'];
@@ -735,7 +787,7 @@ class _WeightState extends State<Weight> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Container(
-                height: 500,
+                // height: 500,
                 width: screenW * 1,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
@@ -826,7 +878,7 @@ class _WeightState extends State<Weight> {
                 Container(
                   margin: EdgeInsets.only(top: 10, right: 10),
                   height: 35,
-                  width: screenW * 0.75,
+                  width: screenW * 0.70,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
                       color: Colors.blueAccent,
@@ -1665,19 +1717,19 @@ class _WeightState extends State<Weight> {
    //Chart Bar Weight_Results
   List<charts.Series<dynamic, String>> _resultsDataBar1(List<dynamic> nowresult) {
     return [
-      for (int i = 0; i < nowresult[0].keys.length; i++)
-        if (nowresult[0].keys.elementAt(i) != 'device')
+      // for (int i = 0; i < nowresult[0]['device'].keys.length; i++)
+      //   if (nowresult[0].keys.elementAt(i) != 'device')
           charts.Series<dynamic, String>(
             strokeWidthPxFn: (__, _) => 1,
-            fillColorFn: (__, _) => charts.ColorUtil.fromDartColor(C2[i - 1]),
-            colorFn: (__, _) => charts.ColorUtil.fromDartColor(C1[i - 1]),
+            fillColorFn: (dynamic daily20, _) => charts.ColorUtil.fromDartColor(daily20['C2']),
+            colorFn: (dynamic daily20, _) => charts.ColorUtil.fromDartColor(daily20['C1']),
 
-            id: '$i',
+            id: '1',
             data: nowresult,
             domainFn: (dynamic daily20, _) => daily20['device'],
             measureFn: (dynamic daily20, _) =>
-                daily20['${nowresult[0].keys.elementAt(i)}'] ?? null,
-            // daily20['${result2[0].keys.elementAt(1)}'] ?? null,
+                // daily20['n_avg'] ?? null,
+            daily20['${nowresult[0].keys.elementAt(2)}'] ?? null,
           ),
     ];
   }
@@ -2349,12 +2401,13 @@ class _WeightState extends State<Weight> {
                 height: 150,
                 child: Row(
                   children: [
-                    nowresult3_1 == null
+                    loading3
+                  
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3||nowresult3_1[0]['n_avg'] == null
+                        :   nowresult3_1 == null || nowresult3_1[0]['n_avg'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2377,7 +2430,7 @@ class _WeightState extends State<Weight> {
                                             CustomCircleSymbolRenderer3_1(
                                                 size: size,
                                                 nowresult3_1: nowresult3_1,
-                                                nowresult1_1: nowresult1_1),
+                                                ),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -2425,16 +2478,17 @@ class _WeightState extends State<Weight> {
                                                 selectedDatum1!.add({
                                                   'title':
                                                       '${datumPair.datum['device']}',
-                                                  for (int i = 1;
-                                                      i <
-                                                          nowresult3_1[0]
-                                                              .keys
-                                                              .length;
-                                                      i++)
-                                                    'subTitle${i}':
-                                                        '${datumPair.datum['${nowresult3_1[0].keys.elementAt(i)}'] ?? 'undefeated'}',
+                                                  // for (int i = 1;
+                                                  //     i <
+                                                  //         nowresult3_1[2]
+                                                  //             .keys
+                                                  //             .length;
+                                                  //     i++)
+                                                    'subTitle1':
+                                                        '${datumPair.datum['n_avg'] ?? 'undefeated'}',
                                                 });
                                               });
+                                              // print(selectedDatum1);
                                             }
                                           })
                                     ],
@@ -2466,12 +2520,12 @@ class _WeightState extends State<Weight> {
                                   ),
                                 ),
                               ),
-                    nowresult3_2 == null
+                   loading3 
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3||nowresult3_2[0]['n_std'] == null
+                        : nowresult3_2 == null|| nowresult3_2[0]['n_std'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2502,16 +2556,16 @@ class _WeightState extends State<Weight> {
                                                   (charts.SeriesDatum
                                                       datumPair) {
                                                 selectedDatum2!.add({
-                                                  'title':
+                                                   'title':
                                                       '${datumPair.datum['device']}',
-                                                  for (int i = 1;
-                                                      i <
-                                                          nowresult3_2[0]
-                                                              .keys
-                                                              .length;
-                                                      i++)
-                                                    'subTitle${i}':
-                                                        '${datumPair.datum['${nowresult3_2[0].keys.elementAt(i)}'] ?? 'undefeated'}',
+                                                  // for (int i = 1;
+                                                  //     i <
+                                                  //         nowresult3_1[2]
+                                                  //             .keys
+                                                  //             .length;
+                                                  //     i++)
+                                                    'subTitle1':
+                                                        '${datumPair.datum['n_std'] ?? 'undefeated'}',
                                                 });
                                               });
                                             }
@@ -2522,8 +2576,7 @@ class _WeightState extends State<Weight> {
                                         symbolRenderer:
                                             CustomCircleSymbolRenderer3_2(
                                                 size: size,
-                                                nowresult3_1: nowresult3_2,
-                                                nowresult1_1: nowresult1_1),
+                                                nowresult3_1: nowresult3_2),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -2589,12 +2642,13 @@ class _WeightState extends State<Weight> {
                 height: 150,
                 child: Row(
                   children: [
-                    nowresult3_3 == null
+                    loading3
+                   
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3||nowresult3_3[0]['n_cv'] == null
+                        :  nowresult3_3 == null|| nowresult3_3[0]['n_cv'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2626,14 +2680,14 @@ class _WeightState extends State<Weight> {
                                                 selectedDatum3!.add({
                                                   'title':
                                                       '${datumPair.datum['device']}',
-                                                  for (int i = 1;
-                                                      i <
-                                                          nowresult3_3[0]
-                                                              .keys
-                                                              .length;
-                                                      i++)
-                                                    'subTitle${i}':
-                                                        '${datumPair.datum['${nowresult3_3[0].keys.elementAt(i)}'] ?? 'undefeated'}',
+                                                  // for (int i = 1;
+                                                  //     i <
+                                                  //         nowresult3_1[2]
+                                                  //             .keys
+                                                  //             .length;
+                                                  //     i++)
+                                                    'subTitle1':
+                                                        '${datumPair.datum['n_cv'] ?? 'undefeated'}',
                                                 });
                                               });
                                             }
@@ -2645,7 +2699,7 @@ class _WeightState extends State<Weight> {
                                             CustomCircleSymbolRenderer3_3(
                                                 size: size,
                                                 nowresult3_1: nowresult3_3,
-                                                nowresult1_1: nowresult1_1),
+                                                ),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -2707,12 +2761,13 @@ class _WeightState extends State<Weight> {
                                   ),
                                 ),
                               ),
-                    nowresult3_4 == null
+                              loading3
+                   
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3||nowresult3_4[0]['n_uni'] == null
+                        :  nowresult3_4 == null|| nowresult3_4[0]['n_uni'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2744,14 +2799,14 @@ class _WeightState extends State<Weight> {
                                                 selectedDatum4!.add({
                                                   'title':
                                                       '${datumPair.datum['device']}',
-                                                  for (int i = 1;
-                                                      i <
-                                                          nowresult3_4[0]
-                                                              .keys
-                                                              .length;
-                                                      i++)
-                                                    'subTitle${i}':
-                                                        '${datumPair.datum['${nowresult3_4[0].keys.elementAt(i)}'] ?? 'undefeated'}',
+                                                  // for (int i = 1;
+                                                  //     i <
+                                                  //         nowresult3_1[2]
+                                                  //             .keys
+                                                  //             .length;
+                                                  //     i++)
+                                                    'subTitle1':
+                                                        '${datumPair.datum['n_uni'] ?? 'undefeated'}',
                                                 });
                                               });
                                             }
@@ -2763,7 +2818,7 @@ class _WeightState extends State<Weight> {
                                             CustomCircleSymbolRenderer3_4(
                                                 size: size,
                                                 nowresult3_1: nowresult3_4,
-                                                nowresult1_1: nowresult1_1),
+                                                ),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -3918,9 +3973,9 @@ List? selectedDatum4;
 class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult3_1;
-  late List<dynamic>? nowresult1_1;
+
   CustomCircleSymbolRenderer3_1(
-      {this.size, this.nowresult3_1, this.nowresult1_1});
+      {this.size, this.nowresult3_1});
 
   @override
   void paint(charts.ChartCanvas canvas, Rectangle bounds,
@@ -3950,15 +4005,15 @@ class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
             ? bounds.left - rectWidth
             : bounds.left - rectWidth / 2)
         : bounds.left - 40;
-    for (int i = 0; i < nowresult1_1!.length; i++) {
-      if (nowresult1_1![i]["count_data"] != null) {
-        uniquelist += [nowresult1_1![i]["device"]];
-        // uniquelist.insert(i, nowresult1_1![i]["device"]);
-      }
-    }
+    // for (int i = 0; i < nowresult1_1!.length; i++) {
+    //   if (nowresult1_1![i]["count_data"] != null) {
+    //     uniquelist += [nowresult1_1![i]["device"]];
+    //     // uniquelist.insert(i, nowresult1_1![i]["device"]);
+    //   }
+    // }
     canvas.drawRRect(
-      Rectangle(110.0 - 5.0 - 50, 15 - 0, 150 + 0,
-          bounds.height + 14 * nowresult3_1![0].keys.length),
+      Rectangle(110.0 - 5.0 - 50, 0 - 0, 150 + 0,
+          bounds.height + 11 * nowresult3_1![0].keys.length),
       fill: charts.ColorUtil.fromDartColor(Color.fromARGB(255, 105, 105, 105)),
       radius: 10,
       roundTopLeft: true,
@@ -3969,25 +4024,18 @@ class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
-    // canvas.drawText(
-    //   chartText.TextElement(tooltips[0]['title'],
-    //       style: textStyle),
-    //   (110 - 10.0 - 35).round(),
-    //   (25.0 - 5).round());
-    // //print(uniquelist![0]);
-    for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
-      if (tooltips[0]['subTitle$i'] == 'undefeated') {
+      if (tooltips[0]['subTitle1'] == 'undefeated') {
         unit3_1 = 'undefeated';
       } else {
-        unit3_1 =
-            '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
+        unit3_1 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
       }
-      canvas.drawText(
-          chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_1',
-              style: textStyle),
-          (110 - 10.0 - 35).round(),
-          (11 + (i * 13) + 7).round());
-    }
+
+    canvas.drawText(
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_1',
+          style: textStyle),
+      (110 - 10.0 - 35).round(),
+      (28.0 - 5).round());
+
   }
 }
 
@@ -4027,15 +4075,16 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
             ? bounds.left - rectWidth
             : bounds.left - rectWidth / 2)
         : bounds.left - 40;
-    for (int i = 0; i < nowresult1_1!.length; i++) {
-      if (nowresult1_1![i]["count_data"] != null) {
-        uniquelist += [nowresult1_1![i]["device"]];
-        // uniquelist.insert(i, nowresult1_1![i]["device"]);
-      }
-    }
+    // for (int i = 0; i < nowresult1_1!.length; i++) {
+    //   if (nowresult1_1![i]["count_data"] != null) {
+    //     uniquelist += [nowresult1_1![i]["device"]];
+    //     // uniquelist.insert(i, nowresult1_1![i]["device"]);
+    //   }
+    // }
+    
     canvas.drawRRect(
       Rectangle(90.0 - 5.0 - 50, 15 - 0, 140 + 0,
-          bounds.height + 14 * nowresult3_1![0].keys.length),
+          bounds.height + 11 * nowresult3_1![0].keys.length),
       fill: charts.ColorUtil.fromDartColor(Color.fromARGB(255, 105, 105, 105)),
       radius: 10,
       roundTopLeft: true,
@@ -4046,25 +4095,36 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
+       if (tooltips[0]['subTitle1'] == 'undefeated') {
+        unit3_2 = 'undefeated';
+      } else {
+        unit3_2 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
+      }
+
+    canvas.drawText(
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_2',
+          style: textStyle),
+      (110 - 10.0 - 35).round(),
+      (28.0 - 5).round());
     // canvas.drawText(
     //   chartText.TextElement(tooltips[0]['title'],
     //       style: textStyle),
     //   (110 - 10.0 - 35).round(),
     //   (25.0 - 5).round());
     // //print(uniquelist![0]);
-    for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
-      if (tooltips[0]['subTitle$i'] == 'undefeated') {
-        unit3_2 = 'undefeated';
-      } else {
-        unit3_2 =
-            '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
-      }
-      canvas.drawText(
-          chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_2',
-              style: textStyle),
-          (85 - 10.0 - 35).round(),
-          (11 + (i * 13) + 7).round());
-    }
+    // for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
+    //   if (tooltips[0]['subTitle$i'] == 'undefeated') {
+    //     unit3_2 = 'undefeated';
+    //   } else {
+    //     unit3_2 =
+    //         '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
+    //   }
+    //   canvas.drawText(
+    //       chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_2',
+    //           style: textStyle),
+    //       (85 - 10.0 - 35).round(),
+    //       (11 + (i * 13) + 7).round());
+    // }
   }
 }
 // แสดงข้อมูลใน Chart Weight_Results3
@@ -4103,15 +4163,15 @@ class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
             ? bounds.left - rectWidth
             : bounds.left - rectWidth / 2)
         : bounds.left - 40;
-    for (int i = 0; i < nowresult1_1!.length; i++) {
-      if (nowresult1_1![i]["count_data"] != null) {
-        uniquelist += [nowresult1_1![i]["device"]];
-        // uniquelist.insert(i, nowresult1_1![i]["device"]);
-      }
-    }
+    // for (int i = 0; i < nowresult1_1!.length; i++) {
+    //   if (nowresult1_1![i]["count_data"] != null) {
+    //     uniquelist += [nowresult1_1![i]["device"]];
+    //     // uniquelist.insert(i, nowresult1_1![i]["device"]);
+    //   }
+    // }
     canvas.drawRRect(
-      Rectangle(110.0 - 5.0 - 50, 15 - 0, 150 + 0,
-          bounds.height + 14 * nowresult3_1![0].keys.length),
+      Rectangle(110.0 - 5.0 - 50, 0 - 0, 150 + 0,
+          bounds.height + 11 * nowresult3_1![0].keys.length),
       fill: charts.ColorUtil.fromDartColor(Color.fromARGB(255, 105, 105, 105)),
       radius: 10,
       roundTopLeft: true,
@@ -4122,25 +4182,36 @@ class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
-    // canvas.drawText(
-    //   chartText.TextElement(tooltips[0]['title'],
-    //       style: textStyle),
-    //   (110 - 10.0 - 35).round(),
-    //   (25.0 - 5).round());
-    // //print(uniquelist![0]);
-    for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
-      if (tooltips[0]['subTitle$i'] == 'undefeated') {
+       if (tooltips[0]['subTitle1'] == 'undefeated') {
         unit3_3 = 'undefeated';
       } else {
-        unit3_3 =
-            '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
+        unit3_3 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
       }
-      canvas.drawText(
-          chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_3',
-              style: textStyle),
-          (110 - 10.0 - 35).round(),
-          (11 + (i * 13) + 7).round());
-    }
+
+    canvas.drawText(
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_3',
+          style: textStyle),
+      (110 - 10.0 - 35).round(),
+      (28.0 - 5).round());
+    // // canvas.drawText(
+    // //   chartText.TextElement(tooltips[0]['title'],
+    // //       style: textStyle),
+    // //   (110 - 10.0 - 35).round(),
+    // //   (25.0 - 5).round());
+    // // //print(uniquelist![0]);
+    // for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
+    //   if (tooltips[0]['subTitle$i'] == 'undefeated') {
+    //     unit3_3 = 'undefeated';
+    //   } else {
+    //     unit3_3 =
+    //         '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
+    //   }
+    //   canvas.drawText(
+    //       chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_3',
+    //           style: textStyle),
+    //       (110 - 10.0 - 35).round(),
+    //       (11 + (i * 13) + 7).round());
+    // }
   }
 }
 // แสดงข้อมูลใน Chart Weight_Results4
@@ -4179,15 +4250,15 @@ class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
             ? bounds.left - rectWidth
             : bounds.left - rectWidth / 2)
         : bounds.left - 40;
-    for (int i = 0; i < nowresult1_1!.length; i++) {
-      if (nowresult1_1![i]["count_data"] != null) {
-        uniquelist += [nowresult1_1![i]["device"]];
-        // uniquelist.insert(i, nowresult1_1![i]["device"]);
-      }
-    }
+    // for (int i = 0; i < nowresult1_1!.length; i++) {
+    //   if (nowresult1_1![i]["count_data"] != null) {
+    //     uniquelist += [nowresult1_1![i]["device"]];
+    //     // uniquelist.insert(i, nowresult1_1![i]["device"]);
+    //   }
+    // }
     canvas.drawRRect(
       Rectangle(90.0 - 5.0 - 50, 15 - 0, 140 + 0,
-          bounds.height + 14 * nowresult3_1![0].keys.length),
+          bounds.height + 11 * nowresult3_1![0].keys.length),
       fill: charts.ColorUtil.fromDartColor(Color.fromARGB(255, 105, 105, 105)),
       radius: 10,
       roundTopLeft: true,
@@ -4198,25 +4269,36 @@ class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
+       if (tooltips[0]['subTitle1'] == 'undefeated') {
+        unit3_4 = 'undefeated';
+      } else {
+        unit3_4 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
+      }
+
+    canvas.drawText(
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_4',
+          style: textStyle),
+      (110 - 10.0 - 35).round(),
+      (28.0 - 5).round());
     // canvas.drawText(
     //   chartText.TextElement(tooltips[0]['title'],
     //       style: textStyle),
     //   (110 - 10.0 - 35).round(),
     //   (25.0 - 5).round());
     // //print(uniquelist![0]);
-    for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
-      if (tooltips[0]['subTitle$i'] == 'undefeated') {
-        unit3_4 = 'undefeated';
-      } else {
-        unit3_4 =
-            '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
-      }
-      canvas.drawText(
-          chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_4',
-              style: textStyle),
-          (85 - 10.0 - 35).round(),
-          (11 + (i * 13) + 7).round());
-    }
+    // for (int i = 1; i < nowresult3_1![0].keys.length; i++) {
+    //   if (tooltips[0]['subTitle$i'] == 'undefeated') {
+    //     unit3_4 = 'undefeated';
+    //   } else {
+    //     unit3_4 =
+    //         '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle$i']}'))}';
+    //   }
+    //   canvas.drawText(
+    //       chartText.TextElement('${uniquelist[i - 1]} : ' + '$unit3_4',
+    //           style: textStyle),
+    //       (85 - 10.0 - 35).round(),
+    //       (11 + (i * 13) + 7).round());
+    // }
   }
 }
 

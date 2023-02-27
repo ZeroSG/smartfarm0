@@ -1551,7 +1551,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Container(
-                height: 500,
+                // height: screenH,
                 width: screenW * 1,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
@@ -1561,8 +1561,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 15, left: 10),
-                              height: screenH * 0.04,
+                              margin: EdgeInsets.only(top: 8, left: 10),
+                              // height: screenH * 0.04,
                               child: Text(
                                 'Manual Setting #${widget.HOUSEname}',
                                 style: TextStyle(
@@ -4081,17 +4081,23 @@ class ColorCircle extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = new Paint();
-    paint.color = Color.fromARGB(255, 95, 95, 95);
+    
+    
+   
+    
+      var paint = new Paint();
+    
+    paint.color = Color(0xFF555555);
     paint.style = PaintingStyle.fill;
     var paint1 = new Paint();
-    paint1.color = Color.fromARGB(255, 0, 255, 51);
+    paint1.color = Color(0xFF48cb01);
     paint1.style = PaintingStyle.fill;
-    if (S! >= upper_percent!) {
-      paint1.color = Color.fromARGB(255, 0, 25, 249);
+    
+    if (S! > upper_percent!) {
+      paint1.color = Color(0xFF9cc833);
     }
     if (S! <= lower_percent!) {
-      paint1.color = Colors.red;
+      paint1.color = Color(0xFFfe0000);
     }
     var path = new Path();
     path.moveTo(30, -0);
