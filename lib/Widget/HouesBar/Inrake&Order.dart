@@ -610,7 +610,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+          print(widget.farmnum);
+     print(widget.cropnum2);
+      print(widget.num);
     if (widget.cropnum2 != null) {
       getjaon1_house_information();
       getjaon2_house_compare();
@@ -782,13 +784,13 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           });
                                         })
                                     : DropdownButton<String>(
-                                        value: sFeed1,
-                                        items: widget.Feed!
-                                            .map((Feed1) =>
+                                        value: sDefault,
+                                        items:Default
+                                            .map((Default) =>
                                                 DropdownMenuItem<String>(
-                                                    value: Feed1["name"],
+                                                    value: Default,
                                                     child: Text(
-                                                      Feed1["name"],
+                                                      Default,
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         fontFamily:
@@ -798,9 +800,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       ),
                                                     )))
                                             .toList(),
-                                        onChanged: (Feed1) {
+                                        onChanged: (Default) {
                                           setState(() {
-                                            sFeed1 = Feed1!;
+                                            sDefault = Default!;
                                             // API_edit_house_silo(widget.Token,widget.farmnum,widget.num,,sFeed1);
                                           });
                                         }),

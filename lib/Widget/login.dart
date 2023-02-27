@@ -318,7 +318,7 @@ class _LoginState extends State<Login> {
                                   Container(
                                       margin:
                                           EdgeInsets.only(top: 15, left: 10),
-                                      height: screenH! * 0.06,
+                                      // height: 20,
                                       child: Text(
                                         "Log in",
                                         style: TextStyle(
@@ -348,9 +348,13 @@ class _LoginState extends State<Login> {
                                   ),
                                 ],
                               ),
-                              newMethodEmail(),
-                              newMethodPassword(setState),
-                              newMethodLogin()
+                              Column(
+                                children: [
+                                  newMethodEmail(),
+                                  newMethodPassword(setState),
+                                  newMethodLogin(),
+                                ],
+                              )
                             ],
                           ),
                         ));

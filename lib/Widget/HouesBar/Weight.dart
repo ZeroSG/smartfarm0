@@ -31,6 +31,7 @@ class Weight extends StatefulWidget {
 }
 
 class _WeightState extends State<Weight> {
+   late DateTime? dateTime_;
   final List<dynamic> _products1 = List.generate(5, (i) {
     return {"id": "$i", "name": "$i", "price": "$i"};
   });
@@ -108,6 +109,7 @@ class _WeightState extends State<Weight> {
             End = '${Date_End.day}/${Date_End.month}/${Date_End.year}';
 
             loading0 = false;
+             getjaon6_weight_estimate_size();
           });
         }
         if (result0_1 == null) {
@@ -119,6 +121,7 @@ class _WeightState extends State<Weight> {
             End = 'Non specified';
             loading0 = false;
             dateTime_ = DateTime.now();
+             getjaon6_weight_estimate_size();
           });
         }
       } else {
@@ -266,6 +269,10 @@ class _WeightState extends State<Weight> {
   List<dynamic> nowresult3_4 = [];
   //API weight_results
   Future<void> getjaon3_weight_results() async {
+    print("Farm : ${widget.farmnum}");
+     print("House : ${widget.num}");
+      print( "Date_Start : ${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1");
+       print("Date_End : ${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2");
     try {
       loading3 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/weight-result");
@@ -486,6 +493,7 @@ class _WeightState extends State<Weight> {
         setState(() {
           uniquelist1 = [];
           nowresult5_1 = result5_1;
+          loading5 = false;
 
           var largestGeekValue1 = 0.0;
 
@@ -549,7 +557,7 @@ class _WeightState extends State<Weight> {
 
           list = list1;
 
-          loading5 = false;
+          
         });
       } else {
         throw Exception('Failed to download');
@@ -562,6 +570,7 @@ class _WeightState extends State<Weight> {
   List<dynamic> nowresult6_1 = [];
     //API weight_estimate_size
   Future<void> getjaon6_weight_estimate_size() async {
+
     try {
       loading6 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/weight-size");
@@ -614,7 +623,7 @@ class _WeightState extends State<Weight> {
     getjaon3_weight_results();
     getjaon5_weight_distribution_rate();
     getjaon4_weight_per_unit();
-    getjaon6_weight_estimate_size();
+    // getjaon6_weight_estimate_size();
   }
 
   @override
@@ -2345,7 +2354,7 @@ class _WeightState extends State<Weight> {
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3
+                        : loading3||nowresult3_1[0]['n_avg'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2462,7 +2471,7 @@ class _WeightState extends State<Weight> {
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3
+                        : loading3||nowresult3_2[0]['n_std'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2585,7 +2594,7 @@ class _WeightState extends State<Weight> {
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3
+                        : loading3||nowresult3_3[0]['n_cv'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -2703,7 +2712,7 @@ class _WeightState extends State<Weight> {
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : loading3
+                        : loading3||nowresult3_4[0]['n_uni'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
@@ -3543,7 +3552,7 @@ class _WeightState extends State<Weight> {
   Color textC = Color(0xff505050);
   int? touchedIndex;
   bool Download6 = true;
-  DateTime? dateTime_ = DateTime.parse('2022-12-08');
+
 
   //ปฏิทิน
   Future<void> chooseDate6() async {

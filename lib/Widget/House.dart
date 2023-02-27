@@ -90,9 +90,7 @@ class _HouseState extends State<House> {
   // Dropdown HOUSE
   Scaffold newDefaultTabController2(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: DefaultTabController(
+      body: DefaultTabController(
           initialIndex: numIndex!,
           length: 3,
           child: Column(children: [
@@ -106,15 +104,15 @@ class _HouseState extends State<House> {
                   Text(' '),
                   Container(
                       width: screenW * 0.5,
-                      height: screenH * 0.05,
+                      height: 50,
                       margin: EdgeInsets.only(
                         right: screenW * 0.05,
-                        top: screenH * 0.008,
+                        top: 10,
                         bottom: screenH * 0.01,
                       ),
                       child: Container(
                         height: screenH * 0.04,
-                        width: screenW * 0.3,
+                        width: 50,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                               color: Color(0xfff1f1f1),
@@ -220,7 +218,7 @@ class _HouseState extends State<House> {
             ),
             Container(
               width: screenW * 0.9,
-              height: screenH * 0.065,
+              height: 50,
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 198, 198, 198),
                   borderRadius: BorderRadius.circular(25.0)),
@@ -253,8 +251,8 @@ class _HouseState extends State<House> {
                 width: screenW * 1,
                 height: screenH * 0.001,
                 color: Color.fromARGB(255, 112, 112, 112)),
-            Container(
-              height: screenH * 0.6,
+            Expanded(
+            
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TabBarView(
@@ -287,7 +285,7 @@ class _HouseState extends State<House> {
             ),
           ]),
         ),
-      ),
+ 
     );
   }
 

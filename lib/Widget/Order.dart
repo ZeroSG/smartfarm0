@@ -1949,7 +1949,7 @@ class _OrderState extends State<Order> {
                                   width: screenW * 0.005),
                               color: Color.fromARGB(255, 235, 235, 235)),
                           height: 50,
-                          width: 170,
+                          width: 180,
                           child: Center(
                             child: TextButton(
                               onPressed: () {
