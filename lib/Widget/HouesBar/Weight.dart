@@ -292,6 +292,10 @@ class _WeightState extends State<Weight> {
   // "House": 145,
   // "Date_Start": "2022-09-06 00:00:00.000",
   // "Date_End": "2022-09-06 23:59:59.000"
+  //   "Farm": 62,
+  // "House": 236,
+  // "Date_Start": "2023-3-7 00:00:00.000",
+  // "Date_End": "2023-3-7 23:59:59.000"
   //             "Farm": 64,
   // "House": 240,
   // "Date_Start": "2023-02-27 00:00:00.000",
@@ -304,67 +308,73 @@ class _WeightState extends State<Weight> {
         var result3_3 = json.decode(ressum.body)['result']['view3'];
         var result3_4 = json.decode(ressum.body)['result']['view4'];
 
-        List<String> uniquelist00 = [];
-        for (int i = 0; i < nowresult1_1.length; i++) {
-          if (nowresult1_1[i]["count_data"] != null) {
-            setState(() {
-              uniquelist00 += [nowresult1_1[i]["device"]];
-            });
-          }
-        }
-        uniquelist2 = uniquelist00;
+        // List<String> uniquelist00 = [];
 
-        List<dynamic> nowresult3_211 = result3_1
-            .map((e) => {
-                  '${result3_1[0].keys.elementAt(0)}':
-                      e['${result3_4[0].keys.elementAt(0)}'],
-                  for (int i = 0; i < uniquelist2.length; i++)
-                    '${result3_1[0].keys.elementAt(1)}${i + 1}': result3_1
-                            .where((e) => e['device'] == uniquelist2[i])
-                            .first['${result3_1[0].keys.elementAt(1)}'] ??
-                        null,
-                })
-            .toList();
+        //    for (int i = 0; i < nowresult1_1.length; i++) {
+        //   if (nowresult1_1[i]["count_data"] != null) {
+        //     setState(() {
+        //       uniquelist00 += [nowresult1_1[i]["device"]];
+        //     });
+        //   }
+        // }
+        
+        // for (int i = 0; i < nowresult1_1.length; i++) {
+        //   if (nowresult1_1[i]["count_data"] != null) {
+        //     setState(() {
+        //       uniquelist00 += [nowresult1_1[i]["device"]];
+        //     });
+        //   }
+        // }
+        // uniquelist2 = uniquelist00;
 
-        List<dynamic> nowresult3_212 = result3_2
-            .map((e) => {
-                  '${result3_2[0].keys.elementAt(0)}':
-                      e['${result3_4[0].keys.elementAt(0)}'],
-                  for (int i = 0; i < uniquelist2.length; i++)
-                    '${result3_2[0].keys.elementAt(1)}${i + 1}': result3_2
-                            .where((e) => e['device'] == uniquelist2[i])
-                            .first['${result3_2[0].keys.elementAt(1)}'] ??
-                        null,
-                })
-            .toList();
+        // List<dynamic> nowresult3_211 = result3_1
+        //     .map((e) => {
+        //           '${result3_1[0].keys.elementAt(0)}':
+        //               e['${result3_4[0].keys.elementAt(0)}'],
+        //           for (int i = 0; i < uniquelist2.length; i++)
+        //             '${result3_1[0].keys.elementAt(1)}${i + 1}': result3_1
+        //                     .where((e) => e['device'] == uniquelist2[i])
+        //                     .first['${result3_1[0].keys.elementAt(1)}'] ??
+        //                 null,
+        //         })
+        //     .toList();
 
-        List<dynamic> nowresult3_213 = result3_3
-            .map((e) => {
-                  '${result3_3[0].keys.elementAt(0)}':
-                      e['${result3_4[0].keys.elementAt(0)}'],
-                  for (int i = 0; i < uniquelist2.length; i++)
-                    '${result3_3[0].keys.elementAt(1)}${i + 1}': result3_3
-                            .where((e) => e['device'] == uniquelist2[i])
-                            .first['${result3_3[0].keys.elementAt(1)}'] ??
-                        null,
-                })
-            .toList();
+        // List<dynamic> nowresult3_212 = result3_2
+        //     .map((e) => {
+        //           '${result3_2[0].keys.elementAt(0)}':
+        //               e['${result3_4[0].keys.elementAt(0)}'],
+        //           for (int i = 0; i < uniquelist2.length; i++)
+        //             '${result3_2[0].keys.elementAt(1)}${i + 1}': result3_2
+        //                     .where((e) => e['device'] == uniquelist2[i])
+        //                     .first['${result3_2[0].keys.elementAt(1)}'] ??
+        //                 null,
+        //         })
+        //     .toList();
 
-        List<dynamic> nowresult3_214 = result3_4
-            .map((e) => {
-                  '${result3_4[0].keys.elementAt(0)}':
-                      e['${result3_4[0].keys.elementAt(0)}'],
-                  for (int i = 0; i < uniquelist2.length; i++)
-                    '${result3_4[0].keys.elementAt(1)}${i + 1}': result3_4
-                            .where((e) => e['device'] == uniquelist2[i])
-                            .first['${result3_4[0].keys.elementAt(1)}'] ??
-                        null,
-                })
-            .toList();
-                   print('===>$nowresult3_211');
-        //  print('===>$nowresult3_42_');
-        //  print('===>$nowresult3_43_');
-        //  print('===>$nowresult3_44_'); 
+        // List<dynamic> nowresult3_213 = result3_3
+        //     .map((e) => {
+        //           '${result3_3[0].keys.elementAt(0)}':
+        //               e['${result3_4[0].keys.elementAt(0)}'],
+        //           for (int i = 0; i < uniquelist2.length; i++)
+        //             '${result3_3[0].keys.elementAt(1)}${i + 1}': result3_3
+        //                     .where((e) => e['device'] == uniquelist2[i])
+        //                     .first['${result3_3[0].keys.elementAt(1)}'] ??
+        //                 null,
+        //         })
+        //     .toList();
+
+        // List<dynamic> nowresult3_214 = result3_4
+        //     .map((e) => {
+        //           '${result3_4[0].keys.elementAt(0)}':
+        //               e['${result3_4[0].keys.elementAt(0)}'],
+        //           for (int i = 0; i < uniquelist2.length; i++)
+        //             '${result3_4[0].keys.elementAt(1)}${i + 1}': result3_4
+        //                     .where((e) => e['device'] == uniquelist2[i])
+        //                     .first['${result3_4[0].keys.elementAt(1)}'] ??
+        //                 null,
+        //         })
+        //     .toList();
+        
         late List<dynamic> _products1 = List.generate(result3_1.length, (i) {
                 return {
                   "name": '1',
@@ -403,20 +413,20 @@ class _WeightState extends State<Weight> {
                 };
               });       
 
-                print('_products1===>$_products1');
-        List<dynamic> nowresult3_41_ =
-            nowresult3_211.where((x) => x['device'] == 'ALL').toList();
-        List<dynamic> nowresult3_42_ =
-            nowresult3_212.where((x) => x['device'] == 'ALL').toList();
-        List<dynamic> nowresult3_43_ =
-            nowresult3_213.where((x) => x['device'] == 'ALL').toList();
-        List<dynamic> nowresult3_44_ =
-            nowresult3_214.where((x) => x['device'] == 'ALL').toList();
+        //         print('_products1===>$_products1');
+        // List<dynamic> nowresult3_41_ =
+        //     nowresult3_211.where((x) => x['device'] == 'ALL').toList();
+        // List<dynamic> nowresult3_42_ =
+        //     nowresult3_212.where((x) => x['device'] == 'ALL').toList();
+        // List<dynamic> nowresult3_43_ =
+        //     nowresult3_213.where((x) => x['device'] == 'ALL').toList();
+        // List<dynamic> nowresult3_44_ =
+        //     nowresult3_214.where((x) => x['device'] == 'ALL').toList();
       
-      // print('===>$nowresult3_41_');
-      //    print('===>$nowresult3_42_');
-      //    print('===>$nowresult3_43_');
-      //    print('===>$nowresult3_44_'); 
+      print('===>$_products1');
+         print('===>$_products2');
+         print('===>$_products3');
+         print('===>$_products4'); 
         setState(() {
           uniquelist2 = [];
           nowresult3_1 = _products1;
@@ -3241,7 +3251,23 @@ class _WeightState extends State<Weight> {
     Color.fromARGB(255, 255, 0, 166),
     Color.fromARGB(255, 112, 48, 3),
     Color.fromARGB(255, 155, 112, 255),
-    Color.fromARGB(255, 4, 83, 91)
+    Color.fromARGB(255, 4, 83, 91),
+    Color.fromARGB(255, 251, 145, 145),
+    Color.fromARGB(255, 1, 220, 249),
+    Color.fromARGB(255, 0, 255, 38),
+    Color.fromARGB(255, 255, 0, 221),
+    Color.fromARGB(255, 4, 113, 79),
+    Color.fromARGB(255, 255, 0, 166),
+    Color.fromARGB(255, 112, 48, 3),
+    Color.fromARGB(255, 255, 0, 0),
+    Color.fromARGB(255, 0, 4, 255),
+    Color.fromARGB(255, 0, 95, 17),
+    Color.fromARGB(255, 118, 0, 99),
+    Color.fromARGB(255, 0, 255, 225),
+    Color.fromARGB(255, 83, 1, 73),
+    Color.fromARGB(255, 255, 132, 0),
+    Color.fromARGB(255, 250, 114, 234),
+    Color.fromARGB(255, 204, 255, 0),
   ];
 
   List<Color> C2 = [
@@ -3260,7 +3286,24 @@ class _WeightState extends State<Weight> {
     Color.fromARGB(255, 83, 1, 73),
     Color.fromARGB(255, 255, 132, 0),
     Color.fromARGB(255, 250, 114, 234),
-    Color.fromARGB(255, 204, 255, 0)
+    Color.fromARGB(255, 204, 255, 0),
+
+     Color.fromARGB(255, 255, 0, 0),
+    Color.fromARGB(255, 0, 4, 255),
+    Color.fromARGB(255, 0, 95, 17),
+    Color.fromARGB(255, 118, 0, 99),
+    Color.fromARGB(255, 0, 255, 225),
+    Color.fromARGB(255, 83, 1, 73),
+    Color.fromARGB(255, 255, 132, 0),
+    Color.fromARGB(255, 255, 230, 0),
+    Color.fromARGB(255, 1, 220, 249),
+    Color.fromARGB(255, 0, 255, 38),
+    Color.fromARGB(255, 255, 0, 221),
+    Color.fromARGB(255, 4, 113, 79),
+    Color.fromARGB(255, 255, 0, 166),
+    Color.fromARGB(255, 112, 48, 3),
+    Color.fromARGB(255, 155, 112, 255),
+    Color.fromARGB(255, 4, 83, 91)
   ];
    //ข้อมูล Chart Plot_Graph
   List<charts.Series<dynamic, String>> _createSampleData4() {
