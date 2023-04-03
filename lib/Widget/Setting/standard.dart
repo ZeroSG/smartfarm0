@@ -153,85 +153,92 @@ class _standardState extends State<standard> {
   Widget build(BuildContext context) {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(),
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              width: 32,
-                              height: 40,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.arrow_back_ios)),
-                            )),
-                      ),
-                      Text(
-                        'Standard Formula', textScaleFactor: 1.0,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 25, 25, 25),
+    return WillPopScope(
+         onWillPop: () async {
+         Navigator.pop(context);
+       
+       return true;
+         },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(),
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                width: 32,
+                                height: 40,
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.arrow_back_ios)),
+                              )),
+                        ),
+                        Text(
+                          'Standard Formula', textScaleFactor: 1.0,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            color: Color.fromARGB(255, 25, 25, 25),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blueAccent,
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              // stops: [0.3, 1],
+                              colors: [
+                                Color.fromARGB(255, 160, 193, 238),
+                                Color.fromARGB(255, 94, 157, 228)
+                              ])),
+                      height: 32,
+                      width: 100,
+                      margin: EdgeInsets.only(top: 5, bottom: 10),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            tbleRows = [];
+                            filename = null;
+                            file = null;
+                          });
+                          Upload(context);
+                        },
+                        child: Text(
+                          'Upload', textScaleFactor: 1.0,
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 13,
+                              color: Color.fromARGB(255, 255, 255, 255)),
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.blueAccent,
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            // stops: [0.3, 1],
-                            colors: [
-                              Color.fromARGB(255, 160, 193, 238),
-                              Color.fromARGB(255, 94, 157, 228)
-                            ])),
-                    height: 32,
-                    width: 100,
-                    margin: EdgeInsets.only(top: 5, bottom: 10),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          tbleRows = [];
-                          filename = null;
-                          file = null;
-                        });
-                        Upload(context);
-                      },
-                      child: Text(
-                        'Upload', textScaleFactor: 1.0,
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 13,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
                     ),
-                  ),
-                ],
-              ),
-              Formula1(),
-              loading1
-                  ? Container(
-                      width: screenW * 0.5,
-                      height: screenW * 0.5,
-                      child: Center(child: CircularProgressIndicator()))
-                  : newDataTable(),
-            ],
+                  ],
+                ),
+                Formula1(),
+                loading1
+                    ? Container(
+                        width: screenW * 0.5,
+                        height: screenW * 0.5,
+                        child: Center(child: CircularProgressIndicator()))
+                    : newDataTable(),
+              ],
+            ),
           ),
         ),
       ),

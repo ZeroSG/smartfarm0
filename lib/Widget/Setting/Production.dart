@@ -1514,168 +1514,175 @@ class _ProductionState extends State<Production> {
   Widget build(BuildContext context) {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: loading1
-              ? Container()
-              : Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      width: 32,
-                                      height: 40,
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Icon(Icons.arrow_back_ios)),
-                                    )),
-                              ),
-                              Text(
-                                'Production Set', textScaleFactor: 1.0,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                  color: Color.fromARGB(255, 25, 25, 25),
+    return WillPopScope(
+         onWillPop: () async {
+         Navigator.pop(context);
+       
+       return true;
+         },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: loading1
+                ? Container()
+                : Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(),
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        width: 32,
+                                        height: 40,
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(Icons.arrow_back_ios)),
+                                      )),
                                 ),
-                              ),
-                            ],
-                          ),
-                          GestureDetector(
-                              onTap: (() {
-                                if (Crop1 == false) {
-                                  setState(() {
-                                    //    print('--------start--------');
-                                    // print(widget.farmnum);
-                                    //  print(Check);
-
-                                    Crop = 'press to end crop';
-                                    color = Colors.red;
-                                    Crop1 = true;
-                                    API_button_production_start(
-                                        widget.Token, widget.farmnum, Check);
-                                  });
-                                  var duration = Duration(seconds: 2);
-
-                                  route() {
-                                    getjaon1_setting_production();
-                                  }
-
-                                  Timer(duration, route);
-                                } else if (Crop1 == true) {
-                                  setState(() {
-                                    //  print('--------stop--------');
-                                    //   print(widget.farmnum);
-
-                                    Crop = 'start crop';
-                                    color = Colors.green;
-                                    Crop1 = false;
-                                    API_button_production_stop(
-                                        widget.Token, widget.farmnum);
-                                  });
-                                  var duration = Duration(seconds: 2);
-
-                                  route() async {
-                                    getjaon1_setting_production();
-                                  }
-
-                                  Timer(duration, route);
-  
-                                }
-                              }),
-                              child: Container(
-                                width: 160,
-                                height: 35,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                      width: 1),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: color,
+                                Text(
+                                  'Production Set', textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 25, 25, 25),
+                                  ),
                                 ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      Crop!, textScaleFactor: 1.0,
-                                      style: new TextStyle(
-                                        fontFamily: 'Montserrat',
+                              ],
+                            ),
+                            GestureDetector(
+                                onTap: (() {
+                                  if (Crop1 == false) {
+                                    setState(() {
+                                      //    print('--------start--------');
+                                      // print(widget.farmnum);
+                                      //  print(Check);
+    
+                                      Crop = 'press to end crop';
+                                      color = Colors.red;
+                                      Crop1 = true;
+                                      API_button_production_start(
+                                          widget.Token, widget.farmnum, Check);
+                                    });
+                                    var duration = Duration(seconds: 2);
+    
+                                    route() {
+                                      getjaon1_setting_production();
+                                    }
+    
+                                    Timer(duration, route);
+                                  } else if (Crop1 == true) {
+                                    setState(() {
+                                      //  print('--------stop--------');
+                                      //   print(widget.farmnum);
+    
+                                      Crop = 'start crop';
+                                      color = Colors.green;
+                                      Crop1 = false;
+                                      API_button_production_stop(
+                                          widget.Token, widget.farmnum);
+                                    });
+                                    var duration = Duration(seconds: 2);
+    
+                                    route() async {
+                                      getjaon1_setting_production();
+                                    }
+    
+                                    Timer(duration, route);
+      
+                                  }
+                                }),
+                                child: Container(
+                                  width: 160,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
                                         color: Color.fromARGB(255, 0, 0, 0),
-                                        fontSize: 15,
+                                        width: 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: color,
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        Crop!, textScaleFactor: 1.0,
+                                        style: new TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: Color.fromARGB(255, 0, 0, 0),
+                                          fontSize: 15,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )),
-                        ],
-                      ),
-                      newMethodRadio(),
-                      Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          // side: BorderSide(color: Colors.red)
+                                )),
+                          ],
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: screenW * 1,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: <Color>[
-                                        Color.fromARGB(255, 148, 184, 233),
-                                        Color(0xff84b6fd),
-                                      ],
+                        newMethodRadio(),
+                        Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            // side: BorderSide(color: Colors.red)
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: screenW * 1,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: <Color>[
+                                          Color.fromARGB(255, 148, 184, 233),
+                                          Color(0xff84b6fd),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      'House', textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  )),
-                              ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  key: Key('builder1 ${selected1.toString()}'),
-                                  itemCount: nowresult1_1.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      child: Production1(index),
-                                    );
-                                  }),
-                            ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                        'House', textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
+                                    )),
+                                ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    key: Key('builder1 ${selected1.toString()}'),
+                                    itemCount: nowresult1_1.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        child: Production1(index),
+                                      );
+                                    }),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );

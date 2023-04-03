@@ -246,81 +246,88 @@ bool loading1 = true;
     // //print(widget.default_species![0]["name"]);
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
-    return Scaffold(
-          body:  SingleChildScrollView(
-         physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child:loading1
-            ? Container(
-                width: screenW * 1,
-                height: screenW * 1,
-                child: Center(child: CircularProgressIndicator()))
-            : Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                                margin: EdgeInsets.only(),
-                                    child: GestureDetector(
-                                  onTap: 
-                                  () {
-                                    
-                               Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                     width: 32,
-                                    height: 40,
-                                 
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(Icons.arrow_back_ios)
+    return WillPopScope(
+         onWillPop: () async {
+         Navigator.pop(context);
+       
+       return true;
+         },
+      child: Scaffold(
+            body:  SingleChildScrollView(
+           physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child:loading1
+              ? Container(
+                  width: screenW * 1,
+                  height: screenW * 1,
+                  child: Center(child: CircularProgressIndicator()))
+              : Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                                  margin: EdgeInsets.only(),
+                                      child: GestureDetector(
+                                    onTap: 
+                                    () {
+                                      
+                                 Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                       width: 32,
+                                      height: 40,
+                                   
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(Icons.arrow_back_ios)
+                                      ),
+                                    )),
                                     ),
-                                  )),
-                                  ),
-                        Text('Farm Name', textScaleFactor: 1.0,
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(255, 25, 25, 25),
-                                            ),)   ,       
-                        ],
-                      ),
-                      Text(
-                          '${nowresult1_1[0]['c_name']??''}', textScaleFactor: 1.0,
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontFamily: 'THSarabun',
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 0, 0, 0)),
-                        ),      
-                    ],
-                  ),
-                  FarmName0(),
-                  Species1(),
-                  Name_BTG2(),
-                  Farm_SerialSEE3(),
-                  Central_Default4(),
-                  Farm_Address5(),
-                  Supervisor_Truck6(),
-                  Email7(),
-                  Line_Token8(),
-                  Chamber_Truck_Num9(),
-                  Chamber_Weight10(),
-                  Ship_Condition11(),
-                   Car_ID1_2_12(),
-                  Target_Uniform13(),
-          
-          
-                  Save(),
-                ],
+                          Text('Farm Name', textScaleFactor: 1.0,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              fontFamily: 'Montserrat',
+                                              color: Color.fromARGB(255, 25, 25, 25),
+                                              ),)   ,       
+                          ],
+                        ),
+                        Text(
+                            '${nowresult1_1[0]['c_name']??''}', textScaleFactor: 1.0,
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontFamily: 'THSarabun',
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 0, 0)),
+                          ),      
+                      ],
+                    ),
+                    FarmName0(),
+                    Species1(),
+                    Name_BTG2(),
+                    Farm_SerialSEE3(),
+                    Central_Default4(),
+                    Farm_Address5(),
+                    Supervisor_Truck6(),
+                    Email7(),
+                    Line_Token8(),
+                    Chamber_Truck_Num9(),
+                    Chamber_Weight10(),
+                    Ship_Condition11(),
+                     Car_ID1_2_12(),
+                    Target_Uniform13(),
+            
+            
+                    Save(),
+                  ],
+                ),
               ),
             ),
-          ),
+      ),
     );
     
   }

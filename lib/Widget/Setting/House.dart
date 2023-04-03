@@ -118,59 +118,66 @@ class _HouseState extends State<House> {
   Widget build(BuildContext context) {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Container(
-          child: loading1
-              ? Container(
-                  width: screenW * 1,
-                  height: screenW * 1,
-                  child: Center(child: CircularProgressIndicator()))
-              : Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(),
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                width: 32,
-                                height: 40,
-                                child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.arrow_back_ios)),
-                              )),
-                        ),
-                        Text(
-                          'House', textScaleFactor: 1.0,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            color: Color.fromARGB(255, 25, 25, 25),
+    return WillPopScope(
+         onWillPop: () async {
+         Navigator.pop(context);
+       
+       return true;
+         },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            child: loading1
+                ? Container(
+                    width: screenW * 1,
+                    height: screenW * 1,
+                    child: Center(child: CircularProgressIndicator()))
+                : Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  width: 32,
+                                  height: 40,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(Icons.arrow_back_ios)),
+                                )),
                           ),
-                        ),
-                      ],
-                    ),
-                    //House
-                    House1(),
-                    Check2(),
-                    MinMax_Usage3(),
-                    MinMax_Weight4(),
-                    Target5(),
-                    //Silo
-                    Silo6(),
-                    Capacity_Topup7(),
-                    Very_Lower8(),
-                    Upper9(),
-
-                    Save(),
-                  ],
-                ),
+                          Text(
+                            'House', textScaleFactor: 1.0,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 25, 25, 25),
+                            ),
+                          ),
+                        ],
+                      ),
+                      //House
+                      House1(),
+                      Check2(),
+                      MinMax_Usage3(),
+                      MinMax_Weight4(),
+                      Target5(),
+                      //Silo
+                      Silo6(),
+                      Capacity_Topup7(),
+                      Very_Lower8(),
+                      Upper9(),
+    
+                      Save(),
+                    ],
+                  ),
+          ),
         ),
       ),
     );

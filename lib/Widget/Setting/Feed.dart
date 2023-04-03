@@ -117,53 +117,60 @@ class _FeedState extends State<Feed> {
   Widget build(BuildContext context) {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: loading1
-              ? Container(
-                  width: screenW * 1,
-                  height: screenW * 1,
-                  child: Center(child: CircularProgressIndicator()))
-              : Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(),
-                            child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  width: 32,
-                                  height: 40,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(Icons.arrow_back_ios)),
-                                )),
-                          ),
-                          Text(
-                            'Feeds InFarm', textScaleFactor: 1.0,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 25, 25, 25),
+    return WillPopScope(
+         onWillPop: () async {
+         Navigator.pop(context);
+       
+       return true;
+         },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: loading1
+                ? Container(
+                    width: screenW * 1,
+                    height: screenW * 1,
+                    child: Center(child: CircularProgressIndicator()))
+                : Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    width: 32,
+                                    height: 40,
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(Icons.arrow_back_ios)),
+                                  )),
                             ),
-                          ),
-                        ],
-                      ),
-                      Feeds1(),
-                      DataTable(),
-                      Feedmills_Orders3(),
-                      Container(),
-                    ],
+                            Text(
+                              'Feeds InFarm', textScaleFactor: 1.0,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                                color: Color.fromARGB(255, 25, 25, 25),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Feeds1(),
+                        DataTable(),
+                        Feedmills_Orders3(),
+                        Container(),
+                      ],
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );
