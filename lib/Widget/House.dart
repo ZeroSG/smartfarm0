@@ -139,7 +139,7 @@ class _HouseState extends State<House> {
                                               DropdownMenuItem<String>(
                                                   value: NoHOUSE,
                                                   child: Text(
-                                                    NoHOUSE,
+                                                    NoHOUSE, textScaleFactor: 1.0,
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontFamily: 'Montserrat',
@@ -162,7 +162,7 @@ class _HouseState extends State<House> {
                                               DropdownMenuItem<String>(
                                                   value: HOUSE['name'],
                                                   child: Text(
-                                                    HOUSE['name'],
+                                                    HOUSE['name'], textScaleFactor: 1.0,
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontFamily: 'Montserrat',

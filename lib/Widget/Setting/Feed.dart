@@ -147,7 +147,7 @@ class _FeedState extends State<Feed> {
                                 )),
                           ),
                           Text(
-                            'Feeds InFarm',
+                            'Feeds InFarm', textScaleFactor: 1.0,
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -198,7 +198,7 @@ class _FeedState extends State<Feed> {
                         items: Feeds.map((Feeds) => DropdownMenuItem<String>(
                             value: Feeds,
                             child: Text(
-                              Feeds,
+                              Feeds, textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontFamily: 'Montserrat',
@@ -305,7 +305,7 @@ class _FeedState extends State<Feed> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "#",
+                      "#", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -317,7 +317,7 @@ class _FeedState extends State<Feed> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "FEED",
+                      "FEED", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -329,7 +329,7 @@ class _FeedState extends State<Feed> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "BAG",
+                      "BAG", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -341,7 +341,7 @@ class _FeedState extends State<Feed> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "KG",
+                      "KG", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -384,15 +384,15 @@ class _FeedState extends State<Feed> {
                         DataCell(Center(
                             child: Text(item['FEED'] == null
                                 ? ''
-                                : item['FEED'].toString()))),
+                                : item['FEED'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['BAG'] == null
                                 ? ''
-                                : item['BAG'].toString()))),
+                                : item['BAG'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['KG'] == null
                                 ? ''
-                                : item['KG'].toString()))),
+                                : item['KG'].toString(), textScaleFactor: 1.0,))),
                       ]);
                     }).toList(),
             ),
@@ -412,7 +412,7 @@ class _FeedState extends State<Feed> {
           Container(
             width: screenW * 0.9,
             child: Text(
-              'Feedmills Orders',
+              'Feedmills Orders', textScaleFactor: 1.0,
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -469,7 +469,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "FEED",
+                            "FEED", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -481,7 +481,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "TYPE",
+                            "TYPE", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -493,7 +493,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BGT-NM",
+                            "BGT-NM", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -505,7 +505,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-LP",
+                            "BTG-LP", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -517,7 +517,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-LR1",
+                            "BTG-LR1", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -529,7 +529,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-LR2",
+                            "BTG-LR2", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -541,7 +541,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-LR3",
+                            "BTG-LR3", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -553,7 +553,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-LR4",
+                            "BTG-LR4", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -565,7 +565,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-NT",
+                            "BTG-NT", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -577,7 +577,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-PC",
+                            "BTG-PC", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -589,7 +589,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-PD",
+                            "BTG-PD", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -601,7 +601,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-SK1",
+                            "BTG-SK1", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -613,7 +613,7 @@ class _FeedState extends State<Feed> {
                       DataColumn(
                         label: Center(
                           child: Text(
-                            "BTG-SK2",
+                            "BTG-SK2", textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -646,55 +646,55 @@ class _FeedState extends State<Feed> {
                               DataCell(Center(
                                   child: Text(item['FEED'] == null
                                       ? ''
-                                      : item['FEED'].toString()))),
+                                      : item['FEED'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['TYPE'] == null
                                       ? ''
-                                      : item['TYPE'].toString()))),
+                                      : item['TYPE'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BGT-NM'] == null
                                       ? ''
-                                      : item['BGT-NM'].toString()))),
+                                      : item['BGT-NM'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-LP'] == null
                                       ? ''
-                                      : item['BTG-LP'].toString()))),
+                                      : item['BTG-LP'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-LR1'] == null
                                       ? ''
-                                      : item['BTG-LR1'].toString()))),
+                                      : item['BTG-LR1'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-LR2'] == null
                                       ? ''
-                                      : item['BTG-LR2'].toString()))),
+                                      : item['BTG-LR2'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-LR3'] == null
                                       ? ''
-                                      : item['BTG-LR3'].toString()))),
+                                      : item['BTG-LR3'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-LR4'] == null
                                       ? ''
-                                      : item['BTG-LR4'].toString()))),
+                                      : item['BTG-LR4'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-NT'] == null
                                       ? ''
-                                      : item['BTG-NT'].toString()))),
+                                      : item['BTG-NT'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-PC'] == null
                                       ? ''
-                                      : item['BTG-PC'].toString()))),
+                                      : item['BTG-PC'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-PD'] == null
                                       ? ''
-                                      : item['BTG-PD'].toString()))),
+                                      : item['BTG-PD'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-SK1'] == null
                                       ? ''
-                                      : item['BTG-SK1'].toString()))),
+                                      : item['BTG-SK1'].toString(), textScaleFactor: 1.0,))),
                               DataCell(Center(
                                   child: Text(item['BTG-SK2'] == null
                                       ? ''
-                                      : item['BTG-SK2'].toString()))),
+                                      : item['BTG-SK2'].toString(), textScaleFactor: 1.0,))),
                             ]);
                           }).toList(),
                   ),

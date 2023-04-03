@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../dialog.dart';
 import '../API_E_B/API_E.dart';
 
 class House extends StatefulWidget {
@@ -145,7 +146,7 @@ class _HouseState extends State<House> {
                               )),
                         ),
                         Text(
-                          'House',
+                          'House', textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -206,7 +207,8 @@ class _HouseState extends State<House> {
                 //  print(widget.farmnum);
                 //  print(Houseid);
                 //  print(Housename);
-
+                normalDialog1(context,'แก้ไขข้อมูล setting house','คุณต้องการแก้ไขข้อมูล setting house นี้ใช่หรือไม่ ? ',(){
+                    Navigator.pop(context);
                 double MinimumU = double.parse(Minimum_Usage.text);
                 String Usage1 = MinimumU.toStringAsFixed(0);
                 int MinU = int.parse(Usage1);
@@ -280,9 +282,10 @@ class _HouseState extends State<House> {
                     Very_Lower1,
                     L_ower,
                     U_P);
+                });
               },
               child: Text(
-                'Save',
+                'Save', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15,
@@ -310,7 +313,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Upper Percent',
+                      'Upper Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -369,7 +372,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Very Lower Percent',
+                      'Very Lower Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -417,7 +420,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Lower Percent',
+                      'Lower Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -474,7 +477,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Capacity',
+                      'Capacity', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -522,7 +525,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Topup',
+                      'Topup', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -572,7 +575,7 @@ class _HouseState extends State<House> {
         Container(
           width: screenW * 0.95,
           child: Text(
-            'Silo',
+            'Silo', textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -605,7 +608,7 @@ class _HouseState extends State<House> {
                         .map((Silo) => DropdownMenuItem<String>(
                             value: Silo['c_name'],
                             child: Text(
-                              Silo['c_name'],
+                              Silo['c_name'], textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -657,7 +660,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Target Weight(gram)',
+                      'Target Weight(gram)', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -716,7 +719,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Minimum Weight Percent',
+                      'Minimum Weight Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -764,7 +767,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Maximum Weight Percent',
+                      'Maximum Weight Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -821,7 +824,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Minimum Usage Percent',
+                      'Minimum Usage Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -869,7 +872,7 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Maximum Usage Percent',
+                      'Maximum Usage Percent', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -936,7 +939,7 @@ class _HouseState extends State<House> {
           ),
           Flexible(
             child: Text(
-              'Use Process Order',
+              'Use Process Order', textScaleFactor: 1.0,
               style: TextStyle(
                 fontSize: 15,
                 // fontWeight: bold ? FontWeight.bold : FontWeight.normal,
@@ -976,7 +979,7 @@ class _HouseState extends State<House> {
                         .map((House) => DropdownMenuItem<String>(
                             value: House['name'],
                             child: Text(
-                              House['name'],
+                              House['name'], textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,

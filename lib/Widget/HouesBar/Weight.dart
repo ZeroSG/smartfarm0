@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:intl/intl.dart';
+import '../../dialog.dart';
 import '../API_E_B/API_E.dart';
 
 import 'package:charts_flutter/src/text_element.dart' as chartText;
@@ -716,7 +717,7 @@ class _WeightState extends State<Weight> {
                       chooseDateTime1();
                     },
                     child: Text(
-                      '${dateTime1_!.day}-${dateTime1_!.month}-${dateTime1_!.year}',
+                      '${dateTime1_!.day}-${dateTime1_!.month}-${dateTime1_!.year}', textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -810,7 +811,7 @@ class _WeightState extends State<Weight> {
                               margin: EdgeInsets.only(top: 15, left: 10),
                               height: screenH * 0.04,
                               child: Text(
-                                'Setting Weight Device',
+                                'Setting Weight Device', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -827,7 +828,7 @@ class _WeightState extends State<Weight> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X',
+                                'X', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -865,7 +866,7 @@ class _WeightState extends State<Weight> {
               Container(
                 width: screenW * 0.74,
                 child: Text(
-                  'Set Weight Size (gram):',
+                  'Set Weight Size (gram):', textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -904,9 +905,12 @@ class _WeightState extends State<Weight> {
                   //  width: screenW*0.5,
                   child: TextButton(
                     onPressed: () {
+                      normalDialog1(context,'แก้ไขข้อมูล setting weight','คุณต้องการแก้ไขข้อมูล setting weight รายการนี้ใช่หรือไม่ ? ',(){
+                         Navigator.pop(context);
                       if (nowresult0_2 == null) {
                         Navigator.pop(context);
                       } else {
+                        
                         API_edit_weight_setting(
                             widget.Token,
                             widget.farmnum,
@@ -926,11 +930,13 @@ class _WeightState extends State<Weight> {
                           // Navigator.pop(context);
                           getjaon0_1_weight_information();
                           Navigator.pop(context);
+                          
                         });
-                      }
+                        
+                      }});
                     },
                     child: Text(
-                      'Save',
+                      'Save', textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -957,7 +963,7 @@ class _WeightState extends State<Weight> {
             Container(
               width: screenW * 0.30,
               child: Text(
-                '% Yield :',
+                '% Yield :', textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1006,7 +1012,7 @@ class _WeightState extends State<Weight> {
             Container(
               width: screenW * 0.30,
               child: Text(
-                '% Loss :',
+                '% Loss :', textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1063,7 +1069,7 @@ class _WeightState extends State<Weight> {
         Container(
           width: screenW * 0.75,
           child: Text(
-            'Size L :',
+            'Size L :', textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -1119,7 +1125,7 @@ class _WeightState extends State<Weight> {
                   width: screenW * 0.05,
                   child: Center(
                     child: Text(
-                      '-',
+                      '-', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1167,7 +1173,7 @@ class _WeightState extends State<Weight> {
         Container(
           width: screenW * 0.75,
           child: Text(
-            'Size M :',
+            'Size M :', textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -1221,7 +1227,7 @@ class _WeightState extends State<Weight> {
                   width: screenW * 0.05,
                   child: Center(
                     child: Text(
-                      '-',
+                      '-', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1269,7 +1275,7 @@ class _WeightState extends State<Weight> {
         Container(
           width: screenW * 0.75,
           child: Text(
-            'Size S :',
+            'Size S :', textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -1323,7 +1329,7 @@ class _WeightState extends State<Weight> {
                   width: screenW * 0.05,
                   child: Center(
                     child: Text(
-                      '-',
+                      '-', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1411,7 +1417,7 @@ class _WeightState extends State<Weight> {
               Container(
                 width: screenW * 0.75,
                 child: Text(
-                  'Set Weight Resulte By Period (00:00-00:00):',
+                  'Set Weight Resulte By Period (00:00-00:00):', textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1445,7 +1451,7 @@ class _WeightState extends State<Weight> {
                       ),
                       child: Center(
                         child: Text(
-                          EndS,
+                          EndS, textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat',
@@ -1461,7 +1467,7 @@ class _WeightState extends State<Weight> {
                   height: 40,
                   child: Center(
                     child: Text(
-                      'to',
+                      'to', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1486,7 +1492,7 @@ class _WeightState extends State<Weight> {
                       ),
                       child: Center(
                         child: Text(
-                          EndE,
+                          EndE, textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat',
@@ -1515,7 +1521,7 @@ class _WeightState extends State<Weight> {
               Container(
                 width: screenW * 0.75,
                 child: Text(
-                  'Set PoultryWeight :',
+                  'Set PoultryWeight :', textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1544,7 +1550,7 @@ class _WeightState extends State<Weight> {
                               .map((PoultryWeight) => DropdownMenuItem<String>(
                                   value: PoultryWeight,
                                   child: Text(
-                                    PoultryWeight,
+                                    PoultryWeight, textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontFamily: 'Montserrat',
@@ -1607,7 +1613,7 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download0
             ? Text(
-                'Standard Formula',
+                'Standard Formula', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -1617,7 +1623,7 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Standard Formula',
+                    'Standard Formula', textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -1667,7 +1673,7 @@ class _WeightState extends State<Weight> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Standard Formula: $form',
+                              'Standard Formula: $form', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
@@ -1682,7 +1688,7 @@ class _WeightState extends State<Weight> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Date Start: $Start',
+                              'Date Start: $Start', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
@@ -1698,14 +1704,14 @@ class _WeightState extends State<Weight> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Date End: $End',
+                              'Date End: $End', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
                                   color: Color.fromARGB(255, 0, 0, 0)),
                             ),
                             Text(
-                              'Age Start: $day Day',
+                              'Age Start: $day Day', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
@@ -1819,7 +1825,7 @@ class _WeightState extends State<Weight> {
         // initiallyExpanded: 0 == selected2,
         maintainState: true,
         title: Text(
-          'Weight Scale Information',
+          'Weight Scale Information', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -1847,7 +1853,7 @@ class _WeightState extends State<Weight> {
                   },
                 ),
                 Text(
-                  'View all day',
+                  'View all day', textScaleFactor: 1.0,
                   style: new TextStyle(fontSize: 15.0),
                 ),
                 Radio(
@@ -1869,7 +1875,7 @@ class _WeightState extends State<Weight> {
                   },
                 ),
                 Text(
-                  'View by period',
+                  'View by period', textScaleFactor: 1.0,
                   style: new TextStyle(fontSize: 15.0),
                 ),
               ],
@@ -1885,7 +1891,7 @@ class _WeightState extends State<Weight> {
                       height: screenH * 0.40,
                       child: Center(
                           child: Text(
-                        'No data to display.',
+                        'No data to display.', textScaleFactor: 1.0,
                         style: TextStyle(fontSize: 18),
                       )))
                   : Padding(
@@ -1942,7 +1948,7 @@ class _WeightState extends State<Weight> {
                                   DataColumn(
                                     label: Center(
                                       child: Text(
-                                        "Device",
+                                        "Device", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -1955,7 +1961,7 @@ class _WeightState extends State<Weight> {
                                   DataColumn(
                                     label: Center(
                                       child: Text(
-                                        "Last Update.",
+                                        "Last Update.", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -1968,7 +1974,7 @@ class _WeightState extends State<Weight> {
                                   DataColumn(
                                     label: Center(
                                       child: Text(
-                                        "Status",
+                                        "Status", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -1981,7 +1987,7 @@ class _WeightState extends State<Weight> {
                                   DataColumn(
                                     label: Center(
                                       child: Text(
-                                        "Sample Data",
+                                        "Sample Data", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -2015,7 +2021,7 @@ class _WeightState extends State<Weight> {
                                           ),
                                         ),
                                         Text(
-                                          item['device'],
+                                          item['device'], textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontFamily: 'Montserrat',
@@ -2024,7 +2030,7 @@ class _WeightState extends State<Weight> {
                                       ],
                                     ))),
                                     DataCell(
-                                        Center(child: Text(item['last_date']))),
+                                        Center(child: Text(item['last_date'], textScaleFactor: 1.0,))),
                                     DataCell(Center(
                                       child: Container(
                                         height: 10,
@@ -2039,7 +2045,7 @@ class _WeightState extends State<Weight> {
                                     )),
                                     DataCell(Center(
                                         child: Text(
-                                            item['count_data'].toString()))),
+                                            item['count_data'].toString(), textScaleFactor: 1.0,))),
                                   ]);
                                 }).toList(),
                               ),
@@ -2124,7 +2130,7 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download2
             ? Text(
-                'Average Hourly Weight',
+                'Average Hourly Weight', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -2161,7 +2167,7 @@ class _WeightState extends State<Weight> {
                             nowresult2_1, 'AverageHourlyWeightData');
                       },
                       child: Text(
-                        'Download',
+                        'Download', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -2178,7 +2184,7 @@ class _WeightState extends State<Weight> {
         children: [
           Center(
             child: Text(
-              '${widget.HOUSE2}-$name',
+              '${widget.HOUSE2}-$name', textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Montserrat',
@@ -2204,7 +2210,7 @@ class _WeightState extends State<Weight> {
                             height: screenH * 0.30,
                             child: Center(
                                 child: Text(
-                              'No data to display.',
+                              'No data to display.', textScaleFactor: 1.0,
                               style: TextStyle(fontSize: 18),
                             )))
                         : charts.BarChart(
@@ -2400,7 +2406,7 @@ class _WeightState extends State<Weight> {
         // initiallyExpanded: 2 == selected2,
         maintainState: true,
         title: Text(
-          'Weight Results',
+          'Weight Results', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -2423,7 +2429,7 @@ class _WeightState extends State<Weight> {
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.',
+                                  'No data to display.', textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2541,7 +2547,7 @@ class _WeightState extends State<Weight> {
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.',
+                                  'No data to display.', textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2664,7 +2670,7 @@ class _WeightState extends State<Weight> {
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.',
+                                  'No data to display.', textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2783,7 +2789,7 @@ class _WeightState extends State<Weight> {
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.',
+                                  'No data to display.', textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2942,7 +2948,7 @@ class _WeightState extends State<Weight> {
         // initiallyExpanded: 3 == selected2,
         maintainState: true,
         title: Text(
-          'Plot Graph',
+          'Plot Graph', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -2978,7 +2984,7 @@ class _WeightState extends State<Weight> {
                             items: Plot.map((Plot) => DropdownMenuItem<String>(
                                 value: Plot,
                                 child: Text(
-                                  Plot,
+                                  Plot, textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -3023,7 +3029,7 @@ class _WeightState extends State<Weight> {
                             items: Unit.map((Unit) => DropdownMenuItem<String>(
                                 value: Unit,
                                 child: Text(
-                                  Unit,
+                                  Unit, textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -3056,7 +3062,7 @@ class _WeightState extends State<Weight> {
                       saveExcelAgeinformation(nowresult4_1, 'DistributionRate');
                     },
                     child: Text(
-                      'Download',
+                      'Download', textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -3075,7 +3081,7 @@ class _WeightState extends State<Weight> {
             margin: EdgeInsets.only(top: 5, bottom: 5),
             child: Center(
               child: Text(
-                '${widget.HOUSE2}',
+                '${widget.HOUSE2}', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Montserrat',
@@ -3095,7 +3101,7 @@ class _WeightState extends State<Weight> {
                         height: screenH * 0.57,
                         child: Center(
                             child: Text(
-                          'No data to display.',
+                          'No data to display.', textScaleFactor: 1.0,
                           style: TextStyle(fontSize: 18),
                         )))
                     : LineChart4(),
@@ -3384,7 +3390,7 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download5
             ? Text(
-                'Distribustoin Rate',
+                'Distribustoin Rate', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -3394,7 +3400,7 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Distribustoin Rate',
+                    'Distribustoin Rate', textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -3420,7 +3426,7 @@ class _WeightState extends State<Weight> {
                         saveExcelAgeinformation(nowresult5_1, 'WeightUnitData');
                       },
                       child: Text(
-                        'Download',
+                        'Download', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -3443,7 +3449,7 @@ class _WeightState extends State<Weight> {
           ),
           Center(
             child: Text(
-              '${widget.HOUSE2}',
+              '${widget.HOUSE2}', textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Montserrat',
@@ -3460,7 +3466,7 @@ class _WeightState extends State<Weight> {
                       height: screenH * 0.57,
                       child: Center(
                           child: Text(
-                        'No data to display.',
+                        'No data to display.', textScaleFactor: 1.0,
                         style: TextStyle(fontSize: 18),
                       )))
                   : LineChart5(),
@@ -3725,7 +3731,7 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download6
             ? Text(
-                'Estimate Real Size',
+                'Estimate Real Size', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -3735,7 +3741,7 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Estimate Real Size',
+                    'Estimate Real Size', textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -3755,7 +3761,7 @@ class _WeightState extends State<Weight> {
                         chooseDate6();
                       },
                       child: Text(
-                        '${dateTime_!.day}-${dateTime_!.month}-${dateTime_!.year}',
+                        '${dateTime_!.day}-${dateTime_!.month}-${dateTime_!.year}', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -3794,7 +3800,7 @@ class _WeightState extends State<Weight> {
                               nowresult6_1, 'SizeComparisonData');
                         },
                         child: Text(
-                          'Download',
+                          'Download', textScaleFactor: 1.0,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 15,
@@ -3840,7 +3846,7 @@ class _WeightState extends State<Weight> {
                             height: screenH * 0.57,
                             child: Center(
                                 child: Text(
-                              'No data to display.',
+                              'No data to display.', textScaleFactor: 1.0,
                               style: TextStyle(fontSize: 18),
                             )))
                         : loading6
@@ -3930,7 +3936,7 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'], style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
           (110 - 10.0 - 35).round(),
           (25.0 - 5).round());
 
@@ -3947,12 +3953,12 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
             '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle2']}'))}';
       }
       canvas.drawText(
-          chartText.TextElement('Avg. Weight : ' + '$unit2_1',
+          chartText.TextElement('Avg. Weight : ' + '$unit2_1', textScaleFactor: 1.0,
               style: textStyle),
           (110 - 10.0 - 35).round(),
           (13 + (1 * 13) + 7).round());
       canvas.drawText(
-          chartText.TextElement('Sample Data : ' + '$unit2_2',
+          chartText.TextElement('Sample Data : ' + '$unit2_2', textScaleFactor: 1.0,
               style: textStyle),
           (110 - 10.0 - 35).round(),
           (13 + (2 * 13) + 7).round());
@@ -3973,7 +3979,7 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'], style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
           (265 - 10.0 - 35).round(),
           (25.0 - 5).round());
       if (tooltips[0]['subTitle1'] == 'undefeated') {
@@ -3989,12 +3995,12 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
             '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle2']}'))}';
       }
       canvas.drawText(
-          chartText.TextElement('Avg. Weight : ' + '$unit2_1',
+          chartText.TextElement('Avg. Weight : ' + '$unit2_1', textScaleFactor: 1.0,
               style: textStyle),
           (265 - 10.0 - 35).round(),
           (13 + (1 * 13) + 7).round());
       canvas.drawText(
-          chartText.TextElement('Sample Data : ' + '$unit2_2',
+          chartText.TextElement('Sample Data : ' + '$unit2_2', textScaleFactor: 1.0,
               style: textStyle),
           (265 - 10.0 - 35).round(),
           (13 + (2 * 13) + 7).round());
@@ -4074,7 +4080,7 @@ class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
       }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_1',
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_1', textScaleFactor: 1.0,
           style: textStyle),
       (110 - 10.0 - 35).round(),
       (28.0 - 5).round());
@@ -4145,7 +4151,7 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
       }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_2',
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_2', textScaleFactor: 1.0,
           style: textStyle),
       (110 - 10.0 - 35).round(),
       (28.0 - 5).round());
@@ -4232,7 +4238,7 @@ class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
       }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_3',
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_3', textScaleFactor: 1.0,
           style: textStyle),
       (110 - 10.0 - 35).round(),
       (28.0 - 5).round());
@@ -4319,7 +4325,7 @@ class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
       }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_4',
+      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_4', textScaleFactor: 1.0,
           style: textStyle),
       (110 - 10.0 - 35).round(),
       (28.0 - 5).round());
@@ -4397,7 +4403,7 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'], style: textStyle),
+          chartText.TextElement(tooltips[0]['title'], textScaleFactor: 1.0, style: textStyle),
           (110 - 10.0 - 35).round(),
           (25.0 - 5).round());
       for (int i = 1; i < nowresult4_1![0].keys.length; i++) {
@@ -4409,7 +4415,7 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
         }
         canvas.drawText(
             chartText.TextElement(
-                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1',
+                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1', textScaleFactor: 1.0,
                 style: textStyle),
             (110 - 10.0 - 35).round(),
             (13 + (i * 13) + 7).round());
@@ -4431,7 +4437,7 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'], style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
           (265 - 10.0 - 35).round(),
           (25.0 - 5).round());
       for (int i = 1; i < nowresult4_1![0].keys.length; i++) {
@@ -4443,7 +4449,7 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
         }
         canvas.drawText(
             chartText.TextElement(
-                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1',
+                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1', textScaleFactor: 1.0,
                 style: textStyle),
             (265 - 10.0 - 35).round(),
             (13 + (i * 13) + 7).round());
@@ -4510,7 +4516,7 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
 
       for (int i = 0; i < uniquelist.length; i++) {
         canvas.drawText(
-            chartText.TextElement('-${uniquelist[i]['title']}',
+            chartText.TextElement('-${uniquelist[i]['title']}', textScaleFactor: 1.0,
                 style: textStyle1),
             (110 - 10.0 - 35).round(),
             ((25.0 + (i * 26)) - 5).round());
@@ -4524,7 +4530,7 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
         canvas.drawText(
             chartText.TextElement(
                 '${NumberFormat.compact().format(double.parse('${uniquelist[i]['subTitle1']}'))} : ' +
-                    '$unit5_1',
+                    '$unit5_1', textScaleFactor: 1.0,
                 style: textStyle),
             (110 - 10.0 - 35).round(),
             (28 + (i * 26) + 7).round());
@@ -4551,7 +4557,7 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
 
       for (int i = 0; i < uniquelist.length; i++) {
         canvas.drawText(
-            chartText.TextElement('-${uniquelist[i]['title']}',
+            chartText.TextElement('-${uniquelist[i]['title']}', textScaleFactor: 1.0,
                 style: textStyle1),
             (265 - 10.0 - 35).round(),
             ((25.0 + (i * 26)) - 5).round());
@@ -4565,7 +4571,7 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
         canvas.drawText(
             chartText.TextElement(
                 '${NumberFormat.compact().format(double.parse('${uniquelist[i]['subTitle1']}'))} : ' +
-                    '$unit5_1',
+                    '$unit5_1', textScaleFactor: 1.0,
                 style: textStyle),
             (265 - 10.0 - 35).round(),
             (28 + (i * 26) + 7).round());

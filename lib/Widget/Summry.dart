@@ -316,7 +316,7 @@ class _SummaryState extends State<Summary> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Age lnformation',
+                    'Age lnformation', textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -343,7 +343,7 @@ class _SummaryState extends State<Summary> {
                           saveExcelAgeinformation(result1, 'Agelnformation');
                         },
                         child: Text(
-                          'Download',
+                          'Download', textScaleFactor: 1.0,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 15,
@@ -359,7 +359,7 @@ class _SummaryState extends State<Summary> {
                 ],
               )
             : Text(
-                'Age lnformation',
+                'Age lnformation', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -372,7 +372,7 @@ class _SummaryState extends State<Summary> {
                   height: 250,
                   child: Center(
                       child: Text(
-                    'No data to display.',
+                    'No data to display.', textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                   )),
                 )
@@ -381,7 +381,7 @@ class _SummaryState extends State<Summary> {
                       height: 250,
                       child: Center(
                           child: Text(
-                        'ไม่มีค่า',
+                        'ไม่มีค่า', textScaleFactor: 1.0,
                         style: TextStyle(fontSize: 18),
                       )))
                   : loading
@@ -412,7 +412,7 @@ class _SummaryState extends State<Summary> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Daily Information',
+                    'Daily Information', textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -438,7 +438,7 @@ class _SummaryState extends State<Summary> {
                           saveExcelAgeinformation(result2, 'DailyInformation');
                         },
                         child: Text(
-                          'Download',
+                          'Download', textScaleFactor: 1.0,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 15,
@@ -450,7 +450,7 @@ class _SummaryState extends State<Summary> {
                 ],
               )
             : Text(
-                'Daily Information',
+                'Daily Information', textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -463,7 +463,7 @@ class _SummaryState extends State<Summary> {
                   height: 250,
                   child: Center(
                       child: Text(
-                    'No data to display.',
+                    'No data to display.', textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                   )),
                 )
@@ -472,7 +472,7 @@ class _SummaryState extends State<Summary> {
                       height: 250,
                       child: Center(
                           child: Text(
-                        'ไม่มีค่า',
+                        'ไม่มีค่า', textScaleFactor: 1.0,
                         style: TextStyle(fontSize: 18),
                       )))
                   : loading2
@@ -669,7 +669,7 @@ class _SummaryState extends State<Summary> {
                                         (NoView_by) => DropdownMenuItem<String>(
                                             value: NoView_by,
                                             child: Text(
-                                              NoView_by,
+                                              NoView_by, textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -692,7 +692,7 @@ class _SummaryState extends State<Summary> {
                                     .map((View_by) => DropdownMenuItem<String>(
                                         value: View_by['name'],
                                         child: Text(
-                                          View_by['name'],
+                                          View_by['name'], textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontFamily: 'Montserrat',
@@ -751,7 +751,7 @@ class _SummaryState extends State<Summary> {
                                 Graph.map((Graph) => DropdownMenuItem<String>(
                                     value: Graph,
                                     child: Text(
-                                      Graph,
+                                      Graph, textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -959,7 +959,7 @@ class _SummaryState extends State<Summary> {
                                       .map((Nosex) => DropdownMenuItem<String>(
                                           value: Nosex,
                                           child: Text(
-                                            Nosex,
+                                            Nosex, textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'Montserrat',
@@ -989,7 +989,7 @@ class _SummaryState extends State<Summary> {
                                                     physics:
                                                         BouncingScrollPhysics(),
                                                     child: Text(
-                                                      sex,
+                                                      sex, textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                         // overflow: TextOverflow.ellipsis,
                                                         fontSize: 14,
@@ -1044,7 +1044,7 @@ class _SummaryState extends State<Summary> {
                                     .map((Notype) => DropdownMenuItem<String>(
                                         value: Notype,
                                         child: Text(
-                                          Notype,
+                                          Notype, textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontFamily: 'Montserrat',
@@ -1066,7 +1066,7 @@ class _SummaryState extends State<Summary> {
                                     .map((type) => DropdownMenuItem<String>(
                                         value: type['name'].toString(),
                                         child: Text(
-                                          type['name'],
+                                          type['name'], textScaleFactor: 1.0,
                                           style: TextStyle(
                                             overflow: TextOverflow.ellipsis,
                                             fontSize: 14,
@@ -1167,7 +1167,7 @@ class CustomCircleSymbolRendererAge_lnformation
       for (int j = 0; j < sex!.length; j++) {
         if (ssex == sex![j]['name']) {
           canvas.drawText(
-              chartText.TextElement('day : ' + tooltips[0]['text'],
+              chartText.TextElement('day : ' + tooltips[0]['text'], textScaleFactor: 1.0,
                   style: textStyle),
               (110 - 10.0 - 35).round(),
               (25.0 - 5).round());
@@ -1180,7 +1180,7 @@ class CustomCircleSymbolRendererAge_lnformation
             }
             canvas.drawText(
                 chartText.TextElement(
-                    '${result1![0].keys.elementAt(i)} : ' + '$unit2',
+                    '${result1![0].keys.elementAt(i)} : ' + '$unit2', textScaleFactor: 1.0,
                     style: textStyle),
                 (110 - 10.0 - 35).round(),
                 (13 + (i * 13) + 7).round());
@@ -1206,7 +1206,7 @@ class CustomCircleSymbolRendererAge_lnformation
       for (int j = 0; j < sex!.length; j++) {
         if (ssex == sex![j]['name']) {
           canvas.drawText(
-              chartText.TextElement('day : ' + tooltips[0]['text'],
+              chartText.TextElement('day : ' + tooltips[0]['text'], textScaleFactor: 1.0,
                   style: textStyle),
               ((sizeW! - 130) - 10.0 - 35).round(),
               (25.0 - 5).round());
@@ -1221,7 +1221,7 @@ class CustomCircleSymbolRendererAge_lnformation
             }
             canvas.drawText(
                 chartText.TextElement(
-                    '${result1![0].keys.elementAt(i)} : ' + '$unit2',
+                    '${result1![0].keys.elementAt(i)} : ' + '$unit2', textScaleFactor: 1.0,
                     style: textStyle),
                 ((sizeW! - 130) - 10.0 - 35).round(),
                 (13 + (i * 13) + 7).round());
@@ -1295,7 +1295,7 @@ class CustomCircleSymbolRendererDaily_Information
       for (int j = 0; j < View_by!.length; j++) {
         if (sView_by == View_by![j]['name']) {
           canvas.drawText(
-              chartText.TextElement('day : ' + tooltips[0]['text'],
+              chartText.TextElement('day : ' + tooltips[0]['text'], textScaleFactor: 1.0,
                   style: textStyle),
               (110 - 10.0 - 35).round(),
               (25.0 - 5).round());
@@ -1308,7 +1308,7 @@ class CustomCircleSymbolRendererDaily_Information
             }
             canvas.drawText(
                 chartText.TextElement(
-                    '${result2![0].keys.elementAt(i)} : ' + '$unit2',
+                    '${result2![0].keys.elementAt(i)} : ' + '$unit2', textScaleFactor: 1.0,
                     style: textStyle),
                 (110 - 10.0 - 35).round(),
                 (13 + (i * 13) + 7).round());
@@ -1334,7 +1334,7 @@ class CustomCircleSymbolRendererDaily_Information
       for (int j = 0; j < View_by!.length; j++) {
         if (sView_by == View_by![j]['name']) {
           canvas.drawText(
-              chartText.TextElement('day : ' + tooltips[0]['text'],
+              chartText.TextElement('day : ' + tooltips[0]['text'], textScaleFactor: 1.0,
                   style: textStyle),
               ((sizeW! - 130) - 10.0 - 35).round(),
               (25.0 - 5).round());
@@ -1347,7 +1347,7 @@ class CustomCircleSymbolRendererDaily_Information
             }
             canvas.drawText(
                 chartText.TextElement(
-                    '${result2![0].keys.elementAt(i)} : ' + '$unit2',
+                    '${result2![0].keys.elementAt(i)} : ' + '$unit2', textScaleFactor: 1.0,
                     style: textStyle),
                 ((sizeW! - 130) - 10.0 - 35).round(),
                 (13 + (i * 13) + 7).round());

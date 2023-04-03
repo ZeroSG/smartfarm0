@@ -13,6 +13,9 @@ import 'Setting/standard.dart';
 import 'package:http/http.dart' as http;
 
 class Setting extends StatefulWidget {
+      int? cropnum2;
+  int? cropnum1;
+  int? cropnum;
   String? Token; // Token
   String? farmname; // farm name
   GlobalKey? navigatorKey;
@@ -32,7 +35,10 @@ class Setting extends StatefulWidget {
       this.default_planning,
       this.house,
       this.default_ship,
-      this.farmname})
+      this.farmname,
+      this.cropnum,
+      this.cropnum1,
+      this.cropnum2})
       : super(key: key);
 
   @override
@@ -126,7 +132,7 @@ class _SettingState extends State<Setting> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    '${widget.farmname}',
+                                    '${widget.farmname}', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontFamily: 'THSarabun',
@@ -146,7 +152,7 @@ class _SettingState extends State<Setting> {
                                       : nowresult1_1[0]['c_address'] == null
                                           ? Text('')
                                           : Text(
-                                              '${nowresult1_1[0]['c_address']}',
+                                              '${nowresult1_1[0]['c_address']}', textScaleFactor: 1.0,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 18,
@@ -172,6 +178,9 @@ class _SettingState extends State<Setting> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Farm(
+                                                        cropnum1: widget.cropnum1,
+                                          cropnum: widget.cropnum,
+                                          cropnum2: widget.cropnum2,
                                           farmnum: widget.farmnum,
                                           Token: widget.Token,
                                           default_species: default_species,
@@ -273,7 +282,7 @@ class _SettingState extends State<Setting> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   new Text(
-                    name,
+                    name, textScaleFactor: 1.0,
                     style: new TextStyle(
                       color: Color.fromARGB(255, 51, 51, 51),
                       fontSize: 15,

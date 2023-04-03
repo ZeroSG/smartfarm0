@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                                 margin: EdgeInsets.only(top: 15, left: 10),
                                 height: screenH! * 0.06,
                                 child: Text(
-                                  "ข้อมูล",
+                                  "ข้อมูล", textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 23,
                                       fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _LoginState extends State<Login> {
                                   Navigator.pop(context);
                                 },
                                 child: Text(
-                                  'X',
+                                  'X', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Center(
-                          child: Text('$Message',
+                          child: Text('$Message', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontFamily: 'Montserrat', fontSize: 16)),
                         ),
@@ -151,7 +151,7 @@ class _LoginState extends State<Login> {
                                 // password1 ='';
                               });
                             },
-                            child: Text('OK',
+                            child: Text('OK', textScaleFactor: 1.0,
                                 style: TextStyle(fontFamily: 'Montserrat')),
                           ),
                         ),
@@ -243,7 +243,7 @@ class _LoginState extends State<Login> {
                           GestureDetector(
                             onTap: () {},
                             child: Text(
-                              'Forgor Password ?',
+                              'Forgor Password ?', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 14,
@@ -320,7 +320,7 @@ class _LoginState extends State<Login> {
                                           EdgeInsets.only(top: 15, left: 10),
                                       // height: 20,
                                       child: Text(
-                                        "Log in",
+                                        "Log in", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -337,7 +337,7 @@ class _LoginState extends State<Login> {
                                         Navigator.pop(context);
                                       },
                                       child: Text(
-                                        'X',
+                                        'X', textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -368,7 +368,7 @@ class _LoginState extends State<Login> {
 
      
         child: Text(
-          'Log In',
+          'Log In', textScaleFactor: 1.0,
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 20,
@@ -497,7 +497,7 @@ class _LoginState extends State<Login> {
           // getToken(_emailController.text,_password1Controller.text);
         },
         child: Text(
-          'Log in',
+          'Log in', textScaleFactor: 1.0,
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 16,
@@ -525,7 +525,7 @@ class _LoginState extends State<Login> {
         onPressed: () {},
         //  Navigator.pushNamed(context, '/showMapPresent'),
         child: Text(
-          'Sign Up',
+          'Sign Up', textScaleFactor: 1.0,
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontSize: 20,

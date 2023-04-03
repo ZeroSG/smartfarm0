@@ -505,7 +505,7 @@ class _DemandState extends State<Demand> {
                     Container(
                       margin: EdgeInsets.only(right: 5),
                       child: Text(
-                        'Demand by house',
+                        'Demand by house', textScaleFactor: 1.0,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -537,7 +537,7 @@ class _DemandState extends State<Demand> {
                                 });
                               },
                               child: Text(
-                                '<',
+                                '<', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -551,7 +551,7 @@ class _DemandState extends State<Demand> {
                               child: Container(
                                 margin: EdgeInsets.only(left: 1, right: 1),
                                 child: Text(
-                                  '$Y',
+                                  '$Y', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -582,7 +582,7 @@ class _DemandState extends State<Demand> {
                                   });
                                 },
                                 child: Text(
-                                  '>',
+                                  '>', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -610,7 +610,7 @@ class _DemandState extends State<Demand> {
                             });
                           },
                           child: Text(
-                            '<',
+                            '<', textScaleFactor: 1.0,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -625,7 +625,7 @@ class _DemandState extends State<Demand> {
                               width: 120,
                               child: Center(
                                   child: Text(
-                                '$M2',
+                                '$M2', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -656,7 +656,7 @@ class _DemandState extends State<Demand> {
                           child: Container(
                               margin: EdgeInsets.only(right: 5),
                               child: Text(
-                                '>',
+                                '>', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -693,7 +693,7 @@ class _DemandState extends State<Demand> {
                         saveExcelAgeinformation(nowresult1_1, 'Demand');
                       },
                       child: Text(
-                        'Download',
+                        'Download', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -761,7 +761,7 @@ class _DemandState extends State<Demand> {
                         ])),
                     width: 70,
                     child: Center(
-                      child: Text('${index+1}',style: TextStyle(
+                      child: Text('${index+1}', textScaleFactor: 1.0,style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontSize: 40,
                                     color: Color.fromARGB(255, 255, 255, 255)),),
@@ -814,7 +814,7 @@ class _DemandState extends State<Demand> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Order : ${nowresult12_1[index]['c_order']}',
+                            'Order : ${nowresult12_1[index]['c_order']}', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
@@ -822,7 +822,7 @@ class _DemandState extends State<Demand> {
                                 color: Color(0xff44bca3)),
                           ),
                           Text(
-                            'No.${nowresult12_1[index]['c_formula']}',
+                            'No.${nowresult12_1[index]['c_formula']}', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
@@ -848,7 +848,7 @@ class _DemandState extends State<Demand> {
                                   Column(
                                     children: [
                                       Text(
-                                        "${nowresult12_1[index]['house'][index1]['c_house'] ?? 'OVER'}",
+                                        "${nowresult12_1[index]['house'][index1]['c_house'] ?? 'OVER'}", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -856,7 +856,7 @@ class _DemandState extends State<Demand> {
                                             color: nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): C[index1]),
                                       ),
                                       Text(
-                                        "${nowresult12_1[index]['house'][index1]['c_silo'] ?? ''}",
+                                        "${nowresult12_1[index]['house'][index1]['c_silo'] ?? ''}", textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -867,7 +867,7 @@ class _DemandState extends State<Demand> {
                                     ],
                                   ),
                                   Text(
-                                    'Day${nowresult12_1[index]['house'][index1]['n_day'] ?? ''}',
+                                    'Day${nowresult12_1[index]['house'][index1]['n_day'] ?? ''}', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
@@ -877,14 +877,14 @@ class _DemandState extends State<Demand> {
                                   Column(
                                     children: [
                                       Text(
-                                        "${nowresult12_1[index]['house'][index1]['n_refill']}",
+                                        "${nowresult12_1[index]['house'][index1]['n_refill']}", textScaleFactor: 1.0,
                                         style: new TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
                                             color: nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): C[index1]),
                                       ),
                                       Text(
-                                        'Filling Date:${nowresult12_1[index]['house'][index1]['d_gdate']}',
+                                        'Filling Date:${nowresult12_1[index]['house'][index1]['d_gdate']}', textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -905,7 +905,7 @@ class _DemandState extends State<Demand> {
                         Container(
                           margin: EdgeInsets.only(left: 10, top: 10),
                           child: Text(
-                            'Demand by truck',
+                            'Demand by truck', textScaleFactor: 1.0,
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -922,7 +922,7 @@ class _DemandState extends State<Demand> {
                             height: 220,
                             child: Center(
                                 child: Text(
-                              'No data to display.',
+                              'No data to display.', textScaleFactor: 1.0,
                               style: TextStyle(fontSize: 18),
                             )))
                         : Container(
@@ -957,7 +957,7 @@ class _DemandState extends State<Demand> {
                           Container(
                             margin: EdgeInsets.only(right: 10),
                             child: Text(
-                              'Over Usage',
+                              'Over Usage', textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -1012,7 +1012,7 @@ class _DemandState extends State<Demand> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Order : ${nowresult1_23[index0]['c_order']}',
+                                            'Order : ${nowresult1_23[index0]['c_order']}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17,
@@ -1020,7 +1020,7 @@ class _DemandState extends State<Demand> {
                                                 color: Color(0xff44bca3)),
                                           ),
                                           Text(
-                                            'No.${nowresult1_23[index0]['c_formula']}',
+                                            'No.${nowresult1_23[index0]['c_formula']}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17,
@@ -1051,7 +1051,7 @@ class _DemandState extends State<Demand> {
                                                     Column(
                                                       children: [
                                                         Text(
-                                                          "${nowresult1_23[index0]['house'][index1]['c_house'] ?? 'OVER'}",
+                                                          "${nowresult1_23[index0]['house'][index1]['c_house'] ?? 'OVER'}", textScaleFactor: 1.0,
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -1066,7 +1066,7 @@ class _DemandState extends State<Demand> {
                                                                           '${now1[index0]['List'].length}')]),
                                                         ),
                                                         Text(
-                                                          "${nowresult1_23[index0]['house'][index1]['c_silo'] ?? ''}",
+                                                          "${nowresult1_23[index0]['house'][index1]['c_silo'] ?? ''}", textScaleFactor: 1.0,
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -1084,7 +1084,7 @@ class _DemandState extends State<Demand> {
                                                       ],
                                                     ),
                                                     Text(
-                                                      'Day${nowresult1_23[index0]['house'][index1]['n_day'] ?? ''}',
+                                                      'Day${nowresult1_23[index0]['house'][index1]['n_day'] ?? ''}', textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1100,7 +1100,7 @@ class _DemandState extends State<Demand> {
                                                     Column(
                                                       children: [
                                                         Text(
-                                                          "${nowresult1_23[index0]['house'][index1]['n_refill']}",
+                                                          "${nowresult1_23[index0]['house'][index1]['n_refill']}", textScaleFactor: 1.0,
                                                           style: new TextStyle(
                                                               fontSize: 15.0,
                                                               fontWeight:
@@ -1113,7 +1113,7 @@ class _DemandState extends State<Demand> {
                                                                           '${now1[index0]['List'].length}')]),
                                                         ),
                                                         Text(
-                                                          'Filling Date:${nowresult1_23[index0]['house'][index1]['d_gdate']}',
+                                                          'Filling Date:${nowresult1_23[index0]['house'][index1]['d_gdate']}', textScaleFactor: 1.0,
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -1147,7 +1147,7 @@ class _DemandState extends State<Demand> {
                           Container(
                             margin: EdgeInsets.only(left: 10, top: 10),
                             child: Text(
-                              'Demand by truck',
+                              'Demand by truck', textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -1227,7 +1227,7 @@ class _DemandState extends State<Demand> {
                             Container(
                               margin: EdgeInsets.only(right: 10),
                               child: Text(
-                                'Over Usage',
+                                'Over Usage', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -1293,7 +1293,7 @@ class _DemandState extends State<Demand> {
                                                   children: [
                                                     Text(
                                                     
-                                                      'Order : ${nowresult1_23[index0]['c_order']}',
+                                                      'Order : ${nowresult1_23[index0]['c_order']}', textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1305,7 +1305,7 @@ class _DemandState extends State<Demand> {
                                                     ),
                                                     Text(
                                                       
-                                                      'No.${nowresult1_23[index0]['c_formula']}',
+                                                      'No.${nowresult1_23[index0]['c_formula']}', textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1344,7 +1344,7 @@ class _DemandState extends State<Demand> {
                                                               Column(
                                                                 children: [
                                                                   Text(
-                                                                    "${nowresult1_23[index0]['house'][index2]['c_house'] ?? 'OVER'}",
+                                                                    "${nowresult1_23[index0]['house'][index2]['c_house'] ?? 'OVER'}", textScaleFactor: 1.0,
                                                                     style: TextStyle(
                                                                         fontWeight: FontWeight.bold,
                                                                         fontSize: 15,
@@ -1357,7 +1357,7 @@ class _DemandState extends State<Demand> {
                                                              
                                                                   ),
                                                                   Text(
-                                                                    "${nowresult1_23[index0]['house'][index2]['c_silo'] ?? ''}",
+                                                                    "${nowresult1_23[index0]['house'][index2]['c_silo'] ?? ''}", textScaleFactor: 1.0,
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -1375,7 +1375,7 @@ class _DemandState extends State<Demand> {
                                                                 ],
                                                               ),
                                                               Text(
-                                                                'Day${nowresult1_23[index0]['house'][index2]['n_day'] ?? ''}',
+                                                                'Day${nowresult1_23[index0]['house'][index2]['n_day'] ?? ''}', textScaleFactor: 1.0,
                                                                 style: TextStyle(
                                                                     fontWeight: FontWeight.bold,
                                                                     fontSize: 15,
@@ -1389,7 +1389,7 @@ class _DemandState extends State<Demand> {
                                                               Column(
                                                                 children: [
                                                                   Text(
-                                                                    "${nowresult1_23[index0]['house'][index2]['n_refill']}",
+                                                                    "${nowresult1_23[index0]['house'][index2]['n_refill']}", textScaleFactor: 1.0,
                                                                     style: new TextStyle(
                                                                         fontSize: 15.0,
                                                                         fontWeight: FontWeight.bold,
@@ -1400,7 +1400,7 @@ class _DemandState extends State<Demand> {
                                                                                 : C[index2 + int.parse('${now2[index0]['List'].length}')]),
                                                                   ),
                                                                   Text(
-                                                                    'Filling Date:${nowresult1_23[index0]['house'][index2]['d_gdate']}',
+                                                                    'Filling Date:${nowresult1_23[index0]['house'][index2]['d_gdate']}', textScaleFactor: 1.0,
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -1437,7 +1437,7 @@ class _DemandState extends State<Demand> {
                             Container(
                               margin: EdgeInsets.only(left: 10, top: 10),
                               child: Text(
-                                'Demand by truck',
+                                'Demand by truck', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -1466,7 +1466,7 @@ class _DemandState extends State<Demand> {
                               Container(
                                 margin: EdgeInsets.only(right: 10),
                                 child: Text(
-                                  'Over Usage',
+                                  'Over Usage', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,

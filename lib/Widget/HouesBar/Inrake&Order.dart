@@ -13,6 +13,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'dart:math';
 
 
+import '../../dialog.dart';
 import '../../drawer.dart';
 import '../API_E_B/API_B.dart';
 import '../API_E_B/API_E.dart';
@@ -276,7 +277,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                if(sFeed1 != widget.Feed![0]['name']){
               sFeed1 = 'Default';
             }else{
-           
+              
             }
             }
               if(sFeed2 == ''){
@@ -287,7 +288,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             }
             }
               }
-
+            
           
 
             upper_percent1 = result1_1[0]['n_upper_percent'];
@@ -322,7 +323,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
           setState(() {
             silo1 = n_silo1;
             sFeed1 = result1_1[0]['c_formula'];
- 
+           
+            // print(widget.Feed);
             
                 if(widget.Feed !=null){
                   if(sFeed1 == ''){
@@ -350,6 +352,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             nowresult1_1 = result1_1;
             nowresult1_2 = result1_2;
             nowresult1_3 = result1_3;
+             print('widget.Feed');
+            print('sFeed1');
             loading1 = false;
           });
         }
@@ -649,7 +653,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                 children: [
                   Container(
                     child: Text(
-                      'RealTime',
+                      'RealTime', textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -696,7 +700,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         // ));
                       },
                       child: Text(
-                        'Estimate',
+                        'Estimate', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Montserrat',
@@ -745,7 +749,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // },
         initiallyExpanded: 0 == selected2,
         title: Text(
-          'Age lnformation',
+          'Age lnformation', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -770,7 +774,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             DropdownMenuItem<String>(
                                                 value: Default,
                                                 child: Text(
-                                                  Default,
+                                                  Default, textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontFamily: 'Montserrat',
@@ -790,7 +794,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                 DropdownMenuItem<String>(
                                                     value: Default,
                                                     child: Text(
-                                                      Default,
+                                                      Default, textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         fontFamily:
@@ -826,7 +830,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '0kg',
+                                      '0kg', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -835,7 +839,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                       ),
                                     ),
                                     Text(
-                                      '0.00%',
+                                      '0.00%', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Montserrat',
@@ -876,7 +880,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   DropdownMenuItem<String>(
                                                       value: Default,
                                                       child: Text(
-                                                        Default,
+                                                        Default, textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontFamily:
@@ -897,7 +901,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       DropdownMenuItem<String>(
                                                           value: Feed1["name"],
                                                           child: Text(
-                                                            Feed1["name"],
+                                                            Feed1["name"], textScaleFactor: 1.0,
                                                             style: TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
@@ -912,9 +916,31 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                           )))
                                                   .toList(),
                                               onChanged: (Feed1) {
+                                                  normalDialog1(context,'แก้ไขข้อมูล Feed','คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',(){
+                                                    Navigator.pop(context);
+                                                    for (int i = 0;
+                                                    i < widget.Feed!.length;
+                                                    i++) {
+                                                  if (widget.Feed![i]['name'] ==
+                                                      Feed1) {
+                                            
+                                                    String? F =
+                                                        widget.Feed![i]['code'];
+                                            
+
+                                                    API_edit_house_silo(
+                                                        widget.Token,
+                                                        widget.farmnum,
+                                                        widget.num,
+                                                        silo1
+                                                            .toStringAsFixed(0),
+                                                        F);
+                                                  }
+                                                }
                                                 setState(() {
                                                   sFeed1 = Feed1!;
                                                 });
+                                                 });
                                               }),
                                     ),
                                   ),
@@ -938,7 +964,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg',
+                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -948,7 +974,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             ),
                                           ),
                                           Text(
-                                            '${percent1.toStringAsFixed(2)}%',
+                                            '${percent1.toStringAsFixed(2)}%', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'Montserrat',
@@ -981,7 +1007,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   DropdownMenuItem<String>(
                                                       value: Default,
                                                       child: Text(
-                                                        Default,
+                                                        Default, textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontFamily:
@@ -1002,7 +1028,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       DropdownMenuItem<String>(
                                                           value: Feed1["name"],
                                                           child: Text(
-                                                            Feed1["name"],
+                                                            Feed1["name"], textScaleFactor: 1.0,
                                                             style: TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
@@ -1017,6 +1043,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                           )))
                                                   .toList(),
                                               onChanged: (Feed1) {
+                                                  normalDialog1(context,'แก้ไขข้อมูล Feed','คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',(){
+                                                    Navigator.pop(context);
                                                 for (int i = 0;
                                                     i < widget.Feed!.length;
                                                     i++) {
@@ -1039,6 +1067,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                 setState(() {
                                                   sFeed1 = Feed1!;
                                                 });
+                                                  });
                                               }),
                                     ),
                                   ),
@@ -1064,7 +1093,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg',
+                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg', textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1077,7 +1106,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${percent1.toStringAsFixed(2)}%',
+                                              '${percent1.toStringAsFixed(2)}%', textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -1107,7 +1136,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   DropdownMenuItem<String>(
                                                       value: Default,
                                                       child: Text(
-                                                        Default,
+                                                        Default, textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontFamily:
@@ -1128,7 +1157,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       DropdownMenuItem<String>(
                                                           value: Feed2["name"],
                                                           child: Text(
-                                                            Feed2["name"],
+                                                            Feed2["name"], textScaleFactor: 1.0,
                                                             style: TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
@@ -1144,7 +1173,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   .toList(),
                                               onChanged: (Feed2) {
                                                 setState(() {
-                                                  sFeed2 = Feed2!;
+                                                  normalDialog1(context,'แก้ไขข้อมูล Feed','คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',(){
+                                                    Navigator.pop(context);
+                                     sFeed2 = Feed2!;
                                                   for (int i = 0;
                                                       i < widget.Feed!.length;
                                                       i++) {
@@ -1161,6 +1192,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                               ['code']);
                                                     }
                                                   }
+                                  // Navigator.pop(context);
+                                  });
+                                                 
                                                 });
                                               }),
                                     ),
@@ -1187,7 +1221,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg',
+                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg', textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1200,7 +1234,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${percent2.toStringAsFixed(2)}%',
+                                              '${percent2.toStringAsFixed(2)}%', textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -1254,7 +1288,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 1 == selected2,
         maintainState: true,
         title: Text(
-          'Formula',
+          'Formula', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -1276,7 +1310,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 2),
                           child: Text(
-                            'Formula: ',
+                            'Formula: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1287,7 +1321,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Farming Plan:',
+                            'Farming Plan:', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1298,7 +1332,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Date Start: ',
+                            'Date Start: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1309,7 +1343,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Broiler: ',
+                            'Broiler: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1320,7 +1354,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Age: ',
+                            'Age: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1353,7 +1387,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 2),
                           child: Text(
-                            'Formula: ',
+                            'Formula: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1364,7 +1398,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Farming Plan:',
+                            'Farming Plan:', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1375,7 +1409,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Date Start: ',
+                            'Date Start: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1386,7 +1420,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Broiler: ',
+                            'Broiler: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1397,7 +1431,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Age: ',
+                            'Age: ', textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1425,7 +1459,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             Container(
                               margin: EdgeInsets.only(top: 2),
                               child: Text(
-                                'Formula: ${nowresult1_2[0]['c_feedtype']}',
+                                'Formula: ${nowresult1_2[0]['c_feedtype']}', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -1436,7 +1470,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             Container(
                               margin: EdgeInsets.only(top: 5),
                               child: Text(
-                                'Farming Plan: ${nowresult1_2[0]['c_plan']}',
+                                'Farming Plan: ${nowresult1_2[0]['c_plan']}', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -1447,7 +1481,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             Container(
                               margin: EdgeInsets.only(top: 5),
                               child: Text(
-                                'Date Start: ${splitted[2]}-${splitted[1]}-${splitted[0]}',
+                                'Date Start: ${splitted[2]}-${splitted[1]}-${splitted[0]}', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -1458,7 +1492,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             Container(
                               margin: EdgeInsets.only(top: 5),
                               child: Text(
-                                'Broiler: start = ${nowresult1_2[0]['n_number']} , Remain = ${nowresult1_2[0]['n_number']}',
+                                'Broiler: start = ${nowresult1_2[0]['n_number']} , Remain = ${nowresult1_2[0]['n_number']}', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -1469,7 +1503,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             Container(
                               margin: EdgeInsets.only(top: 5),
                               child: Text(
-                                'Age: ${nowresult1_2[0]['n_day']}',
+                                'Age: ${nowresult1_2[0]['n_day']}', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -1481,7 +1515,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 margin: EdgeInsets.only(top: 5),
                                 child: nowresult1_2[0]['c_remark'] != null
                                     ? Text(
-                                        '${nowresult1_2[0]['c_remark']}',
+                                        '${nowresult1_2[0]['c_remark']}', textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold,
@@ -1564,7 +1598,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                               margin: EdgeInsets.only(top: 8, left: 10),
                               // height: screenH * 0.04,
                               child: Text(
-                                'Manual Setting #${widget.HOUSEname}',
+                                'Manual Setting #${widget.HOUSEname}', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -1581,7 +1615,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X',
+                                'X', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -1628,7 +1662,89 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                               //  width: screenW*0.5,
                               child: TextButton(
                                 onPressed: () {
-                                  API_edit_house_usage(
+      //                               showDialog(
+      //   barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
+      //   barrierDismissible: false,
+      //   context: context,
+      //   builder: (context) {
+      //     return StatefulBuilder(
+      //         builder: (BuildContext context, StateSetter setState) {
+      //       return SimpleDialog(
+      // title: ListTile(
+      //   // leading: Image.asset('images/maps.png',height: 600,),
+      //   title: Text('แก้ไขข้อมูล', textScaleFactor: 1.0,
+      //   style: TextStyle(
+      //     color: Colors.green,
+      //   // fontFamily: fonts,
+      //   )
+      //     ),
+      //   subtitle: Text( textScaleFactor: 1.0,'คุณต้องการแก้ไขข้อมูลรายการนี้ใช่หรือไม่ ? ', style: TextStyle(
+      //   // fontFamily: fonts,
+      //   )),
+
+      // ),
+      // children: [
+      //   Row(
+      //     mainAxisAlignment: MainAxisAlignment.end,
+      //     children: [
+      //       TextButton(onPressed: () => Navigator.pop(context), child: Text( textScaleFactor: 1.0,'ยกเลิก',
+      //     style: TextStyle(
+      //       // fontFamily: fonts,
+    
+      //         fontSize: 15,
+      //         color: Color.fromARGB(255, 0, 0, 0)),
+      //   )),
+      //          TextButton(onPressed: (){
+      //             Navigator.pop(context);   
+                  
+      //                                API_edit_house_usage(
+      //                                 widget.Token,
+      //                                 widget.farmnum,
+      //                                 widget.num,
+      //                                 nowresult['id'],
+      //                                 Date.text,
+      //                                 double.parse(Usage_Bag.text),
+      //                                 int.parse(Death_Unit.text),
+      //                                 int.parse(Reject_Unit.text),
+      //                                 int.parse(AddOn_Unit.text),
+      //                                 double.parse(Weight_Unit.text),
+      //                                 double.parse(Silo1Usage.text),
+      //                                 double.parse(Silo2Usage.text),
+      //                                 double.parse(Silo1Remain.text),
+      //                                 double.parse(Silo2Remain.text),
+      //                                 double.parse(Silo1Refill.text),
+      //                                 double.parse(Silo2Refill.text),
+      //                                 Crop2);
+      //                             if (widget.cropnum2 != null) {
+      //                               getjaon1_house_information();
+      //                             }
+                               
+                  
+                    
+
+                      
+                   
+
+                               
+      //                    } , child: Text('ตกลง', textScaleFactor: 1.0,
+      //     style: TextStyle(
+      //       // fontFamily: fonts,
+      
+      //         fontSize: 15,
+      //         color: Color.fromARGB(255, 0, 0, 0)),
+      //   )),
+      //     ],
+      //   )
+      // ],
+    
+      //           );
+                
+      //     });
+      //   });
+                                  normalDialog1(context,'แก้ไขข้อมูล','คุณต้องการแก้ไขข้อมูลรายการนี้ใช่หรือไม่ ? ',(){
+                                    Navigator.pop(context);   
+                                    Navigator.pop(context);
+                                     API_edit_house_usage(
                                       widget.Token,
                                       widget.farmnum,
                                       widget.num,
@@ -1649,10 +1765,12 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                   if (widget.cropnum2 != null) {
                                     getjaon1_house_information();
                                   }
-                                  Navigator.pop(context);
+                                  // Navigator.pop(context);
+                                  });
+                                 
                                 },
                                 child: Text(
-                                  'Save',
+                                  'Save', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 15,
@@ -1688,7 +1806,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 1 Refill (kg.):',
+                      'Silo 1 Refill (kg.):', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1740,7 +1858,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 2 Refill (kg.):',
+                      'Silo 2 Refill (kg.):', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1803,7 +1921,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 1 Remain (kg.):',
+                      'Silo 1 Remain (kg.):', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1855,7 +1973,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 2 Remain (kg.):',
+                      'Silo 2 Remain (kg.):', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1918,7 +2036,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 1 Usage (kg.):',
+                      'Silo 1 Usage (kg.):', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1970,7 +2088,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 2 Usage (kg.):',
+                      'Silo 2 Usage (kg.):', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2063,7 +2181,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            Crop,
+                            Crop, textScaleFactor: 1.0,
                             style: new TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 0, 0, 0),
@@ -2095,7 +2213,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Usage Bag :',
+                      'Usage Bag :', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2140,7 +2258,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Weight/Unit (g.) :',
+                      'Weight/Unit (g.) :', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2196,7 +2314,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'AddOn Unit :',
+                      'AddOn Unit :', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2252,7 +2370,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Death Unit :',
+                      'Death Unit :', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2297,7 +2415,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Reject Unit :',
+                      'Reject Unit :', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2353,7 +2471,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.74,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Date :',
+                      'Date :', textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2421,7 +2539,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 2 == selected2,
         maintainState: true,
         title: Text(
-          'Report',
+          'Report', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -2480,7 +2598,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Date",
+                                      "Date", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2493,7 +2611,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "day",
+                                      "day", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2506,7 +2624,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "No.",
+                                      "No.", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2519,7 +2637,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Remain",
+                                      "Remain", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2532,7 +2650,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Refill",
+                                      "Refill", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2545,7 +2663,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Edit",
+                                      "Edit", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2629,7 +2747,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Date",
+                                      "Date", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2642,7 +2760,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "day",
+                                      "day", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2655,7 +2773,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "No.",
+                                      "No.", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2668,7 +2786,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Remain",
+                                      "Remain", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2681,7 +2799,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Refill",
+                                      "Refill", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2694,7 +2812,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Edit",
+                                      "Edit", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2779,7 +2897,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Date",
+                                      "Date", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2792,7 +2910,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "day",
+                                      "day", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2805,7 +2923,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "No.",
+                                      "No.", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2818,7 +2936,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Remain",
+                                      "Remain", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2831,7 +2949,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Refill",
+                                      "Refill", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2844,7 +2962,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 DataColumn(
                                   label: Center(
                                     child: Text(
-                                      "Edit",
+                                      "Edit", textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
@@ -2870,7 +2988,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                       return DataRow(cells: [
                                         DataCell(Center(
                                           child: Text(
-                                            '${nowresult['d_pdate'] ?? " "}',
+                                            '${nowresult['d_pdate'] ?? " "}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -2880,7 +2998,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         )),
                                         DataCell(Center(
                                           child: Text(
-                                            '${nowresult['n_day'] ?? " "}',
+                                            '${nowresult['n_day'] ?? " "}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -2890,7 +3008,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         )),
                                         DataCell(Center(
                                           child: Text(
-                                            '${nowresult['price'] ?? " "}',
+                                            '${nowresult['price'] ?? " "}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -2900,7 +3018,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         )),
                                         DataCell(Center(
                                           child: Text(
-                                            '${nowresult['n_remain'] ?? " "}',
+                                            '${nowresult['n_remain'] ?? " "}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -2910,7 +3028,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         )),
                                         DataCell(Center(
                                           child: Text(
-                                            '${nowresult['c_formula'] ?? " "}',
+                                            '${nowresult['c_formula'] ?? " "}', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -3012,7 +3130,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 3 == selected2,
         maintainState: true,
         title: Text(
-          'Plot Graph',
+          'Plot Graph', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -3048,7 +3166,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             items: Plot.map((Plot) => DropdownMenuItem<String>(
                                 value: Plot,
                                 child: Text(
-                                  Plot,
+                                  Plot, textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -3095,7 +3213,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 .map((day) => DropdownMenuItem<String>(
                                     value: day['name'],
                                     child: Text(
-                                      day['name'],
+                                      day['name'], textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -3144,7 +3262,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       }
                     },
                     child: Text(
-                      'Download',
+                      'Download', textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -3193,7 +3311,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         DropdownMenuItem<String>(
                                             value: Nosamount2,
                                             child: Text(
-                                              Nosamount2,
+                                              Nosamount2, textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -3215,7 +3333,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((amount) => DropdownMenuItem<String>(
                                         value: amount['name'],
                                         child: Text(
-                                          amount["name"],
+                                          amount["name"], textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3300,7 +3418,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         DropdownMenuItem<String>(
                                             value: Nosamount2,
                                             child: Text(
-                                              Nosamount2,
+                                              Nosamount2, textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -3322,7 +3440,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((samount2) => DropdownMenuItem<String>(
                                         value: samount2["name"],
                                         child: Text(
-                                          samount2["name"],
+                                          samount2["name"], textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3378,7 +3496,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   height: screenH * 0.57,
                   child: Center(
                       child: Text(
-                    'No data to display.',
+                    'No data to display.', textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                   )),
                 )
@@ -3391,7 +3509,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   height: screenH * 0.57,
                   child: Center(
                       child: Text(
-                    'No data to display.',
+                    'No data to display.', textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                   )),
                 )
@@ -3670,7 +3788,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 4 == selected2,
         maintainState: true,
         title: Text(
-          'Daily Information Usage',
+          'Daily Information Usage', textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -3708,7 +3826,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((NoView) => DropdownMenuItem<String>(
                                         value: NoView,
                                         child: Text(
-                                          NoView,
+                                          NoView, textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3730,7 +3848,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((View) => DropdownMenuItem<String>(
                                         value: View['name'],
                                         child: Text(
-                                          View['name'],
+                                          View['name'], textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3788,7 +3906,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 Graph.map((Graph) => DropdownMenuItem<String>(
                                     value: Graph,
                                     child: Text(
-                                      Graph,
+                                      Graph, textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -3841,7 +3959,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       saveExcelAgeinformation(nowresult3, 'DailyUsageData');
                     },
                     child: Text(
-                      'Download',
+                      'Download', textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -3860,7 +3978,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       height: screenH * 0.57,
                       child: Center(
                           child: Text(
-                        'No data to display.',
+                        'No data to display.', textScaleFactor: 1.0,
                         style:
                             TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                       )),
@@ -3871,7 +3989,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       height: screenH * 0.57,
                       child: Center(
                           child: Text(
-                        'No data to display.',
+                        'No data to display.', textScaleFactor: 1.0,
                         style:
                             TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                       )),
@@ -4310,7 +4428,7 @@ class CustomCircleSymbolRenderer1 extends charts.CircleSymbolRenderer {
     textStyle.fontSize = 13;
 
     canvas.drawText(
-        chartText.TextElement('${ToolTipMgr.title}', style: textStyle),
+        chartText.TextElement('${ToolTipMgr.title}',  textScaleFactor: 1.0,style: textStyle),
         (110 - 10.0 - 35).round(),
         (25.0 - 5).round());
     if (ToolTipMgr.subTitle == 'undefeated') {
@@ -4332,15 +4450,15 @@ class CustomCircleSymbolRenderer1 extends charts.CircleSymbolRenderer {
           '${NumberFormat.compact().format(double.parse('${ToolTipMgr.subTitle2}'))}';
     }
     canvas.drawText(
-        chartText.TextElement('ปริมาณคงเหลือ ' + '$unit1', style: textStyle),
+        chartText.TextElement('ปริมาณคงเหลือ ' + '$unit1', textScaleFactor: 1.0, style: textStyle),
         (110 - 10.0 - 35).round(),
         (27.0 + 7).round());
     canvas.drawText(
-        chartText.TextElement('ปริมาณการกิน ' + '$unit2', style: textStyle),
+        chartText.TextElement('ปริมาณการกิน ' + '$unit2',  textScaleFactor: 1.0,style: textStyle),
         (110 - 10.0 - 35).round(),
         (42.0 + 7).round());
     canvas.drawText(
-        chartText.TextElement('ปริมาณการเติม ' + '$unit3', style: textStyle),
+        chartText.TextElement('ปริมาณการเติม ' + '$unit3', textScaleFactor: 1.0, style: textStyle),
         (110 - 10.0 - 35).round(),
         (55.0 + 7).round());
   }
@@ -4426,7 +4544,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
         for (int j = 0; j < amount1!.length; j++) {
           if (samount1 == amount1![j]['name']) {
             canvas.drawText(
-                chartText.TextElement(tooltips[0]['title'], style: textStyle),
+                chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
                 (110 - 10.0 - 35).round(),
                 (25.0 - 5).round());
             for (int i = 1; i < nowresult2_1![0].keys.length; i++) {
@@ -4438,7 +4556,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
               }
               canvas.drawText(
                   chartText.TextElement(
-                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_',
+                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
                       style: textStyle),
                   (110 - 10.0 - 35).round(),
                   (13 + (i * 13) + 7).round());
@@ -4465,7 +4583,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
         for (int j = 0; j < amount1!.length; j++) {
           if (samount1 == amount1![j]['name']) {
             canvas.drawText(
-                chartText.TextElement(tooltips[0]['title'], style: textStyle),
+                chartText.TextElement(tooltips[0]['title'], textScaleFactor: 1.0, style: textStyle),
                 (265 - 10.0 - 35).round(),
                 (25.0 - 5).round());
 
@@ -4479,7 +4597,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
               }
               canvas.drawText(
                   chartText.TextElement(
-                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_',
+                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
                       style: textStyle),
                   (265 - 10.0 - 35).round(),
                   (Sn).round());
@@ -4522,7 +4640,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
           for (int j = 0; j < amount1!.length; j++) {
             if (samount2 == amount1![j]['name']) {
               canvas.drawText(
-                  chartText.TextElement(tooltips[0]['title'], style: textStyle),
+                  chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
                   (110 - 10.0 - 35).round(),
                   (25.0 - 5).round());
 
@@ -4535,7 +4653,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
                 }
                 canvas.drawText(
                     chartText.TextElement(
-                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_',
+                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
                         style: textStyle),
                     (110 - 10.0 - 35).round(),
                     (13 + (i * 13) + 7).round());
@@ -4578,7 +4696,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
           for (int j = 0; j < amount1!.length; j++) {
             if (samount2 == amount1![j]['name']) {
               canvas.drawText(
-                  chartText.TextElement(tooltips[0]['title'], style: textStyle),
+                  chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
                   (265 - 10.0 - 35).round(),
                   (25.0 - 5).round());
 
@@ -4591,7 +4709,7 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
                 }
                 canvas.drawText(
                     chartText.TextElement(
-                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_',
+                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
                         style: textStyle),
                     (265 - 10.0 - 35).round(),
                     (13 + (i * 13) + 7).round());

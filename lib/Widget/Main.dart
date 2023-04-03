@@ -204,7 +204,7 @@ class _MainState extends State<Main1> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Text(
-                                        'Summary Feeds',
+                                        'Summary Feeds', textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -260,7 +260,7 @@ class _MainState extends State<Main1> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'HOUSE GROUP',
+                                            'HOUSE GROUP', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -295,7 +295,7 @@ class _MainState extends State<Main1> {
                                                               });
                                                             },
                                                             child: Text(
-                                                              '${result3![index]['Numder']}',
+                                                              '${result3![index]['Numder']}', textScaleFactor: 1.0,
                                                               style: TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
@@ -370,7 +370,7 @@ class _MainState extends State<Main1> {
         initiallyExpanded: index == selected1,
         title: ListTile(
           title: Text(
-            '${result0![index]['c_formula']}',
+            '${result0![index]['c_formula']}', textScaleFactor: 1.0,
             style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Montserrat',
@@ -399,9 +399,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Remain : ${NumberFormat("#,###,##0.00").format(result0![index]['a_remain'])}kg')),
+                                    'Remain : ${NumberFormat("#,###,##0.00").format(result0![index]['a_remain'])}kg', textScaleFactor: 1.0,)),
                             Text(
-                                'Usage : ${NumberFormat("#,###,##0.00").format(result0![index]['a_usage'])}kg'),
+                                'Usage : ${NumberFormat("#,###,##0.00").format(result0![index]['a_usage'])}kg', textScaleFactor: 1.0,),
                           ],
                         ),
                       ),
@@ -412,9 +412,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Refll(Today) : ${NumberFormat("#,###,##0.00").format(result0![index]['a_refill'])}kg')),
+                                    'Refll(Today) : ${NumberFormat("#,###,##0.00").format(result0![index]['a_refill'])}kg', textScaleFactor: 1.0,)),
                             Text(
-                                'Refll(Yedterday) : ${NumberFormat("#,###,##0.00").format(result0![index]['b_refill'])}kg'),
+                                'Refll(Yedterday) : ${NumberFormat("#,###,##0.00").format(result0![index]['b_refill'])}kg', textScaleFactor: 1.0,),
                           ],
                         ),
                       ),
@@ -486,7 +486,7 @@ class _MainState extends State<Main1> {
           // },
           title: ListTile(
             title: Text(
-              '$name [$age]',
+              '$name [$age]', textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Montserrat',
@@ -531,7 +531,7 @@ class _MainState extends State<Main1> {
                                     width: (screenW * 0.85) - 55,
                                     margin: EdgeInsets.only(top: 1),
                                     child: Text(
-                                      '$siloname1($formula1)',
+                                      '$siloname1($formula1)', textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -542,7 +542,7 @@ class _MainState extends State<Main1> {
                                     width: (screenW * 0.85) - 55,
                                     margin: EdgeInsets.only(top: 5),
                                     child: Text(
-                                      '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg',
+                                      '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg', textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -553,7 +553,7 @@ class _MainState extends State<Main1> {
                                     width: (screenW * 0.85) - 55,
                                     margin: EdgeInsets.only(top: 5),
                                     child: Text(
-                                      '${percent1!.toStringAsFixed(2)} %',
+                                      '${percent1!.toStringAsFixed(2)} %', textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -571,7 +571,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: Text(
-                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg.',
+                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg.', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -581,7 +581,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, right: 10),
                               child: Text(
-                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.',
+                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -647,7 +647,7 @@ class _MainState extends State<Main1> {
                                       (route) => false);
                                 },
                                 child: Text(
-                                  'view',
+                                  'view', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 16,
@@ -749,7 +749,7 @@ class _MainState extends State<Main1> {
           // },
           title: ListTile(
             title: Text(
-              '$name [$age]',
+              '$name [$age]', textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Montserrat',
@@ -797,7 +797,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 1),
                                           child: Text(
-                                            '$siloname1($formula1)',
+                                            '$siloname1($formula1)', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -808,7 +808,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg',
+                                            '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -819,7 +819,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            '${percent1!.toStringAsFixed(2)} %',
+                                            '${percent1!.toStringAsFixed(2)} %', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -857,7 +857,7 @@ class _MainState extends State<Main1> {
                                           height: 13,
                                           margin: EdgeInsets.only(top: 1),
                                           child: Text(
-                                            '$siloname2($formula2)',
+                                            '$siloname2($formula2)', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 // overflow: TextOverflow.ellipsis,
                                                 fontSize: 13,
@@ -869,7 +869,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_remain'])} kg',
+                                            '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_remain'])} kg', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -880,7 +880,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            '${percent2!.toStringAsFixed(2)} %',
+                                            '${percent2!.toStringAsFixed(2)} %', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -901,7 +901,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, left: 10),
                               child: Text(
-                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg',
+                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -911,7 +911,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, right: 10),
                               child: Text(
-                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.',
+                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -974,7 +974,7 @@ class _MainState extends State<Main1> {
                                       (route) => false);
                                 },
                                 child: Text(
-                                  'view',
+                                  'view', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 16,

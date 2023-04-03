@@ -70,7 +70,7 @@ class _ViewchartsState extends State<Viewcharts> {
                   height: screenH * 0.30,
                   child: Center(
                       child: Text(
-                    'No data to display.',
+                    'No data to display.', textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 18),
                   )))
                   :  Column(children: [
@@ -157,7 +157,7 @@ class _ViewchartsState extends State<Viewcharts> {
            radius: radius,
             badgeWidget: Container(
      
-              child: Center(child: Text('${data['c_size']}:${data['n_percent']}',style: TextStyle(
+              child: Center(child: Text('${data['c_size']}:${data['n_percent']}', textScaleFactor: 1.0,style: TextStyle(
              fontSize: fontSize,
              fontWeight: FontWeight.bold,
              color: Color.fromARGB(255, 0, 0, 0),

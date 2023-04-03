@@ -72,7 +72,7 @@ class _ViewtableState extends State<Viewtable> {
                               DataColumn(
                             label: Center(
                               child: Text(
-                                "Size",
+                                "Size", textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
@@ -84,7 +84,7 @@ class _ViewtableState extends State<Viewtable> {
                           DataColumn(
                             label: Center(
                               child: Text(
-                                "Weight Range",
+                                "Weight Range", textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
@@ -96,7 +96,7 @@ class _ViewtableState extends State<Viewtable> {
                           DataColumn(
                             label: Center(
                               child: Text(
-                                "Percent",
+                                "Percent", textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
@@ -108,7 +108,7 @@ class _ViewtableState extends State<Viewtable> {
                           DataColumn(
                             label: Center(
                               child: Text(
-                                "Number",
+                                "Number", textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
@@ -120,22 +120,22 @@ class _ViewtableState extends State<Viewtable> {
                         ], 
                           rows: widget.nowresult6_1!.map((item) {
                       return DataRow(cells: [
-                        DataCell(Center(child: Text(item['c_size'] ,style: TextStyle(
+                        DataCell(Center(child: Text(item['c_size'] , textScaleFactor: 1.0,style: TextStyle(
                                
                                     fontSize: 12,
                                     fontFamily: 'Montserrat',
                                     color: Color.fromARGB(255, 0, 0, 0)),))),
-                        DataCell(Center(child: Text(item['c_range'] ,style: TextStyle(
+                        DataCell(Center(child: Text(item['c_range'] , textScaleFactor: 1.0,style: TextStyle(
                                     
                                     fontSize: 12,
                                     fontFamily: 'Montserrat',
                                     color: Color.fromARGB(255, 0, 0, 0)),))),
-                        DataCell(Center(child: Text(item['n_percent'] ,style: TextStyle(
+                        DataCell(Center(child: Text(item['n_percent'] , textScaleFactor: 1.0,style: TextStyle(
                                  
                                     fontSize: 12,
                                     fontFamily: 'Montserrat',
                                     color: Color.fromARGB(255, 0, 0, 0)),))),
-                        DataCell(Center(child: Text(item['n_number'].toString() ,style: TextStyle(
+                        DataCell(Center(child: Text(item['n_number'].toString() , textScaleFactor: 1.0,style: TextStyle(
                                    
                                     fontSize: 12,
                                     fontFamily: 'Montserrat',

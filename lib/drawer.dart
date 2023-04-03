@@ -37,9 +37,10 @@ class Drawer1 extends StatefulWidget {
   int? HOUSE1;
   String? HOUSE2;
   int? farmnum;
-  int? cropnum2;
+
   int? numIndex;
   int? nummune;
+    int? cropnum2;
   int? cropnum1;
   int? cropnum;
   List<dynamic>? Feed;
@@ -295,7 +296,7 @@ class _DrawerState extends State<Drawer1> {
             centerTitle: true,
             automaticallyImplyLeading: false,
             title: Text(
-              name,
+              name, textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Montserrat',
@@ -381,6 +382,9 @@ class _DrawerState extends State<Drawer1> {
                             cmiid: cmiid, //data cmiid
                             id: id),
                         Setting(
+                                              cropnum1: widget.cropnum1,
+                                          cropnum: widget.cropnum,
+                                          cropnum2: widget.cropnum2,
                             farmname: farmname, // farm name
                             Token: widget.Token, // Token
                             navigatorKey: navigatorKeys,
@@ -463,7 +467,7 @@ class _DrawerState extends State<Drawer1> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '$farmname',
+            '$farmname', textScaleFactor: 1.0,
             style: TextStyle(
                 fontSize: 22,
                 fontFamily: 'THSarabun',
@@ -530,7 +534,7 @@ class _DrawerState extends State<Drawer1> {
                                 margin: EdgeInsets.only(top: 15, left: 10),
                                 // height: 40,
                                 child: Text(
-                                  "Choose search From",
+                                  "Choose search From", textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -547,7 +551,7 @@ class _DrawerState extends State<Drawer1> {
                                   Navigator.pop(context);
                                 },
                                 child: Text(
-                                  'X',
+                                  'X', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -634,7 +638,7 @@ class _DrawerState extends State<Drawer1> {
                                                 itemCount: farm0!.length,
                                                 itemBuilder: (context, index) {
                                                   return ListTile(
-                                                    title: Text(farm0![index]['name']),
+                                                    title: Text(farm0![index]['name'], textScaleFactor: 1.0,),
                                                     onTap: () {
                                                       farmname = farm0![index]['name'];
                                                       //print(farm!.length);
@@ -752,7 +756,7 @@ class _DrawerState extends State<Drawer1> {
                               margin: EdgeInsets.only(top: 15, left: 10),
                               height: screenH * 0.06,
                               child: Text(
-                                "Choose Farm",
+                                "Choose Farm", textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -769,7 +773,7 @@ class _DrawerState extends State<Drawer1> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X',
+                                'X', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -812,7 +816,7 @@ class _DrawerState extends State<Drawer1> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '$farmname',
+                                        '$farmname', textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: 'Montserrat',
@@ -842,7 +846,7 @@ class _DrawerState extends State<Drawer1> {
                                   Container(
                                     width: screenW * 0.40,
                                     child: Text(
-                                      email!,
+                                      email!, textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'Montserrat',
@@ -858,7 +862,7 @@ class _DrawerState extends State<Drawer1> {
                               width: 5,
                             ),
                             Text(
-                              '|',
+                              '|', textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -882,7 +886,7 @@ class _DrawerState extends State<Drawer1> {
                                       (route) => false);
                                 },
                                 child: new Text(
-                                  'Logout',
+                                  'Logout', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Montserrat',
@@ -894,7 +898,7 @@ class _DrawerState extends State<Drawer1> {
                       ),
                       Container(
                           child: Text(
-                        '${dateTime!.day}/${dateTime!.month}/${dateTime!.year} ${dateTime!.hour}:${dateTime!.minute}:${dateTime!.second}',
+                        '${dateTime!.day}/${dateTime!.month}/${dateTime!.year} ${dateTime!.hour}:${dateTime!.minute}:${dateTime!.second}', textScaleFactor: 1.0,
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'Montserrat',
@@ -931,7 +935,7 @@ class _DrawerState extends State<Drawer1> {
                               margin: EdgeInsets.only(top: 15, left: 10),
                               height: 40,
                               child: Text(
-                                "Choose Crop",
+                                "Choose Crop", textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -948,7 +952,7 @@ class _DrawerState extends State<Drawer1> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X',
+                                'X', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -991,7 +995,7 @@ class _DrawerState extends State<Drawer1> {
                                                   child: Container(
                                                     width: screenW * 0.64,
                                                     child: Text(
-                                                      crop['name'],
+                                                      crop['name'], textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontFamily:
@@ -1043,7 +1047,7 @@ class _DrawerState extends State<Drawer1> {
                                               DropdownMenuItem<String>(
                                                   value: crop,
                                                   child: Text(
-                                                    crop,
+                                                    crop, textScaleFactor: 1.0,
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontFamily: 'Montserrat',
@@ -1083,7 +1087,7 @@ class _DrawerState extends State<Drawer1> {
     );
 
     return ListTile(
-      title: const Text('appbar style:'),
+      title: const Text('appbar style:', textScaleFactor: 1.0,),
       trailing: dropdown,
     );
   }

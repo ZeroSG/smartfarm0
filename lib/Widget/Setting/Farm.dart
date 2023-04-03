@@ -1,17 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../dialog.dart';
+import '../../drawer.dart';
 import '../API_E_B/API_E.dart';
+import '../shared_preferences/shared_preferences.dart';
 
 
 class Farm extends StatefulWidget {
+      int? cropnum2;
+  int? cropnum1;
+  int? cropnum;
    String? Token; // Token
    int? farmnum;  // farm id
    List<dynamic>? default_species;//ข้อมูล default_species
    List<dynamic>? default_ship;//ข้อมูล default_ship
-   Farm({ Key? key,this.Token ,this.farmnum,this.default_species,this.default_ship}) : super(key: key);
+   Farm({ Key? key,this.Token ,this.farmnum,this.default_species,this.default_ship,
+      this.cropnum,
+      this.cropnum1,
+      this.cropnum2}) : super(key: key);
  
   @override
   State<Farm> createState() => _FarmState();
@@ -19,7 +29,7 @@ class Farm extends StatefulWidget {
 
 class _FarmState extends State<Farm> {
 
- 
+ late Usersharedpreferences _p = Usersharedpreferences();
     late double screenW, screenH;
      late List<dynamic>? Species = widget.default_species;
 
@@ -271,7 +281,7 @@ bool loading1 = true;
                                     ),
                                   )),
                                   ),
-                        Text('Farm Name',
+                        Text('Farm Name', textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -281,7 +291,7 @@ bool loading1 = true;
                         ],
                       ),
                       Text(
-                          '${nowresult1_1[0]['c_name']??''}',
+                          '${nowresult1_1[0]['c_name']??''}', textScaleFactor: 1.0,
                           style: TextStyle(
                               fontSize: 22,
                               fontFamily: 'THSarabun',
@@ -341,7 +351,39 @@ bool loading1 = true;
                           //  width: screenW*0.5,
                           child: TextButton(
                             onPressed: () {
-                              var name = Farm_Name.text;
+                              //   normalDialog1(context,'แก้ไขข้อมูล setting farm','คุณต้องการแก้ไขข้อมูล setting farm นี้ใช่หรือไม่ ? ',(){
+                              // Navigator.pop(context);
+                              showDialog(
+     barrierDismissible: false,
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: ListTile(
+        // leading: Image.asset('images/maps.png',height: 600,),
+        title: Text('แก้ไขข้อมูล', textScaleFactor: 1.0,
+        style: TextStyle(
+          color: Colors.green,
+        // fontFamily: fonts,
+        )
+          ),
+        subtitle: Text('คุณต้องการแก้ไขข้อมูล setting farm นี้ใช่หรือไม่ ? ',  textScaleFactor: 1.0,style: TextStyle(
+        // fontFamily: fonts,
+        )),
+
+      ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(onPressed: () => Navigator.pop(context), child: Text('ยกเลิก', textScaleFactor: 1.0,
+          style: TextStyle(
+            // fontFamily: fonts,
+    
+              fontSize: 15,
+              color: Color.fromARGB(255, 0, 0, 0)),
+        )),
+               TextButton(onPressed: (){
+                  // Navigator.pop(context);
+                     var name = Farm_Name.text;
                             //    print('=======1=========');
                             //  print(widget.Token);
                             //  print(widget.farmnum);
@@ -387,15 +429,129 @@ bool loading1 = true;
                               String Target = Uniform.toStringAsFixed(0);
                                T_U = int.parse(Target);
                             }
-                           
+                         
                             API_edit_setting_farm(widget.Token,widget.farmnum,name,Speciesnum,
                             Name.text,BTG_Plant.text,Farm_ID.text,Serial_SmartEE.text,
                             int.parse(Central_ID.text),int.parse(Default_Density.text),Farm_Address.text,Supervisor.text,
                             Phone.text,E_mail.text,Line_Token.text,int.parse(Chamber_Number.text),int.parse(Truck_Number.text),C_W,
                             Ship_Conditionnum,Car_ID1.text,Car_ID2.text,T_U);
+                             String? email = _p.getUserEmail();
+                            String? password = _p.getUserPassword();
+                             var duration = Duration(seconds: 2);
+
+                              route() {
+                        Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Drawer1(
+                                          Token: widget.Token,
+                                          num1: 5,
+                                          User: email,
+                                          Password: password,
+                                          cropnum1: widget.cropnum1,
+                                          cropnum: widget.cropnum,
+                                          cropnum2: widget.cropnum2,
+                                          farmnum: widget.farmnum,
+                        //                   Feed: feed,
+                                        ),
+                                      ),
+                                      (route) => false);
+                }
+
+                Timer(duration, route);
+                          //  });
+               } , child: Text('ตกลง', textScaleFactor: 1.0,
+          style: TextStyle(
+            // fontFamily: fonts,
+      
+              fontSize: 15,
+              color: Color.fromARGB(255, 0, 0, 0)),
+        )),
+          ],
+        )
+      ],
+    ),
+  );
+                //               var name = Farm_Name.text;
+                //             //    print('=======1=========');
+                //             //  print(widget.Token);
+                //             //  print(widget.farmnum);
+                //             //  print(nowresult1_1[0]["c_name"]);
+                //             //  print(Speciesnum);
+                            
+                //             //  print('=======2=========');
+                //             //  print(Name.text);
+                //             //  print(BTG_Plant.text);
+                //             //  print(Farm_ID.text);
+                //             //  print(Serial_SmartEE.text);
+
+                              
+                //             //    print('=======3=========');
+                //             //  print(int.parse(Central_ID.text));
+                //             //  print(int.parse(Default_Density.text));
+                //             //  print(Farm_Address.text);
+                //             //  print(Supervisor.text);
+
+                //             //     print('=======4=========');
+                //             //  print(Phone.text);
+                //             //  print(E_mail.text);
+                //             //  print( Line_Token.text);
+                //             //  print(int.parse(Chamber_Number.text));
+                //             //  print(int.parse(Truck_Number.text));
+                //             //  print(double.parse(Chamber_Weight.text));
+
+                //             //    print('=======5=========');
+                //             //  print(Ship_Conditionnum);
+                //             //  print(Car_ID1.text);
+                //             //  print( Car_ID2.text);
+                //             //  print(double.parse(Target_Uniform.text));
+                //             //  double Uniform  =  double.parse(Target_Uniform.text).toStringAsFixed(0) ;
+                //             double Chamber = double.parse(Chamber_Weight.text);
+                //             String Weight = Chamber.toStringAsFixed(0);
+                //             int C_W = int.parse(Weight);
+                              
+                //            late int T_U;
+                //             if(Target_Uniform.text == ''||Target_Uniform.text == null){
+                //                T_U = 0;
+                //             }else{
+                //               double Uniform = double.parse(Target_Uniform.text);
+                //               String Target = Uniform.toStringAsFixed(0);
+                //                T_U = int.parse(Target);
+                //             }
+                         
+                //             API_edit_setting_farm(widget.Token,widget.farmnum,name,Speciesnum,
+                //             Name.text,BTG_Plant.text,Farm_ID.text,Serial_SmartEE.text,
+                //             int.parse(Central_ID.text),int.parse(Default_Density.text),Farm_Address.text,Supervisor.text,
+                //             Phone.text,E_mail.text,Line_Token.text,int.parse(Chamber_Number.text),int.parse(Truck_Number.text),C_W,
+                //             Ship_Conditionnum,Car_ID1.text,Car_ID2.text,T_U);
+                //              String? email = _p.getUserEmail();
+                //             String? password = _p.getUserPassword();
+                //              var duration = Duration(seconds: 2);
+
+                //               route() {
+                //         Navigator.pushAndRemoveUntil(
+                //                       context,
+                //                       MaterialPageRoute(
+                //                         builder: (context) => Drawer1(
+                //                           Token: widget.Token,
+                //                           num1: 5,
+                //                           User: email,
+                //                           Password: password,
+                //                           cropnum1: widget.cropnum1,
+                //                           cropnum: widget.cropnum,
+                //                           cropnum2: widget.cropnum2,
+                //                           farmnum: widget.farmnum,
+                //         //                   Feed: feed,
+                //                         ),
+                //                       ),
+                //                       (route) => false);
+                // }
+
+                // Timer(duration, route);
+                //           //  });
                             },
                             child: Text(
-                              'Save',
+                              'Save', textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 15,
@@ -419,7 +575,7 @@ bool loading1 = true;
             Container(
                width: screenW*0.4,
                 margin: EdgeInsets.only(left: 5),
-              child: Text('Target %Uniform',
+              child: Text('Target %Uniform', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
@@ -475,7 +631,7 @@ focusedBorder: OutlineInputBorder(
             Container(
                width: screenW*0.4,
                 margin: EdgeInsets.only(left: 5),
-              child: Text('Car ID 1',
+              child: Text('Car ID 1', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
@@ -519,7 +675,7 @@ focusedBorder: OutlineInputBorder(
               Container(
                width: screenW*0.4,
                margin: EdgeInsets.only(left: 5),
-              child: Text('Car ID 1',
+              child: Text('Car ID 1', textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
@@ -566,7 +722,7 @@ focusedBorder: OutlineInputBorder(
             child: Column(children: [
               Container(
               width: screenW*0.95,
-              child: Text('Ship Condition',
+              child: Text('Ship Condition', textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
@@ -602,7 +758,7 @@ focusedBorder: OutlineInputBorder(
                               .map((Ship_Condition) => DropdownMenuItem<String>(
                                   value: Ship_Condition["name"],
                                   child: Text(
-                                    Ship_Condition["name"],
+                                    Ship_Condition["name"], textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -641,7 +797,7 @@ focusedBorder: OutlineInputBorder(
               Container(
                  width: screenW*0.4,
                   margin: EdgeInsets.only(left: 5),
-                child: Text('Chamber Weight (kg.)',
+                child: Text('Chamber Weight (kg.)', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -697,7 +853,7 @@ decoration: InputDecoration(
               Container(
                  width: screenW*0.4,
                   margin: EdgeInsets.only(left: 5),
-                child: Text('Chamber Number',
+                child: Text('Chamber Number', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -741,7 +897,7 @@ decoration: InputDecoration(
                 Container(
                  width: screenW*0.4,
                  margin: EdgeInsets.only(left: 5),
-                child: Text('Truck Number',
+                child: Text('Truck Number', textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -788,7 +944,7 @@ decoration: InputDecoration(
               child: Column(children: [
                 Container(
                 width: screenW*0.95,
-                child: Text('Line Token',
+                child: Text('Line Token', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -835,7 +991,7 @@ decoration: InputDecoration(
                 child: Column(children: [
                   Container(
                   width: screenW*0.95,
-                  child: Text('E-mail',
+                  child: Text('E-mail', textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold,
@@ -888,7 +1044,7 @@ decoration: InputDecoration(
                 Container(
                    width: screenW*0.4,
                     margin: EdgeInsets.only(left: 5),
-                  child: Text('Supervisor',
+                  child: Text('Supervisor', textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
@@ -932,7 +1088,7 @@ child: TextField(
                   Container(
                    width: screenW*0.4,
                    margin: EdgeInsets.only(left: 5),
-                  child: Text('Phone',
+                  child: Text('Phone', textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
@@ -979,7 +1135,7 @@ child: TextField(
                   child: Column(children: [
                     Container(
                     width: screenW*0.95,
-                    child: Text('Farm Address',
+                    child: Text('Farm Address', textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.bold,
@@ -1032,7 +1188,7 @@ child: TextField(
                   Container(
                      width: screenW*0.4,
                       margin: EdgeInsets.only(left: 5),
-                    child: Text('Central ID',
+                    child: Text('Central ID', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -1076,7 +1232,7 @@ child: TextField(
                     Container(
                      width: screenW*0.4,
                      margin: EdgeInsets.only(left: 5),
-                    child: Text('Default Density',
+                    child: Text('Default Density', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -1129,7 +1285,7 @@ child: TextField(
                   Container(
                      width: screenW*0.4,
                       margin: EdgeInsets.only(left: 5),
-                    child: Text('Farm ID',
+                    child: Text('Farm ID', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -1172,7 +1328,7 @@ child: TextField(
                     Container(
                      width: screenW*0.4,
                      margin: EdgeInsets.only(left: 5),
-                    child: Text('Serial SmartEE',
+                    child: Text('Serial SmartEE', textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -1226,7 +1382,7 @@ child: TextField(
                     Container(
                        width: screenW*0.4,
                         margin: EdgeInsets.only(left: 5),
-                      child: Text('Name (ea)',
+                      child: Text('Name (ea)', textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold,
@@ -1270,7 +1426,7 @@ child: TextField(
                       Container(
                        width: screenW*0.4,
                        margin: EdgeInsets.only(left: 5),
-                      child: Text('BTG Plant',
+                      child: Text('BTG Plant', textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold,
@@ -1317,7 +1473,7 @@ child: TextField(
                 child: Column(children: [
                   Container(
                     width: screenW*0.95,
-                    child: Text('Species',
+                    child: Text('Species', textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.bold,
@@ -1349,7 +1505,7 @@ child: TextField(
                               .map((Species) => DropdownMenuItem<String>(
                                   value: Species["name"],
                                   child: Text(
-                                    Species["name"],
+                                    Species["name"], textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -1384,7 +1540,7 @@ child: TextField(
                 child: Column(children: [
                   Container(
                   width: screenW*0.95,
-                  child: Text('Farm Name',
+                  child: Text('Farm Name', textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold,

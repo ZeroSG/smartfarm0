@@ -10,6 +10,7 @@ import 'package:icofont_flutter/icofont_flutter.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../dialog.dart';
 import '../API_E_B/API_B.dart';
 import '../shared_preferences/shared_preferences.dart';
 
@@ -178,7 +179,7 @@ class _standardState extends State<standard> {
                             )),
                       ),
                       Text(
-                        'Standard Formula',
+                        'Standard Formula', textScaleFactor: 1.0,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -213,7 +214,7 @@ class _standardState extends State<standard> {
                         Upload(context);
                       },
                       child: Text(
-                        'Upload',
+                        'Upload', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -288,7 +289,7 @@ class _standardState extends State<standard> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Day",
+                      "Day", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -300,7 +301,7 @@ class _standardState extends State<standard> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Body Weight",
+                      "Body Weight", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -312,7 +313,7 @@ class _standardState extends State<standard> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Daily Gain",
+                      "Daily Gain", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -324,7 +325,7 @@ class _standardState extends State<standard> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Daily Intake",
+                      "Daily Intake", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -336,7 +337,7 @@ class _standardState extends State<standard> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Cum Intake",
+                      "Cum Intake", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -348,7 +349,7 @@ class _standardState extends State<standard> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Fcr",
+                      "Fcr", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -374,27 +375,27 @@ class _standardState extends State<standard> {
                         DataCell(Center(
                             child: Text(item['n_day'] == null
                                 ? ''
-                                : item['n_day'].toString()))),
+                                : item['n_day'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_body_weight'] == null
                                 ? ''
-                                : item['n_body_weight'].toString()))),
+                                : item['n_body_weight'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_daily_gain'] == null
                                 ? ''
-                                : item['n_daily_gain'].toString()))),
+                                : item['n_daily_gain'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_daily_intake'] == null
                                 ? ''
-                                : item['n_daily_intake'].toString()))),
+                                : item['n_daily_intake'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_cum_intake'] == null
                                 ? ''
-                                : item['n_cum_intake'].toString()))),
+                                : item['n_cum_intake'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_fcr'] == null
                                 ? ''
-                                : item['n_fcr'].toString()))),
+                                : item['n_fcr'].toString(), textScaleFactor: 1.0,))),
                       ]);
                     }).toList(),
             ),
@@ -445,7 +446,7 @@ class _standardState extends State<standard> {
                                   Navigator.pop(context);
                                 },
                                 child: Text(
-                                  'X',
+                                  'X', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -475,7 +476,7 @@ class _standardState extends State<standard> {
                                     color: Color.fromARGB(255, 255, 255, 255)),
                                 child: TextButton(
                                   child: Text(
-                                    'เลือกไฟล์',
+                                    'เลือกไฟล์', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -502,7 +503,7 @@ class _standardState extends State<standard> {
                                   child: Text(
                                     file != null
                                         ? filename!
-                                        : 'ไม่ได้เลือกไฟล์ใด',
+                                        : 'ไม่ได้เลือกไฟล์ใด', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: file != null ? 14 : 18,
                                         overflow: TextOverflow.ellipsis,
@@ -545,7 +546,7 @@ class _standardState extends State<standard> {
                                 child: TextButton(
                                   onPressed: () {},
                                   child: Text(
-                                    'Upload',
+                                    'Upload', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 15,
@@ -572,7 +573,7 @@ class _standardState extends State<standard> {
               width: screenW * 0.80,
               margin: EdgeInsets.only(left: 5),
               child: Text(
-                'Formula',
+                'Formula', textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -611,7 +612,7 @@ class _standardState extends State<standard> {
                                         (NoView_by) => DropdownMenuItem<String>(
                                             value: NoView_by,
                                             child: Text(
-                                              NoView_by,
+                                              NoView_by, textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -633,7 +634,7 @@ class _standardState extends State<standard> {
                                     .map((Formula) => DropdownMenuItem<String>(
                                         value: Formula,
                                         child: Text(
-                                          Formula,
+                                          Formula, textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontFamily: 'Montserrat',
@@ -668,6 +669,8 @@ class _standardState extends State<standard> {
                       width: 40,
                       child: IconButton(
                         onPressed: () async {
+                           normalDialog1(context,'ลบข้อมูล  Formula','คุณต้องการลบข้อมูล  Formula นี้ใช่หรือไม่ ? ',()async{
+                    Navigator.pop(context);
                           if (Formula10!.length > 1) {
           
                             API_button_delete_standard(
@@ -703,7 +706,7 @@ class _standardState extends State<standard> {
                             Formulaname10 = '';
 
                             getjaon1_setting_formula();
-                          }
+                          }});
                         },
                         icon: Icon(
                           IcoFontIcons.uiDelete,

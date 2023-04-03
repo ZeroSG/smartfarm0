@@ -10,6 +10,7 @@ import 'package:icofont_flutter/icofont_flutter.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../dialog.dart';
 import '../API_E_B/API_B.dart';
 import '../shared_preferences/shared_preferences.dart';
 
@@ -182,7 +183,7 @@ class _PlanningState extends State<Planning> {
                             )),
                       ),
                       Text(
-                        'Farming Plan',
+                        'Farming Plan', textScaleFactor: 1.0,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -217,7 +218,7 @@ class _PlanningState extends State<Planning> {
                         Upload(context);
                       },
                       child: Text(
-                        'Upload',
+                        'Upload', textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -281,7 +282,7 @@ class _PlanningState extends State<Planning> {
                                   Navigator.pop(context);
                                 },
                                 child: Text(
-                                  'X',
+                                  'X', textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -311,7 +312,7 @@ class _PlanningState extends State<Planning> {
                                     color: Color.fromARGB(255, 255, 255, 255)),
                                 child: TextButton(
                                   child: Text(
-                                    'เลือกไฟล์',
+                                    'เลือกไฟล์', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -338,7 +339,7 @@ class _PlanningState extends State<Planning> {
                                   child: Text(
                                     file != null
                                         ? filename!
-                                        : 'ไม่ได้เลือกไฟล์ใด',
+                                        : 'ไม่ได้เลือกไฟล์ใด', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: file != null ? 14 : 18,
                                         overflow: TextOverflow.ellipsis,
@@ -381,7 +382,7 @@ class _PlanningState extends State<Planning> {
                                 child: TextButton(
                                   onPressed: () {},
                                   child: Text(
-                                    'Upload',
+                                    'Upload', textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 15,
@@ -451,7 +452,7 @@ class _PlanningState extends State<Planning> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Day",
+                      "Day", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -463,7 +464,7 @@ class _PlanningState extends State<Planning> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Formula Silo1",
+                      "Formula Silo1", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -475,7 +476,7 @@ class _PlanningState extends State<Planning> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Formula Silo2",
+                      "Formula Silo2", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -487,7 +488,7 @@ class _PlanningState extends State<Planning> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Density",
+                      "Density", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -499,7 +500,7 @@ class _PlanningState extends State<Planning> {
                 DataColumn(
                   label: Center(
                     child: Text(
-                      "Percent Bag",
+                      "Percent Bag", textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -524,23 +525,23 @@ class _PlanningState extends State<Planning> {
                         DataCell(Center(
                             child: Text(item['n_day'] == null
                                 ? ''
-                                : item['n_day'].toString()))),
+                                : item['n_day'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['c_formula'] == null
                                 ? ''
-                                : item['c_formula'].toString()))),
+                                : item['c_formula'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['c_formula2'] == null
                                 ? ''
-                                : item['c_formula2'].toString()))),
+                                : item['c_formula2'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_density'] == null
                                 ? ''
-                                : item['n_density'].toString()))),
+                                : item['n_density'].toString(), textScaleFactor: 1.0,))),
                         DataCell(Center(
                             child: Text(item['n_bag_percent'] == null
                                 ? ''
-                                : item['n_bag_percent'].toString()))),
+                                : item['n_bag_percent'].toString(), textScaleFactor: 1.0,))),
                       ]);
                     }).toList(),
             ),
@@ -563,7 +564,7 @@ class _PlanningState extends State<Planning> {
               width: screenW * 0.80,
               margin: EdgeInsets.only(left: 5),
               child: Text(
-                'Plan',
+                'Plan', textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -601,7 +602,7 @@ class _PlanningState extends State<Planning> {
                                         (NoView_by) => DropdownMenuItem<String>(
                                             value: NoView_by,
                                             child: Text(
-                                              NoView_by,
+                                              NoView_by, textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -623,7 +624,7 @@ class _PlanningState extends State<Planning> {
                                     .map((Plan) => DropdownMenuItem<String>(
                                         value: Plan,
                                         child: Text(
-                                          Plan,
+                                          Plan, textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontFamily: 'Montserrat',
@@ -658,6 +659,8 @@ class _PlanningState extends State<Planning> {
                       width: 40,
                       child: IconButton(
                         onPressed: () async {
+                          normalDialog1(context,'ลบข้อมูล planning','คุณต้องการลบข้อมูล planning นี้ใช่หรือไม่ ? ',() async {
+                             Navigator.pop(context);
                           if (Plan!.length > 1) {
                             //      print('=======1=========');
                             //  print(widget.Token);
@@ -697,6 +700,7 @@ class _PlanningState extends State<Planning> {
 
                             getjaon1_setting_planning();
                           }
+                          });
                         },
                         icon: Icon(
                           IcoFontIcons.uiDelete,
