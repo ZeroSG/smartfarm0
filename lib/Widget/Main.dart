@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../drawer.dart';
+import 'shared_preferences/shared_preferences.dart';
 
 class Main1 extends StatefulWidget {
   String? Token; //Token
@@ -63,6 +64,9 @@ class _MainState extends State<Main1> {
 
   //API feed_information
   Future<void> getjaon_feed_information() async {
+      DateTime? dateTime1_ = DateTime.now();
+                  Usersharedpreferences _p = Usersharedpreferences();
+                 await _p.setUserT(dateTime1_.toString());
     try {
       loading = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/main/main-info");
@@ -159,6 +163,7 @@ class _MainState extends State<Main1> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    
     getjaon_feed_information();
   }
 

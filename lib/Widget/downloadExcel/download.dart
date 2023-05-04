@@ -20,7 +20,7 @@ Future SetExcel(var excel, var EXcel) async {
   if (Platform.isAndroid) {
     documentDiresctory = await ExternalPath.getExternalStoragePublicDirectory(
         ExternalPath.DIRECTORY_DOWNLOADS);
-  } else{
+  } else {
     Directory D = await getApplicationDocumentsDirectory();
     documentDiresctory = D.path;
   }
@@ -50,9 +50,7 @@ Future SetExcel(var excel, var EXcel) async {
     } catch (e) {
       print('e====> $e');
     }
-  } else {
-
-  }
+  } else {}
   String? fileexcel =
       "$documentDiresctory/$EXcel${now.millisecond}${now.microsecond}.xlsx";
 

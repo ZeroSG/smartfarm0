@@ -24,12 +24,20 @@ class Usersharedpreferences {
         print(Password);
   }
 
+  
+   Future<void> setUserT(String T,) async{
+     await _preferences!.setString('T', T);
+       print(T);
+
+  }
+
     Future setListdefault_planning(List<String>? Planning) async{
      await _preferences!.setStringList('Planning', Planning!);
 
        print('List $Planning');
 
   }
+  
 
   
       Future setListdefault_formula(List<String>? Formula) async{
@@ -46,7 +54,7 @@ class Usersharedpreferences {
        print('List $NameCrop');
 
   }
-
+   String? getUserT() => _preferences!.getString('T');
    List<String>? getformula() => _preferences!.getStringList('Formula');
    List<String>? getplanning() => _preferences!.getStringList('Planning');
    List<String>? getNameCrop() => _preferences!.getStringList('NameCrop');

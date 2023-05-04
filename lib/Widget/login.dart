@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 import '../drawer.dart';
 import 'Summry.dart';
 import 'shared_preferences/shared_preferences.dart';
@@ -36,145 +37,138 @@ class _LoginState extends State<Login> {
       var token = jsonDecode(res.body);
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/security/login");
       var ressum;
-      
- ressum = await http.post(urlsum,
+
+      ressum = await http.post(urlsum,
           headers: {
             "Authorization": "Bearer ${token['access_token']}",
             'Content-Type': 'application/json'
           },
-           body: jsonEncode(
+          body: jsonEncode(
               <String, dynamic>{"user": Username, "password": Password}));
-             
-               if (ressum.statusCode == 200) {
-                 
-                  setState(() async{
-        Token = token['access_token'];
-          Usersharedpreferences _p =
-                                    Usersharedpreferences();
-                                // await Usersharedpreferences.init();
-                                await _p.setUserEmail(Username, Password);
 
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Drawer1(
-                                        Token: Token,
-                                        User: Username,
-                                        Password: Password,
-                                      ),
-                                    ),
-                                    (route) => false);
-        loading = false;
+      if (ressum.statusCode == 200) {
+        setState(() async {
+          Token = token['access_token'];
+          Usersharedpreferences _p = Usersharedpreferences();
+          // await Usersharedpreferences.init();
+          await _p.setUserEmail(Username, Password);
 
-      });
-               }
-               else{
-                  var Message;
-                 if (ressum.statusCode == 500) {
-                           Message = jsonDecode(ressum.body)['Message'];
-                 }
-                  else{
-                    Message = jsonDecode(ressum.body)['message'];
-                  }
-                 showDialog(
-          barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
-          barrierDismissible: false,
-          context: context,
-          builder: (context) {
-            return StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-              return Dialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Container(
-                    height: screenH! * 0.4,
-                    width: screenW! * 0.5,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                margin: EdgeInsets.only(top: 15, left: 10),
-                                height: screenH! * 0.06,
-                                child: Text(
-                                  "ข้อมูล", textScaleFactor: 1.0,
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'THSarabun',
-                                      color: Color(0xff44bca3)),
-                                )),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              //  color: Colors.white,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'X', textScaleFactor: 1.0,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 0, 0, 0)),
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Drawer1(
+                  Token: Token,
+                  User: Username,
+                  Password: Password,
+                ),
+              ),
+              (route) => false);
+          loading = false;
+        });
+      } else {
+        var Message;
+        if (ressum.statusCode == 500) {
+          Message = jsonDecode(ressum.body)['Message'];
+        } else {
+          Message = jsonDecode(ressum.body)['message'];
+        }
+        showDialog(
+            barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                return Dialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Container(
+                      height: screenH! * 0.4,
+                      width: screenW! * 0.5,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(top: 15, left: 10),
+                                  height: screenH! * 0.06,
+                                  child: Text(
+                                    "ข้อมูล",
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 23,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'THSarabun',
+                                        color: Color(0xff44bca3)),
+                                  )),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                //  color: Colors.white,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'X',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
                                 ),
                               ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 5),
+                            height: screenH! * 0.2,
+                            decoration: BoxDecoration(
+                              //  color: Colors.amberAccent
+                              image: DecorationImage(
+                                  image: AssetImage("images/B1.jpg"),
+                                  fit: BoxFit.fill),
                             ),
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 5),
-                          height: screenH! * 0.2,
-                          decoration: BoxDecoration(
-                            //  color: Colors.amberAccent
-                            image: DecorationImage(
-                                image: AssetImage("images/B1.jpg"),
-                                fit: BoxFit.fill),
                           ),
-                        ),
-                        Center(
-                          child: Text('$Message', textScaleFactor: 1.0,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat', fontSize: 16)),
-                        ),
-                        Container(
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
+                          Center(
+                            child: Text('$Message',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat', fontSize: 16)),
+                          ),
+                          Container(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
 
-                              setState(() {
-                                // result = false;
-                                // email ='';
-                                // password1 ='';
-                              });
-                            },
-                            child: Text('OK', textScaleFactor: 1.0,
-                                style: TextStyle(fontFamily: 'Montserrat')),
+                                setState(() {
+                                  // result = false;
+                                  // email ='';
+                                  // password1 ='';
+                                });
+                              },
+                              child: Text('OK',
+                                  textScaleFactor: 1.0,
+                                  style: TextStyle(fontFamily: 'Montserrat')),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ));
+                        ],
+                      ),
+                    ));
+              });
             });
-          });
-      throw Exception('Failed to download');
-               }
-     
-    } else {
-      
-    }
+        throw Exception('Failed to download');
+      }
+    } else {}
   }
-
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   final TextEditingController _emailController = TextEditingController();
@@ -184,9 +178,7 @@ class _LoginState extends State<Login> {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
     return Container(
-
       child: Scaffold(
-
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Stack(
@@ -194,7 +186,6 @@ class _LoginState extends State<Login> {
               Container(
                 height: screenH! * 1,
                 width: screenW! * 1,
-
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
                     center: Alignment(0, -0.33),
@@ -233,23 +224,22 @@ class _LoginState extends State<Login> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-               
                           buildLogin(),
                           buildSignUp(),
                           SizedBox(
                             height: screenH! * 0.2,
                           ),
 
-                          GestureDetector(
-                            onTap: () {},
-                            child: Text(
-                              'Forgor Password ?', textScaleFactor: 1.0,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                          ),
+                          // GestureDetector(
+                          //   onTap: () {},
+                          //   child: Text(
+                          //     'Forgor Password ?', textScaleFactor: 1.0,
+                          //     style: TextStyle(
+                          //         fontFamily: 'Montserrat',
+                          //         fontSize: 14,
+                          //         color: Color.fromARGB(255, 255, 255, 255)),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: screenH! * 0.05,
                           ),
@@ -265,7 +255,6 @@ class _LoginState extends State<Login> {
         // ),
       ),
     );
-
   }
 
   Container buildLogo() {
@@ -320,7 +309,8 @@ class _LoginState extends State<Login> {
                                           EdgeInsets.only(top: 15, left: 10),
                                       // height: 20,
                                       child: Text(
-                                        "Log in", textScaleFactor: 1.0,
+                                        "Log in",
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -337,7 +327,8 @@ class _LoginState extends State<Login> {
                                         Navigator.pop(context);
                                       },
                                       child: Text(
-                                        'X', textScaleFactor: 1.0,
+                                        'X',
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -360,15 +351,11 @@ class _LoginState extends State<Login> {
                         ));
                   });
                 });
-           
-          } catch (e) {
-       
-          }
+          } catch (e) {}
         },
-
-     
         child: Text(
-          'Log In', textScaleFactor: 1.0,
+          'Log In',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 20,
@@ -382,9 +369,9 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-     late bool? statusRedEye = true;
-  Container newMethodPassword(StateSetter setState) {
 
+  late bool? statusRedEye = true;
+  Container newMethodPassword(StateSetter setState) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xffcfcfcf), width: 1),
@@ -405,18 +392,17 @@ class _LoginState extends State<Login> {
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: 16),
         decoration: InputDecoration(
-            suffixIcon:
-             IconButton(
-                //ทำปุ่ม RedEye
-                icon: statusRedEye!
-                    ? Icon(Icons.remove_red_eye)
-                    : Icon(Icons.remove_red_eye_outlined),
-                onPressed: () {
-                  setState(() {
-                    statusRedEye = !statusRedEye!;
-                  });
-                  print('$statusRedEye');
-                }),
+          suffixIcon: IconButton(
+              //ทำปุ่ม RedEye
+              icon: statusRedEye!
+                  ? Icon(Icons.remove_red_eye)
+                  : Icon(Icons.remove_red_eye_outlined),
+              onPressed: () {
+                setState(() {
+                  statusRedEye = !statusRedEye!;
+                });
+                print('$statusRedEye');
+              }),
           filled: true,
           contentPadding: EdgeInsets.only(top: 10),
           border: InputBorder.none,
@@ -492,12 +478,12 @@ class _LoginState extends State<Login> {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-        
           getToken(_emailController.text, _password1Controller.text);
           // getToken(_emailController.text,_password1Controller.text);
         },
         child: Text(
-          'Log in', textScaleFactor: 1.0,
+          'Log in',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 16,
@@ -522,10 +508,24 @@ class _LoginState extends State<Login> {
         // color: Colors.white,r
       ),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          String smartfarmpro = 'https://smartfarmpro.com/Regis_Farm.aspx';
+          if (await canLaunch(smartfarmpro)) {
+            await launch(
+              smartfarmpro,
+              forceSafariVC: true,
+              forceWebView: true,
+              enableJavaScript: true,
+              universalLinksOnly: true,
+            );
+          } else {
+            print('object');
+          }
+        },
         //  Navigator.pushNamed(context, '/showMapPresent'),
         child: Text(
-          'Sign Up', textScaleFactor: 1.0,
+          'Sign Up',
+          textScaleFactor: 1.0,
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontSize: 20,

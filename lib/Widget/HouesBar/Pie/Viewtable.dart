@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:data_table_2/data_table_2.dart';
+// import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 
@@ -60,60 +60,71 @@ class _ViewtableState extends State<Viewtable> {
                     width: screenW * 1,
                     height: 280,
                     // child: SingleChildScrollView(
-                      
-                      child: DataTable2(
+                      child: DataTable(
                           headingRowHeight: 40.0,  
              dataRowColor: MaterialStateProperty.all(Colors.white),
             columnSpacing: 0,
             horizontalMargin: 15,
-            minWidth: screenW*0.9,
+     
 
                         columns: [
                               DataColumn(
-                            label: Center(
-                              child: Text(
-                                "Size", textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 255, 255, 255)),
+                            label: Container(
+                          width: screenW*0.19,
+                              child: Center(
+                                child: Text(
+                                  "Size", textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                ),
                               ),
                             ),
                           ),
                           DataColumn(
-                            label: Center(
-                              child: Text(
-                                "Weight Range", textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 255, 255, 255)),
+                            label: Container(
+                          width: screenW*0.19,
+                              child: Center(
+                                child: Text(
+                                  "Weight Range", textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                ),
                               ),
                             ),
                           ),
                           DataColumn(
-                            label: Center(
-                              child: Text(
-                                "Percent", textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 255, 255, 255)),
+                            label: Container(
+                          width: screenW*0.19,
+                              child: Center(
+                                child: Text(
+                                  "Percent", textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                ),
                               ),
                             ),
                           ),
                           DataColumn(
-                            label: Center(
-                              child: Text(
-                                "Number", textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 255, 255, 255)),
+                            label: Container(
+                          width: screenW*0.19,
+                              child: Center(
+                                child: Text(
+                                  "Number", textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                ),
                               ),
                             ),
                           ),
@@ -143,6 +154,88 @@ class _ViewtableState extends State<Viewtable> {
                       ]);
                     }).toList(),
                       ),
+            //           child: DataTable2(
+            //               headingRowHeight: 40.0,  
+            //  dataRowColor: MaterialStateProperty.all(Colors.white),
+            // columnSpacing: 0,
+            // horizontalMargin: 15,
+            // minWidth: screenW*0.9,
+
+            //             columns: [
+            //                   DataColumn(
+            //                 label: Center(
+            //                   child: Text(
+            //                     "Size", textScaleFactor: 1.0,
+            //                     style: TextStyle(
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 255, 255, 255)),
+            //                   ),
+            //                 ),
+            //               ),
+            //               DataColumn(
+            //                 label: Center(
+            //                   child: Text(
+            //                     "Weight Range", textScaleFactor: 1.0,
+            //                     style: TextStyle(
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 255, 255, 255)),
+            //                   ),
+            //                 ),
+            //               ),
+            //               DataColumn(
+            //                 label: Center(
+            //                   child: Text(
+            //                     "Percent", textScaleFactor: 1.0,
+            //                     style: TextStyle(
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 255, 255, 255)),
+            //                   ),
+            //                 ),
+            //               ),
+            //               DataColumn(
+            //                 label: Center(
+            //                   child: Text(
+            //                     "Number", textScaleFactor: 1.0,
+            //                     style: TextStyle(
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 255, 255, 255)),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ], 
+            //               rows: widget.nowresult6_1!.map((item) {
+            //           return DataRow(cells: [
+            //             DataCell(Center(child: Text(item['c_size'] , textScaleFactor: 1.0,style: TextStyle(
+                               
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 0, 0, 0)),))),
+            //             DataCell(Center(child: Text(item['c_range'] , textScaleFactor: 1.0,style: TextStyle(
+                                    
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 0, 0, 0)),))),
+            //             DataCell(Center(child: Text(item['n_percent'] , textScaleFactor: 1.0,style: TextStyle(
+                                 
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 0, 0, 0)),))),
+            //             DataCell(Center(child: Text(item['n_number'].toString() , textScaleFactor: 1.0,style: TextStyle(
+                                   
+            //                         fontSize: 12,
+            //                         fontFamily: 'Montserrat',
+            //                         color: Color.fromARGB(255, 0, 0, 0)),)))
+            //           ]);
+            //         }).toList(),
+            //           ),
                     // )
                   ),
                    Container(

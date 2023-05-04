@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:data_table_2/data_table_2.dart';
-import 'package:excel/excel.dart';
+// import 'package:data_table_2/data_table_2.dart';
+import 'package:excel/excel.dart' as excelid;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:icofont_flutter/icofont_flutter.dart';
@@ -50,7 +50,6 @@ class _standardState extends State<standard> {
       allowMultiple: true,
       type: FileType.custom,
       allowedExtensions: ['xlsx'],
-
     );
 
     if (result != null) {
@@ -60,7 +59,7 @@ class _standardState extends State<standard> {
       File file1 = File(file2);
 
       var bytes = file1.readAsBytesSync();
-      var excel = Excel.decodeBytes(
+      var excel = excelid.Excel.decodeBytes(
         bytes,
       );
 
@@ -71,8 +70,8 @@ class _standardState extends State<standard> {
         file = file1;
       });
 
-      Sheet sheet = selectedExcel["Sheet1"];
-     //ตัวอย่าง
+      excelid.Sheet sheet = selectedExcel["Sheet1"];
+      //ตัวอย่าง
       for (var table in excel.tables.keys) {
         for (var row in excel.tables[table]!.rows) {
           setState(() {
@@ -146,7 +145,6 @@ class _standardState extends State<standard> {
       Formula = [''];
       loading1 = false;
     }
-
   }
 
   @override
@@ -154,11 +152,11 @@ class _standardState extends State<standard> {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
     return WillPopScope(
-         onWillPop: () async {
-         Navigator.pop(context);
-       
-       return true;
-         },
+      onWillPop: () async {
+        Navigator.pop(context);
+
+        return true;
+      },
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -185,7 +183,8 @@ class _standardState extends State<standard> {
                               )),
                         ),
                         Text(
-                          'Standard Formula', textScaleFactor: 1.0,
+                          'Standard Formula',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -220,7 +219,8 @@ class _standardState extends State<standard> {
                           Upload(context);
                         },
                         child: Text(
-                          'Upload', textScaleFactor: 1.0,
+                          'Upload',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 13,
@@ -244,174 +244,503 @@ class _standardState extends State<standard> {
       ),
     );
   }
+
   //DataTable
-  Stack newDataTable() {
-    return Stack(
-      children: [
-        Container(
-          width: screenW * 0.95,
-          margin: EdgeInsets.only(top: 10),
-          //  color: Colors.blueAccent,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-          ),
-          height: screenH * 0.5,
-        ),
-        Container(
-          width: screenW * 0.95,
-          margin: EdgeInsets.only(top: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.blueAccent,
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  // stops: [0.3, 1],
-                  colors: [
-                    Color.fromARGB(255, 160, 193, 238),
-                    Color.fromARGB(255, 94, 157, 228)
-                  ])),
-          height: 50.0,
-        ),
-        Container(
-          width: screenW * 0.95,
-          margin: EdgeInsets.only(top: 10),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+  newDataTable() {
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Stack(
+          children: [
+            Container(
+              width: screenW,
+              margin: EdgeInsets.only(top: 10),
+              //  color: Colors.blueAccent,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              // height: screenH * 0.5,
             ),
-            margin: EdgeInsets.only(top: 5),
-
-            height: screenH * 0.5,
-            // child: SingleChildScrollView(
-
-            child: DataTable2(
-              headingRowHeight: 40.0,
-              dataRowColor: MaterialStateProperty.all(Colors.white),
-              columnSpacing: 1,
-              horizontalMargin: 15,
-              minWidth: 600,
-              columns: [
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "Day", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
+            // Container(
+            //   // width: screenW,
+            //   margin: EdgeInsets.only(top: 10),
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //       color: Colors.blueAccent,
+            //       gradient: LinearGradient(
+            //           begin: Alignment.topLeft,
+            //           end: Alignment.bottomRight,
+            //           // stops: [0.3, 1],
+            //           colors: [
+            //             Color.fromARGB(255, 160, 193, 238),
+            //             Color.fromARGB(255, 94, 157, 228)
+            //           ])),
+            //   height: 50.0,
+            // ),
+            Container(
+              // width: screenW,
+              margin: EdgeInsets.only(top: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.only(top: 5),
+    
+                // height: screenH * 0.5,
+                child: SingleChildScrollView(
+                  child: DataTable(
+                    headingRowHeight: 40.0,
+                    dataRowColor: MaterialStateProperty.all(Colors.white),
+                    columnSpacing: 1,
+                    horizontalMargin: 15,
+                    columns: [
+                      DataColumn(
+                        label: Container(
+                          width: 100,
+                          child: Center(
+                            child: Text(
+                              "Day",
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Container(
+                            width: 100,
+                          child: Center(
+                            child: Text(
+                              "Body Weight",
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Container(
+                          width: 100,
+                          child: Center(
+                            child: Text(
+                              "Daily Gain",
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Container(
+                            width: 100,
+                          child: Center(
+                            child: Text(
+                              "Daily Intake",
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Container(
+                           width: 100,
+                          child: Center(
+                            child: Text(
+                              "Cum Intake",
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Container(
+                            width: 100,
+                          child: Center(
+                            child: Text(
+                              "Fcr",
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                    rows: nowresult1_1 == null
+                        ? _products1.map((item) {
+                            return DataRow(cells: [
+                              DataCell(Center(child: Text(''))),
+                              DataCell(Center(child: Text(''))),
+                              DataCell(Center(child: Text(''))),
+                              DataCell(Center(child: Text(''))),
+                              DataCell(Center(child: Text(''))),
+                              DataCell(Center(child: Text(''))),
+                            ]);
+                          }).toList()
+                        : nowresult1_1.map((item) {
+                            return DataRow(cells: [
+                              DataCell(Container(
+                                  width: 100,
+                                child: Center(
+                                    child: Text(
+                                  item['n_day'] == null
+                                      ? ''
+                                      : item['n_day'].toString(),
+                                  textScaleFactor: 1.0,
+                                )),
+                              )),
+                              DataCell(Container(
+                                  width: 100,
+                                child: Center(
+                                    child: Text(
+                                  item['n_body_weight'] == null
+                                      ? ''
+                                      : item['n_body_weight'].toString(),
+                                  textScaleFactor: 1.0,
+                                )),
+                              )),
+                              DataCell(Container(
+                                  width: 100,
+                                child: Center(
+                                    child: Text(
+                                  item['n_daily_gain'] == null
+                                      ? ''
+                                      : item['n_daily_gain'].toString(),
+                                  textScaleFactor: 1.0,
+                                )),
+                              )),
+                              DataCell(Container(
+                                  width: 100,
+                                child: Center(
+                                    child: Text(
+                                  item['n_daily_intake'] == null
+                                      ? ''
+                                      : item['n_daily_intake'].toString(),
+                                  textScaleFactor: 1.0,
+                                )),
+                              )),
+                              DataCell(Container(
+                                  width: 100,
+                                child: Center(
+                                    child: Text(
+                                  item['n_cum_intake'] == null
+                                      ? ''
+                                      : item['n_cum_intake'].toString(),
+                                  textScaleFactor: 1.0,
+                                )),
+                              )),
+                              DataCell(Container(
+                                  width: 100,
+                                child: Center(
+                                    child: Text(
+                                  item['n_fcr'] == null
+                                      ? ''
+                                      : item['n_fcr'].toString(),
+                                  textScaleFactor: 1.0,
+                                )),
+                              )),
+                            ]);
+                          }).toList(),
                   ),
                 ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "Body Weight", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "Daily Gain", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "Daily Intake", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "Cum Intake", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "Fcr", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-              ],
-              rows: nowresult1_1 == null
-                  ? _products1.map((item) {
-                      return DataRow(cells: [
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                      ]);
-                    }).toList()
-                  : nowresult1_1.map((item) {
-                      return DataRow(cells: [
-                        DataCell(Center(
-                            child: Text(item['n_day'] == null
-                                ? ''
-                                : item['n_day'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['n_body_weight'] == null
-                                ? ''
-                                : item['n_body_weight'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['n_daily_gain'] == null
-                                ? ''
-                                : item['n_daily_gain'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['n_daily_intake'] == null
-                                ? ''
-                                : item['n_daily_intake'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['n_cum_intake'] == null
-                                ? ''
-                                : item['n_cum_intake'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['n_fcr'] == null
-                                ? ''
-                                : item['n_fcr'].toString(), textScaleFactor: 1.0,))),
-                      ]);
-                    }).toList(),
+    
+                // child: DataTable2(
+                //   headingRowHeight: 40.0,
+                //   dataRowColor: MaterialStateProperty.all(Colors.white),
+                //   columnSpacing: 1,
+                //   horizontalMargin: 15,
+                //   minWidth: 600,
+                //   columns: [
+                //     DataColumn(
+                //       label: Center(
+                //         child: Text(
+                //           "Day", textScaleFactor: 1.0,
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 13,
+                //               fontFamily: 'Montserrat',
+                //               color: Color.fromARGB(255, 255, 255, 255)),
+                //         ),
+                //       ),
+                //     ),
+                //     DataColumn(
+                //       label: Center(
+                //         child: Text(
+                //           "Body Weight", textScaleFactor: 1.0,
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 13,
+                //               fontFamily: 'Montserrat',
+                //               color: Color.fromARGB(255, 255, 255, 255)),
+                //         ),
+                //       ),
+                //     ),
+                //     DataColumn(
+                //       label: Center(
+                //         child: Text(
+                //           "Daily Gain", textScaleFactor: 1.0,
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 13,
+                //               fontFamily: 'Montserrat',
+                //               color: Color.fromARGB(255, 255, 255, 255)),
+                //         ),
+                //       ),
+                //     ),
+                //     DataColumn(
+                //       label: Center(
+                //         child: Text(
+                //           "Daily Intake", textScaleFactor: 1.0,
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 13,
+                //               fontFamily: 'Montserrat',
+                //               color: Color.fromARGB(255, 255, 255, 255)),
+                //         ),
+                //       ),
+                //     ),
+                //     DataColumn(
+                //       label: Center(
+                //         child: Text(
+                //           "Cum Intake", textScaleFactor: 1.0,
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 13,
+                //               fontFamily: 'Montserrat',
+                //               color: Color.fromARGB(255, 255, 255, 255)),
+                //         ),
+                //       ),
+                //     ),
+                //     DataColumn(
+                //       label: Center(
+                //         child: Text(
+                //           "Fcr", textScaleFactor: 1.0,
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 13,
+                //               fontFamily: 'Montserrat',
+                //               color: Color.fromARGB(255, 255, 255, 255)),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                //   rows: nowresult1_1 == null
+                //       ? _products1.map((item) {
+                //           return DataRow(cells: [
+                //             DataCell(Center(child: Text(''))),
+                //             DataCell(Center(child: Text(''))),
+                //             DataCell(Center(child: Text(''))),
+                //             DataCell(Center(child: Text(''))),
+                //             DataCell(Center(child: Text(''))),
+                //             DataCell(Center(child: Text(''))),
+                //           ]);
+                //         }).toList()
+                //       : nowresult1_1.map((item) {
+                //           return DataRow(cells: [
+                //             DataCell(Center(
+                //                 child: Text(item['n_day'] == null
+                //                     ? ''
+                //                     : item['n_day'].toString(), textScaleFactor: 1.0,))),
+                //             DataCell(Center(
+                //                 child: Text(item['n_body_weight'] == null
+                //                     ? ''
+                //                     : item['n_body_weight'].toString(), textScaleFactor: 1.0,))),
+                //             DataCell(Center(
+                //                 child: Text(item['n_daily_gain'] == null
+                //                     ? ''
+                //                     : item['n_daily_gain'].toString(), textScaleFactor: 1.0,))),
+                //             DataCell(Center(
+                //                 child: Text(item['n_daily_intake'] == null
+                //                     ? ''
+                //                     : item['n_daily_intake'].toString(), textScaleFactor: 1.0,))),
+                //             DataCell(Center(
+                //                 child: Text(item['n_cum_intake'] == null
+                //                     ? ''
+                //                     : item['n_cum_intake'].toString(), textScaleFactor: 1.0,))),
+                //             DataCell(Center(
+                //                 child: Text(item['n_fcr'] == null
+                //                     ? ''
+                //                     : item['n_fcr'].toString(), textScaleFactor: 1.0,))),
+                //           ]);
+                //         }).toList(),
+                // ),
+                // )
+              ),
             ),
-            // )
-          ),
+            // Container(
+            //      width: screenW,
+            //     margin: EdgeInsets.only(top: 10),
+            //     decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(10),
+            //         color: Colors.blueAccent,
+            //         gradient: LinearGradient(
+            //             begin: Alignment.topLeft,
+            //             end: Alignment.bottomRight,
+            //             // stops: [0.3, 1],
+            //             colors: [
+            //               Color.fromARGB(255, 160, 193, 238),
+            //               Color.fromARGB(255, 94, 157, 228)
+            //             ])),
+            //     height: 50,
+            //   ),
+            Container(
+              // width: screenW,
+              margin: EdgeInsets.only(top: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blueAccent,
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        // stops: [0.3, 1],
+                        colors: [
+                          Color.fromARGB(255, 160, 193, 238),
+                          Color.fromARGB(255, 94, 157, 228)
+                        ])),
+                margin: EdgeInsets.only(top: 5),
+                height: 50,
+                child: SingleChildScrollView(
+                  child: DataTable(
+                      headingRowHeight: 50.0,
+                      dataRowColor: MaterialStateProperty.all(Colors.white),
+                      columnSpacing: 1,
+                      horizontalMargin: 15,
+                      // minWidth: 500,
+                      columns: [
+                        DataColumn(
+                          label: Container(
+                            width: 100,
+                            child: Center(
+                              child: Text(
+                                "Day",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                        width: 100,
+                            child: Center(
+                              child: Text(
+                                "Body Weight",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                             width: 100,
+                            child: Center(
+                              child: Text(
+                                "Daily Gain",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                            width: 100,
+                            child: Center(
+                              child: Text(
+                                "Daily Intake",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                             width: 100,
+                            child: Center(
+                              child: Text(
+                                "Cum Intake",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                             width: 100,
+                            child: Center(
+                              child: Text(
+                                "Fcr",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      rows: []),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
+
   //ปุ่มเลือกไฟล์
   Future<dynamic> Upload(BuildContext context) {
     return showDialog(
@@ -453,7 +782,8 @@ class _standardState extends State<standard> {
                                   Navigator.pop(context);
                                 },
                                 child: Text(
-                                  'X', textScaleFactor: 1.0,
+                                  'X',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -483,7 +813,8 @@ class _standardState extends State<standard> {
                                     color: Color.fromARGB(255, 255, 255, 255)),
                                 child: TextButton(
                                   child: Text(
-                                    'เลือกไฟล์', textScaleFactor: 1.0,
+                                    'เลือกไฟล์',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -510,7 +841,8 @@ class _standardState extends State<standard> {
                                   child: Text(
                                     file != null
                                         ? filename!
-                                        : 'ไม่ได้เลือกไฟล์ใด', textScaleFactor: 1.0,
+                                        : 'ไม่ได้เลือกไฟล์ใด',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: file != null ? 14 : 18,
                                         overflow: TextOverflow.ellipsis,
@@ -553,7 +885,8 @@ class _standardState extends State<standard> {
                                 child: TextButton(
                                   onPressed: () {},
                                   child: Text(
-                                    'Upload', textScaleFactor: 1.0,
+                                    'Upload',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 15,
@@ -571,6 +904,7 @@ class _standardState extends State<standard> {
           );
         });
   }
+
   //Dropdown Formula
   Container Formula1() {
     return Container(
@@ -580,7 +914,8 @@ class _standardState extends State<standard> {
               width: screenW * 0.80,
               margin: EdgeInsets.only(left: 5),
               child: Text(
-                'Formula', textScaleFactor: 1.0,
+                'Formula',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -619,7 +954,8 @@ class _standardState extends State<standard> {
                                         (NoView_by) => DropdownMenuItem<String>(
                                             value: NoView_by,
                                             child: Text(
-                                              NoView_by, textScaleFactor: 1.0,
+                                              NoView_by,
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -641,7 +977,8 @@ class _standardState extends State<standard> {
                                     .map((Formula) => DropdownMenuItem<String>(
                                         value: Formula,
                                         child: Text(
-                                          Formula, textScaleFactor: 1.0,
+                                          Formula,
+                                          textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontFamily: 'Montserrat',
@@ -676,44 +1013,106 @@ class _standardState extends State<standard> {
                       width: 40,
                       child: IconButton(
                         onPressed: () async {
-                           normalDialog1(context,'ลบข้อมูล  Formula','คุณต้องการลบข้อมูล  Formula นี้ใช่หรือไม่ ? ',()async{
-                    Navigator.pop(context);
-                          if (Formula10!.length > 1) {
-          
-                            API_button_delete_standard(
-                                widget.Token, widget.farmnum, Formulaname10);
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => SimpleDialog(
+                              title: ListTile(
+                                // leading: Image.asset('images/maps.png',height: 600,),
+                                title: Text('ลบข้อมูล  Formula',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      // fontFamily: fonts,
+                                    )),
+                                subtitle: Text(
+                                    'คุณต้องการลบข้อมูล  Formula นี้ใช่หรือไม่ ? ',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        // fontFamily: fonts,
+                                        )),
+                              ),
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text(
+                                          'ยกเลิก',
+                                          textScaleFactor: 1.0,
+                                          style: TextStyle(
+                                              // fontFamily: fonts,
 
-                            late List<dynamic> Formula0 = [];
+                                              fontSize: 15,
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0)),
+                                        )),
+                                    TextButton(
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                          if (Formula10!.length > 1) {
+                                            API_button_delete_standard(
+                                                widget.Token,
+                                                widget.farmnum,
+                                                Formulaname10);
 
-                            for (int i = 0; i < Formula!.length; i++) {
-                              if (Formula![i]['name'] != Formulaname10) {
-                                Formula0 += [Formula![i]];
-                              }
-                            }
-                            Formulaname = Formula0[0]['name'];
-                            Formula = Formula0;
+                                            late List<dynamic> Formula0 = [];
 
-                            late List<String> formula = [];
-                            for (int i = 0; i < Formula!.length; i++) {
-                              formula += [Formula![i]['name']];
-                            }
-                            await _p.setListdefault_formula(formula);
-                            Formula10 = formula;
-                            Formulaname10 = Formula10![0];
-                            getjaon1_setting_formula();
-                          } else if (Formula10!.length == 1) {
-                            API_button_delete_standard(
-                                widget.Token, widget.farmnum, Formulaname10);
-                            Formulaname = '';
-                            Formula = [''];
-                            late List<String> formula = [''];
+                                            for (int i = 0;
+                                                i < Formula!.length;
+                                                i++) {
+                                              if (Formula![i]['name'] !=
+                                                  Formulaname10) {
+                                                Formula0 += [Formula![i]];
+                                              }
+                                            }
+                                            Formulaname = Formula0[0]['name'];
+                                            Formula = Formula0;
 
-                            await _p.setListdefault_formula(formula);
-                            Formula10 = [''];
-                            Formulaname10 = '';
+                                            late List<String> formula = [];
+                                            for (int i = 0;
+                                                i < Formula!.length;
+                                                i++) {
+                                              formula += [Formula![i]['name']];
+                                            }
+                                            await _p.setListdefault_formula(
+                                                formula);
+                                            Formula10 = formula;
+                                            Formulaname10 = Formula10![0];
+                                            getjaon1_setting_formula();
+                                          } else if (Formula10!.length == 1) {
+                                            API_button_delete_standard(
+                                                widget.Token,
+                                                widget.farmnum,
+                                                Formulaname10);
+                                            Formulaname = '';
+                                            Formula = [''];
+                                            late List<String> formula = [''];
 
-                            getjaon1_setting_formula();
-                          }});
+                                            await _p.setListdefault_formula(
+                                                formula);
+                                            Formula10 = [''];
+                                            Formulaname10 = '';
+
+                                            getjaon1_setting_formula();
+                                          }
+                                        },
+                                        child: Text(
+                                          'ตกลง',
+                                          textScaleFactor: 1.0,
+                                          style: TextStyle(
+                                              // fontFamily: fonts,
+
+                                              fontSize: 15,
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0)),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
                         },
                         icon: Icon(
                           IcoFontIcons.uiDelete,

@@ -6,6 +6,7 @@ import '../drawer.dart';
 import 'HouesBar/Device.dart';
 import 'HouesBar/Inrake&Order.dart';
 import 'HouesBar/Weight.dart';
+import 'shared_preferences/shared_preferences.dart';
 
 class House extends StatefulWidget {
   String? User; // อีเมล User
@@ -55,6 +56,109 @@ class _HouseState extends State<House> {
   String? Noname = '';
   late String? user = widget.User;
   late String? password = widget.Password;
+
+late  DateTime? dateTime1_;
+  bool T = true;
+  Future<void> chooseDateTime() async {
+     Usersharedpreferences _p = Usersharedpreferences();
+    setState(() {
+      T = true;
+       late String? T1 = _p.getUserT();
+       print(T1);
+      dateTime1_ = DateTime.parse(T1!);
+      T = false;
+    });
+  }
+   Future<void> chooseDateTime1() async {
+      
+    DateTime? ChooseDateTime = await showDatePicker(
+      context: context,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+      initialDate: dateTime1_!,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xff44bca3),
+              onPrimary: Color.fromARGB(255, 255, 255, 255),
+              onSurface: Color.fromARGB(255, 0, 0, 0),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (ChooseDateTime != null) {
+       Usersharedpreferences _p = Usersharedpreferences();
+        dateTime1_ = ChooseDateTime;
+      await _p.setUserT(dateTime1_.toString());
+      setState(() {
+
+         Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Drawer1(
+                                                      Token: widget.Token,
+                                                      num1: 2,
+                                                      numIndex: numIndex,
+                                                      User: user,
+                                                      Password: password,
+                                                      HOUSE1: num,
+                                                      HOUSE2: sHOUSE,
+                                                      cropnum1: widget.cropnum1,
+                                                      cropnum: widget.cropnum,
+                                                      cropnum2: widget.cropnum2,
+                                                      farmnum: widget.farmnum,
+                                                      Feed: feed,
+                                                      
+                                                    ),
+                                                  ),
+                                                  (route) => false);
+          // Navigator.pushAndRemoveUntil(
+          //                             context,
+          //                             MaterialPageRoute(
+          //                               builder: (context) => Drawer1(
+          //                                 Token: widget.Token,
+          //                                 num1: 2,
+          //                                 User: user,
+          //                                 Password: password,
+          //                                 HOUSE1: widget.HOUSE1,
+          //                                 HOUSE2: widget.HOUSE2,
+          //                                 cropnum1: widget.cropnum1,
+          //                                 cropnum: widget.cropnum,
+          //                                 cropnum2: widget.cropnum2,
+          //                                 farmnum: widget.farmnum,
+          //                                 Feed: feed,
+          //                               ),
+          //                             ),
+          //                             (route) => false);
+        // dateTime1_ = ChooseDateTime;
+        // getjaon0_1_weight_information();
+        // getjaon1_weight_device();
+        // getjaon2_weight_average_hourly();
+        // getjaon3_weight_results();
+        // getjaon4_weight_per_unit();
+        // getjaon5_weight_distribution_rate();
+        // getjaon6_weight_estimate_size();
+        //  dateTime6 = ChooseDateTime;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   chooseDateTime();
+  }
   @override
   Widget build(BuildContext context) {
     screenW = MediaQuery.of(context).size.width;
@@ -86,11 +190,12 @@ class _HouseState extends State<House> {
 
     return newDefaultTabController2(context);
   }
+   
 
   // Dropdown HOUSE
   Scaffold newDefaultTabController2(BuildContext context) {
     return Scaffold(
-      body: DefaultTabController(
+      body: T? Container(): DefaultTabController(
           initialIndex: numIndex!,
           length: 3,
           child: Column(children: [
@@ -101,7 +206,31 @@ class _HouseState extends State<House> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(' '),
+                 numIndex == 2 ?  Container(
+                   margin: EdgeInsets.only(left: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: Color.fromARGB(255, 194, 194, 194),
+                          width: screenW * 0.005),
+                      color: Color.fromARGB(255, 235, 235, 235)),
+                  height: 50,
+                  width:  screenW * 0.3,
+                  child: TextButton(
+                    onPressed: () {
+                      chooseDateTime1();
+                    },
+                    child: Text(
+                      '${dateTime1_!.day}-${dateTime1_!.month}-${dateTime1_!.year}',
+                      textScaleFactor: 1.0,
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 0, 0, 0)),
+                    ),
+                  ),
+                )
+                 :Text(' '),
                   Container(
                       width: screenW * 0.5,
                       height: 50,

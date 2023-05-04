@@ -1,21 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'package:data_table_2/data_table_2.dart';
+// import 'package:data_table_2/data_table_2.dart';
 
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter_new/flutter.dart' as charts;
 
 import 'package:intl/intl.dart';
 import '../../dialog.dart';
 import '../API_E_B/API_E.dart';
 
-import 'package:charts_flutter/src/text_element.dart' as chartText;
-import 'package:charts_flutter/src/text_style.dart' as chartStyle;
+import 'package:charts_flutter_new/src/text_element.dart' as chartText;
+import 'package:charts_flutter_new/src/text_style.dart' as chartStyle;
 
 import 'package:http/http.dart' as http;
 
 import '../downloadExcel/download.dart';
+import '../shared_preferences/shared_preferences.dart';
 import 'Pie/Viewcharts.dart';
 import 'Pie/Viewtable.dart';
 
@@ -24,7 +25,8 @@ class Weight extends StatefulWidget {
   int? num;
   int? farmnum;
   String? HOUSE2;
-  Weight({Key? key, this.Token, this.num, this.farmnum, this.HOUSE2})
+   DateTime? dateTime1_;
+  Weight({Key? key, this.Token, this.num, this.farmnum, this.HOUSE2,this.dateTime1_})
       : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class Weight extends StatefulWidget {
 }
 
 class _WeightState extends State<Weight> {
-   late DateTime? dateTime_;
+  late DateTime? dateTime_;
   final List<dynamic> _products1 = List.generate(5, (i) {
     return {"id": "$i", "name": "$i", "price": "$i"};
   });
@@ -71,7 +73,7 @@ class _WeightState extends State<Weight> {
   List<dynamic> nowresult0_1 = [];
   List<dynamic> nowresult0_2 = [];
   late int? ALL;
-
+ late DateTime? dateTime1_;
   String? form = 'Non specified';
   String? day = 'Non specified';
   String? Start = 'Non specified';
@@ -110,7 +112,7 @@ class _WeightState extends State<Weight> {
             End = '${Date_End.day}/${Date_End.month}/${Date_End.year}';
 
             loading0 = false;
-             getjaon6_weight_estimate_size();
+            getjaon6_weight_estimate_size();
           });
         }
         if (result0_1 == null) {
@@ -122,7 +124,7 @@ class _WeightState extends State<Weight> {
             End = 'Non specified';
             loading0 = false;
             dateTime_ = DateTime.now();
-             getjaon6_weight_estimate_size();
+            getjaon6_weight_estimate_size();
           });
         }
       } else {
@@ -264,16 +266,18 @@ class _WeightState extends State<Weight> {
   }
 
   late List<String> uniquelist2 = [];
- late List<dynamic> nowresult3_1 = [];
- late List<dynamic> nowresult3_2 = [];
- late List<dynamic> nowresult3_3 = [];
+  late List<dynamic> nowresult3_1 = [];
+  late List<dynamic> nowresult3_2 = [];
+  late List<dynamic> nowresult3_3 = [];
   late List<dynamic> nowresult3_4 = [];
   //API weight_results
   Future<void> getjaon3_weight_results() async {
     print("Farm : ${widget.farmnum}");
-     print("House : ${widget.num}");
-      print( "Date_Start : ${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1");
-       print("Date_End : ${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2");
+    print("House : ${widget.num}");
+    print(
+        "Date_Start : ${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1");
+    print(
+        "Date_End : ${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2");
     try {
       loading3 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/weight-result");
@@ -289,18 +293,18 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-  //             "Farm": 17,
-  // "House": 145,
-  // "Date_Start": "2022-09-06 00:00:00.000",
-  // "Date_End": "2022-09-06 23:59:59.000"
-  //   "Farm": 62,
-  // "House": 236,
-  // "Date_Start": "2023-3-7 00:00:00.000",
-  // "Date_End": "2023-3-7 23:59:59.000"
-  //             "Farm": 64,
-  // "House": 240,
-  // "Date_Start": "2023-02-27 00:00:00.000",
-  // "Date_End": "2023-02-27 23:59:59.000"
+            //             "Farm": 17,
+            // "House": 145,
+            // "Date_Start": "2022-09-06 00:00:00.000",
+            // "Date_End": "2022-09-06 23:59:59.000"
+            //   "Farm": 62,
+            // "House": 236,
+            // "Date_Start": "2023-3-7 00:00:00.000",
+            // "Date_End": "2023-3-7 23:59:59.000"
+            //             "Farm": 64,
+            // "House": 240,
+            // "Date_Start": "2023-02-27 00:00:00.000",
+            // "Date_End": "2023-02-27 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result3_1 = json.decode(ressum.body)['result']['view1'];
@@ -318,7 +322,7 @@ class _WeightState extends State<Weight> {
         //     });
         //   }
         // }
-        
+
         // for (int i = 0; i < nowresult1_1.length; i++) {
         //   if (nowresult1_1[i]["count_data"] != null) {
         //     setState(() {
@@ -375,44 +379,44 @@ class _WeightState extends State<Weight> {
         //                 null,
         //         })
         //     .toList();
-        
-        late List<dynamic> _products1 = List.generate(result3_1.length, (i) {
-                return {
-                  "name": '1',
-                  'device': result3_1[i]['device'],
-                  'n_avg': result3_1[i]['n_avg'],
-                    'C1' : C1[i],
-                  'C2' : C1[i]
-                };
-              });
-         late List<dynamic> _products2 = List.generate(result3_2.length, (i) {
-                return {
-                  "name": '2',
-                  'device': result3_2[i]['device'],
-                  'n_std': result3_2[i]['n_std'],
-                  'C1' : C1[i],
-                  'C2' : C1[i]
-                };
-              });  
-            late List<dynamic> _products3 = List.generate(result3_3.length, (i) {
-                return {
-                  "name": '3',
-                  'device': result3_3[i]['device'],
-                  'n_cv': result3_3[i]['n_cv'],
-                    'C1' : C1[i],
-                  'C2' : C1[i]
-                };
-              }); 
 
-               late List<dynamic> _products4 = List.generate(result3_4.length, (i) {
-                return {
-                  "name": '4',
-                  'device': result3_4[i]['device'],
-                  'n_uni': result3_4[i]['n_uni'],
-                    'C1' : C1[i],
-                  'C2' : C1[i]
-                };
-              });       
+        late List<dynamic> _products1 = List.generate(result3_1.length, (i) {
+          return {
+            "name": '1',
+            'device': result3_1[i]['device'],
+            'n_avg': result3_1[i]['n_avg'],
+            'C1': C1[i],
+            'C2': C1[i]
+          };
+        });
+        late List<dynamic> _products2 = List.generate(result3_2.length, (i) {
+          return {
+            "name": '2',
+            'device': result3_2[i]['device'],
+            'n_std': result3_2[i]['n_std'],
+            'C1': C1[i],
+            'C2': C1[i]
+          };
+        });
+        late List<dynamic> _products3 = List.generate(result3_3.length, (i) {
+          return {
+            "name": '3',
+            'device': result3_3[i]['device'],
+            'n_cv': result3_3[i]['n_cv'],
+            'C1': C1[i],
+            'C2': C1[i]
+          };
+        });
+
+        late List<dynamic> _products4 = List.generate(result3_4.length, (i) {
+          return {
+            "name": '4',
+            'device': result3_4[i]['device'],
+            'n_uni': result3_4[i]['n_uni'],
+            'C1': C1[i],
+            'C2': C1[i]
+          };
+        });
 
         //         print('_products1===>$_products1');
         // List<dynamic> nowresult3_41_ =
@@ -423,18 +427,18 @@ class _WeightState extends State<Weight> {
         //     nowresult3_213.where((x) => x['device'] == 'ALL').toList();
         // List<dynamic> nowresult3_44_ =
         //     nowresult3_214.where((x) => x['device'] == 'ALL').toList();
-      
-      print('===>$_products1');
-         print('===>$_products2');
-         print('===>$_products3');
-         print('===>$_products4'); 
+
+        print('===>$_products1');
+        print('===>$_products2');
+        print('===>$_products3');
+        print('===>$_products4');
         setState(() {
           uniquelist2 = [];
           nowresult3_1 = _products1;
           nowresult3_2 = _products2;
           nowresult3_3 = _products3;
           nowresult3_4 = _products4;
-          
+
           loading3 = false;
         });
       } else {
@@ -545,10 +549,10 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-  //                        "Farm": 64,
-  // "House": 240,
-  // "Date_Start": "2023-02-27 00:00:00.000",
-  // "Date_End": "2023-02-27 23:59:59.000"
+            //                        "Farm": 64,
+            // "House": 240,
+            // "Date_Start": "2023-02-27 00:00:00.000",
+            // "Date_End": "2023-02-27 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result5_1 = json.decode(ressum.body)['result']['view1'];
@@ -561,10 +565,10 @@ class _WeightState extends State<Weight> {
           var largestGeekValue1 = 0.0;
 
           for (int i = 0; i < nowresult5_1.length; i++) {
-            if (nowresult5_1[i]['n_normdst'] == null) {
+            if (nowresult5_1[i]['Column2'] == null) {
             } else {
-              if (nowresult5_1[i]['n_normdst'] > largestGeekValue1) {
-                largestGeekValue1 = nowresult5_1[i]['n_normdst'];
+              if (nowresult5_1[i]['Column2'] > largestGeekValue1) {
+                largestGeekValue1 = nowresult5_1[i]['Column2'];
               }
             }
           }
@@ -574,8 +578,8 @@ class _WeightState extends State<Weight> {
           print('largestGeekValue====$largestGeekValue');
 
           for (int i = 0; i < nowresult5_1.length; i++) {
-            if (nowresult5_1[i]['n_weight'] == null) {
-              nowresult5_1[i]['n_weight'] = 0.0;
+            if (nowresult5_1[i]['Column1'] == null) {
+              nowresult5_1[i]['Column1'] = 0.0;
             }
           }
 
@@ -619,8 +623,6 @@ class _WeightState extends State<Weight> {
           }
 
           list = list1;
-
-          
         });
       } else {
         throw Exception('Failed to download');
@@ -631,9 +633,8 @@ class _WeightState extends State<Weight> {
   }
 
   List<dynamic> nowresult6_1 = [];
-    //API weight_estimate_size
+  //API weight_estimate_size
   Future<void> getjaon6_weight_estimate_size() async {
-
     try {
       loading6 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/weight-size");
@@ -680,6 +681,12 @@ class _WeightState extends State<Weight> {
   void initState() {
     // TODO: implement initState
     super.initState();
+      late Usersharedpreferences _p = Usersharedpreferences();
+ late String? T = _p.getUserT();
+    setState(() {
+      dateTime1_ = DateTime.parse(T!);
+    });
+    
     getjaon0_1_weight_information();
     getjaon1_weight_device();
     getjaon2_weight_average_hourly();
@@ -696,37 +703,95 @@ class _WeightState extends State<Weight> {
     size = MediaQuery.of(context).size;
 
     return Scaffold(
+      // appBar: AppBar(
+      //    automaticallyImplyLeading: false,
+      //     elevation: 0.0,
+      //     backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      //           toolbarHeight: 60.00,
+      //           iconTheme: IconThemeData(color: Colors.grey[200]),
+      //           flexibleSpace : 
+      //            Row(
+      //         mainAxisAlignment: MainAxisAlignment.end,
+      //         children: [
+      //           Container(
+      //             decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(10),
+      //                 border: Border.all(
+      //                     color: Color.fromARGB(255, 194, 194, 194),
+      //                     width: screenW * 0.005),
+      //                 color: Color.fromARGB(255, 235, 235, 235)),
+      //             height: 50,
+      //             width: 150,
+      //             child: TextButton(
+      //               onPressed: () {
+      //                 // chooseDateTime1();
+      //               },
+      //               child: Text(
+      //                 '${dateTime1_!.day}-${dateTime1_!.month}-${dateTime1_!.year}',
+      //                 textScaleFactor: 1.0,
+      //                 style: TextStyle(
+      //                     fontFamily: 'Montserrat',
+      //                     fontSize: 15,
+      //                     color: Color.fromARGB(255, 0, 0, 0)),
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //       //     Center(
+      //       //        child: Padding(
+      //       // padding: const EdgeInsets.only(left: 20,right: 20),
+      //       // child: Column(children: [
+      //       //                   Image.asset(
+      //       //         'assets/images/464742.jpg',
+      //       //         // width:double.infinity,
+      //       //         width: 170,
+      //       //           height: 120,
+      //       //         fit: BoxFit.fill,
+      //       //       ),
+      //       //       SizedBox(
+      //       //       height: 5,
+      //       //     ),
+      //       //        Container(
+      //       //       // height: 50,
+      //       //       child: Container(
+      //       //         child: TextFormField(
+      //       //           onChanged: (value) {
+                        
+      //       //           },
+      //       //           controller: _textController,
+      //       //           textCapitalization: TextCapitalization.words,
+      //       //           decoration: InputDecoration(
+      //       //             border: OutlineInputBorder(),
+      //       //             prefixIcon: Icon(Icons.search),
+      //       //             labelText: '${L.Search}...',
+      //       //             labelStyle: b2,
+      //       //             contentPadding:
+      //       //                 EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+      //       //           ),
+      //       //         ),
+      //       //       ),
+      //       //     ),
+      //       //     SizedBox(
+      //       //       height: 5,
+      //       //     ),
+      //       //     Container(
+                  
+      //       //       alignment: Alignment.centerLeft,
+      //       //       child: Text(
+      //       //         '${L.Messages}',textScaleFactor: 1.0,
+      //       //         style: fontsFS16W,
+      //       //       ),
+      //       //     ),
+      //       // ]),
+      //       //        ),
+      //       //     ),
+      // ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          color: Color.fromARGB(255, 194, 194, 194),
-                          width: screenW * 0.005),
-                      color: Color.fromARGB(255, 235, 235, 235)),
-                  height: 50,
-                  width: 150,
-                  child: TextButton(
-                    onPressed: () {
-                      chooseDateTime1();
-                    },
-                    child: Text(
-                      '${dateTime1_!.day}-${dateTime1_!.month}-${dateTime1_!.year}', textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 0, 0, 0)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+           
             Card(child: Standard_Formula0(context)),
             Card(child: Weight_Scale_Information1(context)),
             Card(child: Average_Hourly_Weight2(context)),
@@ -811,7 +876,8 @@ class _WeightState extends State<Weight> {
                               margin: EdgeInsets.only(top: 15, left: 10),
                               height: screenH * 0.04,
                               child: Text(
-                                'Setting Weight Device', textScaleFactor: 1.0,
+                                'Setting Weight Device',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -828,7 +894,8 @@ class _WeightState extends State<Weight> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X', textScaleFactor: 1.0,
+                                'X',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -866,7 +933,8 @@ class _WeightState extends State<Weight> {
               Container(
                 width: screenW * 0.74,
                 child: Text(
-                  'Set Weight Size (gram):', textScaleFactor: 1.0,
+                  'Set Weight Size (gram):',
+                  textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -905,38 +973,86 @@ class _WeightState extends State<Weight> {
                   //  width: screenW*0.5,
                   child: TextButton(
                     onPressed: () {
-                      normalDialog1(context,'แก้ไขข้อมูล setting weight','คุณต้องการแก้ไขข้อมูล setting weight รายการนี้ใช่หรือไม่ ? ',(){
-                         Navigator.pop(context);
-                      if (nowresult0_2 == null) {
-                        Navigator.pop(context);
-                      } else {
-                        
-                        API_edit_weight_setting(
-                            widget.Token,
-                            widget.farmnum,
-                            widget.num,
-                            ALL,
-                            EndS,
-                            EndE,
-                            double.parse(n_size_s_min.text),
-                            double.parse(n_size_m_min.text),
-                            double.parse(n_size_m_max.text),
-                            double.parse(n_size_l_max.text),
-                            double.parse(n_per_yield.text),
-                            double.parse(n_per_loss.text));
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => SimpleDialog(
+                          title: ListTile(
+                            // leading: Image.asset('images/maps.png',height: 600,),
+                            title: Text('แก้ไขข้อมูล setting weight',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  // fontFamily: fonts,
+                                )),
+                            subtitle: Text(
+                                'คุณต้องการแก้ไขข้อมูล setting weight รายการนี้ใช่หรือไม่ ? ',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
+                                    )),
+                          ),
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text(
+                                      'ยกเลิก',
+                                      textScaleFactor: 1.0,
+                                      style: TextStyle(
+                                          // fontFamily: fonts,
 
-                        var duration = Duration(seconds: 1);
-                        Timer(duration, () {
-                          // Navigator.pop(context);
-                          getjaon0_1_weight_information();
-                          Navigator.pop(context);
-                          
-                        });
-                        
-                      }});
+                                          fontSize: 15,
+                                          color: Color.fromARGB(255, 0, 0, 0)),
+                                    )),
+                                TextButton(
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                      if (nowresult0_2 == null) {
+                                        Navigator.pop(context);
+                                      } else {
+                                        API_edit_weight_setting(
+                                            widget.Token,
+                                            widget.farmnum,
+                                            widget.num,
+                                            ALL,
+                                            EndS,
+                                            EndE,
+                                            double.parse(n_size_s_min.text),
+                                            double.parse(n_size_m_min.text),
+                                            double.parse(n_size_m_max.text),
+                                            double.parse(n_size_l_max.text),
+                                            double.parse(n_per_yield.text),
+                                            double.parse(n_per_loss.text));
+
+                                        var duration = Duration(seconds: 1);
+                                        Timer(duration, () {
+                                          // Navigator.pop(context);
+                                          getjaon0_1_weight_information();
+                                          Navigator.pop(context);
+                                        });
+                                      }
+                                    },
+                                    child: Text(
+                                      'ตกลง',
+                                      textScaleFactor: 1.0,
+                                      style: TextStyle(
+                                          // fontFamily: fonts,
+
+                                          fontSize: 15,
+                                          color: Color.fromARGB(255, 0, 0, 0)),
+                                    )),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
                     },
                     child: Text(
-                      'Save', textScaleFactor: 1.0,
+                      'Save',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -963,7 +1079,8 @@ class _WeightState extends State<Weight> {
             Container(
               width: screenW * 0.30,
               child: Text(
-                '% Yield :', textScaleFactor: 1.0,
+                '% Yield :',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1012,7 +1129,8 @@ class _WeightState extends State<Weight> {
             Container(
               width: screenW * 0.30,
               child: Text(
-                '% Loss :', textScaleFactor: 1.0,
+                '% Loss :',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -1069,7 +1187,8 @@ class _WeightState extends State<Weight> {
         Container(
           width: screenW * 0.75,
           child: Text(
-            'Size L :', textScaleFactor: 1.0,
+            'Size L :',
+            textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -1125,7 +1244,8 @@ class _WeightState extends State<Weight> {
                   width: screenW * 0.05,
                   child: Center(
                     child: Text(
-                      '-', textScaleFactor: 1.0,
+                      '-',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1173,7 +1293,8 @@ class _WeightState extends State<Weight> {
         Container(
           width: screenW * 0.75,
           child: Text(
-            'Size M :', textScaleFactor: 1.0,
+            'Size M :',
+            textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -1227,7 +1348,8 @@ class _WeightState extends State<Weight> {
                   width: screenW * 0.05,
                   child: Center(
                     child: Text(
-                      '-', textScaleFactor: 1.0,
+                      '-',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1275,7 +1397,8 @@ class _WeightState extends State<Weight> {
         Container(
           width: screenW * 0.75,
           child: Text(
-            'Size S :', textScaleFactor: 1.0,
+            'Size S :',
+            textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -1329,7 +1452,8 @@ class _WeightState extends State<Weight> {
                   width: screenW * 0.05,
                   child: Center(
                     child: Text(
-                      '-', textScaleFactor: 1.0,
+                      '-',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1417,7 +1541,8 @@ class _WeightState extends State<Weight> {
               Container(
                 width: screenW * 0.75,
                 child: Text(
-                  'Set Weight Resulte By Period (00:00-00:00):', textScaleFactor: 1.0,
+                  'Set Weight Resulte By Period (00:00-00:00):',
+                  textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1451,7 +1576,8 @@ class _WeightState extends State<Weight> {
                       ),
                       child: Center(
                         child: Text(
-                          EndS, textScaleFactor: 1.0,
+                          EndS,
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat',
@@ -1467,7 +1593,8 @@ class _WeightState extends State<Weight> {
                   height: 40,
                   child: Center(
                     child: Text(
-                      'to', textScaleFactor: 1.0,
+                      'to',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Montserrat',
@@ -1492,7 +1619,8 @@ class _WeightState extends State<Weight> {
                       ),
                       child: Center(
                         child: Text(
-                          EndE, textScaleFactor: 1.0,
+                          EndE,
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat',
@@ -1521,7 +1649,8 @@ class _WeightState extends State<Weight> {
               Container(
                 width: screenW * 0.75,
                 child: Text(
-                  'Set PoultryWeight :', textScaleFactor: 1.0,
+                  'Set PoultryWeight :',
+                  textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1550,7 +1679,8 @@ class _WeightState extends State<Weight> {
                               .map((PoultryWeight) => DropdownMenuItem<String>(
                                   value: PoultryWeight,
                                   child: Text(
-                                    PoultryWeight, textScaleFactor: 1.0,
+                                    PoultryWeight,
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontFamily: 'Montserrat',
@@ -1613,7 +1743,8 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download0
             ? Text(
-                'Standard Formula', textScaleFactor: 1.0,
+                'Standard Formula',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -1623,7 +1754,8 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Standard Formula', textScaleFactor: 1.0,
+                    'Standard Formula',
+                    textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -1673,7 +1805,8 @@ class _WeightState extends State<Weight> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Standard Formula: $form', textScaleFactor: 1.0,
+                              'Standard Formula: $form',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
@@ -1688,13 +1821,13 @@ class _WeightState extends State<Weight> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Date Start: $Start', textScaleFactor: 1.0,
+                              'Date Start: $Start',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
                                   color: Color.fromARGB(255, 0, 0, 0)),
                             ),
-                
                           ],
                         ),
                       ),
@@ -1704,14 +1837,16 @@ class _WeightState extends State<Weight> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Date End: $End', textScaleFactor: 1.0,
+                              'Date End: $End',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
                                   color: Color.fromARGB(255, 0, 0, 0)),
                             ),
                             Text(
-                              'Age Start: $day Day', textScaleFactor: 1.0,
+                              'Age Start: ${day!.split('.').first} Day',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
@@ -1730,66 +1865,69 @@ class _WeightState extends State<Weight> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-   //Chart Bar Weight_Results
-  List<charts.Series<dynamic, String>> _resultsDataBar1(List<dynamic> nowresult) {
+  //Chart Bar Weight_Results
+  List<charts.Series<dynamic, String>> _resultsDataBar1(
+      List<dynamic> nowresult) {
     return [
       // for (int i = 0; i < nowresult[0]['device'].keys.length; i++)
       //   if (nowresult[0].keys.elementAt(i) != 'device')
-          charts.Series<dynamic, String>(
-            strokeWidthPxFn: (__, _) => 1,
-            fillColorFn: (dynamic daily20, _) => charts.ColorUtil.fromDartColor(daily20['C2']),
-            colorFn: (dynamic daily20, _) => charts.ColorUtil.fromDartColor(daily20['C1']),
-
-            id: '1',
-            data: nowresult,
-            domainFn: (dynamic daily20, _) => daily20['device'],
-            measureFn: (dynamic daily20, _) =>
-                // daily20['n_avg'] ?? null,
+      charts.Series<dynamic, String>(
+        strokeWidthPxFn: (__, _) => 1,
+        fillColorFn: (dynamic daily20, _) =>
+            charts.ColorUtil.fromDartColor(daily20['C2']),
+        colorFn: (dynamic daily20, _) =>
+            charts.ColorUtil.fromDartColor(daily20['C1']),
+        id: '1',
+        data: nowresult,
+        domainFn: (dynamic daily20, _) => daily20['device'],
+        measureFn: (dynamic daily20, _) =>
+            // daily20['n_avg'] ?? null,
             daily20['${nowresult[0].keys.elementAt(2)}'] ?? null,
-          ),
+      ),
     ];
   }
+ 
 
-  DateTime? dateTime1_ = DateTime.now();
-  Future<void> chooseDateTime1() async {
-    DateTime? ChooseDateTime = await showDatePicker(
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 5),
-      lastDate: DateTime(DateTime.now().year + 5),
-      initialDate: dateTime1_!,
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Color(0xff44bca3),
-              onPrimary: Color.fromARGB(255, 255, 255, 255),
-              onSurface: Color.fromARGB(255, 0, 0, 0),
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
+  // Future<void> chooseDateTime1() async {
+  //   DateTime? ChooseDateTime = await showDatePicker(
+  //     context: context,
+  //     firstDate: DateTime(DateTime.now().year - 5),
+  //     lastDate: DateTime(DateTime.now().year + 5),
+  //     initialDate: dateTime1_!,
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: Theme.of(context).copyWith(
+  //           colorScheme: ColorScheme.light(
+  //             primary: Color(0xff44bca3),
+  //             onPrimary: Color.fromARGB(255, 255, 255, 255),
+  //             onSurface: Color.fromARGB(255, 0, 0, 0),
+  //           ),
+  //           textButtonTheme: TextButtonThemeData(
+  //             style: TextButton.styleFrom(
+  //               primary: Color.fromARGB(255, 0, 0, 0),
+  //             ),
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //   );
 
-    if (ChooseDateTime != null) {
-      setState(() {
-        dateTime1_ = ChooseDateTime;
-        getjaon0_1_weight_information();
-        getjaon1_weight_device();
-        getjaon2_weight_average_hourly();
-        getjaon3_weight_results();
-        getjaon4_weight_per_unit();
-        getjaon5_weight_distribution_rate();
-        getjaon6_weight_estimate_size();
-        //  dateTime6 = ChooseDateTime;
-      });
-    }
-  }
+  //   if (ChooseDateTime != null) {
+  //     setState(() {
+  //       dateTime1_ = ChooseDateTime;
+  //       getjaon0_1_weight_information();
+  //       getjaon1_weight_device();
+  //       getjaon2_weight_average_hourly();
+  //       getjaon3_weight_results();
+  //       getjaon4_weight_per_unit();
+  //       getjaon5_weight_distribution_rate();
+  //       getjaon6_weight_estimate_size();
+  //       //  dateTime6 = ChooseDateTime;
+  //     });
+  //   }
+  // }
+
   //Weight_Scale_Information
   Widget Weight_Scale_Information1(BuildContext context) => ExpansionTile(
         // key: K1,
@@ -1825,7 +1963,8 @@ class _WeightState extends State<Weight> {
         // initiallyExpanded: 0 == selected2,
         maintainState: true,
         title: Text(
-          'Weight Scale Information', textScaleFactor: 1.0,
+          'Weight Scale Information',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -1853,7 +1992,8 @@ class _WeightState extends State<Weight> {
                   },
                 ),
                 Text(
-                  'View all day', textScaleFactor: 1.0,
+                  'View all day',
+                  textScaleFactor: 1.0,
                   style: new TextStyle(fontSize: 15.0),
                 ),
                 Radio(
@@ -1875,7 +2015,8 @@ class _WeightState extends State<Weight> {
                   },
                 ),
                 Text(
-                  'View by period', textScaleFactor: 1.0,
+                  'View by period',
+                  textScaleFactor: 1.0,
                   style: new TextStyle(fontSize: 15.0),
                 ),
               ],
@@ -1891,168 +2032,420 @@ class _WeightState extends State<Weight> {
                       height: screenH * 0.40,
                       child: Center(
                           child: Text(
-                        'No data to display.', textScaleFactor: 1.0,
+                        'No data to display.',
+                        textScaleFactor: 1.0,
                         style: TextStyle(fontSize: 18),
                       )))
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: screenW * 0.95,
-                            margin: EdgeInsets.only(top: 10),
-                            //  color: Colors.blueAccent,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                            ),
-                            height: 270,
-                          ),
-                          Container(
-                            width: screenW * 0.95,
-                            margin: EdgeInsets.only(top: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.blueAccent,
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    // stops: [0.3, 1],
-                                    colors: [
-                                      Color.fromARGB(255, 160, 193, 238),
-                                      Color.fromARGB(255, 94, 157, 228)
-                                    ])),
-                            height: 60,
-                          ),
-                          Container(
-                            width: screenW * 0.95,
-                            margin: EdgeInsets.only(top: 10),
-                            child: Container(
+                      child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: screenW * 0.95,
+                              margin: EdgeInsets.only(top: 10),
+                              //  color: Colors.blueAccent,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
                               ),
-                              margin: EdgeInsets.only(top: 5),
-
                               height: 270,
-                              // child: SingleChildScrollView(
-
-                              child: DataTable2(
-                                headingRowHeight: 40.0,
-                                dataRowHeight: 60,
-                                dataRowColor:
-                                    MaterialStateProperty.all(Colors.white),
-                                columnSpacing: 0,
-                                horizontalMargin: 15,
-                                minWidth: screenW * 0.9,
-                                columns: [
-                                  DataColumn(
-                                    label: Center(
-                                      child: Text(
-                                        "Device", textScaleFactor: 1.0,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255)),
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Center(
-                                      child: Text(
-                                        "Last Update.", textScaleFactor: 1.0,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255)),
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Center(
-                                      child: Text(
-                                        "Status", textScaleFactor: 1.0,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255)),
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Center(
-                                      child: Text(
-                                        "Sample Data", textScaleFactor: 1.0,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255)),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                rows: nowresult1_1.map((item) {
-                                  return DataRow(cells: [
-                                    DataCell(Center(
-                                        child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(top: 5),
-                                          height: 20,
-                                          width: 10,
-                                          child: Radio(
-                                            activeColor: Colors.green,
-                                            value: true,
-                                            groupValue: item['device'] == name,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                name = item['device'];
-                                                //print(name);
-                                                getjaon2_weight_average_hourly();
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        Text(
-                                          item['device'], textScaleFactor: 1.0,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'Montserrat',
-                                          ),
-                                        ),
-                                      ],
-                                    ))),
-                                    DataCell(
-                                        Center(child: Text(item['last_date'], textScaleFactor: 1.0,))),
-                                    DataCell(Center(
-                                      child: Container(
-                                        height: 10,
-                                        width: 10,
-                                        decoration: BoxDecoration(
-                                            // border: Border.all(color: Color(0xff83bb56), width: 5),
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                            color: item['color']),
-                                      ),
-                                      // Container(child: Text(item['status_now'].toString()))
-                                    )),
-                                    DataCell(Center(
-                                        child: Text(
-                                            item['count_data'].toString(), textScaleFactor: 1.0,))),
-                                  ]);
-                                }).toList(),
-                              ),
-                              // )
                             ),
-                          ),
-                        ],
+                            Container(
+                              // width: screenW * 0.95,
+                              margin: EdgeInsets.only(top: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.blueAccent,
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      // stops: [0.3, 1],
+                                      colors: [
+                                        Color.fromARGB(255, 160, 193, 238),
+                                        Color.fromARGB(255, 94, 157, 228)
+                                      ])),
+                              height: 60,
+                            ),
+                            Container(
+                              // width: screenW * 0.95,
+                              margin: EdgeInsets.only(top: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                margin: EdgeInsets.only(top: 5),
+                      
+                                height: 270,
+                                // child: SingleChildScrollView(
+                                child: SingleChildScrollView(
+                                  child: DataTable(
+                                    headingRowHeight: 40.0,
+                                    dataRowHeight: 60,
+                                    dataRowColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    columnSpacing: 0,
+                                    horizontalMargin: 15,
+                                    columns: [
+                                      DataColumn(
+                                        label: Container(
+                                             width: 100,
+                                          child: Center(
+                                            child: Text(
+                                              "Device",
+                                              textScaleFactor: 1.0,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Container(
+                                            width: 100,
+                                          child: Center(
+                                            child: Text(
+                                              "Last Update.",
+                                              textScaleFactor: 1.0,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Container(
+                                           width: 100,
+                                          child: Center(
+                                            child: Text(
+                                              "Status",
+                                              textScaleFactor: 1.0,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Container(
+                                             width: 100,
+                                          child: Center(
+                                            child: Text(
+                                              "Sample Data",
+                                              textScaleFactor: 1.0,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  fontFamily: 'Montserrat',
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    rows: nowresult1_1.map((item) {
+                                      return DataRow(cells: [
+                                        DataCell(Container(
+                                             width: 100,
+                                          child: Center(
+                                              child: Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(top: 5),
+                                                height: 20,
+                                                width: 10,
+                                                child: Radio(
+                                                  activeColor: Colors.green,
+                                                  value: true,
+                                                  groupValue:
+                                                      item['device'] == name,
+                                                  onChanged: (val) {
+                                                    setState(() {
+                                                      name = item['device'];
+                                                      //print(name);
+                                                      getjaon2_weight_average_hourly();
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Text(
+                                                item['device'],
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: 'Montserrat',
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                        )),
+                                        DataCell(Container(
+                                             width: 100,
+                                          child: Center(
+                                              child: Text(
+                                            item['last_date'],
+                                            textScaleFactor: 1.0,
+                                          )),
+                                        )),
+                                        DataCell(Container(
+                                             width: 100,
+                                          child: Center(
+                                            child: Container(
+                                              height: 10,
+                                              width: 10,
+                                              decoration: BoxDecoration(
+                                                  // border: Border.all(color: Color(0xff83bb56), width: 5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(40),
+                                                  color: item['color']),
+                                            ),
+                                            // Container(child: Text(item['status_now'].toString()))
+                                          ),
+                                        )),
+                                        DataCell(Container(
+                                             width: 100,
+                                          child: Center(
+                                              child: Text(
+                                            item['count_data'].toString(),
+                                            textScaleFactor: 1.0,
+                                          )),
+                                        )),
+                                      ]);
+                                    }).toList(),
+                                  ),
+                                ),
+                                // child: DataTable2(
+                                //   headingRowHeight: 40.0,
+                                //   dataRowHeight: 60,
+                                //   dataRowColor:
+                                //       MaterialStateProperty.all(Colors.white),
+                                //   columnSpacing: 0,
+                                //   horizontalMargin: 15,
+                                //   minWidth: screenW * 0.9,
+                                //   columns: [
+                                //     DataColumn(
+                                //       label: Center(
+                                //         child: Text(
+                                //           "Device", textScaleFactor: 1.0,
+                                //           style: TextStyle(
+                                //               fontWeight: FontWeight.bold,
+                                //               fontSize: 13,
+                                //               fontFamily: 'Montserrat',
+                                //               color: Color.fromARGB(
+                                //                   255, 255, 255, 255)),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Center(
+                                //         child: Text(
+                                //           "Last Update.", textScaleFactor: 1.0,
+                                //           style: TextStyle(
+                                //               fontWeight: FontWeight.bold,
+                                //               fontSize: 13,
+                                //               fontFamily: 'Montserrat',
+                                //               color: Color.fromARGB(
+                                //                   255, 255, 255, 255)),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Center(
+                                //         child: Text(
+                                //           "Status", textScaleFactor: 1.0,
+                                //           style: TextStyle(
+                                //               fontWeight: FontWeight.bold,
+                                //               fontSize: 13,
+                                //               fontFamily: 'Montserrat',
+                                //               color: Color.fromARGB(
+                                //                   255, 255, 255, 255)),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Center(
+                                //         child: Text(
+                                //           "Sample Data", textScaleFactor: 1.0,
+                                //           style: TextStyle(
+                                //               fontWeight: FontWeight.bold,
+                                //               fontSize: 13,
+                                //               fontFamily: 'Montserrat',
+                                //               color: Color.fromARGB(
+                                //                   255, 255, 255, 255)),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ],
+                                //   rows: nowresult1_1.map((item) {
+                                //     return DataRow(cells: [
+                                //       DataCell(Center(
+                                //           child: Column(
+                                //         children: [
+                                //           Container(
+                                //             margin: EdgeInsets.only(top: 5),
+                                //             height: 20,
+                                //             width: 10,
+                                //             child: Radio(
+                                //               activeColor: Colors.green,
+                                //               value: true,
+                                //               groupValue: item['device'] == name,
+                                //               onChanged: (val) {
+                                //                 setState(() {
+                                //                   name = item['device'];
+                                //                   //print(name);
+                                //                   getjaon2_weight_average_hourly();
+                                //                 });
+                                //               },
+                                //             ),
+                                //           ),
+                                //           Text(
+                                //             item['device'], textScaleFactor: 1.0,
+                                //             style: TextStyle(
+                                //               fontSize: 12,
+                                //               fontFamily: 'Montserrat',
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ))),
+                                //       DataCell(
+                                //           Center(child: Text(item['last_date'], textScaleFactor: 1.0,))),
+                                //       DataCell(Center(
+                                //         child: Container(
+                                //           height: 10,
+                                //           width: 10,
+                                //           decoration: BoxDecoration(
+                                //               // border: Border.all(color: Color(0xff83bb56), width: 5),
+                                //               borderRadius:
+                                //                   BorderRadius.circular(40),
+                                //               color: item['color']),
+                                //         ),
+                                //         // Container(child: Text(item['status_now'].toString()))
+                                //       )),
+                                //       DataCell(Center(
+                                //           child: Text(
+                                //               item['count_data'].toString(), textScaleFactor: 1.0,))),
+                                //     ]);
+                                //   }).toList(),
+                                // ),
+                                // )
+                              ),
+                            ),
+                            Container(
+                                // width: screenW * 0.95,
+                                margin: EdgeInsets.only(top: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.blueAccent,
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          // stops: [0.3, 1],
+                                          colors: [
+                                            Color.fromARGB(255, 160, 193, 238),
+                                            Color.fromARGB(255, 94, 157, 228)
+                                          ])),
+                                  margin: EdgeInsets.only(top: 5),
+                      
+                                  height: 40,
+                                  // child: SingleChildScrollView(
+                                  child: SingleChildScrollView(
+                                    child: DataTable(
+                                        headingRowHeight: 40.0,
+                                        dataRowHeight: 60,
+                                        dataRowColor: MaterialStateProperty.all(
+                                            Colors.white),
+                                        columnSpacing: 0,
+                                        horizontalMargin: 15,
+                                        columns: [
+                                          DataColumn(
+                                            label: Container(
+                                               width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Device",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                                width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Last Update.",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                               width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Status",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                                width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Sample Data",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        rows: []),
+                                  ),
+                                )),
+                          ],
+                        ),
                       )),
           Container(
               margin: EdgeInsets.only(top: 10),
@@ -2130,17 +2523,17 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download2
             ? Text(
-                'Average Hourly Weight', textScaleFactor: 1.0,
+                'Average Hourly Weight',
+                textScaleFactor: 1.0,
                 style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Montserrat',
-                    color: Color(0xff44bca3)),
+                   fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Average Hourly Weight',
+                    textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -2167,7 +2560,8 @@ class _WeightState extends State<Weight> {
                             nowresult2_1, 'AverageHourlyWeightData');
                       },
                       child: Text(
-                        'Download', textScaleFactor: 1.0,
+                        'Download',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -2184,7 +2578,8 @@ class _WeightState extends State<Weight> {
         children: [
           Center(
             child: Text(
-              '${widget.HOUSE2}-$name', textScaleFactor: 1.0,
+              '${widget.HOUSE2}-$name',
+              textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Montserrat',
@@ -2210,7 +2605,8 @@ class _WeightState extends State<Weight> {
                             height: screenH * 0.30,
                             child: Center(
                                 child: Text(
-                              'No data to display.', textScaleFactor: 1.0,
+                              'No data to display.',
+                              textScaleFactor: 1.0,
                               style: TextStyle(fontSize: 18),
                             )))
                         : charts.BarChart(
@@ -2406,7 +2802,8 @@ class _WeightState extends State<Weight> {
         // initiallyExpanded: 2 == selected2,
         maintainState: true,
         title: Text(
-          'Weight Results', textScaleFactor: 1.0,
+          'Weight Results',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -2418,18 +2815,19 @@ class _WeightState extends State<Weight> {
                 child: Row(
                   children: [
                     loading3
-                  
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        :   nowresult3_1 == null || nowresult3_1[0]['n_avg'] == null
+                        : nowresult3_1 == null ||
+                                nowresult3_1[0]['n_avg'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.', textScaleFactor: 1.0,
+                                  'No data to display.',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2444,9 +2842,9 @@ class _WeightState extends State<Weight> {
                                       charts.LinePointHighlighter(
                                         symbolRenderer:
                                             CustomCircleSymbolRenderer3_1(
-                                                size: size,
-                                                nowresult3_1: nowresult3_1,
-                                                ),
+                                          size: size,
+                                          nowresult3_1: nowresult3_1,
+                                        ),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -2500,8 +2898,8 @@ class _WeightState extends State<Weight> {
                                                   //             .keys
                                                   //             .length;
                                                   //     i++)
-                                                    'subTitle1':
-                                                        '${datumPair.datum['n_avg'] ?? 'undefeated'}',
+                                                  'subTitle1':
+                                                      '${datumPair.datum['n_avg'] ?? 'undefeated'}',
                                                 });
                                               });
                                               // print(selectedDatum1);
@@ -2536,18 +2934,20 @@ class _WeightState extends State<Weight> {
                                   ),
                                 ),
                               ),
-                   loading3 
+                    loading3
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        : nowresult3_2 == null|| nowresult3_2[0]['n_std'] == null
+                        : nowresult3_2 == null ||
+                                nowresult3_2[0]['n_std'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.', textScaleFactor: 1.0,
+                                  'No data to display.',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2572,7 +2972,7 @@ class _WeightState extends State<Weight> {
                                                   (charts.SeriesDatum
                                                       datumPair) {
                                                 selectedDatum2!.add({
-                                                   'title':
+                                                  'title':
                                                       '${datumPair.datum['device']}',
                                                   // for (int i = 1;
                                                   //     i <
@@ -2580,8 +2980,8 @@ class _WeightState extends State<Weight> {
                                                   //             .keys
                                                   //             .length;
                                                   //     i++)
-                                                    'subTitle1':
-                                                        '${datumPair.datum['n_std'] ?? 'undefeated'}',
+                                                  'subTitle1':
+                                                      '${datumPair.datum['n_std'] ?? 'undefeated'}',
                                                 });
                                               });
                                             }
@@ -2659,18 +3059,19 @@ class _WeightState extends State<Weight> {
                 child: Row(
                   children: [
                     loading3
-                   
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        :  nowresult3_3 == null|| nowresult3_3[0]['n_cv'] == null
+                        : nowresult3_3 == null ||
+                                nowresult3_3[0]['n_cv'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.', textScaleFactor: 1.0,
+                                  'No data to display.',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2702,8 +3103,8 @@ class _WeightState extends State<Weight> {
                                                   //             .keys
                                                   //             .length;
                                                   //     i++)
-                                                    'subTitle1':
-                                                        '${datumPair.datum['n_cv'] ?? 'undefeated'}',
+                                                  'subTitle1':
+                                                      '${datumPair.datum['n_cv'] ?? 'undefeated'}',
                                                 });
                                               });
                                             }
@@ -2713,9 +3114,9 @@ class _WeightState extends State<Weight> {
                                       charts.LinePointHighlighter(
                                         symbolRenderer:
                                             CustomCircleSymbolRenderer3_3(
-                                                size: size,
-                                                nowresult3_1: nowresult3_3,
-                                                ),
+                                          size: size,
+                                          nowresult3_1: nowresult3_3,
+                                        ),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -2777,19 +3178,20 @@ class _WeightState extends State<Weight> {
                                   ),
                                 ),
                               ),
-                              loading3
-                   
+                    loading3
                         ? Container(
                             margin: EdgeInsets.only(top: 10),
                             height: screenH * 0.30,
                             child: Center(child: CircularProgressIndicator()))
-                        :  nowresult3_4 == null|| nowresult3_4[0]['n_uni'] == null
+                        : nowresult3_4 == null ||
+                                nowresult3_4[0]['n_uni'] == null
                             ? Container(
                                 width: screenW * 0.47,
                                 height: screenH * 0.57,
                                 child: Center(
                                     child: Text(
-                                  'No data to display.', textScaleFactor: 1.0,
+                                  'No data to display.',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(fontSize: 18),
                                 )))
                             : Container(
@@ -2821,8 +3223,8 @@ class _WeightState extends State<Weight> {
                                                   //             .keys
                                                   //             .length;
                                                   //     i++)
-                                                    'subTitle1':
-                                                        '${datumPair.datum['n_uni'] ?? 'undefeated'}',
+                                                  'subTitle1':
+                                                      '${datumPair.datum['n_uni'] ?? 'undefeated'}',
                                                 });
                                               });
                                             }
@@ -2832,9 +3234,9 @@ class _WeightState extends State<Weight> {
                                       charts.LinePointHighlighter(
                                         symbolRenderer:
                                             CustomCircleSymbolRenderer3_4(
-                                                size: size,
-                                                nowresult3_1: nowresult3_4,
-                                                ),
+                                          size: size,
+                                          nowresult3_1: nowresult3_4,
+                                        ),
                                       ),
                                       new charts.ChartTitle('${widget.HOUSE2}',
                                           behaviorPosition:
@@ -2909,8 +3311,8 @@ class _WeightState extends State<Weight> {
         ],
       );
 
-  late String sPlot = 'แสดงที้งหมด';
-  List<String> Plot = ['แสดงที้งหมด', 'แสดงถึงวันปัจจุบัน'];
+  late String sPlot = 'แสดงทั้งหมด';
+  List<String> Plot = ['แสดงทั้งหมด', 'แสดงถึงวันปัจจุบัน'];
   late String sUnit = 'Weight Per Unit (All)';
   List<String> Unit = ['Weight Per Unit (All)'];
   //Plot_Graph4
@@ -2948,7 +3350,8 @@ class _WeightState extends State<Weight> {
         // initiallyExpanded: 3 == selected2,
         maintainState: true,
         title: Text(
-          'Plot Graph', textScaleFactor: 1.0,
+          'Plot Graph',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -2984,7 +3387,8 @@ class _WeightState extends State<Weight> {
                             items: Plot.map((Plot) => DropdownMenuItem<String>(
                                 value: Plot,
                                 child: Text(
-                                  Plot, textScaleFactor: 1.0,
+                                  Plot,
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -3029,7 +3433,8 @@ class _WeightState extends State<Weight> {
                             items: Unit.map((Unit) => DropdownMenuItem<String>(
                                 value: Unit,
                                 child: Text(
-                                  Unit, textScaleFactor: 1.0,
+                                  Unit,
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -3062,10 +3467,11 @@ class _WeightState extends State<Weight> {
                       saveExcelAgeinformation(nowresult4_1, 'DistributionRate');
                     },
                     child: Text(
-                      'Download', textScaleFactor: 1.0,
+                      'Download',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 15,
+                          fontSize: 14,
                           color: Color.fromARGB(255, 255, 255, 255)),
                     ),
                     // style: ElevatedButton.styleFrom(
@@ -3081,7 +3487,8 @@ class _WeightState extends State<Weight> {
             margin: EdgeInsets.only(top: 5, bottom: 5),
             child: Center(
               child: Text(
-                '${widget.HOUSE2}', textScaleFactor: 1.0,
+                '${widget.HOUSE2}',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Montserrat',
@@ -3101,7 +3508,8 @@ class _WeightState extends State<Weight> {
                         height: screenH * 0.57,
                         child: Center(
                             child: Text(
-                          'No data to display.', textScaleFactor: 1.0,
+                          'No data to display.',
+                          textScaleFactor: 1.0,
                           style: TextStyle(fontSize: 18),
                         )))
                     : LineChart4(),
@@ -3293,8 +3701,7 @@ class _WeightState extends State<Weight> {
     Color.fromARGB(255, 255, 132, 0),
     Color.fromARGB(255, 250, 114, 234),
     Color.fromARGB(255, 204, 255, 0),
-
-     Color.fromARGB(255, 255, 0, 0),
+    Color.fromARGB(255, 255, 0, 0),
     Color.fromARGB(255, 0, 4, 255),
     Color.fromARGB(255, 0, 95, 17),
     Color.fromARGB(255, 118, 0, 99),
@@ -3311,7 +3718,7 @@ class _WeightState extends State<Weight> {
     Color.fromARGB(255, 155, 112, 255),
     Color.fromARGB(255, 4, 83, 91)
   ];
-   //ข้อมูล Chart Plot_Graph
+  //ข้อมูล Chart Plot_Graph
   List<charts.Series<dynamic, String>> _createSampleData4() {
     return [
       for (int i = 0; i < nowresult4_1[0].keys.length; i++)
@@ -3329,7 +3736,8 @@ class _WeightState extends State<Weight> {
           )..setAttribute(charts.rendererIdKey, 'customLine'),
     ];
   }
-     //ข้อมูล Chart Distribustoin_Rate
+
+  //ข้อมูล Chart Distribustoin_Rate
   List<charts.Series<dynamic, double>> _createSampleData5() {
     List<List<dynamic>> da = list;
     //  print('object=====${da[0]}');
@@ -3346,8 +3754,8 @@ class _WeightState extends State<Weight> {
               charts.ColorUtil.fromDartColor(C1[i]),
           id: uniquelist1[i],
           data: da[i],
-          domainFn: (dynamic daily20, _) => daily20['n_weight'].toDouble(),
-          measureFn: (dynamic daily20, _) => daily20['n_normdst'] ?? null,
+          domainFn: (dynamic daily20, _) => daily20['Column1'].toDouble(),
+          measureFn: (dynamic daily20, _) => daily20['Column2'] ?? null,
         ),
     ];
   }
@@ -3390,7 +3798,8 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download5
             ? Text(
-                'Distribustoin Rate', textScaleFactor: 1.0,
+                'Distribustoin Rate',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -3400,7 +3809,8 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Distribustoin Rate', textScaleFactor: 1.0,
+                    'Distribustoin Rate',
+                    textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -3426,7 +3836,8 @@ class _WeightState extends State<Weight> {
                         saveExcelAgeinformation(nowresult5_1, 'WeightUnitData');
                       },
                       child: Text(
-                        'Download', textScaleFactor: 1.0,
+                        'Download',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -3449,7 +3860,8 @@ class _WeightState extends State<Weight> {
           ),
           Center(
             child: Text(
-              '${widget.HOUSE2}', textScaleFactor: 1.0,
+              '${widget.HOUSE2}',
+              textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Montserrat',
@@ -3466,7 +3878,8 @@ class _WeightState extends State<Weight> {
                       height: screenH * 0.57,
                       child: Center(
                           child: Text(
-                        'No data to display.', textScaleFactor: 1.0,
+                        'No data to display.',
+                        textScaleFactor: 1.0,
                         style: TextStyle(fontSize: 18),
                       )))
                   : LineChart5(),
@@ -3479,8 +3892,8 @@ class _WeightState extends State<Weight> {
       );
   //Chart Distribustoin_Rate
   Container LineChart5() {
-    var largestGeekValue1 = nowresult5_1[0]['n_weight'];
-    var largestGeekValue2 = nowresult5_1[0]['n_weight'];
+    var largestGeekValue1 = nowresult5_1[0]['Column1'];
+    var largestGeekValue2 = nowresult5_1[0]['Column1'];
     var largestGeekValue0;
 
     var largestGeekValue1_normdst = 0.0;
@@ -3488,35 +3901,35 @@ class _WeightState extends State<Weight> {
     var largestGeekValue_normdst;
 
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['n_weight'] == null) {
+      if (nowresult5_1[i]['Column1'] == null) {
       } else {
-        if (nowresult5_1[i]['n_weight'] > largestGeekValue1) {
-          largestGeekValue1 = nowresult5_1[i]['n_weight'];
+        if (nowresult5_1[i]['Column1'] > largestGeekValue1) {
+          largestGeekValue1 = nowresult5_1[i]['Column1'];
         }
       }
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['n_weight'] == null) {
+      if (nowresult5_1[i]['Column1'] == null) {
       } else {
-        if (nowresult5_1[i]['n_weight'] < largestGeekValue2) {
-          largestGeekValue2 = nowresult5_1[i]['n_weight'];
+        if (nowresult5_1[i]['Column1'] < largestGeekValue2) {
+          largestGeekValue2 = nowresult5_1[i]['Column1'];
         }
       }
     }
 
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['n_normdst'] == null) {
+      if (nowresult5_1[i]['Column2'] == null) {
       } else {
-        if (nowresult5_1[i]['n_normdst'] > largestGeekValue1_normdst) {
-          largestGeekValue1_normdst = nowresult5_1[i]['n_normdst'];
+        if (nowresult5_1[i]['Column2'] > largestGeekValue1_normdst) {
+          largestGeekValue1_normdst = nowresult5_1[i]['Column2'];
         }
       }
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['n_normdst'] == null) {
+      if (nowresult5_1[i]['Column2'] == null) {
       } else {
-        if (nowresult5_1[i]['n_normdst'] < largestGeekValue2_normdst) {
-          largestGeekValue2_normdst = nowresult5_1[i]['n_normdst'];
+        if (nowresult5_1[i]['Column2'] < largestGeekValue2_normdst) {
+          largestGeekValue2_normdst = nowresult5_1[i]['Column2'];
         }
       }
     }
@@ -3553,7 +3966,6 @@ class _WeightState extends State<Weight> {
             includeLine: false,
             includePoints: true,
             strokeWidthPx: 1),
-
         selectionModels: [
           charts.SelectionModelConfig(
               type: charts.SelectionModelType.info,
@@ -3563,11 +3975,11 @@ class _WeightState extends State<Weight> {
                   selectedDatum = [];
                   model.selectedDatum.forEach((charts.SeriesDatum datumPair) {
                     selectedDatum!.add({
-                      'title': '${datumPair.datum['c_device']}',
+                      'title': '${datumPair.datum['c_device']?? 'undefeated'}',
                       'subTitle1':
-                          '${datumPair.datum['n_weight'] ?? 'undefeated'}',
+                          '${datumPair.datum['Column1'] ?? 'undefeated'}',
                       'subTitle2':
-                          '${datumPair.datum['n_normdst'] ?? 'undefeated'}',
+                          '${datumPair.datum['Column2'] ?? 'undefeated'}',
                     });
                   });
                 }
@@ -3601,7 +4013,6 @@ class _WeightState extends State<Weight> {
                     largestGeekValue + largestGeekValue_normdst / 7)
                   charts.TickSpec(i * largestGeekValue_normdst / 7),
             ]),
-    
             renderSpec: new charts.GridlineRendererSpec(
                 labelStyle: new charts.TextStyleSpec(
                     fontSize: 13, fontFamily: 'Montserrat'),
@@ -3611,7 +4022,6 @@ class _WeightState extends State<Weight> {
           charts.LinePointHighlighter(
             symbolRenderer: CustomCircleSymbolRenderer5(size: size),
           ),
-
           new charts.ChartTitle(
             'Weight (gram)',
             behaviorPosition: charts.BehaviorPosition.bottom,
@@ -3657,10 +4067,8 @@ class _WeightState extends State<Weight> {
   int? touchedIndex;
   bool Download6 = true;
 
-
   //ปฏิทิน
   Future<void> chooseDate6() async {
-
     DateTime? ChooseDateTime = await showDatePicker(
       context: context,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -3693,6 +4101,7 @@ class _WeightState extends State<Weight> {
       });
     }
   }
+
   //Estimate_Real_Size
   Widget Estimate_Real_Size6(BuildContext context) => ExpansionTile(
         // key: K6,
@@ -3731,7 +4140,8 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download6
             ? Text(
-                'Estimate Real Size', textScaleFactor: 1.0,
+                'Estimate Real Size',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Montserrat',
@@ -3741,7 +4151,8 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Estimate Real Size', textScaleFactor: 1.0,
+                    'Estimate Real Size',
+                    textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Montserrat',
@@ -3761,7 +4172,8 @@ class _WeightState extends State<Weight> {
                         chooseDate6();
                       },
                       child: Text(
-                        '${dateTime_!.day}-${dateTime_!.month}-${dateTime_!.year}', textScaleFactor: 1.0,
+                        '${dateTime_!.day}-${dateTime_!.month}-${dateTime_!.year}',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -3800,10 +4212,11 @@ class _WeightState extends State<Weight> {
                               nowresult6_1, 'SizeComparisonData');
                         },
                         child: Text(
-                          'Download', textScaleFactor: 1.0,
+                          'Download',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
-                              fontSize: 15,
+                              fontSize: 13,
                               color: Color.fromARGB(255, 255, 255, 255)),
                         ),
                         // style: ElevatedButton.styleFrom(
@@ -3846,7 +4259,8 @@ class _WeightState extends State<Weight> {
                             height: screenH * 0.57,
                             child: Center(
                                 child: Text(
-                              'No data to display.', textScaleFactor: 1.0,
+                              'No data to display.',
+                              textScaleFactor: 1.0,
                               style: TextStyle(fontSize: 18),
                             )))
                         : loading6
@@ -3936,7 +4350,8 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],
+              textScaleFactor: 1.0, style: textStyle),
           (110 - 10.0 - 35).round(),
           (25.0 - 5).round());
 
@@ -3953,13 +4368,13 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
             '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle2']}'))}';
       }
       canvas.drawText(
-          chartText.TextElement('Avg. Weight : ' + '$unit2_1', textScaleFactor: 1.0,
-              style: textStyle),
+          chartText.TextElement('Avg. Weight : ' + '$unit2_1',
+              textScaleFactor: 1.0, style: textStyle),
           (110 - 10.0 - 35).round(),
           (13 + (1 * 13) + 7).round());
       canvas.drawText(
-          chartText.TextElement('Sample Data : ' + '$unit2_2', textScaleFactor: 1.0,
-              style: textStyle),
+          chartText.TextElement('Sample Data : ' + '$unit2_2',
+              textScaleFactor: 1.0, style: textStyle),
           (110 - 10.0 - 35).round(),
           (13 + (2 * 13) + 7).round());
     }
@@ -3979,7 +4394,8 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],
+              textScaleFactor: 1.0, style: textStyle),
           (265 - 10.0 - 35).round(),
           (25.0 - 5).round());
       if (tooltips[0]['subTitle1'] == 'undefeated') {
@@ -3995,13 +4411,13 @@ class CustomCircleSymbolRenderer2 extends charts.CircleSymbolRenderer {
             '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle2']}'))}';
       }
       canvas.drawText(
-          chartText.TextElement('Avg. Weight : ' + '$unit2_1', textScaleFactor: 1.0,
-              style: textStyle),
+          chartText.TextElement('Avg. Weight : ' + '$unit2_1',
+              textScaleFactor: 1.0, style: textStyle),
           (265 - 10.0 - 35).round(),
           (13 + (1 * 13) + 7).round());
       canvas.drawText(
-          chartText.TextElement('Sample Data : ' + '$unit2_2', textScaleFactor: 1.0,
-              style: textStyle),
+          chartText.TextElement('Sample Data : ' + '$unit2_2',
+              textScaleFactor: 1.0, style: textStyle),
           (265 - 10.0 - 35).round(),
           (13 + (2 * 13) + 7).round());
     }
@@ -4023,8 +4439,7 @@ class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
   final Size? size;
   late List<dynamic>? nowresult3_1;
 
-  CustomCircleSymbolRenderer3_1(
-      {this.size, this.nowresult3_1});
+  CustomCircleSymbolRenderer3_1({this.size, this.nowresult3_1});
 
   @override
   void paint(charts.ChartCanvas canvas, Rectangle bounds,
@@ -4073,18 +4488,18 @@ class CustomCircleSymbolRenderer3_1 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
-      if (tooltips[0]['subTitle1'] == 'undefeated') {
-        unit3_1 = 'undefeated';
-      } else {
-        unit3_1 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
-      }
+    if (tooltips[0]['subTitle1'] == 'undefeated') {
+      unit3_1 = 'undefeated';
+    } else {
+      unit3_1 =
+          '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
+    }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_1', textScaleFactor: 1.0,
-          style: textStyle),
-      (110 - 10.0 - 35).round(),
-      (28.0 - 5).round());
-
+        chartText.TextElement(tooltips[0]['title'] + '\n' + ' - $unit3_1',
+            textScaleFactor: 1.0, style: textStyle),
+        (110 - 10.0 - 35).round(),
+        (28.0 - 5).round());
   }
 }
 
@@ -4130,7 +4545,7 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
     //     // uniquelist.insert(i, nowresult1_1![i]["device"]);
     //   }
     // }
-    
+
     canvas.drawRRect(
       Rectangle(90.0 - 5.0 - 50, 15 - 0, 140 + 0,
           bounds.height + 11 * nowresult3_1![0].keys.length),
@@ -4144,17 +4559,18 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
-       if (tooltips[0]['subTitle1'] == 'undefeated') {
-        unit3_2 = 'undefeated';
-      } else {
-        unit3_2 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
-      }
+    if (tooltips[0]['subTitle1'] == 'undefeated') {
+      unit3_2 = 'undefeated';
+    } else {
+      unit3_2 =
+          '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
+    }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_2', textScaleFactor: 1.0,
-          style: textStyle),
-      (110 - 10.0 - 35).round(),
-      (28.0 - 5).round());
+        chartText.TextElement(tooltips[0]['title'] + '\n' + ' - $unit3_2',
+            textScaleFactor: 1.0, style: textStyle),
+        (110 - 10.0 - 35).round(),
+        (28.0 - 5).round());
     // canvas.drawText(
     //   chartText.TextElement(tooltips[0]['title'],
     //       style: textStyle),
@@ -4176,6 +4592,7 @@ class CustomCircleSymbolRenderer3_2 extends charts.CircleSymbolRenderer {
     // }
   }
 }
+
 // แสดงข้อมูลใน Chart Weight_Results3
 class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
   final Size? size;
@@ -4231,17 +4648,18 @@ class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
-       if (tooltips[0]['subTitle1'] == 'undefeated') {
-        unit3_3 = 'undefeated';
-      } else {
-        unit3_3 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
-      }
+    if (tooltips[0]['subTitle1'] == 'undefeated') {
+      unit3_3 = 'undefeated';
+    } else {
+      unit3_3 =
+          '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
+    }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_3', textScaleFactor: 1.0,
-          style: textStyle),
-      (110 - 10.0 - 35).round(),
-      (28.0 - 5).round());
+        chartText.TextElement(tooltips[0]['title'] + '\n' + ' - $unit3_3',
+            textScaleFactor: 1.0, style: textStyle),
+        (110 - 10.0 - 35).round(),
+        (28.0 - 5).round());
     // // canvas.drawText(
     // //   chartText.TextElement(tooltips[0]['title'],
     // //       style: textStyle),
@@ -4263,6 +4681,7 @@ class CustomCircleSymbolRenderer3_3 extends charts.CircleSymbolRenderer {
     // }
   }
 }
+
 // แสดงข้อมูลใน Chart Weight_Results4
 class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
   final Size? size;
@@ -4318,17 +4737,18 @@ class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
     chartStyle.TextStyle textStyle = chartStyle.TextStyle();
     textStyle.color = charts.Color.white;
     textStyle.fontSize = 11;
-       if (tooltips[0]['subTitle1'] == 'undefeated') {
-        unit3_4 = 'undefeated';
-      } else {
-        unit3_4 = '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
-      }
+    if (tooltips[0]['subTitle1'] == 'undefeated') {
+      unit3_4 = 'undefeated';
+    } else {
+      unit3_4 =
+          '${NumberFormat.compact().format(double.parse('${tooltips[0]['subTitle1']}'))}';
+    }
 
     canvas.drawText(
-      chartText.TextElement(tooltips[0]['title']+'\n'+  ' - $unit3_4', textScaleFactor: 1.0,
-          style: textStyle),
-      (110 - 10.0 - 35).round(),
-      (28.0 - 5).round());
+        chartText.TextElement(tooltips[0]['title'] + '\n' + ' - $unit3_4',
+            textScaleFactor: 1.0, style: textStyle),
+        (110 - 10.0 - 35).round(),
+        (28.0 - 5).round());
     // canvas.drawText(
     //   chartText.TextElement(tooltips[0]['title'],
     //       style: textStyle),
@@ -4352,6 +4772,7 @@ class CustomCircleSymbolRenderer3_4 extends charts.CircleSymbolRenderer {
 }
 
 String? unit4_1;
+
 // แสดงข้อมูลใน Chart Plot_Graph
 class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
   final Size? size;
@@ -4403,7 +4824,8 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'], textScaleFactor: 1.0, style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],
+              textScaleFactor: 1.0, style: textStyle),
           (110 - 10.0 - 35).round(),
           (25.0 - 5).round());
       for (int i = 1; i < nowresult4_1![0].keys.length; i++) {
@@ -4415,7 +4837,8 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
         }
         canvas.drawText(
             chartText.TextElement(
-                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1', textScaleFactor: 1.0,
+                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1',
+                textScaleFactor: 1.0,
                 style: textStyle),
             (110 - 10.0 - 35).round(),
             (13 + (i * 13) + 7).round());
@@ -4437,7 +4860,8 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
       textStyle.color = charts.Color.white;
       textStyle.fontSize = 11;
       canvas.drawText(
-          chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
+          chartText.TextElement(tooltips[0]['title'],
+              textScaleFactor: 1.0, style: textStyle),
           (265 - 10.0 - 35).round(),
           (25.0 - 5).round());
       for (int i = 1; i < nowresult4_1![0].keys.length; i++) {
@@ -4449,7 +4873,8 @@ class CustomCircleSymbolRenderer4 extends charts.CircleSymbolRenderer {
         }
         canvas.drawText(
             chartText.TextElement(
-                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1', textScaleFactor: 1.0,
+                '${nowresult4_1![0].keys.elementAt(i)} : ' + '$unit4_1',
+                textScaleFactor: 1.0,
                 style: textStyle),
             (265 - 10.0 - 35).round(),
             (13 + (i * 13) + 7).round());
@@ -4516,8 +4941,8 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
 
       for (int i = 0; i < uniquelist.length; i++) {
         canvas.drawText(
-            chartText.TextElement('-${uniquelist[i]['title']}', textScaleFactor: 1.0,
-                style: textStyle1),
+            chartText.TextElement('-${uniquelist[i]['title']}',
+                textScaleFactor: 1.0, style: textStyle1),
             (110 - 10.0 - 35).round(),
             ((25.0 + (i * 26)) - 5).round());
 
@@ -4530,7 +4955,8 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
         canvas.drawText(
             chartText.TextElement(
                 '${NumberFormat.compact().format(double.parse('${uniquelist[i]['subTitle1']}'))} : ' +
-                    '$unit5_1', textScaleFactor: 1.0,
+                    '$unit5_1',
+                textScaleFactor: 1.0,
                 style: textStyle),
             (110 - 10.0 - 35).round(),
             (28 + (i * 26) + 7).round());
@@ -4557,8 +4983,8 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
 
       for (int i = 0; i < uniquelist.length; i++) {
         canvas.drawText(
-            chartText.TextElement('-${uniquelist[i]['title']}', textScaleFactor: 1.0,
-                style: textStyle1),
+            chartText.TextElement('-${uniquelist[i]['title']}',
+                textScaleFactor: 1.0, style: textStyle1),
             (265 - 10.0 - 35).round(),
             ((25.0 + (i * 26)) - 5).round());
 
@@ -4571,7 +4997,8 @@ class CustomCircleSymbolRenderer5 extends charts.CircleSymbolRenderer {
         canvas.drawText(
             chartText.TextElement(
                 '${NumberFormat.compact().format(double.parse('${uniquelist[i]['subTitle1']}'))} : ' +
-                    '$unit5_1', textScaleFactor: 1.0,
+                    '$unit5_1',
+                textScaleFactor: 1.0,
                 style: textStyle),
             (265 - 10.0 - 35).round(),
             (28 + (i * 26) + 7).round());

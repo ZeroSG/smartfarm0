@@ -54,15 +54,12 @@ class _ProductionState extends State<Production> {
   bool Download0 = true;
   int Check = 0;
 
-
   //รายการ Production
   Production1(int index) {
     return Container(
       child: ExpansionTile(
         childrenPadding: EdgeInsets.all(0).copyWith(top: 0),
-       
         backgroundColor: Colors.white,
-       
         maintainState: true,
         key: Key(index.toString()),
         initiallyExpanded: index == selected1,
@@ -80,7 +77,8 @@ class _ProductionState extends State<Production> {
         },
         title: ListTile(
             title: Text(
-          '${nowresult1_1[index]['c_name']}', textScaleFactor: 1.0,
+          '${nowresult1_1[index]['c_name']}',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -92,11 +90,11 @@ class _ProductionState extends State<Production> {
           DateSE_12(index),
           Standard_Silo_13(index),
           Number_Age_14(index),
-      
         ],
       ),
     );
   }
+
   //ปุม เลือก By
   Container newMethodRadio() {
     return Container(
@@ -114,7 +112,8 @@ class _ProductionState extends State<Production> {
             },
           ),
           Text(
-            'Not Set', textScaleFactor: 1.0,
+            'Not Set',
+            textScaleFactor: 1.0,
             style: new TextStyle(
               fontSize: 15.0,
               fontFamily: 'Montserrat',
@@ -131,7 +130,8 @@ class _ProductionState extends State<Production> {
             },
           ),
           Text(
-            'By Farm', textScaleFactor: 1.0,
+            'By Farm',
+            textScaleFactor: 1.0,
             style: new TextStyle(
               fontSize: 15.0,
               fontFamily: 'Montserrat',
@@ -148,7 +148,8 @@ class _ProductionState extends State<Production> {
             },
           ),
           Text(
-            'By House', textScaleFactor: 1.0,
+            'By House',
+            textScaleFactor: 1.0,
             style: new TextStyle(
               fontSize: 15.0,
               fontFamily: 'Montserrat',
@@ -158,8 +159,8 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
-   
-   //ปุม Save แก้ไข
+
+  //ปุม Save แก้ไข
   Container Save_New(context, StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 20),
@@ -188,7 +189,8 @@ class _ProductionState extends State<Production> {
                 Navigator.pop(context);
               },
               child: Text(
-                'New', textScaleFactor: 1.0,
+                'New',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15,
@@ -215,72 +217,125 @@ class _ProductionState extends State<Production> {
             //  width: screenW*0.5,
             child: TextButton(
               onPressed: () {
-                 normalDialog1(context,'แก้ไขข้อมูล  setting production','คุณต้องการแก้ไขข้อมูล  setting production นี้ใช่หรือไม่ ? ',(){
-                    Navigator.pop(context);
-                //   print('=======1=========');
-                //  print(widget.Token);
-                //  print(widget.farmnum);
-                //  print(int.parse(name_h!));
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) => SimpleDialog(
+                    title: ListTile(
+                      // leading: Image.asset('images/maps.png',height: 600,),
+                      title: Text('แก้ไขข้อมูล setting production',
+                          textScaleFactor: 1.0,
+                          style: TextStyle(
+                            color: Colors.green,
+                            // fontFamily: fonts,
+                          )),
+                      subtitle: Text(
+                          'คุณต้องการแก้ไขข้อมูล  setting production นี้ใช่หรือไม่ ? ',
+                          textScaleFactor: 1.0,
+                          style: TextStyle(
+                              // fontFamily: fonts,
+                              )),
+                    ),
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'ยกเลิก',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
 
-                //  print('=======2=========');
-                //   print(Sub_Crop.text);
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              )),
+                          TextButton(
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                late var dayS = dateTimeStart!.day
+                                    .toString()
+                                    .padLeft(2, '0');
+                                late var monthS = dateTimeStart!.month
+                                    .toString()
+                                    .padLeft(2, '0');
+                                late var yearS = dateTimeStart!.year
+                                    .toString()
+                                    .padLeft(4, '0');
+                                // print('$yearS-$monthS-$dayS 00:00:00.000');
 
-                late var dayS = dateTimeStart!.day.toString().padLeft(2, '0');
-                late var monthS =
-                    dateTimeStart!.month.toString().padLeft(2, '0');
-                late var yearS = dateTimeStart!.year.toString().padLeft(4, '0');
-                // print('$yearS-$monthS-$dayS 00:00:00.000');
+                                if (dateTimeEnd == null) {
+                                  dateTimeEnd = DateTime.now();
+                                }
 
-                if (dateTimeEnd == null) {
-                  dateTimeEnd = DateTime.now();
-                }
-               
-                late var dayE = dateTimeEnd!.day.toString().padLeft(2, '0');
-                late var monthE = dateTimeEnd!.month.toString().padLeft(2, '0');
-                late var yearE = dateTimeEnd!.year.toString().padLeft(4, '0');
-                // print('$yearE-$monthE-$dayE 00:00:00.000');
+                                late var dayE =
+                                    dateTimeEnd!.day.toString().padLeft(2, '0');
+                                late var monthE = dateTimeEnd!.month
+                                    .toString()
+                                    .padLeft(2, '0');
+                                late var yearE = dateTimeEnd!.year
+                                    .toString()
+                                    .padLeft(4, '0');
+                                // print('$yearE-$monthE-$dayE 00:00:00.000');
 
-                double Number = double.parse(Number_Of_animal.text);
-                String animal = Number.toStringAsFixed(0);
-                int M_A = int.parse(animal);
+                                double Number =
+                                    double.parse(Number_Of_animal.text);
+                                String animal = Number.toStringAsFixed(0);
+                                int M_A = int.parse(animal);
 
-                double A = double.parse(Age.text);
-                String ge = A.toStringAsFixed(0);
-                int AGE = int.parse(ge);
-                //    print('=======3=========');
-                //   print(Standardname);
-                //   print(Siloname);
+                                double A = double.parse(Age.text);
+                                String ge = A.toStringAsFixed(0);
+                                int AGE = int.parse(ge);
+                                //    print('=======3=========');
+                                //   print(Standardname);
+                                //   print(Siloname);
 
-                //  print(M_A);
-                //   print(AGE);
-                 
-                      // Navigator.pop(context);
-                API_edit_setting_production(
-                    widget.Token,
-                    widget.farmnum,
-                    int.parse(name_h!),
-                    Sub_Crop.text,
-                    '$yearS-$monthS-$dayS 00:00:00.000',
-                    '$yearE-$monthE-$dayE 00:00:00.000',
-                    Standardname,
-                    Siloname,
-                    M_A,
-                    AGE);
-                  // });
-                var duration = Duration(seconds: 2);
+                                //  print(M_A);
+                                //   print(AGE);
 
-                Navigator.pop(context);
-                Navigator.pop(context);
+                                // Navigator.pop(context);
+                                API_edit_setting_production(
+                                    widget.Token,
+                                    widget.farmnum,
+                                    int.parse(name_h!),
+                                    Sub_Crop.text,
+                                    '$yearS-$monthS-$dayS 00:00:00.000',
+                                    '$yearE-$monthE-$dayE 00:00:00.000',
+                                    Standardname,
+                                    Siloname,
+                                    M_A,
+                                    AGE);
+                                // });
+                                var duration = Duration(seconds: 2);
 
-                route() {
-                  getjaon1_setting_production();
-                }
+                                Navigator.pop(context);
+                                Navigator.pop(context);
 
-                Timer(duration, route);
-                });
+                                route() {
+                                  getjaon1_setting_production();
+                                }
+
+                                Timer(duration, route);
+                              },
+                              child: Text(
+                                'ตกลง',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
+
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                );
               },
               child: Text(
-                'Save', textScaleFactor: 1.0,
+                'Save',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15,
@@ -292,6 +347,7 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
+
   //แก้ไข ข้อมูล Number และ Age
   Container Number_Age4(StateSetter setState) {
     return Container(
@@ -307,7 +363,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Number of animal :', textScaleFactor: 1.0,
+                      'Number of animal :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -351,7 +408,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Age of animal :', textScaleFactor: 1.0,
+                      'Age of animal :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -391,7 +449,8 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
- // แสดง ข้อมูล Number และ Age
+
+  // แสดง ข้อมูล Number และ Age
   Container Number_Age_14(index) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
@@ -406,7 +465,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Number of animal :', textScaleFactor: 1.0,
+                      'Number of animal :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -435,7 +495,8 @@ class _ProductionState extends State<Production> {
                               ),
                             )
                           : Text(
-                              '${nowresult1_1[index]['n_number']}', textScaleFactor: 1.0,
+                              '${nowresult1_1[index]['n_number']}',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -454,7 +515,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Age of animal :', textScaleFactor: 1.0,
+                      'Age of animal :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -483,7 +545,8 @@ class _ProductionState extends State<Production> {
                               ),
                             )
                           : Text(
-                              '${nowresult1_1[index]['n_age']}', textScaleFactor: 1.0,
+                              '${nowresult1_1[index]['n_age']}',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -498,7 +561,8 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
- //แก้ไข ข้อมูล Standard และ Silo
+
+  //แก้ไข ข้อมูล Standard และ Silo
   Container Standard_Silo3(StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -513,7 +577,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Standard Formula :', textScaleFactor: 1.0,
+                      'Standard Formula :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -543,7 +608,8 @@ class _ProductionState extends State<Production> {
                                   .map((NoView_by) => DropdownMenuItem<String>(
                                       value: NoView_by,
                                       child: Text(
-                                        NoView_by, textScaleFactor: 1.0,
+                                        NoView_by,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
@@ -555,7 +621,7 @@ class _ProductionState extends State<Production> {
                                 setState(() {});
                               })
                           : DropdownButton<String>(
-                            isExpanded: true,
+                              isExpanded: true,
                               icon: Icon(
                                 Icons.arrow_drop_down_circle,
                                 size: 20,
@@ -566,7 +632,8 @@ class _ProductionState extends State<Production> {
                                   .map((Standard) => DropdownMenuItem<String>(
                                       value: Standard,
                                       child: Text(
-                                        Standard, textScaleFactor: 1.0,
+                                        Standard,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -593,7 +660,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo Planning :', textScaleFactor: 1.0,
+                      'Silo Planning :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -623,7 +691,8 @@ class _ProductionState extends State<Production> {
                                   .map((NoView_by) => DropdownMenuItem<String>(
                                       value: NoView_by,
                                       child: Text(
-                                        NoView_by, textScaleFactor: 1.0,
+                                        NoView_by,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
@@ -644,7 +713,8 @@ class _ProductionState extends State<Production> {
                                   .map((Silo) => DropdownMenuItem<String>(
                                       value: Silo,
                                       child: Text(
-                                        Silo, textScaleFactor: 1.0,
+                                        Silo,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -667,7 +737,8 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
-   // แสดง ข้อมูล  Standard และ Silo
+
+  // แสดง ข้อมูล  Standard และ Silo
   Container Standard_Silo_13(index) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -682,7 +753,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Standard Formula :', textScaleFactor: 1.0,
+                      'Standard Formula :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -711,7 +783,8 @@ class _ProductionState extends State<Production> {
                               ),
                             )
                           : Text(
-                              '${nowresult1_1[index]['c_feedtype']}', textScaleFactor: 1.0,
+                              '${nowresult1_1[index]['c_feedtype']}',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -730,7 +803,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo Planning :', textScaleFactor: 1.0,
+                      'Silo Planning :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -758,7 +832,8 @@ class _ProductionState extends State<Production> {
                                   color: Color.fromARGB(255, 0, 0, 0)),
                             )
                           : Text(
-                              '${nowresult1_1[index]['c_plan']}', textScaleFactor: 1.0,
+                              '${nowresult1_1[index]['c_plan']}',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: 15,
                                   fontFamily: 'Montserrat',
@@ -818,6 +893,7 @@ class _ProductionState extends State<Production> {
       });
     }
   }
+
   //ปฏิทิน TimeEnd
   Future<void> TimeEnd(StateSetter setState) async {
     DateTime? ChooseDateTime2_1;
@@ -880,7 +956,8 @@ class _ProductionState extends State<Production> {
       });
     }
   }
-   //แก้ไข ข้อมูล DateStart และ DateEnd
+
+  //แก้ไข ข้อมูล DateStart และ DateEnd
   Container DateSE2(index, StateSetter setState) {
     return Container(
       margin: EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -895,7 +972,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Date Start :', textScaleFactor: 1.0,
+                      'Date Start :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -919,7 +997,8 @@ class _ProductionState extends State<Production> {
                           TimeStart(setState);
                         },
                         child: Text(
-                          "${dateTimeStart!.year}-${dateTimeStart!.month}-${dateTimeStart!.day}", textScaleFactor: 1.0,
+                          "${dateTimeStart!.year}-${dateTimeStart!.month}-${dateTimeStart!.day}",
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Montserrat',
@@ -939,7 +1018,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Date End :', textScaleFactor: 1.0,
+                      'Date End :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -965,7 +1045,8 @@ class _ProductionState extends State<Production> {
                         child: dateTimeEnd == null
                             ? Text('')
                             : Text(
-                                "${dateTimeEnd!.year}-${dateTimeEnd!.month}-${dateTimeEnd!.day}", textScaleFactor: 1.0,
+                                "${dateTimeEnd!.year}-${dateTimeEnd!.month}-${dateTimeEnd!.day}",
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Montserrat',
@@ -981,6 +1062,7 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
+
 // แสดง ข้อมูล DateStart และ DateEnd
   Container DateSE_12(index) {
     if (nowresult1_1[index]['c_datestart'] == null) {
@@ -1007,7 +1089,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Date Start :', textScaleFactor: 1.0,
+                      'Date Start :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1036,7 +1119,8 @@ class _ProductionState extends State<Production> {
                               ),
                             )
                           : Text(
-                              "${dateTimeStart1!.year}-${dateTimeStart1!.month}-${dateTimeStart1!.day}", textScaleFactor: 1.0,
+                              "${dateTimeStart1!.year}-${dateTimeStart1!.month}-${dateTimeStart1!.day}",
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -1055,7 +1139,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Date End :', textScaleFactor: 1.0,
+                      'Date End :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1084,7 +1169,8 @@ class _ProductionState extends State<Production> {
                               ),
                             )
                           : Text(
-                              "${dateTimeEnd1!.year}-${dateTimeEnd1!.month}-${dateTimeEnd1!.day}", textScaleFactor: 1.0,
+                              "${dateTimeEnd1!.year}-${dateTimeEnd1!.month}-${dateTimeEnd1!.day}",
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -1099,6 +1185,7 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
+
   //แก้ไข ข้อมูล Sub และ Crop
   Container Sub_Crop1(StateSetter setState) {
     return Container(
@@ -1114,7 +1201,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Sub Crop :', textScaleFactor: 1.0,
+                      'Sub Crop :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1154,6 +1242,7 @@ class _ProductionState extends State<Production> {
       ),
     );
   }
+
   // แสดง ข้อมูล Sub และ Crop
   Container Sub_Crop_11(int index) {
     DateTime? dateTime = DateTime.now();
@@ -1181,7 +1270,8 @@ class _ProductionState extends State<Production> {
                     width: screenW * 0.40,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Sub Crop :', textScaleFactor: 1.0,
+                      'Sub Crop :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1210,7 +1300,8 @@ class _ProductionState extends State<Production> {
                               ),
                             )
                           : Text(
-                              '${nowresult1_1[index]['c_namecrop']}', textScaleFactor: 1.0,
+                              '${nowresult1_1[index]['c_namecrop']}',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -1370,7 +1461,8 @@ class _ProductionState extends State<Production> {
                                                   top: 15, left: 10),
                                               height: screenH * 0.06,
                                               child: Text(
-                                                '${nowresult1_1[index]['c_name']}', textScaleFactor: 1.0,
+                                                '${nowresult1_1[index]['c_name']}',
+                                                textScaleFactor: 1.0,
                                                 style: TextStyle(
                                                     fontSize: 25,
                                                     fontWeight: FontWeight.bold,
@@ -1389,7 +1481,8 @@ class _ProductionState extends State<Production> {
                                                 Navigator.pop(context);
                                               },
                                               child: Text(
-                                                'X', textScaleFactor: 1.0,
+                                                'X',
+                                                textScaleFactor: 1.0,
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.bold,
@@ -1515,11 +1608,11 @@ class _ProductionState extends State<Production> {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
     return WillPopScope(
-         onWillPop: () async {
-         Navigator.pop(context);
-       
-       return true;
-         },
+      onWillPop: () async {
+        Navigator.pop(context);
+
+        return true;
+      },
       child: Scaffold(
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -1550,7 +1643,8 @@ class _ProductionState extends State<Production> {
                                       )),
                                 ),
                                 Text(
-                                  'Production Set', textScaleFactor: 1.0,
+                                  'Production Set',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -1567,7 +1661,7 @@ class _ProductionState extends State<Production> {
                                       //    print('--------start--------');
                                       // print(widget.farmnum);
                                       //  print(Check);
-    
+
                                       Crop = 'press to end crop';
                                       color = Colors.red;
                                       Crop1 = true;
@@ -1575,17 +1669,17 @@ class _ProductionState extends State<Production> {
                                           widget.Token, widget.farmnum, Check);
                                     });
                                     var duration = Duration(seconds: 2);
-    
+
                                     route() {
                                       getjaon1_setting_production();
                                     }
-    
+
                                     Timer(duration, route);
                                   } else if (Crop1 == true) {
                                     setState(() {
                                       //  print('--------stop--------');
                                       //   print(widget.farmnum);
-    
+
                                       Crop = 'start crop';
                                       color = Colors.green;
                                       Crop1 = false;
@@ -1593,13 +1687,12 @@ class _ProductionState extends State<Production> {
                                           widget.Token, widget.farmnum);
                                     });
                                     var duration = Duration(seconds: 2);
-    
+
                                     route() async {
                                       getjaon1_setting_production();
                                     }
-    
+
                                     Timer(duration, route);
-      
                                   }
                                 }),
                                 child: Container(
@@ -1616,7 +1709,8 @@ class _ProductionState extends State<Production> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        Crop!, textScaleFactor: 1.0,
+                                        Crop!,
+                                        textScaleFactor: 1.0,
                                         style: new TextStyle(
                                           fontFamily: 'Montserrat',
                                           color: Color.fromARGB(255, 0, 0, 0),
@@ -1655,7 +1749,8 @@ class _ProductionState extends State<Production> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Text(
-                                        'House', textScaleFactor: 1.0,
+                                        'House',
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -1667,7 +1762,8 @@ class _ProductionState extends State<Production> {
                                 ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    key: Key('builder1 ${selected1.toString()}'),
+                                    key:
+                                        Key('builder1 ${selected1.toString()}'),
                                     itemCount: nowresult1_1.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {

@@ -1,17 +1,16 @@
 import 'dart:convert';
 
 // import 'package:bezier_chart/bezier_chart.dart';
-import 'package:data_table_2/data_table_2.dart';
+// import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/src/text_element.dart' as chartText;
-import 'package:charts_flutter/src/text_style.dart' as chartStyle;
+import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:charts_flutter_new/src/text_element.dart' as chartText;
+import 'package:charts_flutter_new/src/text_style.dart' as chartStyle;
 
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'dart:math';
-
 
 import '../../dialog.dart';
 import '../../drawer.dart';
@@ -71,8 +70,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   var _pointerValue1, _pointerValue2, _pointerValue3, _date;
   late String sDefault = 'Default';
   List<String> Default = ['Default'];
-  late String sPlot = 'แสดงที้งหมด';
-  List<String> Plot = ['แสดงที้งหมด', 'แสดงถึงวันปัจจุบัน'];
+  late String sPlot = 'แสดงทั้งหมด';
+  List<String> Plot = ['แสดงทั้งหมด', 'แสดงถึงวันปัจจุบัน'];
 
   int Allnum = 7;
   late String samount1 = widget.samount1![1]['name'];
@@ -104,7 +103,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   String? Noname = '';
   var num;
   late double screenW, screenH;
-  
+
   //ข้อมูล Chart Plot_Graph
   List<charts.Series<dynamic, String>> _createSampleData1() {
     if (numamount2 == 0 || numamount1 == numamount2) {
@@ -227,9 +226,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   late var sum2, percent2, upper_percent2, lower_percent2;
   var silo1;
   var silo2;
-      //API house_information
+  //API house_information
   Future<void> getjaon1_house_information() async {
-
     try {
       loading1 = true;
       var urlsum = Uri.https("smartfarmpro.com", "/v1/api/house/house-info");
@@ -255,11 +253,11 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         var result1_3 = json.decode(ressum.body)['result']['view3'];
         // //print("ressum211 => ${result1_1.length}");
         if (result1_1.length == 2) {
-         late String? namef1;
-         if(result1_2 != null ){
+          late String? namef1;
+          if (result1_2 != null) {
             namef1 = result1_2[0]['c_datestart'].split('T').first;
-         }
-          
+          }
+
           var n_silo1 = result1_1[0]['n_silo'];
           var n_silo2 = result1_1[1]['n_silo'];
           var capacity1 = result1_1[0]['n_capacity'];
@@ -272,37 +270,31 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             silo2 = n_silo2;
             sFeed1 = result1_1[0]['c_formula'];
             sFeed2 = result1_1[1]['c_formula'];
-              if(widget.Feed !=null){
-                  if(sFeed1 == ''){
-               if(sFeed1 != widget.Feed![0]['name']){
-              sFeed1 = 'Default';
-            }else{
-              
-            }
-            }
-              if(sFeed2 == ''){
-               if(sFeed2 != widget.Feed![0]['name']){
-              sFeed2 = 'Default';
-            }else{
-           
-            }
-            }
+            if (widget.Feed != null) {
+              if (sFeed1 == '') {
+                if (sFeed1 != widget.Feed![0]['name']) {
+                  sFeed1 = 'Default';
+                } else {}
               }
-            
-          
+              if (sFeed2 == '') {
+                if (sFeed2 != widget.Feed![0]['name']) {
+                  sFeed2 = 'Default';
+                } else {}
+              }
+            }
 
             upper_percent1 = result1_1[0]['n_upper_percent'];
             lower_percent1 = result1_1[0]['n_lower_percent'];
             percent1 = (remain1 / capacity1) * 100;
-            sum1 =remain1;
+            sum1 = remain1;
             upper_percent2 = result1_1[1]['n_upper_percent'];
             lower_percent2 = result1_1[1]['n_lower_percent'];
             percent2 = (remain2 / capacity2) * 100;
             sum2 = remain2;
-               if(result1_2 != null ){
-            splitted = namef1!.split("-");
-         }
-            
+            if (result1_2 != null) {
+              splitted = namef1!.split("-");
+            }
+
             nowresult1_1 = result1_1;
             nowresult1_2 = result1_2;
             nowresult1_3 = result1_3;
@@ -310,49 +302,42 @@ class _Inrake_OrderState extends State<Inrake_Order> {
           });
         }
         if (result1_1.length == 1) {
-           late String? namef1;
-         if(result1_2 != null ){
+          late String? namef1;
+          if (result1_2 != null) {
             namef1 = result1_2[0]['c_datestart'].split('T').first;
-         }
-          
+          }
+
           var n_silo1 = result1_1[0]['n_silo'];
           var capacity1 = result1_1[0]['n_capacity'];
           var remain1 = result1_1[0]['n_remain'];
           // //print("ressum211 => ${result1_1}");
-          
+
           setState(() {
             silo1 = n_silo1;
             sFeed1 = result1_1[0]['c_formula'];
-           
+
             // print(widget.Feed);
-            
-                if(widget.Feed !=null){
-                  if(sFeed1 == ''){
-               if(sFeed1 != widget.Feed![0]['name']){
-              sFeed1 = 'Default';
-            }else{
-           
-            }
-            }
-          
 
-
+            if (widget.Feed != null) {
+              if (sFeed1 == '') {
+                if (sFeed1 != widget.Feed![0]['name']) {
+                  sFeed1 = 'Default';
+                } else {}
+              }
             }
-           
 
-            
             upper_percent1 = result1_1[0]['n_upper_percent'];
             lower_percent1 = result1_1[0]['n_lower_percent'];
             percent1 = (remain1 / capacity1) * 100;
             sum1 = remain1;
-              if(result1_2 != null ){
-            splitted = namef1!.split("-");
-         }
-      
+            if (result1_2 != null) {
+              splitted = namef1!.split("-");
+            }
+
             nowresult1_1 = result1_1;
             nowresult1_2 = result1_2;
             nowresult1_3 = result1_3;
-             print('widget.Feed');
+            print('widget.Feed');
             print('sFeed1');
             loading1 = false;
           });
@@ -367,7 +352,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       //print(e.toString());
     }
   }
-    //API house_compare
+
+  //API house_compare
   Future<void> getjaon2_house_compare() async {
     try {
       loading2 = true;
@@ -415,10 +401,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     .split('(')
                     .first;
                 var splitted1 = splitted.split('-');
-      
+
                 if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                   _products1 += [nowresult2_1[i]];
-      
                 }
                 if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                     (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -429,7 +414,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   _products1 += [nowresult2_1[i]];
                 }
               }
-        
+
               List<dynamic> _products2 = [];
               for (int i = 0; i < nowresult2_2.length; i++) {
                 var splitted = nowresult2_2[i]
@@ -450,7 +435,6 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   _products2 += [nowresult2_2[i]];
                 }
               }
-
 
               setState(() {
                 nowresult2_1 = _products1;
@@ -486,7 +470,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               DateTime? dateTime1_ = DateTime.now();
               var newDate = new DateTime(
                   dateTime1_.year, dateTime1_.month - 8, dateTime1_.day - 10);
-  
+
               List<dynamic> _products1 = [];
               for (int i = 0; i < nowresult2_1.length; i++) {
                 var splitted = nowresult2_1[i]
@@ -497,7 +481,6 @@ class _Inrake_OrderState extends State<Inrake_Order> {
 
                 if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                   _products1 += [nowresult2_1[i]];
-               
                 }
                 if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                     (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -508,7 +491,6 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   _products1 += [nowresult2_1[i]];
                 }
               }
-
 
               setState(() {
                 nowresult2_1 = _products1;
@@ -544,7 +526,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       //print(e.toString());
     }
   }
-     //API house_silo
+
+  //API house_silo
   Future<void> getjaon3_house_silo() async {
     try {
       loading3 = true;
@@ -573,7 +556,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
             DateTime? dateTime1_ = DateTime.now();
             var newDate = new DateTime(
                 dateTime1_.year, dateTime1_.month - 8, dateTime1_.day - 10);
-     
+
             List<dynamic> _products1 = [];
             for (int i = 0; i < nowresult3.length; i++) {
               var splitted = nowresult3[i]['${nowresult3[i].keys.elementAt(0)}']
@@ -581,10 +564,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   .split('(')
                   .first;
               var splitted1 = splitted.split('-');
-        
+
               if (int.parse("20${splitted1[2]}") < dateTime1_.year) {
                 _products1 += [nowresult3[i]];
-           
               }
               if ((int.parse(splitted1[1]) < dateTime1_.month) &&
                   (int.parse("20${splitted1[2]}") == dateTime1_.year)) {
@@ -595,7 +577,6 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                 _products1 += [nowresult3[i]];
               }
             }
-      
 
             setState(() {
               nowresult3 = _products1;
@@ -614,9 +595,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   void initState() {
     // TODO: implement initState
     super.initState();
-          print(widget.farmnum);
-     print(widget.cropnum2);
-      print(widget.num);
+    print(widget.farmnum);
+    print(widget.cropnum2);
+    print(widget.num);
     if (widget.cropnum2 != null) {
       getjaon1_house_information();
       getjaon2_house_compare();
@@ -653,7 +634,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                 children: [
                   Container(
                     child: Text(
-                      'RealTime', textScaleFactor: 1.0,
+                      'RealTime',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -700,7 +682,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         // ));
                       },
                       child: Text(
-                        'Estimate', textScaleFactor: 1.0,
+                        'Estimate',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Montserrat',
@@ -724,7 +707,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       ),
     );
   }
-   //Age_lnformation
+
+  //Age_lnformation
   Widget Age_lnformation1(BuildContext context) => ExpansionTile(
         // key: K1,
         // onExpansionChanged: (value) {
@@ -749,7 +733,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // },
         initiallyExpanded: 0 == selected2,
         title: Text(
-          'Age lnformation', textScaleFactor: 1.0,
+          'Age lnformation',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -774,7 +759,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             DropdownMenuItem<String>(
                                                 value: Default,
                                                 child: Text(
-                                                  Default, textScaleFactor: 1.0,
+                                                  Default,
+                                                  textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontFamily: 'Montserrat',
@@ -789,21 +775,19 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         })
                                     : DropdownButton<String>(
                                         value: sDefault,
-                                        items:Default
-                                            .map((Default) =>
-                                                DropdownMenuItem<String>(
-                                                    value: Default,
-                                                    child: Text(
-                                                      Default, textScaleFactor: 1.0,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        color: Color.fromARGB(
-                                                            255, 25, 25, 25),
-                                                      ),
-                                                    )))
-                                            .toList(),
+                                        items: Default.map((Default) =>
+                                            DropdownMenuItem<String>(
+                                                value: Default,
+                                                child: Text(
+                                                  Default,
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 25, 25, 25),
+                                                  ),
+                                                ))).toList(),
                                         onChanged: (Default) {
                                           setState(() {
                                             sDefault = Default!;
@@ -830,7 +814,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '0kg', textScaleFactor: 1.0,
+                                      '0kg',
+                                      textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -839,7 +824,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                       ),
                                     ),
                                     Text(
-                                      '0.00%', textScaleFactor: 1.0,
+                                      '0.00%',
+                                      textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Montserrat',
@@ -880,7 +866,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   DropdownMenuItem<String>(
                                                       value: Default,
                                                       child: Text(
-                                                        Default, textScaleFactor: 1.0,
+                                                        Default,
+                                                        textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontFamily:
@@ -901,7 +888,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       DropdownMenuItem<String>(
                                                           value: Feed1["name"],
                                                           child: Text(
-                                                            Feed1["name"], textScaleFactor: 1.0,
+                                                            Feed1["name"],
+                                                            textScaleFactor:
+                                                                1.0,
                                                             style: TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
@@ -916,31 +905,112 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                           )))
                                                   .toList(),
                                               onChanged: (Feed1) {
-                                                  normalDialog1(context,'แก้ไขข้อมูล Feed','คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',(){
-                                                    Navigator.pop(context);
-                                                    for (int i = 0;
-                                                    i < widget.Feed!.length;
-                                                    i++) {
-                                                  if (widget.Feed![i]['name'] ==
-                                                      Feed1) {
-                                            
-                                                    String? F =
-                                                        widget.Feed![i]['code'];
-                                            
+                                                showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      SimpleDialog(
+                                                    title: ListTile(
+                                                      // leading: Image.asset('images/maps.png',height: 600,),
+                                                      title: Text(
+                                                          'แก้ไขข้อมูล Feed',
+                                                          textScaleFactor: 1.0,
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                            // fontFamily: fonts,
+                                                          )),
+                                                      subtitle: Text(
+                                                          'คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',
+                                                          textScaleFactor: 1.0,
+                                                          style: TextStyle(
+                                                              // fontFamily: fonts,
+                                                              )),
+                                                    ),
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context),
+                                                              child: Text(
+                                                                'ยกเลิก',
+                                                                textScaleFactor:
+                                                                    1.0,
+                                                                style:
+                                                                    TextStyle(
+                                                                        // fontFamily: fonts,
 
-                                                    API_edit_house_silo(
-                                                        widget.Token,
-                                                        widget.farmnum,
-                                                        widget.num,
-                                                        silo1
-                                                            .toStringAsFixed(0),
-                                                        F);
-                                                  }
-                                                }
-                                                setState(() {
-                                                  sFeed1 = Feed1!;
-                                                });
-                                                 });
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            0,
+                                                                            0)),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                for (int i = 0;
+                                                                    i <
+                                                                        widget
+                                                                            .Feed!
+                                                                            .length;
+                                                                    i++) {
+                                                                  if (widget.Feed![
+                                                                              i]
+                                                                          [
+                                                                          'name'] ==
+                                                                      Feed1) {
+                                                                    String? F =
+                                                                        widget.Feed![i]
+                                                                            [
+                                                                            'code'];
+
+                                                                    API_edit_house_silo(
+                                                                        widget
+                                                                            .Token,
+                                                                        widget
+                                                                            .farmnum,
+                                                                        widget
+                                                                            .num,
+                                                                        silo1.toStringAsFixed(
+                                                                            0),
+                                                                        F);
+                                                                  }
+                                                                }
+                                                                setState(() {
+                                                                  sFeed1 =
+                                                                      Feed1!;
+                                                                });
+                                                              },
+                                                              child: Text(
+                                                                'ตกลง',
+                                                                textScaleFactor:
+                                                                    1.0,
+                                                                style:
+                                                                    TextStyle(
+                                                                        // fontFamily: fonts,
+
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            0,
+                                                                            0)),
+                                                              )),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
                                               }),
                                     ),
                                   ),
@@ -964,7 +1034,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg', textScaleFactor: 1.0,
+                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg',
+                                            textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -974,7 +1045,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             ),
                                           ),
                                           Text(
-                                            '${percent1.toStringAsFixed(2)}%', textScaleFactor: 1.0,
+                                            '${percent1.toStringAsFixed(2)}%',
+                                            textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'Montserrat',
@@ -1007,7 +1079,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   DropdownMenuItem<String>(
                                                       value: Default,
                                                       child: Text(
-                                                        Default, textScaleFactor: 1.0,
+                                                        Default,
+                                                        textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontFamily:
@@ -1028,7 +1101,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       DropdownMenuItem<String>(
                                                           value: Feed1["name"],
                                                           child: Text(
-                                                            Feed1["name"], textScaleFactor: 1.0,
+                                                            Feed1["name"],
+                                                            textScaleFactor:
+                                                                1.0,
                                                             style: TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
@@ -1043,31 +1118,112 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                           )))
                                                   .toList(),
                                               onChanged: (Feed1) {
-                                                  normalDialog1(context,'แก้ไขข้อมูล Feed','คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',(){
-                                                    Navigator.pop(context);
-                                                for (int i = 0;
-                                                    i < widget.Feed!.length;
-                                                    i++) {
-                                                  if (widget.Feed![i]['name'] ==
-                                                      Feed1) {
-                                            
-                                                    String? F =
-                                                        widget.Feed![i]['code'];
-                                            
+                                                showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      SimpleDialog(
+                                                    title: ListTile(
+                                                      // leading: Image.asset('images/maps.png',height: 600,),
+                                                      title: Text(
+                                                          'แก้ไขข้อมูล Feed',
+                                                          textScaleFactor: 1.0,
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                            // fontFamily: fonts,
+                                                          )),
+                                                      subtitle: Text(
+                                                          'คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',
+                                                          textScaleFactor: 1.0,
+                                                          style: TextStyle(
+                                                              // fontFamily: fonts,
+                                                              )),
+                                                    ),
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context),
+                                                              child: Text(
+                                                                'ยกเลิก',
+                                                                textScaleFactor:
+                                                                    1.0,
+                                                                style:
+                                                                    TextStyle(
+                                                                        // fontFamily: fonts,
 
-                                                    API_edit_house_silo(
-                                                        widget.Token,
-                                                        widget.farmnum,
-                                                        widget.num,
-                                                        silo1
-                                                            .toStringAsFixed(0),
-                                                        F);
-                                                  }
-                                                }
-                                                setState(() {
-                                                  sFeed1 = Feed1!;
-                                                });
-                                                  });
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            0,
+                                                                            0)),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                for (int i = 0;
+                                                                    i <
+                                                                        widget
+                                                                            .Feed!
+                                                                            .length;
+                                                                    i++) {
+                                                                  if (widget.Feed![
+                                                                              i]
+                                                                          [
+                                                                          'name'] ==
+                                                                      Feed1) {
+                                                                    String? F =
+                                                                        widget.Feed![i]
+                                                                            [
+                                                                            'code'];
+
+                                                                    API_edit_house_silo(
+                                                                        widget
+                                                                            .Token,
+                                                                        widget
+                                                                            .farmnum,
+                                                                        widget
+                                                                            .num,
+                                                                        silo1.toStringAsFixed(
+                                                                            0),
+                                                                        F);
+                                                                  }
+                                                                }
+                                                                setState(() {
+                                                                  sFeed1 =
+                                                                      Feed1!;
+                                                                });
+                                                              },
+                                                              child: Text(
+                                                                'ตกลง',
+                                                                textScaleFactor:
+                                                                    1.0,
+                                                                style:
+                                                                    TextStyle(
+                                                                        // fontFamily: fonts,
+
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            0,
+                                                                            0)),
+                                                              )),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
                                               }),
                                     ),
                                   ),
@@ -1093,7 +1249,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg', textScaleFactor: 1.0,
+                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg',
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1106,7 +1263,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${percent1.toStringAsFixed(2)}%', textScaleFactor: 1.0,
+                                              '${percent1.toStringAsFixed(2)}%',
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -1136,7 +1294,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   DropdownMenuItem<String>(
                                                       value: Default,
                                                       child: Text(
-                                                        Default, textScaleFactor: 1.0,
+                                                        Default,
+                                                        textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           fontFamily:
@@ -1157,7 +1316,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                       DropdownMenuItem<String>(
                                                           value: Feed2["name"],
                                                           child: Text(
-                                                            Feed2["name"], textScaleFactor: 1.0,
+                                                            Feed2["name"],
+                                                            textScaleFactor:
+                                                                1.0,
                                                             style: TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
@@ -1173,28 +1334,111 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                   .toList(),
                                               onChanged: (Feed2) {
                                                 setState(() {
-                                                  normalDialog1(context,'แก้ไขข้อมูล Feed','คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',(){
-                                                    Navigator.pop(context);
-                                     sFeed2 = Feed2!;
-                                                  for (int i = 0;
-                                                      i < widget.Feed!.length;
-                                                      i++) {
-                                                    if (widget.Feed![i]
-                                                            ['name'] ==
-                                                        sFeed2) {
-                                                      API_edit_house_silo(
-                                                          widget.Token,
-                                                          widget.farmnum,
-                                                          widget.num,
-                                                          silo2.toStringAsFixed(
-                                                              0),
-                                                          widget.Feed![i]
-                                                              ['code']);
-                                                    }
-                                                  }
-                                  // Navigator.pop(context);
-                                  });
-                                                 
+                                                  showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        SimpleDialog(
+                                                      title: ListTile(
+                                                        // leading: Image.asset('images/maps.png',height: 600,),
+                                                        title: Text(
+                                                            'แก้ไขข้อมูล Feed',
+                                                            textScaleFactor:
+                                                                1.0,
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.green,
+                                                              // fontFamily: fonts,
+                                                            )),
+                                                        subtitle: Text(
+                                                            'คุณต้องการแก้ไขข้อมูล Feed รายการนี้ใช่หรือไม่ ? ',
+                                                            textScaleFactor:
+                                                                1.0,
+                                                            style: TextStyle(
+                                                                // fontFamily: fonts,
+                                                                )),
+                                                      ),
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        context),
+                                                                child: Text(
+                                                                  'ยกเลิก',
+                                                                  textScaleFactor:
+                                                                      1.0,
+                                                                  style:
+                                                                      TextStyle(
+                                                                          // fontFamily: fonts,
+
+                                                                          fontSize:
+                                                                              15,
+                                                                          color: Color.fromARGB(
+                                                                              255,
+                                                                              0,
+                                                                              0,
+                                                                              0)),
+                                                                )),
+                                                            TextButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  sFeed2 =
+                                                                      Feed2!;
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          widget
+                                                                              .Feed!
+                                                                              .length;
+                                                                      i++) {
+                                                                    if (widget.Feed![i]
+                                                                            [
+                                                                            'name'] ==
+                                                                        sFeed2) {
+                                                                      API_edit_house_silo(
+                                                                          widget
+                                                                              .Token,
+                                                                          widget
+                                                                              .farmnum,
+                                                                          widget
+                                                                              .num,
+                                                                          silo2.toStringAsFixed(
+                                                                              0),
+                                                                          widget.Feed![i]
+                                                                              [
+                                                                              'code']);
+                                                                    }
+                                                                  }
+                                                                  // Navigator.pop(context);
+                                                                },
+                                                                child: Text(
+                                                                  'ตกลง',
+                                                                  textScaleFactor:
+                                                                      1.0,
+                                                                  style:
+                                                                      TextStyle(
+                                                                          // fontFamily: fonts,
+
+                                                                          fontSize:
+                                                                              15,
+                                                                          color: Color.fromARGB(
+                                                                              255,
+                                                                              0,
+                                                                              0,
+                                                                              0)),
+                                                                )),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
                                                 });
                                               }),
                                     ),
@@ -1221,7 +1465,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg', textScaleFactor: 1.0,
+                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg',
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -1234,7 +1479,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${percent2.toStringAsFixed(2)}%', textScaleFactor: 1.0,
+                                              '${percent2.toStringAsFixed(2)}%',
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
@@ -1252,17 +1498,14 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             ),
                           ],
                         ),
-
           Container(
               margin: EdgeInsets.only(top: 10),
               width: screenW * 1,
               height: screenH * 0.001,
               color: Color(0xfffff1f1f1)),
-
-
         ],
       );
-   //Formula
+  //Formula
   Widget Formula2(BuildContext context) => ExpansionTile(
         // key: K2,
         // onExpansionChanged: (value) {
@@ -1288,7 +1531,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 1 == selected2,
         maintainState: true,
         title: Text(
-          'Formula', textScaleFactor: 1.0,
+          'Formula',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -1310,7 +1554,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 2),
                           child: Text(
-                            'Formula: ', textScaleFactor: 1.0,
+                            'Formula: ',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1321,7 +1566,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Farming Plan:', textScaleFactor: 1.0,
+                            'Farming Plan:',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1332,7 +1578,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Date Start: ', textScaleFactor: 1.0,
+                            'Date Start: ',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1343,7 +1590,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Broiler: ', textScaleFactor: 1.0,
+                            'Broiler: ',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1354,7 +1602,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child: Text(
-                            'Age: ', textScaleFactor: 1.0,
+                            'Age: ',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
@@ -1370,171 +1619,193 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       width: screenW * 0.45,
                       height: 170,
                       child: Center(child: CircularProgressIndicator()))
-                  : nowresult1_2 == null ?
-                  Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: 135,
-                  width: screenW * 0.9,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(
-                          color: Color(0xff9ac7c2), width: screenW * 0.008)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView(
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 2),
-                          child: Text(
-                            'Formula: ', textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Farming Plan:', textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Date Start: ', textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Broiler: ', textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Age: ', textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))
-                  : Container(
-                      margin: EdgeInsets.only(top: 10),
-                      height: 135,
-                      width: screenW * 0.9,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(
-                              color: Color(0xff9ac7c2),
-                              width: screenW * 0.008)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListView(
-                          physics: BouncingScrollPhysics(),
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 2),
-                              child: Text(
-                                'Formula: ${nowresult1_2[0]['c_feedtype']}', textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 115, 114, 114)),
-                              ),
+                  : nowresult1_2 == null
+                      ? Container(
+                          margin: EdgeInsets.only(top: 10),
+                          height: 135,
+                          width: screenW * 0.9,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                  color: Color(0xff9ac7c2),
+                                  width: screenW * 0.008)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView(
+                              physics: BouncingScrollPhysics(),
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 2),
+                                  child: Text(
+                                    'Formula: ',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Farming Plan:',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Date Start: ',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Broiler: ',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Age: ',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5),
-                              child: Text(
-                                'Farming Plan: ${nowresult1_2[0]['c_plan']}', textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 115, 114, 114)),
-                              ),
+                          ))
+                      : Container(
+                          margin: EdgeInsets.only(top: 10),
+                          height: 135,
+                          width: screenW * 0.9,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                  color: Color(0xff9ac7c2),
+                                  width: screenW * 0.008)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView(
+                              physics: BouncingScrollPhysics(),
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 2),
+                                  child: Text(
+                                    'Formula: ${nowresult1_2[0]['c_feedtype']}',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Farming Plan: ${nowresult1_2[0]['c_plan']}',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Date Start: ${splitted[2]}-${splitted[1]}-${splitted[0]}',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Broiler: start = ${nowresult1_2[0]['n_number']} , Remain = ${nowresult1_2[0]['n_number']}',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    'Age: ${nowresult1_2[0]['n_day']}',
+                                    textScaleFactor: 1.0,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        color:
+                                            Color.fromARGB(255, 115, 114, 114)),
+                                  ),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.only(top: 5),
+                                    child: nowresult1_2[0]['c_remark'] != null
+                                        ? Text(
+                                            '${nowresult1_2[0]['c_remark']}',
+                                            textScaleFactor: 1.0,
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Montserrat',
+                                                color: Color.fromARGB(
+                                                    255, 115, 114, 114)),
+                                          )
+                                        : Text(
+                                            '',
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Montserrat',
+                                                color: Color.fromARGB(
+                                                    255, 115, 114, 114)),
+                                          )),
+                              ],
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5),
-                              child: Text(
-                                'Date Start: ${splitted[2]}-${splitted[1]}-${splitted[0]}', textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 115, 114, 114)),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5),
-                              child: Text(
-                                'Broiler: start = ${nowresult1_2[0]['n_number']} , Remain = ${nowresult1_2[0]['n_number']}', textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 115, 114, 114)),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5),
-                              child: Text(
-                                'Age: ${nowresult1_2[0]['n_day']}', textScaleFactor: 1.0,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Color.fromARGB(255, 115, 114, 114)),
-                              ),
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(top: 5),
-                                child: nowresult1_2[0]['c_remark'] != null
-                                    ? Text(
-                                        '${nowresult1_2[0]['c_remark']}', textScaleFactor: 1.0,
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(
-                                                255, 115, 114, 114)),
-                                      )
-                                    : Text(
-                                        '',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Montserrat',
-                                            color: Color.fromARGB(
-                                                255, 115, 114, 114)),
-                                      )),
-                          ],
-                        ),
-                      )),
+                          )),
           Container(
               margin: EdgeInsets.only(top: 10),
               width: screenW * 1,
@@ -1598,7 +1869,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                               margin: EdgeInsets.only(top: 8, left: 10),
                               // height: screenH * 0.04,
                               child: Text(
-                                'Manual Setting #${widget.HOUSEname}', textScaleFactor: 1.0,
+                                'Manual Setting #${widget.HOUSEname}',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -1615,7 +1887,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X', textScaleFactor: 1.0,
+                                'X',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -1662,115 +1935,171 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                               //  width: screenW*0.5,
                               child: TextButton(
                                 onPressed: () {
-      //                               showDialog(
-      //   barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
-      //   barrierDismissible: false,
-      //   context: context,
-      //   builder: (context) {
-      //     return StatefulBuilder(
-      //         builder: (BuildContext context, StateSetter setState) {
-      //       return SimpleDialog(
-      // title: ListTile(
-      //   // leading: Image.asset('images/maps.png',height: 600,),
-      //   title: Text('แก้ไขข้อมูล', textScaleFactor: 1.0,
-      //   style: TextStyle(
-      //     color: Colors.green,
-      //   // fontFamily: fonts,
-      //   )
-      //     ),
-      //   subtitle: Text( textScaleFactor: 1.0,'คุณต้องการแก้ไขข้อมูลรายการนี้ใช่หรือไม่ ? ', style: TextStyle(
-      //   // fontFamily: fonts,
-      //   )),
+                                  //                               showDialog(
+                                  //   barrierColor: Color.fromARGB(255, 148, 174, 149).withOpacity(0.3),
+                                  //   barrierDismissible: false,
+                                  //   context: context,
+                                  //   builder: (context) {
+                                  //     return StatefulBuilder(
+                                  //         builder: (BuildContext context, StateSetter setState) {
+                                  //       return SimpleDialog(
+                                  // title: ListTile(
+                                  //   // leading: Image.asset('images/maps.png',height: 600,),
+                                  //   title: Text('แก้ไขข้อมูล', textScaleFactor: 1.0,
+                                  //   style: TextStyle(
+                                  //     color: Colors.green,
+                                  //   // fontFamily: fonts,
+                                  //   )
+                                  //     ),
+                                  //   subtitle: Text( textScaleFactor: 1.0,'คุณต้องการแก้ไขข้อมูลรายการนี้ใช่หรือไม่ ? ', style: TextStyle(
+                                  //   // fontFamily: fonts,
+                                  //   )),
 
-      // ),
-      // children: [
-      //   Row(
-      //     mainAxisAlignment: MainAxisAlignment.end,
-      //     children: [
-      //       TextButton(onPressed: () => Navigator.pop(context), child: Text( textScaleFactor: 1.0,'ยกเลิก',
-      //     style: TextStyle(
-      //       // fontFamily: fonts,
-    
-      //         fontSize: 15,
-      //         color: Color.fromARGB(255, 0, 0, 0)),
-      //   )),
-      //          TextButton(onPressed: (){
-      //             Navigator.pop(context);   
-                  
-      //                                API_edit_house_usage(
-      //                                 widget.Token,
-      //                                 widget.farmnum,
-      //                                 widget.num,
-      //                                 nowresult['id'],
-      //                                 Date.text,
-      //                                 double.parse(Usage_Bag.text),
-      //                                 int.parse(Death_Unit.text),
-      //                                 int.parse(Reject_Unit.text),
-      //                                 int.parse(AddOn_Unit.text),
-      //                                 double.parse(Weight_Unit.text),
-      //                                 double.parse(Silo1Usage.text),
-      //                                 double.parse(Silo2Usage.text),
-      //                                 double.parse(Silo1Remain.text),
-      //                                 double.parse(Silo2Remain.text),
-      //                                 double.parse(Silo1Refill.text),
-      //                                 double.parse(Silo2Refill.text),
-      //                                 Crop2);
-      //                             if (widget.cropnum2 != null) {
-      //                               getjaon1_house_information();
-      //                             }
-                               
-                  
-                    
+                                  // ),
+                                  // children: [
+                                  //   Row(
+                                  //     mainAxisAlignment: MainAxisAlignment.end,
+                                  //     children: [
+                                  //       TextButton(onPressed: () => Navigator.pop(context), child: Text( textScaleFactor: 1.0,'ยกเลิก',
+                                  //     style: TextStyle(
+                                  //       // fontFamily: fonts,
 
-                      
-                   
+                                  //         fontSize: 15,
+                                  //         color: Color.fromARGB(255, 0, 0, 0)),
+                                  //   )),
+                                  //          TextButton(onPressed: (){
+                                  //             Navigator.pop(context);
 
-                               
-      //                    } , child: Text('ตกลง', textScaleFactor: 1.0,
-      //     style: TextStyle(
-      //       // fontFamily: fonts,
-      
-      //         fontSize: 15,
-      //         color: Color.fromARGB(255, 0, 0, 0)),
-      //   )),
-      //     ],
-      //   )
-      // ],
-    
-      //           );
-                
-      //     });
-      //   });
-                                  normalDialog1(context,'แก้ไขข้อมูล','คุณต้องการแก้ไขข้อมูลรายการนี้ใช่หรือไม่ ? ',(){
-                                    Navigator.pop(context);   
-                                    Navigator.pop(context);
-                                     API_edit_house_usage(
-                                      widget.Token,
-                                      widget.farmnum,
-                                      widget.num,
-                                      nowresult['id'],
-                                      Date.text,
-                                      double.parse(Usage_Bag.text),
-                                      int.parse(Death_Unit.text),
-                                      int.parse(Reject_Unit.text),
-                                      int.parse(AddOn_Unit.text),
-                                      double.parse(Weight_Unit.text),
-                                      double.parse(Silo1Usage.text),
-                                      double.parse(Silo2Usage.text),
-                                      double.parse(Silo1Remain.text),
-                                      double.parse(Silo2Remain.text),
-                                      double.parse(Silo1Refill.text),
-                                      double.parse(Silo2Refill.text),
-                                      Crop2);
-                                  if (widget.cropnum2 != null) {
-                                    getjaon1_house_information();
-                                  }
-                                  // Navigator.pop(context);
-                                  });
-                                 
+                                  //                                API_edit_house_usage(
+                                  //                                 widget.Token,
+                                  //                                 widget.farmnum,
+                                  //                                 widget.num,
+                                  //                                 nowresult['id'],
+                                  //                                 Date.text,
+                                  //                                 double.parse(Usage_Bag.text),
+                                  //                                 int.parse(Death_Unit.text),
+                                  //                                 int.parse(Reject_Unit.text),
+                                  //                                 int.parse(AddOn_Unit.text),
+                                  //                                 double.parse(Weight_Unit.text),
+                                  //                                 double.parse(Silo1Usage.text),
+                                  //                                 double.parse(Silo2Usage.text),
+                                  //                                 double.parse(Silo1Remain.text),
+                                  //                                 double.parse(Silo2Remain.text),
+                                  //                                 double.parse(Silo1Refill.text),
+                                  //                                 double.parse(Silo2Refill.text),
+                                  //                                 Crop2);
+                                  //                             if (widget.cropnum2 != null) {
+                                  //                               getjaon1_house_information();
+                                  //                             }
+
+                                  //                    } , child: Text('ตกลง', textScaleFactor: 1.0,
+                                  //     style: TextStyle(
+                                  //       // fontFamily: fonts,
+
+                                  //         fontSize: 15,
+                                  //         color: Color.fromARGB(255, 0, 0, 0)),
+                                  //   )),
+                                  //     ],
+                                  //   )
+                                  // ],
+
+                                  //           );
+
+                                  //     });
+                                  //   });
+                                  showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) => SimpleDialog(
+                                      title: ListTile(
+                                        // leading: Image.asset('images/maps.png',height: 600,),
+                                        title: Text('แก้ไขข้อมูล',
+                                            textScaleFactor: 1.0,
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              // fontFamily: fonts,
+                                            )),
+                                        subtitle: Text(
+                                            'คุณต้องการแก้ไขข้อมูลรายการนี้ใช่หรือไม่ ? ',
+                                            textScaleFactor: 1.0,
+                                            style: TextStyle(
+                                                // fontFamily: fonts,
+                                                )),
+                                      ),
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text(
+                                                  'ยกเลิก',
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      // fontFamily: fonts,
+
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 0, 0)),
+                                                )),
+                                            TextButton(
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                  Navigator.pop(context);
+                                                  API_edit_house_usage(
+                                                      widget.Token,
+                                                      widget.farmnum,
+                                                      widget.num,
+                                                      nowresult['id'],
+                                                      Date.text,
+                                                      double.parse(
+                                                          Usage_Bag.text),
+                                                      int.parse(
+                                                          Death_Unit.text),
+                                                      int.parse(
+                                                          Reject_Unit.text),
+                                                      int.parse(
+                                                          AddOn_Unit.text),
+                                                      double.parse(
+                                                          Weight_Unit.text),
+                                                      double.parse(
+                                                          Silo1Usage.text),
+                                                      double.parse(
+                                                          Silo2Usage.text),
+                                                      double.parse(
+                                                          Silo1Remain.text),
+                                                      double.parse(
+                                                          Silo2Remain.text),
+                                                      double.parse(
+                                                          Silo1Refill.text),
+                                                      double.parse(
+                                                          Silo2Refill.text),
+                                                      Crop2);
+                                                  if (widget.cropnum2 != null) {
+                                                    getjaon1_house_information();
+                                                  }
+                                                },
+                                                child: Text(
+                                                  'ตกลง',
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      // fontFamily: fonts,
+
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 0, 0)),
+                                                )),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  );
                                 },
                                 child: Text(
-                                  'Save', textScaleFactor: 1.0,
+                                  'Save',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 15,
@@ -1806,7 +2135,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 1 Refill (kg.):', textScaleFactor: 1.0,
+                      'Silo 1 Refill (kg.):',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1858,7 +2188,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 2 Refill (kg.):', textScaleFactor: 1.0,
+                      'Silo 2 Refill (kg.):',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1921,7 +2252,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 1 Remain (kg.):', textScaleFactor: 1.0,
+                      'Silo 1 Remain (kg.):',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1973,7 +2305,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 2 Remain (kg.):', textScaleFactor: 1.0,
+                      'Silo 2 Remain (kg.):',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2036,7 +2369,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 1 Usage (kg.):', textScaleFactor: 1.0,
+                      'Silo 1 Usage (kg.):',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2088,7 +2422,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Silo 2 Usage (kg.):', textScaleFactor: 1.0,
+                      'Silo 2 Usage (kg.):',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2156,7 +2491,6 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                           color = Colors.red;
                           Crop1 = true;
                           Crop2 = 0;
-            
                         });
                       } else if (Crop2 == 0) {
                         setState(() {
@@ -2164,7 +2498,6 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                           color = Colors.green;
                           Crop1 = false;
                           Crop2 = 1;
-                   
                         });
                       }
                     }),
@@ -2181,7 +2514,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            Crop, textScaleFactor: 1.0,
+                            Crop,
+                            textScaleFactor: 1.0,
                             style: new TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 0, 0, 0),
@@ -2213,7 +2547,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Usage Bag :', textScaleFactor: 1.0,
+                      'Usage Bag :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2258,7 +2593,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Weight/Unit (g.) :', textScaleFactor: 1.0,
+                      'Weight/Unit (g.) :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2314,7 +2650,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'AddOn Unit :', textScaleFactor: 1.0,
+                      'AddOn Unit :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2370,7 +2707,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Death Unit :', textScaleFactor: 1.0,
+                      'Death Unit :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2415,7 +2753,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Reject Unit :', textScaleFactor: 1.0,
+                      'Reject Unit :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2471,7 +2810,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                     width: screenW * 0.74,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Date :', textScaleFactor: 1.0,
+                      'Date :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -2539,7 +2879,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 2 == selected2,
         maintainState: true,
         title: Text(
-          'Report', textScaleFactor: 1.0,
+          'Report',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -2550,7 +2891,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   child: Stack(
                     children: [
                       Container(
-                        width: screenW * 0.95,
+                        // width: screenW * 0.95,
                         margin: EdgeInsets.only(top: 10),
                         //  color: Colors.blueAccent,
                         decoration: BoxDecoration(
@@ -2560,7 +2901,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         height: 274,
                       ),
                       Container(
-                        width: screenW * 0.95,
+                        // width: screenW * 0.95,
                         margin: EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -2576,7 +2917,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                         height: 60,
                       ),
                       Container(
-                        width: screenW * 0.95,
+                        // width: screenW * 0.95,
                         margin: EdgeInsets.only(top: 10),
                         child: Container(
                           decoration: BoxDecoration(
@@ -2587,89 +2928,112 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                           height: 274,
                           // child: SingleChildScrollView(
 
-                          child: DataTable2(
+                          child: DataTable(
                               headingRowHeight: 40.0,
                               dataRowColor:
                                   MaterialStateProperty.all(Colors.white),
                               columnSpacing: 0,
                               horizontalMargin: 15,
-                              minWidth: screenW * 0.9,
                               columns: [
                                 DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Date", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
+                                  label: Container(
+                                    width: 100,
+                                    child: Center(
+                                      child: Text(
+                                        "Date",
+                                        textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "day", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
+                                  label: Container(
+                                    width: 100,
+                                    child: Center(
+                                      child: Text(
+                                        "day",
+                                        textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "No.", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
+                                  label: Container(
+                                     width: 100,
+                                    child: Center(
+                                      child: Text(
+                                        "No.",
+                                        textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Remain", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
+                                  label: Container(
+                                    width: 100,
+                                    child: Center(
+                                      child: Text(
+                                        "Remain",
+                                        textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Refill", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
+                                  label: Container(
+                                     width: 100,
+                                    child: Center(
+                                      child: Text(
+                                        "Refill",
+                                        textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Edit", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
+                                  label: Container(
+                                   width: 100,
+                                    child: Center(
+                                      child: Text(
+                                        "Edit",
+                                        textScaleFactor: 1.0,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            fontFamily: 'Montserrat',
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255)),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -2694,358 +3058,745 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       width: screenW * 0.45,
                       height: 170,
                       child: Center(child: CircularProgressIndicator()))
-                  : nowresult1_3 == null?Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: screenW * 0.95,
-                        margin: EdgeInsets.only(top: 10),
-                        //  color: Colors.blueAccent,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        height: 274,
-                      ),
-                      Container(
-                        width: screenW * 0.95,
-                        margin: EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.blueAccent,
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                // stops: [0.3, 1],
-                                colors: [
-                                  Color.fromARGB(255, 160, 193, 238),
-                                  Color.fromARGB(255, 94, 157, 228)
-                                ])),
-                        height: 60,
-                      ),
-                      Container(
-                        width: screenW * 0.95,
-                        margin: EdgeInsets.only(top: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          margin: EdgeInsets.only(top: 5),
+                  : nowresult1_3 == null
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  // width: screenW * 0.95,
+                                  margin: EdgeInsets.only(top: 10),
+                                  //  color: Colors.blueAccent,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
+                                  height: 274,
+                                ),
+                                Container(
+                                  // width: screenW * 0.95,
+                                  margin: EdgeInsets.only(top: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.blueAccent,
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          // stops: [0.3, 1],
+                                          colors: [
+                                            Color.fromARGB(255, 160, 193, 238),
+                                            Color.fromARGB(255, 94, 157, 228)
+                                          ])),
+                                  height: 60,
+                                ),
+                                Container(
+                                  // width: screenW * 0.95,
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    margin: EdgeInsets.only(top: 5),
 
-                          height: 274,
-                          // child: SingleChildScrollView(
+                                    height: 274,
+                                    // child: SingleChildScrollView(
 
-                          child: DataTable2(
-                              headingRowHeight: 40.0,
-                              dataRowColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              columnSpacing: 0,
-                              horizontalMargin: 15,
-                              minWidth: screenW * 0.9,
-                              columns: [
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Date", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "day", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "No.", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Remain", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Refill", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Edit", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
+                                    child: DataTable(
+                                        headingRowHeight: 40.0,
+                                        dataRowColor: MaterialStateProperty.all(
+                                            Colors.white),
+                                        columnSpacing: 0,
+                                        horizontalMargin: 15,
+                                        columns: [
+                                          DataColumn(
+                                            label: Container(
+                                          width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Date",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                           width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "day",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                              width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "No.",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                           width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Remain",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                             width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Refill",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                            width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Edit",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        rows: _products1.map((item) {
+                                          return DataRow(cells: [
+                                            DataCell(Center(child: Text(''))),
+                                            DataCell(Center(child: Text(''))),
+                                            DataCell(Center(child: Text(''))),
+                                            DataCell(Center(child: Text(''))),
+                                            DataCell(Center(child: Text(''))),
+                                            DataCell(Center(child: Text(''))),
+                                          ]);
+                                        }).toList()),
+                                    // )
                                   ),
                                 ),
                               ],
-                              rows: _products1.map((item) {
-                                return DataRow(cells: [
-                                  DataCell(Center(child: Text(''))),
-                                  DataCell(Center(child: Text(''))),
-                                  DataCell(Center(child: Text(''))),
-                                  DataCell(Center(child: Text(''))),
-                                  DataCell(Center(child: Text(''))),
-                                  DataCell(Center(child: Text(''))),
-                                ]);
-                              }).toList()),
-                          // )
-                        ),
-                      ),
-                    ],
-                  ))
-                  : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: screenW * 0.95,
-                            margin: EdgeInsets.only(top: 10),
-                            //  color: Colors.blueAccent,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
                             ),
-                            height: 274,
-                          ),
-                          Container(
-                            width: screenW * 0.95,
-                            margin: EdgeInsets.only(top: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.blueAccent,
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    // stops: [0.3, 1],
-                                    colors: [
-                                      Color.fromARGB(255, 160, 193, 238),
-                                      Color.fromARGB(255, 94, 157, 228)
-                                    ])),
-                            height: 60,
-                          ),
-                          Container(
-                            // color: Color.fromARGB(255, 255, 255, 255),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    // stops: [0.3, 1],
-                                    colors: [
-                                      Color.fromARGB(255, 160, 193, 238),
-                                      Color.fromARGB(255, 94, 157, 228)
-                                    ])),
-                            margin: EdgeInsets.only(top: 5),
-                            width: screenW * 1,
-                            height: 274,
-                            child: DataTable2(
-                              // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                              //   border: Border.all(color: Color.fromARGB(255, 94, 157, 228), width: 2)),
-                              headingRowHeight: 40.0,
-                              dataRowColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              columnSpacing: 0,
-                              horizontalMargin: 15,
-                              minWidth: screenW * 0.9,
-                              columns: [
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Date", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
+                          ))
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  // width: screenW * 0.95,
+                                  margin: EdgeInsets.only(top: 10),
+                                  //  color: Colors.blueAccent,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
                                   ),
+                                  height: 274,
                                 ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "day", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
+                                Container(
+                                  // width: screenW * 0.95,
+                                  margin: EdgeInsets.only(top: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.blueAccent,
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          // stops: [0.3, 1],
+                                          colors: [
+                                            Color.fromARGB(255, 160, 193, 238),
+                                            Color.fromARGB(255, 94, 157, 228)
+                                          ])),
+                                  height: 60,
                                 ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "No.", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Remain", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Refill", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Center(
-                                    child: Text(
-                                      "Edit", textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          fontFamily: 'Montserrat',
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255)),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              rows: widget.cropnum2 == null
-                                  ? _products1.map((item) {
-                                      return DataRow(cells: [
-                                        DataCell(Center(child: Text(''))),
-                                        DataCell(Center(child: Text(''))),
-                                        DataCell(Center(child: Text(''))),
-                                        DataCell(Center(child: Text(''))),
-                                        DataCell(Center(child: Text(''))),
-                                        DataCell(Center(child: Text(''))),
-                                      ]);
-                                    }).toList()
-                                  : nowresult1_3.map((nowresult) {
-                                      return DataRow(cells: [
-                                        DataCell(Center(
-                                          child: Text(
-                                            '${nowresult['d_pdate'] ?? " "}', textScaleFactor: 1.0,
-                                            style: TextStyle(
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat',
+                                Container(
+                                  // color: Color.fromARGB(255, 255, 255, 255),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          // stops: [0.3, 1],
+                                          colors: [
+                                            Color.fromARGB(255, 160, 193, 238),
+                                            Color.fromARGB(255, 94, 157, 228)
+                                          ])),
+                                  margin: EdgeInsets.only(top: 5),
+                                  // width: screenW * 1,
+                                  height: 274,
+                                  child: SingleChildScrollView(
+                                    child: DataTable(
+                                      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                                      //   border: Border.all(color: Color.fromARGB(255, 94, 157, 228), width: 2)),
+                                      headingRowHeight: 40.0,
+                                      dataRowColor: MaterialStateProperty.all(
+                                          Colors.white),
+                                      columnSpacing: 0,
+                                      horizontalMargin: 15,
+                                      // minWidth: screenW * 0.9,
+                                      columns: [
+                                        DataColumn(
+                                          label: Container(
+                                       width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "Date",
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                              ),
                                             ),
                                           ),
-                                        )),
-                                        DataCell(Center(
-                                          child: Text(
-                                            '${nowresult['n_day'] ?? " "}', textScaleFactor: 1.0,
-                                            style: TextStyle(
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                        )),
-                                        DataCell(Center(
-                                          child: Text(
-                                            '${nowresult['price'] ?? " "}', textScaleFactor: 1.0,
-                                            style: TextStyle(
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                        )),
-                                        DataCell(Center(
-                                          child: Text(
-                                            '${nowresult['n_remain'] ?? " "}', textScaleFactor: 1.0,
-                                            style: TextStyle(
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                        )),
-                                        DataCell(Center(
-                                          child: Text(
-                                            '${nowresult['c_formula'] ?? " "}', textScaleFactor: 1.0,
-                                            style: TextStyle(
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                        )),
-                                        DataCell(
-                                          Edit(nowresult, context),
                                         ),
-                                      ]);
-                                    }).toList(),
+                                        DataColumn(
+                                          label: Container(
+                                           width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "day",
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Container(
+                                           width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "No.",
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Container(
+                                             width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "Remain",
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Container(
+                                             width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "Refill",
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Container(
+                                              width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                "Edit",
+                                                textScaleFactor: 1.0,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      rows: widget.cropnum2 == null
+                                          ? _products1.map((item) {
+                                              return DataRow(cells: [
+                                                DataCell(
+                                                    Center(child: Text(''))),
+                                                DataCell(
+                                                    Center(child: Text(''))),
+                                                DataCell(
+                                                    Center(child: Text(''))),
+                                                DataCell(
+                                                    Center(child: Text(''))),
+                                                DataCell(
+                                                    Center(child: Text(''))),
+                                                DataCell(
+                                                    Center(child: Text(''))),
+                                              ]);
+                                            }).toList()
+                                          : nowresult1_3.map((nowresult) {
+                                              return DataRow(cells: [
+                                                DataCell(Container(
+                                                      width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${nowresult['d_pdate'] ?? " "}',
+                                                      textScaleFactor: 1.0,
+                                                      style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Montserrat',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                                DataCell(Container(
+                                                      width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${nowresult['n_day'] ?? " "}',
+                                                      textScaleFactor: 1.0,
+                                                      style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Montserrat',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                                DataCell(Container(
+                                                      width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${nowresult['price'] ?? " "}',
+                                                      textScaleFactor: 1.0,
+                                                      style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Montserrat',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                                DataCell(Container(
+                                                      width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${nowresult['n_remain'] ?? " "}',
+                                                      textScaleFactor: 1.0,
+                                                      style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Montserrat',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                                DataCell(Container(
+                                                      width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${nowresult['c_formula'] ?? " "}',
+                                                      textScaleFactor: 1.0,
+                                                      style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Montserrat',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                                DataCell(
+                                                  Container(
+                                                        width: 100,
+                                                    child: Edit(nowresult, context)),
+                                                ),
+                                              ]);
+                                            }).toList(),
+                                    ),
+                                  ),
+                                  // child: DataTable2(
+                                  //   // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                                  //   //   border: Border.all(color: Color.fromARGB(255, 94, 157, 228), width: 2)),
+                                  //   headingRowHeight: 40.0,
+                                  //   dataRowColor:
+                                  //       MaterialStateProperty.all(Colors.white),
+                                  //   columnSpacing: 0,
+                                  //   horizontalMargin: 15,
+                                  //   minWidth: screenW * 0.9,
+                                  //   columns: [
+                                  //     DataColumn(
+                                  //       label: Center(
+                                  //         child: Text(
+                                  //           "Date", textScaleFactor: 1.0,
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 13,
+                                  //               fontFamily: 'Montserrat',
+                                  //               color: Color.fromARGB(
+                                  //                   255, 255, 255, 255)),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     DataColumn(
+                                  //       label: Center(
+                                  //         child: Text(
+                                  //           "day", textScaleFactor: 1.0,
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 13,
+                                  //               fontFamily: 'Montserrat',
+                                  //               color: Color.fromARGB(
+                                  //                   255, 255, 255, 255)),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     DataColumn(
+                                  //       label: Center(
+                                  //         child: Text(
+                                  //           "No.", textScaleFactor: 1.0,
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 13,
+                                  //               fontFamily: 'Montserrat',
+                                  //               color: Color.fromARGB(
+                                  //                   255, 255, 255, 255)),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     DataColumn(
+                                  //       label: Center(
+                                  //         child: Text(
+                                  //           "Remain", textScaleFactor: 1.0,
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 13,
+                                  //               fontFamily: 'Montserrat',
+                                  //               color: Color.fromARGB(
+                                  //                   255, 255, 255, 255)),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     DataColumn(
+                                  //       label: Center(
+                                  //         child: Text(
+                                  //           "Refill", textScaleFactor: 1.0,
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 13,
+                                  //               fontFamily: 'Montserrat',
+                                  //               color: Color.fromARGB(
+                                  //                   255, 255, 255, 255)),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     DataColumn(
+                                  //       label: Center(
+                                  //         child: Text(
+                                  //           "Edit", textScaleFactor: 1.0,
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 13,
+                                  //               fontFamily: 'Montserrat',
+                                  //               color: Color.fromARGB(
+                                  //                   255, 255, 255, 255)),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  //   rows: widget.cropnum2 == null
+                                  //       ? _products1.map((item) {
+                                  //           return DataRow(cells: [
+                                  //             DataCell(Center(child: Text(''))),
+                                  //             DataCell(Center(child: Text(''))),
+                                  //             DataCell(Center(child: Text(''))),
+                                  //             DataCell(Center(child: Text(''))),
+                                  //             DataCell(Center(child: Text(''))),
+                                  //             DataCell(Center(child: Text(''))),
+                                  //           ]);
+                                  //         }).toList()
+                                  //       : nowresult1_3.map((nowresult) {
+                                  //           return DataRow(cells: [
+                                  //             DataCell(Center(
+                                  //               child: Text(
+                                  //                 '${nowresult['d_pdate'] ?? " "}', textScaleFactor: 1.0,
+                                  //                 style: TextStyle(
+                                  //                   // fontWeight: FontWeight.bold,
+                                  //                   fontSize: 12,
+                                  //                   fontFamily: 'Montserrat',
+                                  //                 ),
+                                  //               ),
+                                  //             )),
+                                  //             DataCell(Center(
+                                  //               child: Text(
+                                  //                 '${nowresult['n_day'] ?? " "}', textScaleFactor: 1.0,
+                                  //                 style: TextStyle(
+                                  //                   // fontWeight: FontWeight.bold,
+                                  //                   fontSize: 12,
+                                  //                   fontFamily: 'Montserrat',
+                                  //                 ),
+                                  //               ),
+                                  //             )),
+                                  //             DataCell(Center(
+                                  //               child: Text(
+                                  //                 '${nowresult['price'] ?? " "}', textScaleFactor: 1.0,
+                                  //                 style: TextStyle(
+                                  //                   // fontWeight: FontWeight.bold,
+                                  //                   fontSize: 12,
+                                  //                   fontFamily: 'Montserrat',
+                                  //                 ),
+                                  //               ),
+                                  //             )),
+                                  //             DataCell(Center(
+                                  //               child: Text(
+                                  //                 '${nowresult['n_remain'] ?? " "}', textScaleFactor: 1.0,
+                                  //                 style: TextStyle(
+                                  //                   // fontWeight: FontWeight.bold,
+                                  //                   fontSize: 12,
+                                  //                   fontFamily: 'Montserrat',
+                                  //                 ),
+                                  //               ),
+                                  //             )),
+                                  //             DataCell(Center(
+                                  //               child: Text(
+                                  //                 '${nowresult['c_formula'] ?? " "}', textScaleFactor: 1.0,
+                                  //                 style: TextStyle(
+                                  //                   // fontWeight: FontWeight.bold,
+                                  //                   fontSize: 12,
+                                  //                   fontFamily: 'Montserrat',
+                                  //                 ),
+                                  //               ),
+                                  //             )),
+                                  //             DataCell(
+                                  //               Edit(nowresult, context),
+                                  //             ),
+                                  //           ]);
+                                  //         }).toList(),
+                                  // ),
+                                ),
+                                Container(
+                                  // color: Color.fromARGB(255, 255, 255, 255),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          // stops: [0.3, 1],
+                                          colors: [
+                                            Color.fromARGB(255, 160, 193, 238),
+                                            Color.fromARGB(255, 94, 157, 228)
+                                          ])),
+                                  margin: EdgeInsets.only(top: 5),
+                                  // width: screenW * 1,
+                                  height: 40,
+                                  child: SingleChildScrollView(
+                                    child: DataTable(
+                                        // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                                        //   border: Border.all(color: Color.fromARGB(255, 94, 157, 228), width: 2)),
+                                        headingRowHeight: 40.0,
+                                        dataRowColor: MaterialStateProperty.all(
+                                            Colors.white),
+                                        columnSpacing: 0,
+                                        horizontalMargin: 15,
+                                        // minWidth: screenW * 0.9,
+                                        columns: [
+                                          DataColumn(
+                                            label: Container(
+                                           width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Date",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                              width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "day",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                                  width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "No.",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                                 width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Remain",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                                 width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Refill",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          DataColumn(
+                                            label: Container(
+                                                  width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  "Edit",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      fontFamily: 'Montserrat',
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        rows: []),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
           // ),
           Container(
               // margin: EdgeInsets.only(top: 10),
@@ -3054,7 +3805,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-  // Edit  Manual Setting  
+  // Edit  Manual Setting
   Center Edit(nowresult, BuildContext context) {
     DateTime now = DateTime.now();
     List<String> pdate = nowresult['d_pdate'].split("-");
@@ -3104,6 +3855,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       );
     }
   }
+
   //Plot_Graph
   Widget Plot_Graph4(BuildContext context) => ExpansionTile(
         // key: K4,
@@ -3130,7 +3882,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 3 == selected2,
         maintainState: true,
         title: Text(
-          'Plot Graph', textScaleFactor: 1.0,
+          'Plot Graph',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -3166,7 +3919,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                             items: Plot.map((Plot) => DropdownMenuItem<String>(
                                 value: Plot,
                                 child: Text(
-                                  Plot, textScaleFactor: 1.0,
+                                  Plot,
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -3213,7 +3967,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 .map((day) => DropdownMenuItem<String>(
                                     value: day['name'],
                                     child: Text(
-                                      day['name'], textScaleFactor: 1.0,
+                                      day['name'],
+                                      textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -3262,7 +4017,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       }
                     },
                     child: Text(
-                      'Download', textScaleFactor: 1.0,
+                      'Download',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -3311,7 +4067,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         DropdownMenuItem<String>(
                                             value: Nosamount2,
                                             child: Text(
-                                              Nosamount2, textScaleFactor: 1.0,
+                                              Nosamount2,
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -3333,7 +4090,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((amount) => DropdownMenuItem<String>(
                                         value: amount['name'],
                                         child: Text(
-                                          amount["name"], textScaleFactor: 1.0,
+                                          amount["name"],
+                                          textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3418,7 +4176,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         DropdownMenuItem<String>(
                                             value: Nosamount2,
                                             child: Text(
-                                              Nosamount2, textScaleFactor: 1.0,
+                                              Nosamount2,
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -3440,7 +4199,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((samount2) => DropdownMenuItem<String>(
                                         value: samount2["name"],
                                         child: Text(
-                                          samount2["name"], textScaleFactor: 1.0,
+                                          samount2["name"],
+                                          textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3459,7 +4219,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                       setState(() {
                                         numamount2 = widget.samount1![i]['id'];
                                         samount2 = samount22!;
-                                  
+
                                         if (samount22.contains('ต่อตัว')) {
                                           kg2 = 'gram/ea.';
                                         }
@@ -3496,7 +4256,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   height: screenH * 0.57,
                   child: Center(
                       child: Text(
-                    'No data to display.', textScaleFactor: 1.0,
+                    'No data to display.',
+                    textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                   )),
                 )
@@ -3505,15 +4266,18 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       margin: EdgeInsets.only(top: 10),
                       height: screenH * 0.57,
                       child: Center(child: CircularProgressIndicator()))
-                  : nowresult2_1 == null ? Container(
-                  height: screenH * 0.57,
-                  child: Center(
-                      child: Text(
-                    'No data to display.', textScaleFactor: 1.0,
-                    style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
-                  )),
-                )
-                  :newMethodLine4(),
+                  : nowresult2_1 == null
+                      ? Container(
+                          height: screenH * 0.57,
+                          child: Center(
+                              child: Text(
+                            'No data to display.',
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Montserrat'),
+                          )),
+                        )
+                      : newMethodLine4(),
           Container(
               margin: EdgeInsets.only(top: 10),
               width: screenW * 1,
@@ -3521,8 +4285,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
               color: Color.fromARGB(255, 112, 112, 112)),
         ],
       );
-   
-    // Chart Plot_Graph
+
+  // Chart Plot_Graph
   Container newMethodLine4() {
     double n = screenW * 0.065;
     int? sC, sF;
@@ -3566,7 +4330,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
     }
 
     double? Number;
-    
+
     if (nowresult2_1.length < 30) {
       Number = nowresult2_1.length / 11;
     }
@@ -3578,7 +4342,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
     }
     String Number1 = Number!.toStringAsFixed(0);
     int Number2 = int.parse('$Number1');
-   
+
     return Container(
       margin: EdgeInsets.only(top: 10),
       height: screenH * 0.57,
@@ -3761,6 +4525,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
       ),
     );
   }
+
   //Daily_Information_Usage
   Widget Daily_Information_Usage5(BuildContext context) => ExpansionTile(
         // key: K5,
@@ -3788,7 +4553,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
         // initiallyExpanded: 4 == selected2,
         maintainState: true,
         title: Text(
-          'Daily Information Usage', textScaleFactor: 1.0,
+          'Daily Information Usage',
+          textScaleFactor: 1.0,
           style: TextStyle(
               fontSize: 15, fontFamily: 'Montserrat', color: Color(0xff44bca3)),
         ),
@@ -3826,7 +4592,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((NoView) => DropdownMenuItem<String>(
                                         value: NoView,
                                         child: Text(
-                                          NoView, textScaleFactor: 1.0,
+                                          NoView,
+                                          textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3848,7 +4615,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                     .map((View) => DropdownMenuItem<String>(
                                         value: View['name'],
                                         child: Text(
-                                          View['name'], textScaleFactor: 1.0,
+                                          View['name'],
+                                          textScaleFactor: 1.0,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -3906,7 +4674,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                 Graph.map((Graph) => DropdownMenuItem<String>(
                                     value: Graph,
                                     child: Text(
-                                      Graph, textScaleFactor: 1.0,
+                                      Graph,
+                                      textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -3959,7 +4728,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       saveExcelAgeinformation(nowresult3, 'DailyUsageData');
                     },
                     child: Text(
-                      'Download', textScaleFactor: 1.0,
+                      'Download',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15,
@@ -3978,32 +4748,34 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                       height: screenH * 0.57,
                       child: Center(
                           child: Text(
-                        'No data to display.', textScaleFactor: 1.0,
+                        'No data to display.',
+                        textScaleFactor: 1.0,
                         style:
                             TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
                       )),
                     )
                   : loading3
                       ? Center(child: CircularProgressIndicator())
-                      : nowresult3 == null ? Container(
-                      height: screenH * 0.57,
-                      child: Center(
-                          child: Text(
-                        'No data to display.', textScaleFactor: 1.0,
-                        style:
-                            TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
-                      )),
-                    )
-                    :BarChart5()),
+                      : nowresult3 == null
+                          ? Container(
+                              height: screenH * 0.57,
+                              child: Center(
+                                  child: Text(
+                                'No data to display.',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontSize: 16, fontFamily: 'Montserrat'),
+                              )),
+                            )
+                          : BarChart5()),
           Container(
               margin: EdgeInsets.only(top: 10),
               width: screenW * 1,
               height: screenH * 0.001,
               color: Color.fromARGB(255, 112, 112, 112)),
-              
         ],
       );
-   // Chart Daily_Information_Usage
+  // Chart Daily_Information_Usage
   charts.BarChart BarChart5() {
     double? Number;
 
@@ -4150,7 +4922,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                   color: charts.MaterialPalette.black))),
     );
   }
-  //ข้อมูล Chart Daily_Information_Usage 
+
+  //ข้อมูล Chart Daily_Information_Usage
   List<charts.Series<dynamic, String>> _createSampleDataBar() {
     return [
       charts.Series<dynamic, String>(
@@ -4199,18 +4972,14 @@ class ColorCircle extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    
-    
-   
-    
-      var paint = new Paint();
-    
+    var paint = new Paint();
+
     paint.color = Color(0xFF555555);
     paint.style = PaintingStyle.fill;
     var paint1 = new Paint();
     paint1.color = Color(0xFF48cb01);
     paint1.style = PaintingStyle.fill;
-    
+
     if (S! > upper_percent!) {
       paint1.color = Color(0xFF9cc833);
     }
@@ -4428,7 +5197,8 @@ class CustomCircleSymbolRenderer1 extends charts.CircleSymbolRenderer {
     textStyle.fontSize = 13;
 
     canvas.drawText(
-        chartText.TextElement('${ToolTipMgr.title}',  textScaleFactor: 1.0,style: textStyle),
+        chartText.TextElement('${ToolTipMgr.title}',
+            textScaleFactor: 1.0, style: textStyle),
         (110 - 10.0 - 35).round(),
         (25.0 - 5).round());
     if (ToolTipMgr.subTitle == 'undefeated') {
@@ -4450,15 +5220,18 @@ class CustomCircleSymbolRenderer1 extends charts.CircleSymbolRenderer {
           '${NumberFormat.compact().format(double.parse('${ToolTipMgr.subTitle2}'))}';
     }
     canvas.drawText(
-        chartText.TextElement('ปริมาณคงเหลือ ' + '$unit1', textScaleFactor: 1.0, style: textStyle),
+        chartText.TextElement('ปริมาณคงเหลือ ' + '$unit1',
+            textScaleFactor: 1.0, style: textStyle),
         (110 - 10.0 - 35).round(),
         (27.0 + 7).round());
     canvas.drawText(
-        chartText.TextElement('ปริมาณการกิน ' + '$unit2',  textScaleFactor: 1.0,style: textStyle),
+        chartText.TextElement('ปริมาณการกิน ' + '$unit2',
+            textScaleFactor: 1.0, style: textStyle),
         (110 - 10.0 - 35).round(),
         (42.0 + 7).round());
     canvas.drawText(
-        chartText.TextElement('ปริมาณการเติม ' + '$unit3', textScaleFactor: 1.0, style: textStyle),
+        chartText.TextElement('ปริมาณการเติม ' + '$unit3',
+            textScaleFactor: 1.0, style: textStyle),
         (110 - 10.0 - 35).round(),
         (55.0 + 7).round());
   }
@@ -4544,7 +5317,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
         for (int j = 0; j < amount1!.length; j++) {
           if (samount1 == amount1![j]['name']) {
             canvas.drawText(
-                chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
+                chartText.TextElement(tooltips[0]['title'],
+                    textScaleFactor: 1.0, style: textStyle),
                 (110 - 10.0 - 35).round(),
                 (25.0 - 5).round());
             for (int i = 1; i < nowresult2_1![0].keys.length; i++) {
@@ -4556,7 +5330,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
               }
               canvas.drawText(
                   chartText.TextElement(
-                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
+                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_',
+                      textScaleFactor: 1.0,
                       style: textStyle),
                   (110 - 10.0 - 35).round(),
                   (13 + (i * 13) + 7).round());
@@ -4583,7 +5358,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
         for (int j = 0; j < amount1!.length; j++) {
           if (samount1 == amount1![j]['name']) {
             canvas.drawText(
-                chartText.TextElement(tooltips[0]['title'], textScaleFactor: 1.0, style: textStyle),
+                chartText.TextElement(tooltips[0]['title'],
+                    textScaleFactor: 1.0, style: textStyle),
                 (265 - 10.0 - 35).round(),
                 (25.0 - 5).round());
 
@@ -4597,7 +5373,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
               }
               canvas.drawText(
                   chartText.TextElement(
-                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
+                      '${nowresult2_1![0].keys.elementAt(i)} : ' + '$unit2_',
+                      textScaleFactor: 1.0,
                       style: textStyle),
                   (265 - 10.0 - 35).round(),
                   (Sn).round());
@@ -4640,7 +5417,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
           for (int j = 0; j < amount1!.length; j++) {
             if (samount2 == amount1![j]['name']) {
               canvas.drawText(
-                  chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
+                  chartText.TextElement(tooltips[0]['title'],
+                      textScaleFactor: 1.0, style: textStyle),
                   (110 - 10.0 - 35).round(),
                   (25.0 - 5).round());
 
@@ -4653,7 +5431,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
                 }
                 canvas.drawText(
                     chartText.TextElement(
-                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
+                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_',
+                        textScaleFactor: 1.0,
                         style: textStyle),
                     (110 - 10.0 - 35).round(),
                     (13 + (i * 13) + 7).round());
@@ -4696,7 +5475,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
           for (int j = 0; j < amount1!.length; j++) {
             if (samount2 == amount1![j]['name']) {
               canvas.drawText(
-                  chartText.TextElement(tooltips[0]['title'],  textScaleFactor: 1.0,style: textStyle),
+                  chartText.TextElement(tooltips[0]['title'],
+                      textScaleFactor: 1.0, style: textStyle),
                   (265 - 10.0 - 35).round(),
                   (25.0 - 5).round());
 
@@ -4709,7 +5489,8 @@ class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
                 }
                 canvas.drawText(
                     chartText.TextElement(
-                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_', textScaleFactor: 1.0,
+                        '${nowresult2![0].keys.elementAt(i)} : ' + '$unit2_',
+                        textScaleFactor: 1.0,
                         style: textStyle),
                     (265 - 10.0 - 35).round(),
                     (13 + (i * 13) + 7).round());

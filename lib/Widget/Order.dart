@@ -1,6 +1,5 @@
 //หน้า Order
 
-
 import 'dart:async';
 import 'dart:convert';
 
@@ -334,7 +333,8 @@ class _OrderState extends State<Order> {
                               margin: EdgeInsets.only(top: 8, left: 10),
                               // height: screenH * 0.04,
                               child: Text(
-                                'Create Order', textScaleFactor: 1.0,
+                                'Create Order',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -351,7 +351,8 @@ class _OrderState extends State<Order> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X', textScaleFactor: 1.0,
+                                'X',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -418,24 +419,73 @@ class _OrderState extends State<Order> {
                   // print(Order_Ref.text);
                   // print("$Start");
                   // print('$End');
-                   normalDialog1(context,'แก้ไขข้อมูล edit order','คุณต้องการแก้ไขข้อมูล edit order รายการนี้ใช่หรือไม่ ? ',(){
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                  API_edit_order_edit(
-                      widget.Token,
-                      widget.farmnum,
-                      Order_Ref.text,
-                      "$Start",
-                      '$End',
-                      nowresult1_1[index]['c_name_crop'],
-                      Ship_Conditionnameedit,
-                      Feed_Formulanameedit,
-                      int.parse(Number2.text),
-                      Unitnameedit,
-                      Remark2.text,
-                      widget.id);
-                  getjaon1_order_information();});
-                  // Navigator.pop(context);
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => SimpleDialog(
+                      title: ListTile(
+                        // leading: Image.asset('images/maps.png',height: 600,),
+                        title: Text('แก้ไขข้อมูล edit order',
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                              color: Colors.green,
+                              // fontFamily: fonts,
+                            )),
+                        subtitle: Text(
+                            'คุณต้องการแก้ไขข้อมูล edit order รายการนี้ใช่หรือไม่ ? ',
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                                // fontFamily: fonts,
+                                )),
+                      ),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  'ยกเลิก',
+                                  textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      // fontFamily: fonts,
+
+                                      fontSize: 15,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                )),
+                            TextButton(
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  API_edit_order_edit(
+                                      widget.Token,
+                                      widget.farmnum,
+                                      Order_Ref.text,
+                                      "$Start",
+                                      '$End',
+                                      nowresult1_1[index]['c_name_crop'],
+                                      Ship_Conditionnameedit,
+                                      Feed_Formulanameedit,
+                                      int.parse(Number2.text),
+                                      Unitnameedit,
+                                      Remark2.text,
+                                      widget.id);
+                                  getjaon1_order_information();
+                                },
+                                child: Text(
+                                  'ตกลง',
+                                  textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      // fontFamily: fonts,
+
+                                      fontSize: 15,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                )),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
                 }
                 // print('=======2=========');
 
@@ -449,7 +499,8 @@ class _OrderState extends State<Order> {
                 // print(widget.id);
               },
               child: Text(
-                'Save', textScaleFactor: 1.0,
+                'Save',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15,
@@ -477,7 +528,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.74,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Remark :', textScaleFactor: 1.0,
+                      'Remark :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -535,7 +587,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Number :', textScaleFactor: 1.0,
+                      'Number :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -580,7 +633,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Unit :', textScaleFactor: 1.0,
+                      'Unit :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -602,7 +656,10 @@ class _OrderState extends State<Order> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('${nowresult1_1[index]['c_unit']}', textScaleFactor: 1.0,),
+                              Text(
+                                '${nowresult1_1[index]['c_unit']}',
+                                textScaleFactor: 1.0,
+                              ),
                               Icon(
                                 Icons.arrow_drop_down,
                                 color: Color.fromARGB(255, 78, 78, 78),
@@ -623,7 +680,8 @@ class _OrderState extends State<Order> {
                                             DropdownMenuItem<String>(
                                                 value: NoView_by,
                                                 child: Text(
-                                                  NoView_by, textScaleFactor: 1.0,
+                                                  NoView_by,
+                                                  textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontFamily: 'Montserrat',
@@ -642,7 +700,8 @@ class _OrderState extends State<Order> {
                                         .map((Unit) => DropdownMenuItem<String>(
                                             value: Unit['name'],
                                             child: Text(
-                                              Unit['name'], textScaleFactor: 1.0,
+                                              Unit['name'],
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -682,7 +741,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Ship Condition :', textScaleFactor: 1.0,
+                      'Ship Condition :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -704,7 +764,10 @@ class _OrderState extends State<Order> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('${nowresult1_1[index]['c_ship_cond']}', textScaleFactor: 1.0,),
+                              Text(
+                                '${nowresult1_1[index]['c_ship_cond']}',
+                                textScaleFactor: 1.0,
+                              ),
                               Icon(
                                 Icons.arrow_drop_down,
                                 color: Color.fromARGB(255, 78, 78, 78),
@@ -722,7 +785,8 @@ class _OrderState extends State<Order> {
                                             DropdownMenuItem<String>(
                                                 value: NoView_by,
                                                 child: Text(
-                                                  NoView_by, textScaleFactor: 1.0,
+                                                  NoView_by,
+                                                  textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontFamily: 'Montserrat',
@@ -742,7 +806,8 @@ class _OrderState extends State<Order> {
                                             DropdownMenuItem<String>(
                                                 value: Ship_Condition['code'],
                                                 child: Text(
-                                                  Ship_Condition['code'], textScaleFactor: 1.0,
+                                                  Ship_Condition['code'],
+                                                  textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     fontFamily: 'Montserrat',
@@ -771,7 +836,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Feed Formula :', textScaleFactor: 1.0,
+                      'Feed Formula :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -793,7 +859,10 @@ class _OrderState extends State<Order> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('${nowresult1_1[index]['c_formula']}', textScaleFactor: 1.0,),
+                              Text(
+                                '${nowresult1_1[index]['c_formula']}',
+                                textScaleFactor: 1.0,
+                              ),
                               Icon(
                                 Icons.arrow_drop_down,
                                 color: Color.fromARGB(255, 78, 78, 78),
@@ -810,7 +879,8 @@ class _OrderState extends State<Order> {
                                             DropdownMenuItem<String>(
                                                 value: NoView_by,
                                                 child: Text(
-                                                  NoView_by, textScaleFactor: 1.0,
+                                                  NoView_by,
+                                                  textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontFamily: 'Montserrat',
@@ -829,7 +899,8 @@ class _OrderState extends State<Order> {
                                             DropdownMenuItem<String>(
                                                 value: Feed_Formula['FEED'],
                                                 child: Text(
-                                                  Feed_Formula['FEED'], textScaleFactor: 1.0,
+                                                  Feed_Formula['FEED'],
+                                                  textScaleFactor: 1.0,
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     fontFamily: 'Montserrat',
@@ -867,7 +938,8 @@ class _OrderState extends State<Order> {
               Container(
                 width: screenW * 0.74,
                 child: Text(
-                  'Name Crop :', textScaleFactor: 1.0,
+                  'Name Crop :',
+                  textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -892,7 +964,10 @@ class _OrderState extends State<Order> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('${nowresult1_1[index]['c_name_crop']}', textScaleFactor: 1.0,),
+                        Text(
+                          '${nowresult1_1[index]['c_name_crop']}',
+                          textScaleFactor: 1.0,
+                        ),
                         Icon(
                           Icons.arrow_drop_down,
                           color: Color.fromARGB(255, 78, 78, 78),
@@ -1001,7 +1076,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Order Date :', textScaleFactor: 1.0,
+                      'Order Date :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1029,7 +1105,8 @@ class _OrderState extends State<Order> {
                           // DateStart(setState);
                         },
                         child: Text(
-                          "${Start!.year}-${Start!.month}-${Start!.day}", textScaleFactor: 1.0,
+                          "${Start!.year}-${Start!.month}-${Start!.day}",
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Montserrat',
@@ -1049,7 +1126,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Filling Date :', textScaleFactor: 1.0,
+                      'Filling Date :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1077,7 +1155,8 @@ class _OrderState extends State<Order> {
                           //  DateEnd(setState);
                         },
                         child: Text(
-                          "${End!.year}-${End!.month}-${End!.day}", textScaleFactor: 1.0,
+                          "${End!.year}-${End!.month}-${End!.day}",
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Montserrat',
@@ -1109,7 +1188,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.74,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Order Ref :', textScaleFactor: 1.0,
+                      'Order Ref :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1249,7 +1329,8 @@ class _OrderState extends State<Order> {
                           Container(
                               margin: EdgeInsets.only(top: 8, left: 10),
                               child: Text(
-                                'Create Order', textScaleFactor: 1.0,
+                                'Create Order',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -1266,7 +1347,8 @@ class _OrderState extends State<Order> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X', textScaleFactor: 1.0,
+                                'X',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -1341,22 +1423,72 @@ class _OrderState extends State<Order> {
                 //  print('9=$Unitname');
                 //  print('10=${Remark1.text}');
                 //  print('11=${widget.id}');
-                normalDialog1(context,'แก้ไขข้อมูล create order','คุณต้องการแก้ไขข้อมูล create order รายการนี้ใช่หรือไม่ ? ',(){
-                  Navigator.pop(context);
-                   Navigator.pop(context);
-                API_edit_order_create(
-                    widget.Token,
-                    widget.farmnum,
-                    "$dateTimeStart0",
-                    "$dateTimeEnd0",
-                    Name_Cropname,
-                    Ship_Conditionname,
-                    Feed_Formulaname,
-                    Number1.text,
-                    Unitname,
-                    Remark1.text,
-                    widget.id);
-                });
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) => SimpleDialog(
+                    title: ListTile(
+                      // leading: Image.asset('images/maps.png',height: 600,),
+                      title: Text('แก้ไขข้อมูล create order',
+                          textScaleFactor: 1.0,
+                          style: TextStyle(
+                            color: Colors.green,
+                            // fontFamily: fonts,
+                          )),
+                      subtitle: Text(
+                          'คุณต้องการแก้ไขข้อมูล create order รายการนี้ใช่หรือไม่ ? ',
+                          textScaleFactor: 1.0,
+                          style: TextStyle(
+                              // fontFamily: fonts,
+                              )),
+                    ),
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'ยกเลิก',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
+
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              )),
+                          TextButton(
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                API_edit_order_create(
+                                    widget.Token,
+                                    widget.farmnum,
+                                    "$dateTimeStart0",
+                                    "$dateTimeEnd0",
+                                    Name_Cropname,
+                                    Ship_Conditionname,
+                                    Feed_Formulaname,
+                                    Number1.text,
+                                    Unitname,
+                                    Remark1.text,
+                                    widget.id);
+                              },
+                              child: Text(
+                                'ตกลง',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
+
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+
                 var duration = Duration(seconds: 2);
 
                 // Navigator.pop(context);
@@ -1368,7 +1500,8 @@ class _OrderState extends State<Order> {
                 Timer(duration, route);
               },
               child: Text(
-                'Save', textScaleFactor: 1.0,
+                'Save',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15,
@@ -1396,7 +1529,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.74,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Remark :', textScaleFactor: 1.0,
+                      'Remark :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1453,7 +1587,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Number :', textScaleFactor: 1.0,
+                      'Number :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1497,7 +1632,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Unit :', textScaleFactor: 1.0,
+                      'Unit :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1527,7 +1663,8 @@ class _OrderState extends State<Order> {
                                   .map((NoView_by) => DropdownMenuItem<String>(
                                       value: NoView_by,
                                       child: Text(
-                                        NoView_by, textScaleFactor: 1.0,
+                                        NoView_by,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
@@ -1546,7 +1683,8 @@ class _OrderState extends State<Order> {
                                   .map((Unit) => DropdownMenuItem<String>(
                                       value: Unit['name'],
                                       child: Text(
-                                        Unit['name'], textScaleFactor: 1.0,
+                                        Unit['name'],
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -1586,7 +1724,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Ship Condition :', textScaleFactor: 1.0,
+                      'Ship Condition :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1612,7 +1751,8 @@ class _OrderState extends State<Order> {
                                   .map((NoView_by) => DropdownMenuItem<String>(
                                       value: NoView_by,
                                       child: Text(
-                                        NoView_by, textScaleFactor: 1.0,
+                                        NoView_by,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
@@ -1632,7 +1772,8 @@ class _OrderState extends State<Order> {
                                       DropdownMenuItem<String>(
                                           value: Ship_Condition['code'],
                                           child: Text(
-                                            Ship_Condition['code'], textScaleFactor: 1.0,
+                                            Ship_Condition['code'],
+                                            textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 13,
                                               fontFamily: 'Montserrat',
@@ -1660,7 +1801,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Feed Formula :', textScaleFactor: 1.0,
+                      'Feed Formula :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1686,7 +1828,8 @@ class _OrderState extends State<Order> {
                                   .map((NoView_by) => DropdownMenuItem<String>(
                                       value: NoView_by,
                                       child: Text(
-                                        NoView_by, textScaleFactor: 1.0,
+                                        NoView_by,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
@@ -1705,7 +1848,8 @@ class _OrderState extends State<Order> {
                                       DropdownMenuItem<String>(
                                           value: Feed_Formula['FEED'],
                                           child: Text(
-                                            Feed_Formula['FEED'], textScaleFactor: 1.0,
+                                            Feed_Formula['FEED'],
+                                            textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 13,
                                               fontFamily: 'Montserrat',
@@ -1743,7 +1887,8 @@ class _OrderState extends State<Order> {
               Container(
                 width: screenW * 0.74,
                 child: Text(
-                  'Name Crop :', textScaleFactor: 1.0,
+                  'Name Crop :',
+                  textScaleFactor: 1.0,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -1773,7 +1918,8 @@ class _OrderState extends State<Order> {
                                   .map((NoView_by) => DropdownMenuItem<String>(
                                       value: NoView_by,
                                       child: Text(
-                                        NoView_by, textScaleFactor: 1.0,
+                                        NoView_by,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Montserrat',
@@ -1791,7 +1937,8 @@ class _OrderState extends State<Order> {
                                   .map((Name_Crop) => DropdownMenuItem<String>(
                                       value: Name_Crop,
                                       child: Text(
-                                        Name_Crop, textScaleFactor: 1.0,
+                                        Name_Crop,
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -1831,7 +1978,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Order Date :', textScaleFactor: 1.0,
+                      'Order Date :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1855,7 +2003,8 @@ class _OrderState extends State<Order> {
                           TimeStart(setState);
                         },
                         child: Text(
-                          "${dateTimeStart!.year}-${dateTimeStart!.month}-${dateTimeStart!.day}", textScaleFactor: 1.0,
+                          "${dateTimeStart!.year}-${dateTimeStart!.month}-${dateTimeStart!.day}",
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Montserrat',
@@ -1875,7 +2024,8 @@ class _OrderState extends State<Order> {
                     width: screenW * 0.35,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Filling Date :', textScaleFactor: 1.0,
+                      'Filling Date :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -1899,7 +2049,8 @@ class _OrderState extends State<Order> {
                           TimeEnd(setState);
                         },
                         child: Text(
-                          "${dateTimeEnd!.year}-${dateTimeEnd!.month}-${dateTimeEnd!.day}", textScaleFactor: 1.0,
+                          "${dateTimeEnd!.year}-${dateTimeEnd!.month}-${dateTimeEnd!.day}",
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 13,
                             fontFamily: 'Montserrat',
@@ -1933,7 +2084,8 @@ class _OrderState extends State<Order> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Confirm Order', textScaleFactor: 1.0,
+                      'Confirm Order',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Montserrat',
@@ -1942,7 +2094,8 @@ class _OrderState extends State<Order> {
                     Row(
                       children: [
                         Text(
-                          'Date : ', textScaleFactor: 1.0,
+                          'Date : ',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                               fontSize: 18,
                               fontFamily: 'Montserrat',
@@ -1965,21 +2118,24 @@ class _OrderState extends State<Order> {
                               child: Row(
                                 children: [
                                   Text(
-                                    '${dayS}/${monthS}/${yearS}', textScaleFactor: 1.0,
+                                    '${dayS}/${monthS}/${yearS}',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 13,
                                         color: Color.fromARGB(255, 0, 0, 0)),
                                   ),
                                   Text(
-                                    "-", textScaleFactor: 1.0,
+                                    "-",
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 13,
                                         color: Color.fromARGB(255, 0, 0, 0)),
                                   ),
                                   Text(
-                                    '${dayE}/${monthE}/${yearE}', textScaleFactor: 1.0,
+                                    '${dayE}/${monthE}/${yearE}',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 13,
@@ -2024,7 +2180,8 @@ class _OrderState extends State<Order> {
                           // }
                         },
                         child: Text(
-                          'Download', textScaleFactor: 1.0,
+                          'Download',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 13,
@@ -2054,7 +2211,8 @@ class _OrderState extends State<Order> {
                               DialogOrder(context);
                             },
                             child: Text(
-                              '+', textScaleFactor: 1.0,
+                              '+',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 13,
@@ -2084,7 +2242,8 @@ class _OrderState extends State<Order> {
                                   widget.Token, widget.farmnum, widget.id);
                             },
                             child: Text(
-                              'Confirm Order & Send API Now!', textScaleFactor: 1.0,
+                              'Confirm Order & Send API Now!',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 13,
@@ -2181,7 +2340,8 @@ class _OrderState extends State<Order> {
                           ),
                         )
                       : Text(
-                          'Date: ${From.year}-${From.month}-${From.day}', textScaleFactor: 1.0,
+                          'Date: ${From.year}-${From.month}-${From.day}',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Montserrat',
@@ -2198,7 +2358,8 @@ class _OrderState extends State<Order> {
                           ),
                         )
                       : Text(
-                          'Filling Date: ${To.year}-${To.month}-${To.day}', textScaleFactor: 1.0,
+                          'Filling Date: ${To.year}-${To.month}-${To.day}',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Montserrat',
@@ -2219,7 +2380,8 @@ class _OrderState extends State<Order> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Order Reference :', textScaleFactor: 1.0,
+                      'Order Reference :',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: 'Montserrat',
@@ -2227,7 +2389,8 @@ class _OrderState extends State<Order> {
                       ),
                     ),
                     Text(
-                      '${nowresult1_1[index]['c_order_refer']}', textScaleFactor: 1.0,
+                      '${nowresult1_1[index]['c_order_refer']}',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: 'Montserrat',
@@ -2240,7 +2403,8 @@ class _OrderState extends State<Order> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Feed: ${nowresult1_1[index]['c_formula']}', textScaleFactor: 1.0,
+                      'Feed: ${nowresult1_1[index]['c_formula']}',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: 'Montserrat',
@@ -2248,7 +2412,8 @@ class _OrderState extends State<Order> {
                       ),
                     ),
                     Text(
-                      'Uint: ${nowresult1_1[index]['c_unit']}', textScaleFactor: 1.0,
+                          'Unit: ${nowresult1_1[index]['n_plan_order']} ${nowresult1_1[index]['c_unit']}',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: 'Montserrat',

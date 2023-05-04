@@ -39,41 +39,40 @@ dependencies:
   icofont_flutter: ^1.4.0
   material_design_icons_flutter: ^5.0.6996
    
-  file_picker: ^5.2.2
+  file_picker: ^5.2.6
   excel: ^2.0.0-null-safety-3
-  path_provider: ^2.0.11
-  open_filex: ^4.3.1
+  path_provider: ^2.0.10
+  open_filex: ^4.2.0
   external_path: ^1.0.3
 
-
+  url_launcher: ^6.1.7
 
 
   # ios
   permission_handler: ^10.2.0
 
-  http: ^0.13.1
-  charts_flutter: ^0.12.0
+  http: ^0.13.5
+  charts_flutter_new: ^0.12.0
 
 
-  convex_bottom_bar: ^3.0.0
+  convex_bottom_bar: ^2.7.0 
 
   fl_chart: ^0.55.0
 
 
-  data_table_2: ^2.2.1
   custom_date_range_picker: ^1.0.6
 
   intl: ^0.17.0
 
 
-  date_picker_timeline: ^1.2.1
+  
   shared_preferences: ^2.0.15
 
-  flutter_local_notifications: ^9.1.4
+  flutter_local_notifications: ^12.0.4
 
 
   scrollable_positioned_list: ^0.3.5
-  
+
 
 
 

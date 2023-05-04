@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'Setting/Farm.dart';
 import 'Setting/Feed.dart';
@@ -13,7 +14,7 @@ import 'Setting/standard.dart';
 import 'package:http/http.dart' as http;
 
 class Setting extends StatefulWidget {
-      int? cropnum2;
+  int? cropnum2;
   int? cropnum1;
   int? cropnum;
   String? Token; // Token
@@ -25,8 +26,10 @@ class Setting extends StatefulWidget {
   List<dynamic>? default_planning; //ข้อมูล default_planning
   List<dynamic>? default_formula; //ข้อมูล default_formula
   List<dynamic>? default_ship; //ข้อมูล default_ship
+  int? id; //id user
   Setting(
       {Key? key,
+      this.id,
       this.Token,
       this.navigatorKey,
       this.farmnum,
@@ -132,7 +135,8 @@ class _SettingState extends State<Setting> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    '${widget.farmname}', textScaleFactor: 1.0,
+                                    '${widget.farmname}',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontFamily: 'THSarabun',
@@ -152,7 +156,8 @@ class _SettingState extends State<Setting> {
                                       : nowresult1_1[0]['c_address'] == null
                                           ? Text('')
                                           : Text(
-                                              '${nowresult1_1[0]['c_address']}', textScaleFactor: 1.0,
+                                              '${nowresult1_1[0]['c_address']}',
+                                              textScaleFactor: 1.0,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 18,
@@ -178,7 +183,7 @@ class _SettingState extends State<Setting> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => Farm(
-                                                        cropnum1: widget.cropnum1,
+                                          cropnum1: widget.cropnum1,
                                           cropnum: widget.cropnum,
                                           cropnum2: widget.cropnum2,
                                           farmnum: widget.farmnum,
@@ -248,6 +253,8 @@ class _SettingState extends State<Setting> {
                                   ),
                                 );
                               })),
+
+                              buildDeleteUser(),
                             ],
                           ),
                         ],
@@ -260,6 +267,97 @@ class _SettingState extends State<Setting> {
           },
         );
       },
+    );
+  }
+
+  Container buildDeleteUser() {
+    return Container(
+      margin: EdgeInsets.only(top: 16),
+      width: screenW * 0.75,
+      height: screenH * 0.07,
+      decoration: BoxDecoration(
+        border: Border.all(color: Color.fromARGB(255, 255, 255, 255), width: 3),
+        borderRadius: BorderRadius.circular(30),
+        // color: Colors.white,r
+      ),
+      child: ElevatedButton(
+        onPressed: () async {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => SimpleDialog(
+              title: ListTile(
+                // leading: Image.asset('images/maps.png',height: 600,),
+                title: Text('ลบบัญชี',
+                    textScaleFactor: 1.0,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'THSarabun',
+                    )),
+                subtitle: Text('คุณต้องการลบบัญชีนี้ใช่หรือไม่ ?',
+                    textScaleFactor: 1.0,
+                    style: TextStyle(
+                      fontFamily: 'THSarabun',
+                      color: Colors.black,
+                    )),
+              ),
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('ยกเลิก',
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                              fontFamily: 'THSarabun',
+                              color: Colors.black,
+                            ))),
+                    TextButton(
+                        onPressed: () async {
+                          print('${widget.id}');
+                          String smartfarmpro =
+                              'https://smartfarmpro.com/DeleteUser.aspx?ID=${widget.id}';
+                          if (await canLaunch(smartfarmpro)) {
+                            await launch(
+                              smartfarmpro,
+                              forceSafariVC: true,
+                              forceWebView: true,
+                              enableJavaScript: true,
+                              universalLinksOnly: true,
+                            );
+                          } else {
+                            print('object');
+                          }
+                        },
+                        child: Text('ตกลง',
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                              fontFamily: 'THSarabun',
+                              color: Colors.black,
+                            ))),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+        //  Navigator.pushNamed(context, '/showMapPresent'),
+        child: Text(
+          'Delete User',
+          textScaleFactor: 1.0,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+            primary: Color(0xff35b499),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
+      ),
     );
   }
 
@@ -282,7 +380,8 @@ class _SettingState extends State<Setting> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   new Text(
-                    name, textScaleFactor: 1.0,
+                    name,
+                    textScaleFactor: 1.0,
                     style: new TextStyle(
                       color: Color.fromARGB(255, 51, 51, 51),
                       fontSize: 15,

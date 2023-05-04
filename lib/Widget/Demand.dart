@@ -2,15 +2,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'downloadExcel/download.dart';
 
 class Demand extends StatefulWidget {
-  String? Token;  //Token
+  String? Token; //Token
   int? farmnum; // farm id
   Demand({
     Key? key,
@@ -100,7 +99,6 @@ class _DemandState extends State<Demand> {
 
   //API demand_information
   Future<void> getjaon1_demand_information() async {
-
     try {
       loading1 = true;
       var urlsum1 =
@@ -146,7 +144,6 @@ class _DemandState extends State<Demand> {
             List uniquelist = nowresult1_1
                 .where((student) => seen.add(student['c_order']))
                 .toList();
-      
 
             setState(() {
               uniquelist1 = uniquelist;
@@ -172,7 +169,6 @@ class _DemandState extends State<Demand> {
               loading1 = false;
             });
           } else {
-          
             var seen = Set<String>();
             List uniquelist = nowresult1_1
                 .where((student) => seen.add(student['c_order']))
@@ -213,7 +209,6 @@ class _DemandState extends State<Demand> {
               int S = 0, S1 = 0;
 
               if (nowresult1_21[0]['n_tow'] == 1) {
-         
                 for (int j = 0; j < _products1.length; j++) {
                   for (int i = S; i < nowresult1_1.length; i++) {
                     if ((_products1[j]["Numder"] <
@@ -229,18 +224,17 @@ class _DemandState extends State<Demand> {
                       _products1[j]["c_formula"] = nowresult1_1[S]['c_formula'];
                       _products1[j]["Numder"] += int.parse(
                           '${nowresult1_1[i]["n_refill"].split(' ').first.replaceAll(',', '')}');
-
                     }
                   }
                   D = double.parse('${_products1[j]["List"].length}');
                   S += D.toInt();
                 }
-               
+
                 List<dynamic> nowresult3_42_ =
                     _products1.where((x) => (x['Numder']) != 0).toList();
                 now1 = nowresult3_42_;
               }
-      
+
               if (nowresult1_21[0]['n_tow'] == 2) {
                 for (int j = 0; j < _products1.length; j++) {
                   for (int i = S; i < nowresult1_1.length; i++) {
@@ -252,14 +246,12 @@ class _DemandState extends State<Demand> {
                                     '${nowresult1_1[i]["n_refill"].split(' ').first.replaceAll(',', '')}')) <=
                             (nowresult1_21[0]['n_weight'] *
                                 nowresult1_21[0]['n_box']))) {
-                      
                       _products1[j]["List"] += [nowresult1_1[i]];
-                 
+
                       _products1[j]["c_order"] = nowresult1_1[S]['c_order'];
                       _products1[j]["c_formula"] = nowresult1_1[S]['c_formula'];
                       _products1[j]["Numder"] += int.parse(
                           '${nowresult1_1[i]["n_refill"].split(' ').first.replaceAll(',', '')}');
-                 
                     }
                   }
                   D = double.parse('${_products1[j]["List"].length}');
@@ -272,28 +264,29 @@ class _DemandState extends State<Demand> {
                   return {"Numder": 0, 'List': []};
                 });
 
-
                 for (int j = 0; j < _products2.length; j++) {
                   for (int i = S1; i < nowresult3_42_.length; i++) {
-                    if ((_products2[j]["Numder"] <((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow'])) &&
-                        ((_products2[j]["Numder"] +nowresult3_42_[i]['Numder']) <=((nowresult1_21[0]['n_weight'] *nowresult1_21[0]['n_box']) *nowresult1_21[0]['n_tow']))) {
-                   
+                    if ((_products2[j]["Numder"] <
+                            ((nowresult1_21[0]['n_weight'] *
+                                    nowresult1_21[0]['n_box']) *
+                                nowresult1_21[0]['n_tow'])) &&
+                        ((_products2[j]["Numder"] +
+                                nowresult3_42_[i]['Numder']) <=
+                            ((nowresult1_21[0]['n_weight'] *
+                                    nowresult1_21[0]['n_box']) *
+                                nowresult1_21[0]['n_tow']))) {
                       _products2[j]["List"] += [nowresult3_42_[i]];
                       _products2[j]["Numder"] += nowresult3_42_[i]['Numder'];
-            
                     }
                   }
                   D1 = double.parse('${_products2[j]["List"].length}');
                   S1 += D1.toInt();
                 }
-           
 
                 List<dynamic> nowresult3_42_1 =
                     _products2.where((x) => ((x['Numder']) != 0)).toList();
 
-
                 now2 = nowresult3_42_1;
-        
               }
 
               loading1 = false;
@@ -305,84 +298,74 @@ class _DemandState extends State<Demand> {
       } else {
         throw Exception('Failed to download');
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
- late var itemController = ItemScrollController();
+  late var itemController = ItemScrollController();
   int item = 0;
   DateTime itemdmy = DateTime.now();
   DateTime itemdmy1 = DateTime.now();
   //กำหนดจำนวนวันของเดือน
-  Future scrollToitem() async{
+  Future scrollToitem() async {
     print(item);
-    if(item == 0){
-     DateTime day1 = DateTime.now();
-      itemController.jumpTo(index: day1.day-1,alignment: 0.6);
+    if (item == 0) {
+      DateTime day1 = DateTime.now();
+      itemController.jumpTo(index: day1.day - 1, alignment: 0.6);
       setState(() {
-        
-        item =  day1.day;
+        item = day1.day;
         itemdmy = DateTime.parse('$Y-$M-${item.toString().padLeft(2, '0')}');
       });
-    }else{
-      if(day == 31){
-      if(item < 4 || item > 28){
-       
-      }else{
-         itemController.jumpTo(index:item,alignment: 0.6);    
+    } else {
+      if (day == 31) {
+        if (item < 4 || item > 28) {
+        } else {
+          itemController.jumpTo(index: item, alignment: 0.6);
+        }
       }
+      if (day == 28) {
+        if (item < 4 || item > 25) {
+        } else {
+          itemController.jumpTo(index: item, alignment: 0.6);
+        }
       }
-      if(day == 28){
-   if(item < 4 || item > 25){
-       
-      }else{
-         itemController.jumpTo(index:item,alignment: 0.6);    
+      if (day == 29) {
+        if (item < 4 || item > 26) {
+        } else {
+          itemController.jumpTo(index: item, alignment: 0.6);
+        }
       }
-      }
-      if(day == 29){
-          if(item < 4 || item > 26){
-       
-      }else{
-         itemController.jumpTo(index:item,alignment: 0.6);    
-      }
-      }
-      if(day == 30){
-        if(item < 4 || item > 27){
-       
-      }else{
-         itemController.jumpTo(index:item,alignment: 0.6);    
-      }
+      if (day == 30) {
+        if (item < 4 || item > 27) {
+        } else {
+          itemController.jumpTo(index: item, alignment: 0.6);
+        }
       }
     }
-
-   
   }
- 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getjaon1_demand_information();
-    if(int.parse(M) >0&&int.parse(M) <10){
-        setState(() {
-          M = '0$M';
-        });
-    
+    if (int.parse(M) > 0 && int.parse(M) < 10) {
+      setState(() {
+        M = '0$M';
+      });
     }
 
-     if (int.parse(Y) > 0 && int.parse(Y) < 10) {
-                                    Y = '000$Y';
-                                  }
-                                  if (int.parse(Y) >= 10 && int.parse(Y) < 100) {
-                                    Y = '00$Y';
-                                  }
-                                  if (int.parse(Y) >= 100 && int.parse(Y) < 1000) {
-                                    Y = '0$Y';
-                                  }
-                                  if (int.parse(Y) >= 1000) {
-                                    Y = '$Y';
-                                  }
+    if (int.parse(Y) > 0 && int.parse(Y) < 10) {
+      Y = '000$Y';
+    }
+    if (int.parse(Y) >= 10 && int.parse(Y) < 100) {
+      Y = '00$Y';
+    }
+    if (int.parse(Y) >= 100 && int.parse(Y) < 1000) {
+      Y = '0$Y';
+    }
+    if (int.parse(Y) >= 1000) {
+      Y = '$Y';
+    }
     // _createSampleData();
   }
 
@@ -392,8 +375,8 @@ class _DemandState extends State<Demand> {
   late String M2 = '${_selectedValue.month}';
   late int MM = int.parse('${_selectedValue.month}');
   late int day = 31;
-  
-   //กำหนดจำนวนวันเดือนปี
+
+  //กำหนดจำนวนวันเดือนปี
   void M3() {
     switch (MM) {
       case 1:
@@ -407,10 +390,10 @@ class _DemandState extends State<Demand> {
           M2 = 'FEBRUARY';
           // late double DF = double.parse('${_selectedValue.year}');
           late double DF = YY.toDouble();
-            print(DF);
-          DF = YY/4.0;
+          print(DF);
+          DF = YY / 4.0;
           String DDF = DF.toStringAsFixed(2).toString();
-         
+
           print(DDF);
           if ('${DDF.split('.').last}' == '00') {
             day = 29;
@@ -483,14 +466,14 @@ class _DemandState extends State<Demand> {
         break;
     }
   }
-   
+
   @override
   Widget build(BuildContext context) {
     scrollToitem();
     M3();
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
-    
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -505,7 +488,8 @@ class _DemandState extends State<Demand> {
                     Container(
                       margin: EdgeInsets.only(right: 5),
                       child: Text(
-                        'Demand by house', textScaleFactor: 1.0,
+                        'Demand by house',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -537,7 +521,8 @@ class _DemandState extends State<Demand> {
                                 });
                               },
                               child: Text(
-                                '<', textScaleFactor: 1.0,
+                                '<',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -551,7 +536,8 @@ class _DemandState extends State<Demand> {
                               child: Container(
                                 margin: EdgeInsets.only(left: 1, right: 1),
                                 child: Text(
-                                  '$Y', textScaleFactor: 1.0,
+                                  '$Y',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -582,7 +568,8 @@ class _DemandState extends State<Demand> {
                                   });
                                 },
                                 child: Text(
-                                  '>', textScaleFactor: 1.0,
+                                  '>',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -604,13 +591,13 @@ class _DemandState extends State<Demand> {
                                 } else if (MM >= 10) {
                                   M = '$MM';
                                 }
-                              } else {
-                              }
+                              } else {}
                               M3();
                             });
                           },
                           child: Text(
-                            '<', textScaleFactor: 1.0,
+                            '<',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -625,7 +612,8 @@ class _DemandState extends State<Demand> {
                               width: 120,
                               child: Center(
                                   child: Text(
-                                '$M2', textScaleFactor: 1.0,
+                                '$M2',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -656,7 +644,8 @@ class _DemandState extends State<Demand> {
                           child: Container(
                               margin: EdgeInsets.only(right: 5),
                               child: Text(
-                                '>', textScaleFactor: 1.0,
+                                '>',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -693,7 +682,8 @@ class _DemandState extends State<Demand> {
                         saveExcelAgeinformation(nowresult1_1, 'Demand');
                       },
                       child: Text(
-                        'Download', textScaleFactor: 1.0,
+                        'Download',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 13,
@@ -704,73 +694,80 @@ class _DemandState extends State<Demand> {
                 ],
               ),
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: Colors.blueAccent,
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [
-                          0.3,
-                          1
-                        ],
-                        colors: [
-                          Color.fromARGB(255, 160, 193, 238),
-                          Color.fromARGB(255, 94, 157, 228)
-                        ])),
-     
-                margin: EdgeInsets.only(top: 5),
-                height: 80,
-                child: 
-                ScrollablePositionedList.builder(
-                   scrollDirection: Axis.horizontal,
-                   shrinkWrap: true,
-                  itemCount: day, 
-                  itemScrollController: itemController,
-                  itemBuilder: (BuildContext context, int index){
-                       return Center(
-                child: GestureDetector (
-                  onTap: () {
-                               setState(() {
-                              item = index+1;
-                              itemdmy = DateTime.parse('$Y-$M-${(index+1).toString().padLeft(2, '0')}');
-                                DateTime  date = DateTime.parse('$Y-$M-${(index+1).toString().padLeft(2, '0')}');
-                         
-                      _selectedValue = date;
-                      getjaon1_demand_information();
-                    });
-                   
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: itemdmy.year != YY ? Color.fromARGB(0, 255, 214, 64)
-                    :itemdmy.month != MM ?Color.fromARGB(0, 255, 214, 64)
-                    :itemdmy.day != (index+1) ? Color.fromARGB(0, 255, 214, 64)
-                    :Color.fromARGB(255, 255, 0, 208),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [
-                          0.3,
-                          1
-                        ],
-                        colors: [
-                          Color.fromARGB(255, 255, 0, 208),
-                          Color.fromARGB(255, 255, 255, 255)
-                        ])),
-                    width: 70,
-                    child: Center(
-                      child: Text('${index+1}', textScaleFactor: 1.0,style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 40,
-                                    color: Color.fromARGB(255, 255, 255, 255)),),
-                    ),
-                  ),
-                ),
-              );
-                  })
-              ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.blueAccent,
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [
+                            0.3,
+                            1
+                          ],
+                          colors: [
+                            Color.fromARGB(255, 160, 193, 238),
+                            Color.fromARGB(255, 94, 157, 228)
+                          ])),
+                  margin: EdgeInsets.only(top: 5),
+                  height: 80,
+                  child: ScrollablePositionedList.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: day,
+                      itemScrollController: itemController,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                item = index + 1;
+                                itemdmy = DateTime.parse(
+                                    '$Y-$M-${(index + 1).toString().padLeft(2, '0')}');
+                                DateTime date = DateTime.parse(
+                                    '$Y-$M-${(index + 1).toString().padLeft(2, '0')}');
+
+                                _selectedValue = date;
+                                getjaon1_demand_information();
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: itemdmy.year != YY
+                                      ? Color.fromARGB(0, 255, 214, 64)
+                                      : itemdmy.month != MM
+                                          ? Color.fromARGB(0, 255, 214, 64)
+                                          : itemdmy.day != (index + 1)
+                                              ? Color.fromARGB(0, 255, 214, 64)
+                                              : Color.fromARGB(
+                                                  255, 255, 0, 208),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      stops: [
+                                        0.3,
+                                        1
+                                      ],
+                                      colors: [
+                                        Color.fromARGB(255, 255, 0, 208),
+                                        Color.fromARGB(255, 255, 255, 255)
+                                      ])),
+                              width: 70,
+                              child: Center(
+                                child: Text(
+                                  '${index + 1}',
+                                  textScaleFactor: 1.0,
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 40,
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      })),
               loading1
                   ? Container(
                       margin: EdgeInsets.only(top: 10),
@@ -787,6 +784,7 @@ class _DemandState extends State<Demand> {
       ),
     );
   }
+
   // หน้าตารางข้อมูล Demand
   Container Demand() {
     if (nowresult1_1[0]["n_refill"].split(' ').last == 'Bag') {
@@ -814,7 +812,8 @@ class _DemandState extends State<Demand> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Order : ${nowresult12_1[index]['c_order']}', textScaleFactor: 1.0,
+                            'Order : ${nowresult12_1[index]['c_order']}',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
@@ -822,7 +821,8 @@ class _DemandState extends State<Demand> {
                                 color: Color(0xff44bca3)),
                           ),
                           Text(
-                            'No.${nowresult12_1[index]['c_formula']}', textScaleFactor: 1.0,
+                            'No.${nowresult12_1[index]['c_formula']}',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
@@ -848,15 +848,21 @@ class _DemandState extends State<Demand> {
                                   Column(
                                     children: [
                                       Text(
-                                        "${nowresult12_1[index]['house'][index1]['c_house'] ?? 'OVER'}", textScaleFactor: 1.0,
+                                        "${nowresult12_1[index]['house'][index1]['c_house'] ?? 'OVER'}",
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             fontFamily: 'Montserrat',
-                                            color: nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): C[index1]),
+                                            color: nowresult12_1[index]['house']
+                                                        [index1]['c_house'] ==
+                                                    null
+                                                ? Color.fromARGB(255, 255, 0, 0)
+                                                : C[index1]),
                                       ),
                                       Text(
-                                        "${nowresult12_1[index]['house'][index1]['c_silo'] ?? ''}", textScaleFactor: 1.0,
+                                        "${nowresult12_1[index]['house'][index1]['c_silo'] ?? ''}",
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -867,24 +873,35 @@ class _DemandState extends State<Demand> {
                                     ],
                                   ),
                                   Text(
-                                    'Day${nowresult12_1[index]['house'][index1]['n_day'] ?? ''}', textScaleFactor: 1.0,
+                                    'Day${nowresult12_1[index]['house'][index1]['n_day'] ?? ''}',
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                         fontFamily: 'Montserrat',
-                                        color:nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):  C[index1]),
+                                        color: nowresult12_1[index]['house']
+                                                    [index1]['c_house'] ==
+                                                null
+                                            ? Color.fromARGB(255, 255, 0, 0)
+                                            : C[index1]),
                                   ),
                                   Column(
                                     children: [
                                       Text(
-                                        "${nowresult12_1[index]['house'][index1]['n_refill']}", textScaleFactor: 1.0,
+                                        "${nowresult12_1[index]['house'][index1]['n_refill']}",
+                                        textScaleFactor: 1.0,
                                         style: new TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.bold,
-                                            color: nowresult12_1[index]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): C[index1]),
+                                            color: nowresult12_1[index]['house']
+                                                        [index1]['c_house'] ==
+                                                    null
+                                                ? Color.fromARGB(255, 255, 0, 0)
+                                                : C[index1]),
                                       ),
                                       Text(
-                                        'Filling Date:${nowresult12_1[index]['house'][index1]['d_gdate']}', textScaleFactor: 1.0,
+                                        'Filling Date:${nowresult12_1[index]['house'][index1]['d_gdate']}',
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -905,7 +922,8 @@ class _DemandState extends State<Demand> {
                         Container(
                           margin: EdgeInsets.only(left: 10, top: 10),
                           child: Text(
-                            'Demand by truck', textScaleFactor: 1.0,
+                            'Demand by truck',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -922,13 +940,13 @@ class _DemandState extends State<Demand> {
                             height: 220,
                             child: Center(
                                 child: Text(
-                              'No data to display.', textScaleFactor: 1.0,
+                              'No data to display.',
+                              textScaleFactor: 1.0,
                               style: TextStyle(fontSize: 18),
                             )))
                         : Container(
                             width: 380,
                             height: 220,
-
                             child: Center(
                               child: Container(
                                 margin: EdgeInsets.only(top: 10),
@@ -957,7 +975,8 @@ class _DemandState extends State<Demand> {
                           Container(
                             margin: EdgeInsets.only(right: 10),
                             child: Text(
-                              'Over Usage', textScaleFactor: 1.0,
+                              'Over Usage',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -1001,8 +1020,7 @@ class _DemandState extends State<Demand> {
                           child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount:
-                                  nowresult1_23.length,
+                              itemCount: nowresult1_23.length,
                               itemBuilder: (BuildContext context, int index0) {
                                 return Container(
                                   child: Column(
@@ -1012,7 +1030,8 @@ class _DemandState extends State<Demand> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Order : ${nowresult1_23[index0]['c_order']}', textScaleFactor: 1.0,
+                                            'Order : ${nowresult1_23[index0]['c_order']}',
+                                            textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17,
@@ -1020,7 +1039,8 @@ class _DemandState extends State<Demand> {
                                                 color: Color(0xff44bca3)),
                                           ),
                                           Text(
-                                            'No.${nowresult1_23[index0]['c_formula']}', textScaleFactor: 1.0,
+                                            'No.${nowresult1_23[index0]['c_formula']}',
+                                            textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17,
@@ -1037,9 +1057,9 @@ class _DemandState extends State<Demand> {
                                             physics:
                                                 NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
-                                            itemCount:
-                                                nowresult1_23[index0]['house']
-                                                    .length,
+                                            itemCount: nowresult1_23[index0]
+                                                    ['house']
+                                                .length,
                                             itemBuilder: (BuildContext context,
                                                 int index1) {
                                               return Container(
@@ -1051,7 +1071,8 @@ class _DemandState extends State<Demand> {
                                                     Column(
                                                       children: [
                                                         Text(
-                                                          "${nowresult1_23[index0]['house'][index1]['c_house'] ?? 'OVER'}", textScaleFactor: 1.0,
+                                                          "${nowresult1_23[index0]['house'][index1]['c_house'] ?? 'OVER'}",
+                                                          textScaleFactor: 1.0,
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -1059,14 +1080,27 @@ class _DemandState extends State<Demand> {
                                                               fontSize: 15,
                                                               fontFamily:
                                                                   'Montserrat',
-                                                              color:nowresult1_23[index0]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): index0 == 0
-                                                                  ? C[index1]
-                                                                  : C[index1 +
-                                                                      int.parse(
-                                                                          '${now1[index0]['List'].length}')]),
+                                                              color: nowresult1_23[index0]['house']
+                                                                              [index1]
+                                                                          [
+                                                                          'c_house'] ==
+                                                                      null
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          0,
+                                                                          0)
+                                                                  : index0 == 0
+                                                                      ? C[
+                                                                          index1]
+                                                                      : C[index1 +
+                                                                          int.parse(
+                                                                              '${now1[index0]['List'].length}')]),
                                                         ),
                                                         Text(
-                                                          "${nowresult1_23[index0]['house'][index1]['c_silo'] ?? ''}", textScaleFactor: 1.0,
+                                                          "${nowresult1_23[index0]['house'][index1]['c_silo'] ?? ''}",
+                                                          textScaleFactor: 1.0,
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -1084,36 +1118,62 @@ class _DemandState extends State<Demand> {
                                                       ],
                                                     ),
                                                     Text(
-                                                      'Day${nowresult1_23[index0]['house'][index1]['n_day'] ?? ''}', textScaleFactor: 1.0,
+                                                      'Day${nowresult1_23[index0]['house'][index1]['n_day'] ?? ''}',
+                                                      textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 15,
                                                           fontFamily:
                                                               'Montserrat',
-                                                          color: nowresult1_23[index0]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0): index0 == 0
-                                                              ? C[index1]
-                                                              : C[index1 +
-                                                                  int.parse(
-                                                                      '${now1[index0]['List'].length}')]),
+                                                          color: nowresult1_23[index0]
+                                                                              ['house']
+                                                                          [index1]
+                                                                      [
+                                                                      'c_house'] ==
+                                                                  null
+                                                              ? Color.fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  0,
+                                                                  0)
+                                                              : index0 == 0
+                                                                  ? C[index1]
+                                                                  : C[index1 +
+                                                                      int.parse(
+                                                                          '${now1[index0]['List'].length}')]),
                                                     ),
                                                     Column(
                                                       children: [
                                                         Text(
-                                                          "${nowresult1_23[index0]['house'][index1]['n_refill']}", textScaleFactor: 1.0,
+                                                          "${nowresult1_23[index0]['house'][index1]['n_refill']}",
+                                                          textScaleFactor: 1.0,
                                                           style: new TextStyle(
                                                               fontSize: 15.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              color:nowresult1_23[index0]['house'][index1]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):  index0 == 0
-                                                                  ? C[index1]
-                                                                  : C[index1 +
-                                                                      int.parse(
-                                                                          '${now1[index0]['List'].length}')]),
+                                                              color: nowresult1_23[index0]['house']
+                                                                              [index1]
+                                                                          [
+                                                                          'c_house'] ==
+                                                                      null
+                                                                  ? Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          0,
+                                                                          0)
+                                                                  : index0 == 0
+                                                                      ? C[
+                                                                          index1]
+                                                                      : C[index1 +
+                                                                          int.parse(
+                                                                              '${now1[index0]['List'].length}')]),
                                                         ),
                                                         Text(
-                                                          'Filling Date:${nowresult1_23[index0]['house'][index1]['d_gdate']}', textScaleFactor: 1.0,
+                                                          'Filling Date:${nowresult1_23[index0]['house'][index1]['d_gdate']}',
+                                                          textScaleFactor: 1.0,
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -1138,16 +1198,15 @@ class _DemandState extends State<Demand> {
                                     ],
                                   ),
                                 );
-                              })
-                         
-                          ),
+                              })),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             margin: EdgeInsets.only(left: 10, top: 10),
                             child: Text(
-                              'Demand by truck', textScaleFactor: 1.0,
+                              'Demand by truck',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -1158,12 +1217,9 @@ class _DemandState extends State<Demand> {
                           ),
                         ],
                       ),
-                  
                       Container(
                         width: 380,
-                     
                         height: 220,
-
                         child: Center(
                           child: Stack(
                             children: [
@@ -1181,9 +1237,7 @@ class _DemandState extends State<Demand> {
                               ),
                               Container(
                                 width: 265,
-                              
                                 height: 170,
-            
                                 margin: EdgeInsets.only(left: 73),
                                 child: charts.BarChart(
                                   _createSampleDataBar1(index),
@@ -1210,9 +1264,7 @@ class _DemandState extends State<Demand> {
                             ],
                           ),
                         ),
-                     
                       ),
-
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -1227,7 +1279,8 @@ class _DemandState extends State<Demand> {
                             Container(
                               margin: EdgeInsets.only(right: 10),
                               child: Text(
-                                'Over Usage', textScaleFactor: 1.0,
+                                'Over Usage',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -1262,7 +1315,6 @@ class _DemandState extends State<Demand> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                     ),
-       
                     child: Column(
                       children: [
                         ListView.builder(
@@ -1292,8 +1344,8 @@ class _DemandState extends State<Demand> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                    
-                                                      'Order : ${nowresult1_23[index0]['c_order']}', textScaleFactor: 1.0,
+                                                      'Order : ${nowresult1_23[index0]['c_order']}',
+                                                      textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1304,8 +1356,8 @@ class _DemandState extends State<Demand> {
                                                               0xff44bca3)),
                                                     ),
                                                     Text(
-                                                      
-                                                      'No.${nowresult1_23[index0]['c_formula']}', textScaleFactor: 1.0,
+                                                      'No.${nowresult1_23[index0]['c_formula']}',
+                                                      textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1328,7 +1380,6 @@ class _DemandState extends State<Demand> {
                                                           NeverScrollableScrollPhysics(),
                                                       shrinkWrap: true,
                                                       itemCount:
-                                                         
                                                           nowresult1_23[index0]
                                                                   ['house']
                                                               .length,
@@ -1344,20 +1395,25 @@ class _DemandState extends State<Demand> {
                                                               Column(
                                                                 children: [
                                                                   Text(
-                                                                    "${nowresult1_23[index0]['house'][index2]['c_house'] ?? 'OVER'}", textScaleFactor: 1.0,
+                                                                    "${nowresult1_23[index0]['house'][index2]['c_house'] ?? 'OVER'}",
+                                                                    textScaleFactor:
+                                                                        1.0,
                                                                     style: TextStyle(
                                                                         fontWeight: FontWeight.bold,
                                                                         fontSize: 15,
                                                                         fontFamily: 'Montserrat',
-                                                                        color: nowresult1_23[index0]['house'][index2]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):index1 != 0
-                                                                            ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
-                                                                            : index0 == 0
-                                                                                ? C[index2]
-                                                                                : C[index2 + int.parse('${now2[index0]['List'].length}')]),
-                                                             
+                                                                        color: nowresult1_23[index0]['house'][index2]['c_house'] == null
+                                                                            ? Color.fromARGB(255, 255, 0, 0)
+                                                                            : index1 != 0
+                                                                                ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
+                                                                                : index0 == 0
+                                                                                    ? C[index2]
+                                                                                    : C[index2 + int.parse('${now2[index0]['List'].length}')]),
                                                                   ),
                                                                   Text(
-                                                                    "${nowresult1_23[index0]['house'][index2]['c_silo'] ?? ''}", textScaleFactor: 1.0,
+                                                                    "${nowresult1_23[index0]['house'][index2]['c_silo'] ?? ''}",
+                                                                    textScaleFactor:
+                                                                        1.0,
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -1375,32 +1431,42 @@ class _DemandState extends State<Demand> {
                                                                 ],
                                                               ),
                                                               Text(
-                                                                'Day${nowresult1_23[index0]['house'][index2]['n_day'] ?? ''}', textScaleFactor: 1.0,
+                                                                'Day${nowresult1_23[index0]['house'][index2]['n_day'] ?? ''}',
+                                                                textScaleFactor:
+                                                                    1.0,
                                                                 style: TextStyle(
                                                                     fontWeight: FontWeight.bold,
                                                                     fontSize: 15,
                                                                     fontFamily: 'Montserrat',
-                                                                    color:  nowresult1_23[index0]['house'][index2]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):index1 != 0
-                                                                        ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
-                                                                        : index0 == 0
-                                                                            ? C[index2]
-                                                                            : C[index2 + int.parse('${now2[index0]['List'].length}')]),
-                                                              ),
-                                                              Column(
-                                                                children: [
-                                                                  Text(
-                                                                    "${nowresult1_23[index0]['house'][index2]['n_refill']}", textScaleFactor: 1.0,
-                                                                    style: new TextStyle(
-                                                                        fontSize: 15.0,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        color:  nowresult1_23[index0]['house'][index2]['c_house'] == null?Color.fromARGB(255, 255, 0, 0):index1 != 0
+                                                                    color: nowresult1_23[index0]['house'][index2]['c_house'] == null
+                                                                        ? Color.fromARGB(255, 255, 0, 0)
+                                                                        : index1 != 0
                                                                             ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
                                                                             : index0 == 0
                                                                                 ? C[index2]
                                                                                 : C[index2 + int.parse('${now2[index0]['List'].length}')]),
+                                                              ),
+                                                              Column(
+                                                                children: [
+                                                                  Text(
+                                                                    "${nowresult1_23[index0]['house'][index2]['n_refill']}",
+                                                                    textScaleFactor:
+                                                                        1.0,
+                                                                    style: new TextStyle(
+                                                                        fontSize: 15.0,
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: nowresult1_23[index0]['house'][index2]['c_house'] == null
+                                                                            ? Color.fromARGB(255, 255, 0, 0)
+                                                                            : index1 != 0
+                                                                                ? C[index2 + int.parse('${now2[index]['List'][index1 - 1]['List'].length}')]
+                                                                                : index0 == 0
+                                                                                    ? C[index2]
+                                                                                    : C[index2 + int.parse('${now2[index0]['List'].length}')]),
                                                                   ),
                                                                   Text(
-                                                                    'Filling Date:${nowresult1_23[index0]['house'][index2]['d_gdate']}', textScaleFactor: 1.0,
+                                                                    'Filling Date:${nowresult1_23[index0]['house'][index2]['d_gdate']}',
+                                                                    textScaleFactor:
+                                                                        1.0,
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -1437,7 +1503,8 @@ class _DemandState extends State<Demand> {
                             Container(
                               margin: EdgeInsets.only(left: 10, top: 10),
                               child: Text(
-                                'Demand by truck', textScaleFactor: 1.0,
+                                'Demand by truck',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -1448,10 +1515,7 @@ class _DemandState extends State<Demand> {
                             ),
                           ],
                         ),
-                     
-
                         DataChartBar2_1(index),
-
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
@@ -1466,7 +1530,8 @@ class _DemandState extends State<Demand> {
                               Container(
                                 margin: EdgeInsets.only(right: 10),
                                 child: Text(
-                                  'Over Usage', textScaleFactor: 1.0,
+                                  'Over Usage',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -1489,7 +1554,7 @@ class _DemandState extends State<Demand> {
 
     return Container();
   }
-  
+
   // ChartBar และ รูปภาพ  Demand
   Container DataChartBar2_1(int index) {
     if (now2[index]["List"].length == 1) {
@@ -1505,7 +1570,7 @@ class _DemandState extends State<Demand> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top:20),
+                      margin: EdgeInsets.only(top: 20),
                       child: Image(
                         image: AssetImage(
                           'images/s2.jpg',
@@ -1529,7 +1594,7 @@ class _DemandState extends State<Demand> {
                             groupingType: charts.BarGroupingType.stacked,
                             strokeWidthPx: 1.0),
                         behaviors: [
-                          new charts.PercentInjector<String>(
+                          charts.PercentInjector<String>(
                               totalType: charts.PercentInjectorTotalType.domain)
                         ],
                         primaryMeasureAxis: new charts.NumericAxisSpec(
@@ -1602,7 +1667,7 @@ class _DemandState extends State<Demand> {
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top:20),
+                      margin: EdgeInsets.only(top: 20),
                       child: Image(
                         image: AssetImage(
                           'images/s2.jpg',
@@ -1699,7 +1764,7 @@ class _DemandState extends State<Demand> {
         .map((e) => {
               for (int i = 0; i < now1[index]['List'].length; i++) 'int': '$i',
               'c_order': e['c_order'],
-               'c_house' :e['c_house'],
+              'c_house': e['c_house'],
               'n_refill':
                   int.parse(e['n_refill'].split(' ').first.replaceAll(',', '')),
               'diff': e['diff'],
@@ -1722,12 +1787,10 @@ class _DemandState extends State<Demand> {
       }
     }
 
-
-    for(int i = 0;i<nowresult1_22.length;i++){
-      if(nowresult1_22[i]['c_house']== null){
+    for (int i = 0; i < nowresult1_22.length; i++) {
+      if (nowresult1_22[i]['c_house'] == null) {
         nowresult1_22[i]['color'] = Color.fromARGB(255, 255, 0, 0);
       }
-
     }
     return [
       charts.Series<dynamic, String>(
@@ -1740,7 +1803,7 @@ class _DemandState extends State<Demand> {
     ];
   }
 
- //ข้อมูล Chart Demand ที่เป็น kg
+  //ข้อมูล Chart Demand ที่เป็น kg
   List<charts.Series<dynamic, String>> _createSampleDataBar2(int index, int A) {
     List<dynamic> color = [
       for (int i = 0; i < now2[index]['List'][A]['List'].length; i++)
@@ -1759,7 +1822,7 @@ class _DemandState extends State<Demand> {
         .map((e) => {
               for (int i = 0; i < now2[index]['List'][A]['List'].length; i++)
                 'int': '$i',
-                'c_house' :e['c_house'],
+              'c_house': e['c_house'],
               'id': color
                       .where((element) =>
                           element['c_house']
@@ -1790,12 +1853,11 @@ class _DemandState extends State<Demand> {
         }
       }
     }
-    
-    for(int i = 0;i<nowresult1_22.length;i++){
-      if(nowresult1_22[i]['c_house']== null){
+
+    for (int i = 0; i < nowresult1_22.length; i++) {
+      if (nowresult1_22[i]['c_house'] == null) {
         nowresult1_22[i]['color'] = Color.fromARGB(255, 255, 0, 0);
       }
-
     }
 
     return [

@@ -119,11 +119,11 @@ class _HouseState extends State<House> {
     screenW = MediaQuery.of(context).size.width;
     screenH = MediaQuery.of(context).size.height;
     return WillPopScope(
-         onWillPop: () async {
-         Navigator.pop(context);
-       
-       return true;
-         },
+      onWillPop: () async {
+        Navigator.pop(context);
+
+        return true;
+      },
       child: Scaffold(
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -152,7 +152,8 @@ class _HouseState extends State<House> {
                                 )),
                           ),
                           Text(
-                            'House', textScaleFactor: 1.0,
+                            'House',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -173,7 +174,7 @@ class _HouseState extends State<House> {
                       Capacity_Topup7(),
                       Very_Lower8(),
                       Upper9(),
-    
+
                       Save(),
                     ],
                   ),
@@ -214,85 +215,150 @@ class _HouseState extends State<House> {
                 //  print(widget.farmnum);
                 //  print(Houseid);
                 //  print(Housename);
-                normalDialog1(context,'แก้ไขข้อมูล setting house','คุณต้องการแก้ไขข้อมูล setting house นี้ใช่หรือไม่ ? ',(){
-                    Navigator.pop(context);
-                double MinimumU = double.parse(Minimum_Usage.text);
-                String Usage1 = MinimumU.toStringAsFixed(0);
-                int MinU = int.parse(Usage1);
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) => SimpleDialog(
+                    title: ListTile(
+                      // leading: Image.asset('images/maps.png',height: 600,),
+                      title: Text('แก้ไขข้อมูล setting house',
+                          textScaleFactor: 1.0,
+                          style: TextStyle(
+                            color: Colors.green,
+                            // fontFamily: fonts,
+                          )),
+                      subtitle: Text(
+                          'คุณต้องการแก้ไขข้อมูล setting house นี้ใช่หรือไม่ ? ',
+                          textScaleFactor: 1.0,
+                          style: TextStyle(
+                              // fontFamily: fonts,
+                              )),
+                    ),
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'ยกเลิก',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
 
-                double MaximumU = double.parse(Maximum_Usage.text);
-                String Usage2 = MaximumU.toStringAsFixed(0);
-                int MaxU = int.parse(Usage2);
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
 
-                double MinimumW = double.parse(Minimum_Weight.text);
-                String Weight1 = MinimumW.toStringAsFixed(0);
-                int MinW = int.parse(Weight1);
+                                double MinimumU =
+                                    double.parse(Minimum_Usage.text);
+                                String Usage1 = MinimumU.toStringAsFixed(0);
+                                int MinU = int.parse(Usage1);
 
-                double MaximumW = double.parse(Maximum_Weight.text);
-                String Weight2 = MaximumW.toStringAsFixed(0);
-                int MaxW = int.parse(Weight2);
+                                double MaximumU =
+                                    double.parse(Maximum_Usage.text);
+                                String Usage2 = MaximumU.toStringAsFixed(0);
+                                int MaxU = int.parse(Usage2);
 
-                double Target = double.parse(Target_Weight.text);
-                String Weight = Target.toStringAsFixed(0);
-                int T_W = int.parse(Weight);
+                                double MinimumW =
+                                    double.parse(Minimum_Weight.text);
+                                String Weight1 = MinimumW.toStringAsFixed(0);
+                                int MinW = int.parse(Weight1);
 
-                //  print('=======2=========');
-                //  print(Checkid);
-                //  print(MinU);
-                //  print(MaxU);
-                //  print(MinW);
-                //   print(MaxW);
-                //    print(T_W);
+                                double MaximumW =
+                                    double.parse(Maximum_Weight.text);
+                                String Weight2 = MaximumW.toStringAsFixed(0);
+                                int MaxW = int.parse(Weight2);
 
-                API_edit_setting_house_1(widget.Token, widget.farmnum, Houseid,
-                    Housename, Checkid, MinU, MaxU, MinW, MaxW, T_W);
+                                double Target =
+                                    double.parse(Target_Weight.text);
+                                String Weight = Target.toStringAsFixed(0);
+                                int T_W = int.parse(Weight);
 
-                String num = Siloid.toStringAsFixed(0);
-                int Siloidnum = int.parse(num);
+                                //  print('=======2=========');
+                                //  print(Checkid);
+                                //  print(MinU);
+                                //  print(MaxU);
+                                //  print(MinW);
+                                //   print(MaxW);
+                                //    print(T_W);
 
-                double Cap = double.parse(Capacity.text);
-                String acity = Cap.toStringAsFixed(0);
-                int Cap_acity = int.parse(acity);
+                                API_edit_setting_house_1(
+                                    widget.Token,
+                                    widget.farmnum,
+                                    Houseid,
+                                    Housename,
+                                    Checkid,
+                                    MinU,
+                                    MaxU,
+                                    MinW,
+                                    MaxW,
+                                    T_W);
 
-                double Top = double.parse(Topup.text);
-                String up = Top.toStringAsFixed(0);
-                int Top_up = int.parse(up);
+                                String num = Siloid.toStringAsFixed(0);
+                                int Siloidnum = int.parse(num);
 
-                double Very = double.parse(Very_Lower.text);
-                String Lower1 = Very.toStringAsFixed(0);
-                int Very_Lower1 = int.parse(Lower1);
+                                double Cap = double.parse(Capacity.text);
+                                String acity = Cap.toStringAsFixed(0);
+                                int Cap_acity = int.parse(acity);
 
-                double L = double.parse(Lower.text);
-                String ower = L.toStringAsFixed(0);
-                int L_ower = int.parse(ower);
+                                double Top = double.parse(Topup.text);
+                                String up = Top.toStringAsFixed(0);
+                                int Top_up = int.parse(up);
 
-                double Upper = double.parse(Upper_Percent.text);
-                String Percent = Upper.toStringAsFixed(0);
-                int U_P = int.parse(Percent);
+                                double Very = double.parse(Very_Lower.text);
+                                String Lower1 = Very.toStringAsFixed(0);
+                                int Very_Lower1 = int.parse(Lower1);
 
-                //  print('=======2=========');
-                //  print(Siloidnum);
-                //  print(Siloname);
-                //  print(Cap_acity);
-                //  print(Top_up);
-                //  print(Very_Lower1);
-                //   print(L_ower);
-                //    print(U_P);
-                API_edit_setting_silo_2(
-                    widget.Token,
-                    widget.farmnum,
-                    Houseid,
-                    Siloidnum,
-                    Siloname,
-                    Cap_acity,
-                    Top_up,
-                    Very_Lower1,
-                    L_ower,
-                    U_P);
-                });
+                                double L = double.parse(Lower.text);
+                                String ower = L.toStringAsFixed(0);
+                                int L_ower = int.parse(ower);
+
+                                double Upper = double.parse(Upper_Percent.text);
+                                String Percent = Upper.toStringAsFixed(0);
+                                int U_P = int.parse(Percent);
+
+                                //  print('=======2=========');
+                                //  print(Siloidnum);
+                                //  print(Siloname);
+                                //  print(Cap_acity);
+                                //  print(Top_up);
+                                //  print(Very_Lower1);
+                                //   print(L_ower);
+                                //    print(U_P);
+                                API_edit_setting_silo_2(
+                                    widget.Token,
+                                    widget.farmnum,
+                                    Houseid,
+                                    Siloidnum,
+                                    Siloname,
+                                    Cap_acity,
+                                    Top_up,
+                                    Very_Lower1,
+                                    L_ower,
+                                    U_P);
+                              },
+                              child: Text(
+                                'ตกลง',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    // fontFamily: fonts,
+
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                );
               },
               child: Text(
-                'Save', textScaleFactor: 1.0,
+                'Save',
+                textScaleFactor: 1.0,
                 style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 15,
@@ -320,7 +386,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Upper Percent', textScaleFactor: 1.0,
+                      'Upper Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -379,7 +446,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Very Lower Percent', textScaleFactor: 1.0,
+                      'Very Lower Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -427,7 +495,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Lower Percent', textScaleFactor: 1.0,
+                      'Lower Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -484,7 +553,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Capacity', textScaleFactor: 1.0,
+                      'Capacity',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -532,7 +602,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Topup', textScaleFactor: 1.0,
+                      'Topup',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -582,7 +653,8 @@ class _HouseState extends State<House> {
         Container(
           width: screenW * 0.95,
           child: Text(
-            'Silo', textScaleFactor: 1.0,
+            'Silo',
+            textScaleFactor: 1.0,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -615,7 +687,8 @@ class _HouseState extends State<House> {
                         .map((Silo) => DropdownMenuItem<String>(
                             value: Silo['c_name'],
                             child: Text(
-                              Silo['c_name'], textScaleFactor: 1.0,
+                              Silo['c_name'],
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -667,7 +740,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Target Weight(gram)', textScaleFactor: 1.0,
+                      'Target Weight(gram)',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -726,7 +800,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Minimum Weight Percent', textScaleFactor: 1.0,
+                      'Minimum Weight Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -774,7 +849,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Maximum Weight Percent', textScaleFactor: 1.0,
+                      'Maximum Weight Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -831,7 +907,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Minimum Usage Percent', textScaleFactor: 1.0,
+                      'Minimum Usage Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -879,7 +956,8 @@ class _HouseState extends State<House> {
                     width: screenW * 0.45,
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      'Maximum Usage Percent', textScaleFactor: 1.0,
+                      'Maximum Usage Percent',
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -946,7 +1024,8 @@ class _HouseState extends State<House> {
           ),
           Flexible(
             child: Text(
-              'Use Process Order', textScaleFactor: 1.0,
+              'Use Process Order',
+              textScaleFactor: 1.0,
               style: TextStyle(
                 fontSize: 15,
                 // fontWeight: bold ? FontWeight.bold : FontWeight.normal,
@@ -986,7 +1065,8 @@ class _HouseState extends State<House> {
                         .map((House) => DropdownMenuItem<String>(
                             value: House['name'],
                             child: Text(
-                              House['name'], textScaleFactor: 1.0,
+                              House['name'],
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,

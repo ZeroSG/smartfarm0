@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:data_table_2/data_table_2.dart';
+// import 'package:data_table_2/data_table_2.dart';
 import 'package:icofont_flutter/icofont_flutter.dart';
 
 import 'package:http/http.dart' as http;
@@ -164,8 +164,9 @@ class _FeedState extends State<Feed> {
                           ],
                         ),
                         Feeds1(),
-                        DataTable(),
+                        DataTable1(),
                         Feedmills_Orders3(),
+                        
                         Container(),
                       ],
                     ),
@@ -261,152 +262,373 @@ class _FeedState extends State<Feed> {
     );
   }
    //DataTable Feed
-  Stack DataTable() {
-    return Stack(
-      children: [
-        Container(
-          width: screenW * 0.95,
-          margin: EdgeInsets.only(top: 10),
-          //  color: Colors.blueAccent,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-          ),
-          height: 184,
-        ),
-        Container(
-          width: screenW * 0.95,
-          margin: EdgeInsets.only(top: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.blueAccent,
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  // stops: [0.3, 1],
-                  colors: [
-                    Color.fromARGB(255, 160, 193, 238),
-                    Color.fromARGB(255, 94, 157, 228)
-                  ])),
-          height: 60,
-        ),
-        Container(
-          width: screenW * 0.95,
-          margin: EdgeInsets.only(top: 10),
-          child: Container(
+   DataTable1() {
+    return SingleChildScrollView(
+        scrollDirection:
+                                                            Axis.horizontal,
+      child: Stack(
+        children: [
+          Container(
+            // width: 400,
+            margin: EdgeInsets.only(top: 10),
+            //  color: Colors.blueAccent,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
             ),
-            margin: EdgeInsets.only(top: 5),
-
             height: 184,
-            // child: SingleChildScrollView(
-
-            child: DataTable2(
-              headingRowHeight: 40.0,
-              dataRowColor: MaterialStateProperty.all(Colors.white),
-              columnSpacing: 1,
-              horizontalMargin: 15,
-              minWidth: 200,
-              columns: [
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "#", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "FEED", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "BAG", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Center(
-                    child: Text(
-                      "KG", textScaleFactor: 1.0,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          fontFamily: 'Montserrat',
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                  ),
-                ),
-              ],
-              rows: nowresult1_1 == null
-                  ? _products1.map((item) {
-                      return DataRow(cells: [
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                        DataCell(Center(child: Text(''))),
-                      ]);
-                    }).toList()
-                  : nowresult1_1.map((item) {
-                      return DataRow(cells: [
-                        DataCell(Center(
-                          child: IconButton(
-                            onPressed: () {
-                              API_button_delete_feed(
-                                  widget.Token, widget.farmnum, item['FEED']);
-                              var duration = Duration(seconds: 2);
-                              route() {
-                                getjaon1_setting_feeds();
-                              }
-
-                              Timer(duration, route);
-                            },
-                            icon: Icon(
-                              Icons.delete_forever,
-                              color: Color.fromARGB(255, 242, 3, 3),
-                              size: 17,
-                            ),
-                          ),
-                        )),
-                        DataCell(Center(
-                            child: Text(item['FEED'] == null
-                                ? ''
-                                : item['FEED'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['BAG'] == null
-                                ? ''
-                                : item['BAG'].toString(), textScaleFactor: 1.0,))),
-                        DataCell(Center(
-                            child: Text(item['KG'] == null
-                                ? ''
-                                : item['KG'].toString(), textScaleFactor: 1.0,))),
-                      ]);
-                    }).toList(),
-            ),
-            // )
           ),
-        ),
-      ],
+          // Container(
+          //   width: screenW * 0.95,
+          //   margin: EdgeInsets.only(top: 10),
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       color: Colors.blueAccent,
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //           // stops: [0.3, 1],
+          //           colors: [
+          //             Color.fromARGB(255, 160, 193, 238),
+          //             Color.fromARGB(255, 94, 157, 228)
+          //           ])),
+          //   height: 60,
+          // ),
+          Container(
+            // width: screenW,
+            margin: EdgeInsets.only(top: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: EdgeInsets.only(top: 5),
+    
+              height: 184,
+         
+              // child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: DataTable(
+                                headingRowHeight: 40.0,
+                                dataRowColor: MaterialStateProperty.all(Colors.white),
+                                columnSpacing: 1,
+                                horizontalMargin: 15,
+                                // minWidth: 200,
+                                columns: [
+                    DataColumn(
+                      label: Container(
+                         width: 100,
+                        child: Center(
+                          child: Text(
+                            "#", textScaleFactor: 1.0,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'Montserrat',
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label:  Container(
+                         width: 100,
+                        child: Center(
+                          child: Text(
+                            "FEED", textScaleFactor: 1.0,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'Montserrat',
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label:  Container(
+                         width: 100,
+                        child: Center(
+                          child: Text(
+                            "BAG", textScaleFactor: 1.0,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'Montserrat',
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label:  Container(
+                          width: 100,
+                        child: Center(
+                          child: Text(
+                            "KG", textScaleFactor: 1.0,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'Montserrat',
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                      ),
+                    ),
+                                ],
+                                rows: nowresult1_1 == null
+                      ? _products1.map((item) {
+                          return DataRow(cells: [
+                            DataCell(Center(child: Text(''))),
+                            DataCell(Center(child: Text(''))),
+                            DataCell(Center(child: Text(''))),
+                            DataCell(Center(child: Text(''))),
+                          ]);
+                        }).toList()
+                      : nowresult1_1.map((item) {
+                          return DataRow(cells: [
+                            DataCell(Container(
+                               width: 100,
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    API_button_delete_feed(
+                                        widget.Token, widget.farmnum, item['FEED']);
+                                    var duration = Duration(seconds: 2);
+                                    route() {
+                                      getjaon1_setting_feeds();
+                                    }
+                                              
+                                    Timer(duration, route);
+                                  },
+                                  icon: Icon(
+                                    Icons.delete_forever,
+                                    color: Color.fromARGB(255, 242, 3, 3),
+                                    size: 17,
+                                  ),
+                                ),
+                              ),
+                            )),
+                            DataCell(Container(
+                                width: 100,
+                              child: Center(
+                                  child: Text(item['FEED'] == null
+                                      ? ''
+                                      : item['FEED'].toString(), textScaleFactor: 1.0,)),
+                            )),
+                            DataCell(Container(
+                                width: 100,
+                              child: Center(
+                                  child: Text(item['BAG'] == null
+                                      ? ''
+                                      : item['BAG'].toString(), textScaleFactor: 1.0,)),
+                            )),
+                            DataCell(Container(
+                                width: 100,
+                              child: Center(
+                                  child: Text(item['KG'] == null
+                                      ? ''
+                                      : item['KG'].toString(), textScaleFactor: 1.0,)),
+                            )),
+                          ]);
+                        }).toList(),
+                              ),
+                  ),
+              // child: DataTable2(
+              //   headingRowHeight: 40.0,
+              //   dataRowColor: MaterialStateProperty.all(Colors.white),
+              //   columnSpacing: 1,
+              //   horizontalMargin: 15,
+              //   minWidth: 200,
+              //   columns: [
+              //     DataColumn(
+              //       label: Center(
+              //         child: Text(
+              //           "#", textScaleFactor: 1.0,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 13,
+              //               fontFamily: 'Montserrat',
+              //               color: Color.fromARGB(255, 255, 255, 255)),
+              //         ),
+              //       ),
+              //     ),
+              //     DataColumn(
+              //       label: Center(
+              //         child: Text(
+              //           "FEED", textScaleFactor: 1.0,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 13,
+              //               fontFamily: 'Montserrat',
+              //               color: Color.fromARGB(255, 255, 255, 255)),
+              //         ),
+              //       ),
+              //     ),
+              //     DataColumn(
+              //       label: Center(
+              //         child: Text(
+              //           "BAG", textScaleFactor: 1.0,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 13,
+              //               fontFamily: 'Montserrat',
+              //               color: Color.fromARGB(255, 255, 255, 255)),
+              //         ),
+              //       ),
+              //     ),
+              //     DataColumn(
+              //       label: Center(
+              //         child: Text(
+              //           "KG", textScaleFactor: 1.0,
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 13,
+              //               fontFamily: 'Montserrat',
+              //               color: Color.fromARGB(255, 255, 255, 255)),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              //   rows: nowresult1_1 == null
+              //       ? _products1.map((item) {
+              //           return DataRow(cells: [
+              //             DataCell(Center(child: Text(''))),
+              //             DataCell(Center(child: Text(''))),
+              //             DataCell(Center(child: Text(''))),
+              //             DataCell(Center(child: Text(''))),
+              //           ]);
+              //         }).toList()
+              //       : nowresult1_1.map((item) {
+              //           return DataRow(cells: [
+              //             DataCell(Center(
+              //               child: IconButton(
+              //                 onPressed: () {
+              //                   API_button_delete_feed(
+              //                       widget.Token, widget.farmnum, item['FEED']);
+              //                   var duration = Duration(seconds: 2);
+              //                   route() {
+              //                     getjaon1_setting_feeds();
+              //                   }
+    
+              //                   Timer(duration, route);
+              //                 },
+              //                 icon: Icon(
+              //                   Icons.delete_forever,
+              //                   color: Color.fromARGB(255, 242, 3, 3),
+              //                   size: 17,
+              //                 ),
+              //               ),
+              //             )),
+              //             DataCell(Center(
+              //                 child: Text(item['FEED'] == null
+              //                     ? ''
+              //                     : item['FEED'].toString(), textScaleFactor: 1.0,))),
+              //             DataCell(Center(
+              //                 child: Text(item['BAG'] == null
+              //                     ? ''
+              //                     : item['BAG'].toString(), textScaleFactor: 1.0,))),
+              //             DataCell(Center(
+              //                 child: Text(item['KG'] == null
+              //                     ? ''
+              //                     : item['KG'].toString(), textScaleFactor: 1.0,))),
+              //           ]);
+              //         }).toList(),
+              // ),
+              // )
+            ),
+          ),
+           Container(
+            // width: screenW,
+            margin: EdgeInsets.only(top: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.blueAccent,
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      // stops: [0.3, 1],
+                      colors: [
+                        Color.fromARGB(255, 160, 193, 238),
+                        Color.fromARGB(255, 94, 157, 228)
+                      ])),
+              margin: EdgeInsets.only(top: 5),
+    
+              height: 40,
+         
+              // child: SingleChildScrollView(
+                  child: DataTable(
+                headingRowHeight: 40.0,
+                dataRowColor: MaterialStateProperty.all(Colors.white),
+                columnSpacing: 1,
+                horizontalMargin: 15,
+                // minWidth: 200,
+                columns: [
+                  DataColumn(
+                    label:  Container(
+                        width: 100,
+                      child: Center(
+                        child: Text(
+                          "#", textScaleFactor: 1.0,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label:  Container(
+                       width: 100,
+                      child: Center(
+                        child: Text(
+                          "FEED", textScaleFactor: 1.0,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Container(
+                        width: 100,
+                      child: Center(
+                        child: Text(
+                          "BAG", textScaleFactor: 1.0,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label:  Container(
+                        width: 100,
+                      child: Center(
+                        child: Text(
+                          "KG", textScaleFactor: 1.0,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+                rows: []
+              ),)),
+        ],
+      ),
     );
   }
   //DataTable Feedmills_Orders
@@ -429,8 +651,7 @@ class _FeedState extends State<Feed> {
             ),
           ),
           SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            scrollDirection: Axis.vertical,
+              scrollDirection: Axis.horizontal,
             child: Stack(
               children: [
                 Container(
@@ -465,248 +686,789 @@ class _FeedState extends State<Feed> {
 
                   height: 274,
                   // child: SingleChildScrollView(
-
-                  child: DataTable2(
-                    headingRowHeight: 40.0,
-                    dataRowColor: MaterialStateProperty.all(Colors.white),
-                    columnSpacing: 1,
-                    horizontalMargin: 15,
-                    minWidth: 1100,
-                    columns: [
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "FEED", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                   child: SingleChildScrollView(
+                     child: DataTable(
+                      headingRowHeight: 40.0,
+                      dataRowColor: MaterialStateProperty.all(Colors.white),
+                      columnSpacing: 1,
+                      horizontalMargin: 15,
+                      // minWidth: 1100,
+                      columns: [
+                        DataColumn(
+                          label: Container(
+                    width: 100,
+                            child: Center(
+                              child: Text(
+                                "FEED", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "TYPE", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "TYPE", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BGT-NM", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                    width: 100,
+                            child: Center(
+                              child: Text(
+                                "BGT-NM", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-LP", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                     width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LP", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-LR1", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                     width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR1", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-LR2", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                     width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR2", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-LR3", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                     width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR3", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-LR4", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR4", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-NT", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-NT", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-PC", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-PC", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-PD", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-PD", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-SK1", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-SK1", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      DataColumn(
-                        label: Center(
-                          child: Text(
-                            "BTG-SK2", textScaleFactor: 1.0,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'Montserrat',
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-SK2", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                    rows: nowresult1_2 == null
-                        ? _products2.map((item) {
-                            return DataRow(cells: [
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                              DataCell(Center(child: Text(''))),
-                            ]);
-                          }).toList()
-                        : nowresult1_2.map((item) {
-                            return DataRow(cells: [
-                              DataCell(Center(
-                                  child: Text(item['FEED'] == null
-                                      ? ''
-                                      : item['FEED'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['TYPE'] == null
-                                      ? ''
-                                      : item['TYPE'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BGT-NM'] == null
-                                      ? ''
-                                      : item['BGT-NM'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-LP'] == null
-                                      ? ''
-                                      : item['BTG-LP'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-LR1'] == null
-                                      ? ''
-                                      : item['BTG-LR1'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-LR2'] == null
-                                      ? ''
-                                      : item['BTG-LR2'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-LR3'] == null
-                                      ? ''
-                                      : item['BTG-LR3'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-LR4'] == null
-                                      ? ''
-                                      : item['BTG-LR4'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-NT'] == null
-                                      ? ''
-                                      : item['BTG-NT'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-PC'] == null
-                                      ? ''
-                                      : item['BTG-PC'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-PD'] == null
-                                      ? ''
-                                      : item['BTG-PD'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-SK1'] == null
-                                      ? ''
-                                      : item['BTG-SK1'].toString(), textScaleFactor: 1.0,))),
-                              DataCell(Center(
-                                  child: Text(item['BTG-SK2'] == null
-                                      ? ''
-                                      : item['BTG-SK2'].toString(), textScaleFactor: 1.0,))),
-                            ]);
-                          }).toList(),
-                  ),
+                      ],
+                      rows: nowresult1_2 == null
+                          ? _products2.map((item) {
+                              return DataRow(cells: [
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                                DataCell(Center(child: Text(''))),
+                              ]);
+                            }).toList()
+                          : nowresult1_2.map((item) {
+                              return DataRow(cells: [
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['FEED'] == null
+                                          ? ''
+                                          : item['FEED'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['TYPE'] == null
+                                          ? ''
+                                          : item['TYPE'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BGT-NM'] == null
+                                          ? ''
+                                          : item['BGT-NM'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-LP'] == null
+                                          ? ''
+                                          : item['BTG-LP'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-LR1'] == null
+                                          ? ''
+                                          : item['BTG-LR1'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-LR2'] == null
+                                          ? ''
+                                          : item['BTG-LR2'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-LR3'] == null
+                                          ? ''
+                                          : item['BTG-LR3'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-LR4'] == null
+                                          ? ''
+                                          : item['BTG-LR4'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-NT'] == null
+                                          ? ''
+                                          : item['BTG-NT'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-PC'] == null
+                                          ? ''
+                                          : item['BTG-PC'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-PD'] == null
+                                          ? ''
+                                          : item['BTG-PD'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-SK1'] == null
+                                          ? ''
+                                          : item['BTG-SK1'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                                DataCell(Container(
+                                   width: 100,
+                                  child: Center(
+                                      child: Text(item['BTG-SK2'] == null
+                                          ? ''
+                                          : item['BTG-SK2'].toString(), textScaleFactor: 1.0,)),
+                                )),
+                              ]);
+                            }).toList(),
+                                     ),
+                   ),
+                  // child: DataTable2(
+                  //   headingRowHeight: 40.0,
+                  //   dataRowColor: MaterialStateProperty.all(Colors.white),
+                  //   columnSpacing: 1,
+                  //   horizontalMargin: 15,
+                  //   minWidth: 1100,
+                  //   columns: [
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "FEED", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "TYPE", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BGT-NM", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-LP", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-LR1", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-LR2", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-LR3", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-LR4", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-NT", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-PC", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-PD", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-SK1", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     DataColumn(
+                  //       label: Center(
+                  //         child: Text(
+                  //           "BTG-SK2", textScaleFactor: 1.0,
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 13,
+                  //               fontFamily: 'Montserrat',
+                  //               color: Color.fromARGB(255, 255, 255, 255)),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  //   rows: nowresult1_2 == null
+                  //       ? _products2.map((item) {
+                  //           return DataRow(cells: [
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //             DataCell(Center(child: Text(''))),
+                  //           ]);
+                  //         }).toList()
+                  //       : nowresult1_2.map((item) {
+                  //           return DataRow(cells: [
+                  //             DataCell(Center(
+                  //                 child: Text(item['FEED'] == null
+                  //                     ? ''
+                  //                     : item['FEED'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['TYPE'] == null
+                  //                     ? ''
+                  //                     : item['TYPE'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BGT-NM'] == null
+                  //                     ? ''
+                  //                     : item['BGT-NM'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-LP'] == null
+                  //                     ? ''
+                  //                     : item['BTG-LP'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-LR1'] == null
+                  //                     ? ''
+                  //                     : item['BTG-LR1'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-LR2'] == null
+                  //                     ? ''
+                  //                     : item['BTG-LR2'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-LR3'] == null
+                  //                     ? ''
+                  //                     : item['BTG-LR3'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-LR4'] == null
+                  //                     ? ''
+                  //                     : item['BTG-LR4'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-NT'] == null
+                  //                     ? ''
+                  //                     : item['BTG-NT'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-PC'] == null
+                  //                     ? ''
+                  //                     : item['BTG-PC'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-PD'] == null
+                  //                     ? ''
+                  //                     : item['BTG-PD'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-SK1'] == null
+                  //                     ? ''
+                  //                     : item['BTG-SK1'].toString(), textScaleFactor: 1.0,))),
+                  //             DataCell(Center(
+                  //                 child: Text(item['BTG-SK2'] == null
+                  //                     ? ''
+                  //                     : item['BTG-SK2'].toString(), textScaleFactor: 1.0,))),
+                  //           ]);
+                  //         }).toList(),
+                  // ),
                   // )
                 ),
+                Container(
+                 decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blueAccent,
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    // stops: [0.3, 1],
+                    colors: [
+                      Color.fromARGB(255, 160, 193, 238),
+                      Color.fromARGB(255, 94, 157, 228)
+                    ])),
+                  margin: EdgeInsets.only(top: 5),
+
+                  height: 40,
+                  // child: SingleChildScrollView(
+                   child: SingleChildScrollView(
+                     child: DataTable(
+                      headingRowHeight: 40.0,
+                      dataRowColor: MaterialStateProperty.all(Colors.white),
+                      columnSpacing: 1,
+                      horizontalMargin: 15,
+                      // minWidth: 1100,
+                      columns: [
+                        DataColumn(
+                          label: Container(
+                     width: 100,
+                            child: Center(
+                              child: Text(
+                                "FEED", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "TYPE", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BGT-NM", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LP", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR1", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR2", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR3", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-LR4", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                      width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-NT", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-PC", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-PD", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                       width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-SK1", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Container(
+                     width: 100,
+                            child: Center(
+                              child: Text(
+                                "BTG-SK2", textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      rows: [],
+                                     ),
+                   ),),
               ],
             ),
           ),

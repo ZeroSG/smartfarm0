@@ -37,10 +37,10 @@ class Drawer1 extends StatefulWidget {
   int? HOUSE1;
   String? HOUSE2;
   int? farmnum;
-
+  
   int? numIndex;
   int? nummune;
-    int? cropnum2;
+  int? cropnum2;
   int? cropnum1;
   int? cropnum;
   List<dynamic>? Feed;
@@ -116,7 +116,7 @@ class _DrawerState extends State<Drawer1> {
 
   late TextEditingController from = TextEditingController();
 
-   // API login
+  // API login
   Future<void> getjaon_login() async {
     try {
       loading = true;
@@ -296,7 +296,8 @@ class _DrawerState extends State<Drawer1> {
             centerTitle: true,
             automaticallyImplyLeading: false,
             title: Text(
-              name, textScaleFactor: 1.0,
+              name,
+              textScaleFactor: 1.0,
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Montserrat',
@@ -382,9 +383,10 @@ class _DrawerState extends State<Drawer1> {
                             cmiid: cmiid, //data cmiid
                             id: id),
                         Setting(
-                                              cropnum1: widget.cropnum1,
-                                          cropnum: widget.cropnum,
-                                          cropnum2: widget.cropnum2,
+                            id: id,
+                            cropnum1: widget.cropnum1,
+                            cropnum: widget.cropnum,
+                            cropnum2: widget.cropnum2,
                             farmname: farmname, // farm name
                             Token: widget.Token, // Token
                             navigatorKey: navigatorKeys,
@@ -413,11 +415,18 @@ class _DrawerState extends State<Drawer1> {
           color: Color.fromARGB(255, 255, 255, 255),
           activeColor: Color.fromARGB(255, 253, 253, 253),
           backgroundColor: Color(0xff44bca3),
-          onTap: (int i) {
+          onTap: (int i) async {
             setState(() {
               num = i;
+             
             });
-
+            print('num ==> $num');
+           if(num != 2){
+                 DateTime? dateTime1_ = DateTime.now();
+                  Usersharedpreferences _p = Usersharedpreferences();
+                 await _p.setUserT(dateTime1_.toString());
+                 print('dateTime1_ ==> $dateTime1_');
+              }
             //print('click index=$i');
             if (i == 0) {
               setState(() {
@@ -467,7 +476,8 @@ class _DrawerState extends State<Drawer1> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '$farmname', textScaleFactor: 1.0,
+            '$farmname',
+            textScaleFactor: 1.0,
             style: TextStyle(
                 fontSize: 22,
                 fontFamily: 'THSarabun',
@@ -520,202 +530,198 @@ class _DrawerState extends State<Drawer1> {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return Dialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                // child:  SingleChildScrollView(
-                  child: Column(
-                      children: [
-                        Container(
-                          child: Column(children: [
- Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                margin: EdgeInsets.only(top: 15, left: 10),
-                                // height: 40,
-                                child: Text(
-                                  "Choose search From", textScaleFactor: 1.0,
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'THSarabun',
-                                      color: Color(0xff44bca3)),
-                                )),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              //  color: Colors.white,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'X', textScaleFactor: 1.0,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                            width: screenW * 1,
-                            height: screenH * 0.001,
-                            color: Color.fromARGB(255, 220, 220, 220)),
-                        Center(
-                            child: Container(
-                          margin: EdgeInsets.only(top: 10),
-                          // height: 40,
-                          width: screenW * 0.8,
-                          child: DecoratedBox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              // child:  SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    child: Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(top: 15, left: 10),
+                              // height: 40,
+                              child: Text(
+                                "Choose search From",
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'THSarabun',
+                                    color: Color(0xff44bca3)),
+                              )),
+                          Container(
                             decoration: BoxDecoration(
-                                color: Color(0xfff1f1f1),
-                                border: Border.all(
-                                    color: Color(0xffe0eaeb), width: 3),
-                                borderRadius: BorderRadius.circular(50),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.57),
-                                      blurRadius: 5)
-                                ]),
-                            child: TextField(
-                              onTap: () {
-                                from.text = '';
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            //  color: Colors.white,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
                               },
-                              onChanged: ((value) {
-                                farm0 = farm;
-                
-                                final sugges = farm0!.where((element) {
-                                  final farmtext = element['name']!.toLowerCase();
-                                  final index = value.toLowerCase();
-                
-                                  return farmtext!.contains(index);
-                                }).toList();
-                
-                                setState(() {
-                                  farm0 = sugges;
-                                });
-                              }),
-                              controller: from,
-                              keyboardType: TextInputType.emailAddress,
-                              style:
-                                  TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: Color(0xffd4d4d4),
-                                ),
-                                // filled: true,
-                                contentPadding:
-                                    EdgeInsets.only(top: 10, left: 10),
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(color: Color(0xff7d7d7d)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide:
-                                      BorderSide(color: Color(0xffcfcfcf)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide:
-                                      BorderSide(color: Color(0xffcfcfcf)),
-                                ),
+                              child: Text(
+                                'X',
+                                textScaleFactor: 1.0,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
                               ),
                             ),
                           ),
-                        )),
-                          ]),
+                        ],
+                      ),
+                      Container(
+                          width: screenW * 1,
+                          height: screenH * 0.001,
+                          color: Color.fromARGB(255, 220, 220, 220)),
+                      Center(
+                          child: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        // height: 40,
+                        width: screenW * 0.8,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Color(0xfff1f1f1),
+                              border: Border.all(
+                                  color: Color(0xffe0eaeb), width: 3),
+                              borderRadius: BorderRadius.circular(50),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.57),
+                                    blurRadius: 5)
+                              ]),
+                          child: TextField(
+                            onTap: () {
+                              from.text = '';
+                            },
+                            onChanged: ((value) {
+                              farm0 = farm;
+
+                              final sugges = farm0!.where((element) {
+                                final farmtext = element['name']!.toLowerCase();
+                                final index = value.toLowerCase();
+
+                                return farmtext!.contains(index);
+                              }).toList();
+
+                              setState(() {
+                                farm0 = sugges;
+                              });
+                            }),
+                            controller: from,
+                            keyboardType: TextInputType.emailAddress,
+                            style:
+                                TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Color(0xffd4d4d4),
+                              ),
+                              // filled: true,
+                              contentPadding:
+                                  EdgeInsets.only(top: 10, left: 10),
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(color: Color(0xff7d7d7d)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide:
+                                    BorderSide(color: Color(0xffcfcfcf)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide:
+                                    BorderSide(color: Color(0xffcfcfcf)),
+                              ),
+                            ),
+                          ),
                         ),
-                       
-                       Expanded(
-                         child: SingleChildScrollView(
-                           child: ListView.builder(
-                                                physics: NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                itemCount: farm0!.length,
-                                                itemBuilder: (context, index) {
-                                                  return ListTile(
-                                                    title: Text(farm0![index]['name'], textScaleFactor: 1.0,),
-                                                    onTap: () {
-                                                      farmname = farm0![index]['name'];
-                                                      //print(farm!.length);
-                                          
-                                                      for (int i = 0; i < farm!.length; i++) {
-                                                        if (farm![i]['name'] ==
-                                                            farm0![index]['name']) {
-                                                          setState(() {
-                                                            cropnum1 = i;
-                                          
-                                                            farmnum = farm![i]['id'];
-                                          
-                                                            if (farm![i]['crop'] == null) {
-                                                              cropnum2 = null;
-                                                            } else {
-                                                              cropnum2 =
-                                                                  farm![i]['crop'][0]['id'];
-                                                            }
-                                          
-                                                            cropnum1 = i;
-                                                            cropnum = 0;
-                                                            // //print(farmnum);
-                                                            // //print(cropnum2);
-                                                            farmname = farm![i]['name'];
-                                                            if (farm![i]['crop'] == null) {
-                                                              cropname = null;
-                                                            } else {
-                                                              cropname =
-                                                                  farm![i]['crop'][0]['name'];
-                                                            }
-                                          
-                                                            crop = farm![i]['crop'];
-                                          
-                                                            Navigator.pop(context);
-                                                            Navigator.pushAndRemoveUntil(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder: (context) => Drawer1(
-                                                                      num1: num,
-                                                                      Token: widget.Token,
-                                                                      User: user,
-                                                                      Password: password,
-                                                                      cropnum1: i,
-                                                                      cropnum2: cropnum2,
-                                                                      farmnum: farmnum,
-                                                                      cropnum: cropnum),
-                                                                ),
-                                                                (route) => false);
-                                                          });
-                                                        }
-                                          
-                                                        //  Navigator.pop(context);
-                                                        // if(farm![i]['name'] == farm1){
-                                                        //   setState(() {
-                                                        //     cropnum1 = i;
-                                                        //     farmnum = farm![i]['id'];
-                                                        //     //print(farmnum);
-                                                        //      Navigator.pop(context);
-                                                        //   });
-                                          
-                                                        // }
-                                                      }
-                                                    },
-                                                  );
-                                                }),
-                         ),
-                       ),
-                      
-                       
-                                
-                              
-                       
-                      ],
-                    
+                      )),
+                    ]),
                   ),
-                // )
-                );
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: farm0!.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(
+                                farm0![index]['name'],
+                                textScaleFactor: 1.0,
+                              ),
+                              onTap: () {
+                                farmname = farm0![index]['name'];
+                                //print(farm!.length);
+
+                                for (int i = 0; i < farm!.length; i++) {
+                                  if (farm![i]['name'] ==
+                                      farm0![index]['name']) {
+                                    setState(() {
+                                      cropnum1 = i;
+
+                                      farmnum = farm![i]['id'];
+
+                                      if (farm![i]['crop'] == null) {
+                                        cropnum2 = null;
+                                      } else {
+                                        cropnum2 = farm![i]['crop'][0]['id'];
+                                      }
+
+                                      cropnum1 = i;
+                                      cropnum = 0;
+                                      // //print(farmnum);
+                                      // //print(cropnum2);
+                                      farmname = farm![i]['name'];
+                                      if (farm![i]['crop'] == null) {
+                                        cropname = null;
+                                      } else {
+                                        cropname = farm![i]['crop'][0]['name'];
+                                      }
+
+                                      crop = farm![i]['crop'];
+
+                                      Navigator.pop(context);
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Drawer1(
+                                                num1: num,
+                                                Token: widget.Token,
+                                                User: user,
+                                                Password: password,
+                                                cropnum1: i,
+                                                cropnum2: cropnum2,
+                                                farmnum: farmnum,
+                                                cropnum: cropnum),
+                                          ),
+                                          (route) => false);
+                                    });
+                                  }
+
+                                  //  Navigator.pop(context);
+                                  // if(farm![i]['name'] == farm1){
+                                  //   setState(() {
+                                  //     cropnum1 = i;
+                                  //     farmnum = farm![i]['id'];
+                                  //     //print(farmnum);
+                                  //      Navigator.pop(context);
+                                  //   });
+
+                                  // }
+                                }
+                              },
+                            );
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+              // )
+            );
           });
         });
   }
@@ -756,7 +762,8 @@ class _DrawerState extends State<Drawer1> {
                               margin: EdgeInsets.only(top: 15, left: 10),
                               height: screenH * 0.06,
                               child: Text(
-                                "Choose Farm", textScaleFactor: 1.0,
+                                "Choose Farm",
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -773,7 +780,8 @@ class _DrawerState extends State<Drawer1> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X', textScaleFactor: 1.0,
+                                'X',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -816,7 +824,8 @@ class _DrawerState extends State<Drawer1> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '$farmname', textScaleFactor: 1.0,
+                                        '$farmname',
+                                        textScaleFactor: 1.0,
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: 'Montserrat',
@@ -846,7 +855,8 @@ class _DrawerState extends State<Drawer1> {
                                   Container(
                                     width: screenW * 0.40,
                                     child: Text(
-                                      email!, textScaleFactor: 1.0,
+                                      email!,
+                                      textScaleFactor: 1.0,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'Montserrat',
@@ -862,7 +872,8 @@ class _DrawerState extends State<Drawer1> {
                               width: 5,
                             ),
                             Text(
-                              '|', textScaleFactor: 1.0,
+                              '|',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Montserrat',
@@ -886,7 +897,8 @@ class _DrawerState extends State<Drawer1> {
                                       (route) => false);
                                 },
                                 child: new Text(
-                                  'Logout', textScaleFactor: 1.0,
+                                  'Logout',
+                                  textScaleFactor: 1.0,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Montserrat',
@@ -898,7 +910,8 @@ class _DrawerState extends State<Drawer1> {
                       ),
                       Container(
                           child: Text(
-                        '${dateTime!.day}/${dateTime!.month}/${dateTime!.year} ${dateTime!.hour}:${dateTime!.minute}:${dateTime!.second}', textScaleFactor: 1.0,
+                        '${dateTime!.day}/${dateTime!.month}/${dateTime!.year} ${dateTime!.hour}:${dateTime!.minute}:${dateTime!.second}',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'Montserrat',
@@ -935,7 +948,8 @@ class _DrawerState extends State<Drawer1> {
                               margin: EdgeInsets.only(top: 15, left: 10),
                               height: 40,
                               child: Text(
-                                "Choose Crop", textScaleFactor: 1.0,
+                                "Choose Crop",
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -952,7 +966,8 @@ class _DrawerState extends State<Drawer1> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'X', textScaleFactor: 1.0,
+                                'X',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -995,7 +1010,8 @@ class _DrawerState extends State<Drawer1> {
                                                   child: Container(
                                                     width: screenW * 0.64,
                                                     child: Text(
-                                                      crop['name'], textScaleFactor: 1.0,
+                                                      crop['name'],
+                                                      textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontFamily:
@@ -1047,7 +1063,8 @@ class _DrawerState extends State<Drawer1> {
                                               DropdownMenuItem<String>(
                                                   value: crop,
                                                   child: Text(
-                                                    crop, textScaleFactor: 1.0,
+                                                    crop,
+                                                    textScaleFactor: 1.0,
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontFamily: 'Montserrat',
@@ -1087,7 +1104,10 @@ class _DrawerState extends State<Drawer1> {
     );
 
     return ListTile(
-      title: const Text('appbar style:', textScaleFactor: 1.0,),
+      title: const Text(
+        'appbar style:',
+        textScaleFactor: 1.0,
+      ),
       trailing: dropdown,
     );
   }
