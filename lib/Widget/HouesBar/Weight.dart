@@ -462,20 +462,20 @@ class _WeightState extends State<Weight> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            // "Farm": widget.farmnum,
-            // "House": widget.num,
-            // "Date_Start":
-            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
-            // "Date_End":
-            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
+            "Farm": widget.farmnum,
+            "House": widget.num,
+            "Date_Start":
+                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
+            "Date_End":
+                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
   //            "Farm": 17,
   // "House": 145,
   // "Date_Start": "2022-09-06 00:00:00.000",
   // "Date_End": "2022-09-06 23:59:59.000"
- "Farm": 153,
-  "House": 330,
-  "Date_Start": "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
-  "Date_End":"${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
+//  "Farm": 153,
+//   "House": 330,
+//   "Date_Start": "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
+//   "Date_End":"${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
           }));
       if (ressum.statusCode == 200) {
         var result4_1 = json.decode(ressum.body)['result']['view1'];
@@ -483,11 +483,11 @@ class _WeightState extends State<Weight> {
         setState(() {
           print('5544');
           nowresult4_1 = result4_1;
-          for(int i = 0;i<nowresult4_1.length;i++){
-          //  nowresult4_1[i]['target_weight']  = double.parse(nowresult4_1[i]['target_weight'].toStringAsFixed(2));
-          //  nowresult4_1[i]['estimate_weight']  = nowresult4_1[i]['estimate_weight'].toString();
-            //  nowresult4_1[i]['actual_weight']  = double.parse(nowresult4_1[i]['target_weight'].toStringAsFixed(2));
-          }
+          // for(int i = 0;i<nowresult4_1.length;i++){
+          // //  nowresult4_1[i]['target_weight']  = double.parse(nowresult4_1[i]['target_weight'].toStringAsFixed(2));
+          // //  nowresult4_1[i]['estimate_weight']  = nowresult4_1[i]['estimate_weight'].toString();
+          //   //  nowresult4_1[i]['actual_weight']  = double.parse(nowresult4_1[i]['target_weight'].toStringAsFixed(2));
+          // }
           // print('nowresult4_1 ===> $nowresult4_1');
           loading4 = false;
         });
