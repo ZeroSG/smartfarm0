@@ -462,23 +462,33 @@ class _WeightState extends State<Weight> {
             'Content-Type': 'application/json'
           },
           body: jsonEncode(<String, dynamic>{
-            "Farm": widget.farmnum,
-            "House": widget.num,
-            "Date_Start":
-                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
-            "Date_End":
-                "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-
-            // "Farm": 17,
-            // "House": 145,
-            // "Date_Start": "2022-09-06 00:00:00.000",
-            // "Date_End": "2022-09-06 23:59:59.000"
+            // "Farm": widget.farmnum,
+            // "House": widget.num,
+            // "Date_Start":
+            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
+            // "Date_End":
+            //     "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
+  //            "Farm": 17,
+  // "House": 145,
+  // "Date_Start": "2022-09-06 00:00:00.000",
+  // "Date_End": "2022-09-06 23:59:59.000"
+ "Farm": 153,
+  "House": 330,
+  "Date_Start": "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
+  "Date_End":"${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2",
           }));
       if (ressum.statusCode == 200) {
         var result4_1 = json.decode(ressum.body)['result']['view1'];
-
+       
         setState(() {
+          print('5544');
           nowresult4_1 = result4_1;
+          for(int i = 0;i<nowresult4_1.length;i++){
+          //  nowresult4_1[i]['target_weight']  = double.parse(nowresult4_1[i]['target_weight'].toStringAsFixed(2));
+          //  nowresult4_1[i]['estimate_weight']  = nowresult4_1[i]['estimate_weight'].toString();
+            //  nowresult4_1[i]['actual_weight']  = double.parse(nowresult4_1[i]['target_weight'].toStringAsFixed(2));
+          }
+          // print('nowresult4_1 ===> $nowresult4_1');
           loading4 = false;
         });
 
@@ -549,10 +559,10 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-            //                        "Farm": 64,
-            // "House": 240,
-            // "Date_Start": "2023-02-27 00:00:00.000",
-            // "Date_End": "2023-02-27 23:59:59.000"
+  // "Farm": 17,
+  // "House": 145,
+  // "Date_Start": "2022-09-06 00:00:00.000",
+  // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result5_1 = json.decode(ressum.body)['result']['view1'];
@@ -565,10 +575,10 @@ class _WeightState extends State<Weight> {
           var largestGeekValue1 = 0.0;
 
           for (int i = 0; i < nowresult5_1.length; i++) {
-            if (nowresult5_1[i]['Column2'] == null) {
+            if (nowresult5_1[i]['n_normdst'] == null) {
             } else {
-              if (nowresult5_1[i]['Column2'] > largestGeekValue1) {
-                largestGeekValue1 = nowresult5_1[i]['Column2'];
+              if (nowresult5_1[i]['n_normdst'] > largestGeekValue1) {
+                largestGeekValue1 = nowresult5_1[i]['n_normdst'];
               }
             }
           }
@@ -578,8 +588,8 @@ class _WeightState extends State<Weight> {
           print('largestGeekValue====$largestGeekValue');
 
           for (int i = 0; i < nowresult5_1.length; i++) {
-            if (nowresult5_1[i]['Column1'] == null) {
-              nowresult5_1[i]['Column1'] = 0.0;
+            if (nowresult5_1[i]['n_weight'] == null) {
+              nowresult5_1[i]['n_weight'] = 0.0;
             }
           }
 
@@ -2219,7 +2229,11 @@ class _WeightState extends State<Weight> {
                                         DataCell(Container(
                                              width: 100,
                                           child: Center(
-                                              child: Text(
+                                              child:item['count_data'] == null ?Text(
+                                            '',
+                                            textScaleFactor: 1.0,
+                                          )
+                                              : Text(
                                             item['count_data'].toString(),
                                             textScaleFactor: 1.0,
                                           )),
@@ -3503,7 +3517,7 @@ class _WeightState extends State<Weight> {
                     margin: EdgeInsets.only(top: 10),
                     height: screenH * 0.57,
                     child: Center(child: CircularProgressIndicator()))
-                : nowresult4_1 == null || nowresult4_1[0]['n_day'] == null
+                : nowresult4_1 == null 
                     ? Container(
                         height: screenH * 0.57,
                         child: Center(
@@ -3512,7 +3526,8 @@ class _WeightState extends State<Weight> {
                           textScaleFactor: 1.0,
                           style: TextStyle(fontSize: 18),
                         )))
-                    : LineChart4(),
+                    : //Center()
+                    LineChart4(),
           ),
           Container(
               margin: EdgeInsets.only(top: 10),
@@ -3525,19 +3540,19 @@ class _WeightState extends State<Weight> {
   charts.BarChart LineChart4() {
     double? Number;
     int? T;
-
-    if (nowresult4_1.length < 50) {
+     
+    if (nowresult4_1.length <= 50) {
       Number = nowresult4_1.length / 10;
     }
     if (nowresult4_1.length > 50 && nowresult4_1.length < 100) {
       Number = nowresult4_1.length / 13;
     }
-    if (nowresult4_1.length > 100) {
+    if (nowresult4_1.length >= 100) {
       Number = nowresult4_1.length / 15;
     }
     String Number1 = Number!.toStringAsFixed(0);
     int Number2 = int.parse('$Number1');
-
+    
     return charts.BarChart(
       _createSampleData4(),
       animate: false,
@@ -3595,7 +3610,7 @@ class _WeightState extends State<Weight> {
                 model.selectedDatum.forEach((charts.SeriesDatum datumPair) {
                   selectedDatum!.add({
                     'title':
-                        '${datumPair.datum['n_day'] ?? datumPair.datum[0]['day']}',
+                        '${datumPair.datum['${nowresult4_1[0].keys.elementAt(0)}']}',
                     for (int i = 1; i < nowresult4_1[0].keys.length; i++)
                       'subTitle${i}':
                           '${datumPair.datum['${nowresult4_1[0].keys.elementAt(i)}'] ?? 'undefeated'}',
@@ -3726,7 +3741,7 @@ class _WeightState extends State<Weight> {
             nowresult4_1[0].keys.elementAt(i) != 'day')
           charts.Series<dynamic, String>(
             colorFn: (__, _) => charts.ColorUtil.fromDartColor(C2[i]),
-            id: '${nowresult4_1[0].keys.elementAt(i)}',
+            id: '${nowresult4_1[0].keys.elementAt(i).toString()}',
             data: nowresult4_1,
             domainFn: (dynamic daily20, _) =>
                 daily20['day'] ?? daily20['n_day'],
@@ -3752,10 +3767,10 @@ class _WeightState extends State<Weight> {
               charts.ColorUtil.fromDartColor(C2[i]),
           colorFn: (dynamic daily20, _) =>
               charts.ColorUtil.fromDartColor(C1[i]),
-          id: uniquelist1[i],
+          id: uniquelist1[i].toString(),
           data: da[i],
-          domainFn: (dynamic daily20, _) => daily20['Column1'].toDouble(),
-          measureFn: (dynamic daily20, _) => daily20['Column2'] ?? null,
+          domainFn: (dynamic daily20, _) => daily20['n_weight'].toDouble(),
+          measureFn: (dynamic daily20, _) => daily20['n_normdst'] ?? null,
         ),
     ];
   }
@@ -3892,8 +3907,8 @@ class _WeightState extends State<Weight> {
       );
   //Chart Distribustoin_Rate
   Container LineChart5() {
-    var largestGeekValue1 = nowresult5_1[0]['Column1'];
-    var largestGeekValue2 = nowresult5_1[0]['Column1'];
+    var largestGeekValue1 = nowresult5_1[0]['n_weight'];
+    var largestGeekValue2 = nowresult5_1[0]['n_weight'];
     var largestGeekValue0;
 
     var largestGeekValue1_normdst = 0.0;
@@ -3901,35 +3916,35 @@ class _WeightState extends State<Weight> {
     var largestGeekValue_normdst;
 
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['Column1'] == null) {
+      if (nowresult5_1[i]['n_weight'] == null) {
       } else {
-        if (nowresult5_1[i]['Column1'] > largestGeekValue1) {
-          largestGeekValue1 = nowresult5_1[i]['Column1'];
+        if (nowresult5_1[i]['n_weight'] > largestGeekValue1) {
+          largestGeekValue1 = nowresult5_1[i]['n_weight'];
         }
       }
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['Column1'] == null) {
+      if (nowresult5_1[i]['n_weight'] == null) {
       } else {
-        if (nowresult5_1[i]['Column1'] < largestGeekValue2) {
-          largestGeekValue2 = nowresult5_1[i]['Column1'];
+        if (nowresult5_1[i]['n_weight'] < largestGeekValue2) {
+          largestGeekValue2 = nowresult5_1[i]['n_weight'];
         }
       }
     }
 
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['Column2'] == null) {
+      if (nowresult5_1[i]['n_normdst'] == null) {
       } else {
-        if (nowresult5_1[i]['Column2'] > largestGeekValue1_normdst) {
-          largestGeekValue1_normdst = nowresult5_1[i]['Column2'];
+        if (nowresult5_1[i]['n_normdst'] > largestGeekValue1_normdst) {
+          largestGeekValue1_normdst = nowresult5_1[i]['n_normdst'];
         }
       }
     }
     for (int i = 0; i < nowresult5_1.length; i++) {
-      if (nowresult5_1[i]['Column2'] == null) {
+      if (nowresult5_1[i]['n_normdst'] == null) {
       } else {
-        if (nowresult5_1[i]['Column2'] < largestGeekValue2_normdst) {
-          largestGeekValue2_normdst = nowresult5_1[i]['Column2'];
+        if (nowresult5_1[i]['n_normdst'] < largestGeekValue2_normdst) {
+          largestGeekValue2_normdst = nowresult5_1[i]['n_normdst'];
         }
       }
     }
@@ -3977,9 +3992,9 @@ class _WeightState extends State<Weight> {
                     selectedDatum!.add({
                       'title': '${datumPair.datum['c_device']?? 'undefeated'}',
                       'subTitle1':
-                          '${datumPair.datum['Column1'] ?? 'undefeated'}',
+                          '${datumPair.datum['n_weight'] ?? 'undefeated'}',
                       'subTitle2':
-                          '${datumPair.datum['Column2'] ?? 'undefeated'}',
+                          '${datumPair.datum['n_normdst'] ?? 'undefeated'}',
                     });
                   });
                 }

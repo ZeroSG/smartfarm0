@@ -41,7 +41,7 @@ Future SetExcel(var excel, var EXcel) async {
   Directory _appDocDirNewFolder =
       await _appDocDirFolder.create(recursive: true);
 
-  var status = await Permission.storage.request();
+  var status = await Permission.manageExternalStorage.request();
   if (status.isGranted) {
     try {
       File file = File(
