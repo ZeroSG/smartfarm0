@@ -404,9 +404,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Remain : ${NumberFormat("#,###,##0.00").format(result0![index]['a_remain'])}kg', textScaleFactor: 1.0,)),
+                                    'Remain : ${NumberFormat("#,###,###").format(result0![index]['a_remain'])}kg', textScaleFactor: 1.0,)),
                             Text(
-                                'Usage : ${NumberFormat("#,###,##0.00").format(result0![index]['a_usage'])}kg', textScaleFactor: 1.0,),
+                                'Usage : ${NumberFormat("#,###,###").format(result0![index]['a_usage'])}kg', textScaleFactor: 1.0,),
                           ],
                         ),
                       ),
@@ -417,9 +417,9 @@ class _MainState extends State<Main1> {
                             Container(
                                 width: screenW * 0.4,
                                 child: Text(
-                                    'Refll(Today) : ${NumberFormat("#,###,##0.00").format(result0![index]['a_refill'])}kg', textScaleFactor: 1.0,)),
+                                    'Refll(Today) : ${NumberFormat("#,###,###").format(result0![index]['a_refill'])}kg', textScaleFactor: 1.0,)),
                             Text(
-                                'Refll(Yedterday) : ${NumberFormat("#,###,##0.00").format(result0![index]['b_refill'])}kg', textScaleFactor: 1.0,),
+                                'Refll(Yedterday) : ${NumberFormat("#,###,###").format(result0![index]['b_refill'])}kg', textScaleFactor: 1.0,),
                           ],
                         ),
                       ),
@@ -547,7 +547,7 @@ class _MainState extends State<Main1> {
                                     width: (screenW * 0.85) - 55,
                                     margin: EdgeInsets.only(top: 5),
                                     child: Text(
-                                      '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg', textScaleFactor: 1.0,
+                                      '${NumberFormat("#,###,###").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg', textScaleFactor: 1.0,
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
@@ -576,7 +576,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: Text(
-                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg.', textScaleFactor: 1.0,
+                                'Estimate Refill :${NumberFormat("#,###,###").format(E_Refill1)} kg.', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -586,7 +586,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, right: 10),
                               child: Text(
-                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.', textScaleFactor: 1.0,
+                                'Actual Refill :${NumberFormat("#,###,###").format(A_Refill1)} kg.', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -813,7 +813,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg', textScaleFactor: 1.0,
+                                            '${NumberFormat("#,###,###").format(result3![Col1]['HOUSE'][index1]['HOUSE'][0]['n_remain'])} kg', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -874,7 +874,7 @@ class _MainState extends State<Main1> {
                                           width: (screenW * 0.46) - 55,
                                           margin: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            '${NumberFormat("#,###,##0.00").format(result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_remain'])} kg', textScaleFactor: 1.0,
+                                            '${NumberFormat("#,###,###").format(result3![Col1]['HOUSE'][index1]['HOUSE'][1]['n_remain'])} kg', textScaleFactor: 1.0,
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
@@ -906,7 +906,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, left: 10),
                               child: Text(
-                                'Estimate Refill :${NumberFormat("#,###,##0.00").format(E_Refill1)} kg', textScaleFactor: 1.0,
+                                'Estimate Refill :${NumberFormat("#,###,###").format(E_Refill1)} kg', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',
@@ -916,7 +916,7 @@ class _MainState extends State<Main1> {
                             Container(
                               margin: EdgeInsets.only(top: 5, right: 10),
                               child: Text(
-                                'Actual Refill :${NumberFormat("#,###,##0.00").format(A_Refill1)} kg.', textScaleFactor: 1.0,
+                                'Actual Refill :${NumberFormat("#,###,###").format(A_Refill1)} kg.', textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontFamily: 'Montserrat',

@@ -1034,7 +1034,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '${NumberFormat("#,###,##0.00").format(sum1)}kg',
+                                            '${NumberFormat("#,###,###").format(sum1)}kg',
                                             textScaleFactor: 1.0,
                                             style: TextStyle(
                                               fontSize: 14,
@@ -1249,7 +1249,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum1)}kg',
+                                              '${NumberFormat("#,###,###").format(sum1)}kg',
                                               textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,
@@ -1465,7 +1465,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                           Container(
                                             width: screenW * 0.18,
                                             child: Text(
-                                              '${NumberFormat("#,###,##0.00").format(sum2)}kg',
+                                              '${NumberFormat("#,###,###").format(sum2)}kg',
                                               textScaleFactor: 1.0,
                                               style: TextStyle(
                                                 fontSize: 14,

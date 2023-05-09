@@ -156,10 +156,11 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-            // "Farm": 5,
-            // "House": 82,
-            // "Date_Start": "2022-09-06 00:00:00.000",
-            // "Date_End": "2022-09-06 23:59:59.000"
+  // "Farm": 17,
+  // "House": 145,
+
+  // "Date_Start": "2022-09-06 00:00:00.000",
+  // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result1_1 = json.decode(ressum.body)['result']['view1'];
@@ -244,11 +245,11 @@ class _WeightState extends State<Weight> {
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat1",
             "Date_End":
                 "${dateTime1_!.year}-${dateTime1_!.month}-${dateTime1_!.day} $dat2"
-            // "Farm": 17,
-            // "House": 145,
-            // "Device": "ALL",
-            // "Date_Start": "2022-09-06 00:00:00.000",
-            // "Date_End": "2022-09-06 23:59:59.000"
+  // "Farm": 17,
+  // "House": 145,
+  // "Device": "ALL",
+  // "Date_Start": "2022-09-06 00:00:00.000",
+  // "Date_End": "2022-09-06 23:59:59.000"
           }));
       if (ressum.statusCode == 200) {
         var result2_1 = json.decode(ressum.body)['result']['view1'];
@@ -601,7 +602,7 @@ class _WeightState extends State<Weight> {
               uniquelist1 += [nowresult5_1[i]["c_device"]];
             }
           }
-          print('uniquelist1====$uniquelist1');
+          print('uniquelist111====$uniquelist1');
 
           for (int i = 0; i < nowresult5_1.length; i++) {
             if (nowresult5_1[i]['c_device'] == nowresult5_1[0]['c_device']) {
@@ -2168,6 +2169,7 @@ class _WeightState extends State<Weight> {
                                       ),
                                     ],
                                     rows: nowresult1_1.map((item) {
+                                      DateTime DT = DateTime.parse('${item['last_date']}');
                                       return DataRow(cells: [
                                         DataCell(Container(
                                              width: 100,
@@ -2207,7 +2209,7 @@ class _WeightState extends State<Weight> {
                                              width: 100,
                                           child: Center(
                                               child: Text(
-                                            item['last_date'],
+                                           '${DT.day.toString().padLeft(2, '0')}/${DT.month.toString().padLeft(2, '0')}/${DT.year.toString().padLeft(4, '0')} ${DT.hour.toString().padLeft(2, '0')}:${DT.minute.toString().padLeft(2, '0')}:${DT.second.toString().padLeft(2, '0')}',
                                             textScaleFactor: 1.0,
                                           )),
                                         )),
@@ -2234,7 +2236,7 @@ class _WeightState extends State<Weight> {
                                             textScaleFactor: 1.0,
                                           )
                                               : Text(
-                                            item['count_data'].toString(),
+                                            item['count_data'].toString().split('.').first,
                                             textScaleFactor: 1.0,
                                           )),
                                         )),
@@ -2476,9 +2478,9 @@ class _WeightState extends State<Weight> {
         data: nowresult2_1,
         id: 'Avg. Weight',
         colorFn: (_, __) =>
-            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 255, 0, 0)),
+            charts.ColorUtil.fromDartColor(Colors.orange),
         fillColorFn: (_, __) =>
-            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 243, 207, 7)),
+            charts.ColorUtil.fromDartColor(Colors.orange),
         fillPatternFn: (_, __) => charts.FillPatternType.forwardHatch,
         domainFn: (dynamic nowresult, _) => nowresult['c_date'],
         measureFn: (dynamic nowresult, _) =>
@@ -3813,7 +3815,7 @@ class _WeightState extends State<Weight> {
         maintainState: true,
         title: Download5
             ? Text(
-                'Distribustoin Rate',
+                'Normal Distribution Rate',
                 textScaleFactor: 1.0,
                 style: TextStyle(
                     fontSize: 15,
@@ -3824,7 +3826,7 @@ class _WeightState extends State<Weight> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Distribustoin Rate',
+                    'Normal Distribution Rate',
                     textScaleFactor: 1.0,
                     style: TextStyle(
                         fontSize: 15,
