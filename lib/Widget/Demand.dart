@@ -906,7 +906,7 @@ class _DemandState extends State<Demand> {
                                     ],
                                   ),
                                   Text(
-                                    'Day${nowresult12_1[index]['house'][index1]['n_day'] ?? ''}',
+                                    '${nowresult12_1[index]['house'][index1]['n_day'] ?? ''}',
                                     textScaleFactor: 1.0,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -1135,7 +1135,7 @@ class _DemandState extends State<Demand> {
                                                       ],
                                                     ),
                                                     Text(
-                                                      'Day${nowresult1_23[index0]['house'][index1]['n_day'] ?? ''}',
+                                                      '${nowresult1_23[index0]['house'][index1]['n_day'] ?? ''}',
                                                       textScaleFactor: 1.0,
                                                       style: TextStyle(
                                                           fontWeight:
@@ -1420,7 +1420,7 @@ class _DemandState extends State<Demand> {
                                                                 ],
                                                               ),
                                                               Text(
-                                                                'Day${nowresult1_23[index0]['house'][index2]['n_day'] ?? ''}',
+                                                                '${nowresult1_23[index0]['house'][index2]['n_day'] ?? ''}',
                                                                 textScaleFactor:
                                                                     1.0,
                                                                 style: TextStyle(
