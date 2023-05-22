@@ -367,7 +367,7 @@ late  DateTime? dateTime1_;
                     text: 'Inrake&Order',
                   ),
                   Tab(
-                    text: 'Device',
+                    text: 'Climate',
                   ),
                   Tab(
                     text: 'Weight',
@@ -402,7 +402,7 @@ late  DateTime? dateTime1_;
                       HOUSEname: sHOUSE,
                       Feed: feed,
                     ),
-                    Device(Token: widget.Token),
+                    Climate(Token: widget.Token),
                     Weight(
                         Token: widget.Token,
                         num: num,

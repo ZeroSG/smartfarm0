@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:excel/excel.dart';
 import 'package:external_path/external_path.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -30,6 +31,17 @@ Future SetExcel(var excel, var EXcel) async {
   // String documentPath = documentDiresctory.path;
   _appDocDirFolder = Directory("$documentDiresctory/");
   print(_appDocDirFolder.path);
+
+
+  //  var filename =
+  //         "$documentDiresctory/$EXcel${now.millisecond}${now.microsecond}.xlsx";
+  //     print('file  $filename');
+  //     print(filename);
+  //     // Save to filesystem
+  //     var file = File(filename);
+  //     var params = SaveFileDialogParams(sourceFilePath: file.path);
+  //     var finalPath = await FlutterFileDialog.saveFile(params: params);
+  //     // await file.writeAsBytes(response.bodyBytes);
   // var isThere = await _appDocDirFolder.exists();
   //  print(isThere ? 'exists' : 'non-existent');
   //  if(isThere != true){
@@ -38,19 +50,22 @@ Future SetExcel(var excel, var EXcel) async {
   //  }else{
   //    print('==================>มีอยู่เล้ว');
   //  }
-  Directory _appDocDirNewFolder =
-      await _appDocDirFolder.create(recursive: true);
+  // Directory _appDocDirNewFolder =
+  //     await _appDocDirFolder.create(recursive: true);
 
-  var status = await Permission.manageExternalStorage.request();
-  if (status.isGranted) {
-    try {
+  // var status = await Permission.storage.request();
+  // if (status.isGranted) {
+  //   try {
       File file = File(
           "$documentDiresctory/$EXcel${now.millisecond}${now.microsecond}.xlsx");
-      file.writeAsBytesSync(await excel.encode());
-    } catch (e) {
-      print('e====> $e');
-    }
-  } else {}
+          file.writeAsBytesSync(await excel.encode());
+               var params = SaveFileDialogParams(sourceFilePath: file.path);
+      var finalPath = await FlutterFileDialog.saveFile(params: params);
+  //     // file.writeAsBytesSync(await excel.encode());
+  //   } catch (e) {
+  //     print('e====> $e');
+  //   }
+  // } else {}
   String? fileexcel =
       "$documentDiresctory/$EXcel${now.millisecond}${now.microsecond}.xlsx";
 
