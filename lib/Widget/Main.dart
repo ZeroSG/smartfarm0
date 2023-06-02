@@ -522,6 +522,7 @@ class _MainState extends State<Main1> {
                               height: 70,
                               child: CustomPaint(
                                 painter: ColorCircle(
+                                  c_service: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString(),
                                     S: percent1,
                                     upper_percent: upper_percent1,
                                     lower_percent: lower_percent1),
@@ -540,7 +541,7 @@ class _MainState extends State<Main1> {
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
-                                          color: Colors.black),
+                                          color: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                     ),
                                   ),
                                   Container(
@@ -551,7 +552,7 @@ class _MainState extends State<Main1> {
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
-                                          color: Colors.black),
+                                          color: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                     ),
                                   ),
                                   Container(
@@ -562,7 +563,7 @@ class _MainState extends State<Main1> {
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontFamily: 'Montserrat',
-                                          color: Colors.black),
+                                          color: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                     ),
                                   ),
                                 ],
@@ -789,6 +790,7 @@ class _MainState extends State<Main1> {
                                     height: 70,
                                     child: CustomPaint(
                                       painter: ColorCircle(
+                                        c_service: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString(),
                                           S: percent1,
                                           upper_percent: upper_percent1,
                                           lower_percent: lower_percent1),
@@ -806,7 +808,7 @@ class _MainState extends State<Main1> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
-                                                color: Colors.black),
+                                                color: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                           ),
                                         ),
                                         Container(
@@ -817,7 +819,7 @@ class _MainState extends State<Main1> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
-                                                color: Colors.black),
+                                                color: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                           ),
                                         ),
                                         Container(
@@ -828,7 +830,7 @@ class _MainState extends State<Main1> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
-                                                color: Colors.black),
+                                                color: result3![Col1]['HOUSE'][index1]['HOUSE'][0]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                           ),
                                         ),
                                       ],
@@ -848,6 +850,7 @@ class _MainState extends State<Main1> {
                                     height: 70,
                                     child: CustomPaint(
                                       painter: ColorCircle(
+                                        c_service: result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_service'].toString(),
                                           S: percent2,
                                           upper_percent: upper_percent2,
                                           lower_percent: lower_percent2),
@@ -867,7 +870,7 @@ class _MainState extends State<Main1> {
                                                 // overflow: TextOverflow.ellipsis,
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
-                                                color: Colors.black),
+                                                color: result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                           ),
                                         ),
                                         Container(
@@ -878,7 +881,7 @@ class _MainState extends State<Main1> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
-                                                color: Colors.black),
+                                                color: result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                           ),
                                         ),
                                         Container(
@@ -889,7 +892,7 @@ class _MainState extends State<Main1> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontFamily: 'Montserrat',
-                                                color: Colors.black),
+                                                color: result3![Col1]['HOUSE'][index1]['HOUSE'][1]['c_service'].toString()!= 'Y'?Color(0xFFfe0000) :Colors.black),
                                           ),
                                         ),
                                       ],
@@ -1002,13 +1005,14 @@ class _MainState extends State<Main1> {
 
 //รูปภาพ
 class ColorCircle extends CustomPainter {
+ 
   MaterialColor? myColor;
   double? S;
   double? upper_percent;
   double? lower_percent;
-
+  String? c_service;
   ColorCircle(
-      {@required this.myColor, this.S, this.lower_percent, this.upper_percent});
+      {@required this.myColor, this.S, this.lower_percent, this.upper_percent,this.c_service});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -1020,11 +1024,17 @@ class ColorCircle extends CustomPainter {
     paint1.color = Color(0xFF48cb01);
     paint1.style = PaintingStyle.fill;
    
-    if (S! > upper_percent!) {
+    
+
+    if(c_service != 'Y'){
+       paint1.color = Color(0xFFfe0000);
+    }else{
+       if (S! > upper_percent!) {
       paint1.color = Color(0xFF9cc833);
     }
     if (S! <= lower_percent!) {
       paint1.color = Color(0xFFfe0000);
+    }
     }
 
     var path = new Path();

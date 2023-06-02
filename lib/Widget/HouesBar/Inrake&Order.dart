@@ -226,6 +226,9 @@ class _Inrake_OrderState extends State<Inrake_Order> {
   late var sum2, percent2, upper_percent2, lower_percent2;
   var silo1;
   var silo2;
+
+  var c_service1;
+  var c_service2;
   //API house_information
   Future<void> getjaon1_house_information() async {
     try {
@@ -266,6 +269,8 @@ class _Inrake_OrderState extends State<Inrake_Order> {
           var remain2 = result1_1[1]['n_remain'];
           //  //print("ressum211 => ${result1_1}");
           setState(() {
+            c_service1 = result1_1[0]['c_service'].toString();
+            c_service2 = result1_1[1]['c_service'].toString();
             silo1 = n_silo1;
             silo2 = n_silo2;
             sFeed1 = result1_1[0]['c_formula'];
@@ -313,6 +318,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
           // //print("ressum211 => ${result1_1}");
 
           setState(() {
+             c_service1 = result1_1[0]['c_service'].toString();
             silo1 = n_silo1;
             sFeed1 = result1_1[0]['c_formula'];
 
@@ -805,6 +811,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                   height: 100,
                                   child: CustomPaint(
                                     painter: ColorCircle(
+                                        c_service: 'Y',
                                         S: 0,
                                         upper_percent: 20,
                                         lower_percent: 100),
@@ -1024,6 +1031,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         height: 100,
                                         child: CustomPaint(
                                           painter: ColorCircle(
+                                            c_service: c_service1.toString(),
                                               S: percent1,
                                               upper_percent: upper_percent1,
                                               lower_percent: lower_percent1),
@@ -1040,7 +1048,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'Montserrat',
-                                              color: Color.fromARGB(
+                                              color: c_service1.toString()!= 'Y'?Color(0xFFfe0000) :Color.fromARGB(
                                                   255, 25, 25, 25),
                                             ),
                                           ),
@@ -1050,7 +1058,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'Montserrat',
-                                              color: Color.fromARGB(
+                                              color: c_service1.toString()!= 'Y'?Color(0xFFfe0000) :Color.fromARGB(
                                                   255, 25, 25, 25),
                                             ),
                                           ),
@@ -1237,6 +1245,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         height: 100,
                                         child: CustomPaint(
                                           painter: ColorCircle(
+                                            c_service: c_service1.toString(),
                                               S: percent1,
                                               upper_percent: upper_percent1,
                                               lower_percent: lower_percent1),
@@ -1255,7 +1264,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: 'Montserrat',
-                                                color: Color.fromARGB(
+                                                color: c_service1.toString()!= 'Y'?Color(0xFFfe0000) :Color.fromARGB(
                                                     255, 25, 25, 25),
                                               ),
                                             ),
@@ -1268,7 +1277,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
-                                                color: Color.fromARGB(
+                                                color: c_service1.toString()!= 'Y'?Color(0xFFfe0000) :Color.fromARGB(
                                                     255, 25, 25, 25),
                                               ),
                                             ),
@@ -1453,6 +1462,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                         height: 100,
                                         child: CustomPaint(
                                           painter: ColorCircle(
+                                            c_service: c_service2.toString(),
                                               S: percent2,
                                               upper_percent: upper_percent2,
                                               lower_percent: lower_percent2),
@@ -1471,7 +1481,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: 'Montserrat',
-                                                color: Color.fromARGB(
+                                                color: c_service2.toString()!= 'Y'?Color(0xFFfe0000) :Color.fromARGB(
                                                     255, 25, 25, 25),
                                               ),
                                             ),
@@ -1484,7 +1494,7 @@ class _Inrake_OrderState extends State<Inrake_Order> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'Montserrat',
-                                                color: Color.fromARGB(
+                                                color: c_service2.toString()!= 'Y'?Color(0xFFfe0000) :Color.fromARGB(
                                                     255, 25, 25, 25),
                                               ),
                                             ),
@@ -4966,9 +4976,9 @@ class ColorCircle extends CustomPainter {
   double? S;
   double? upper_percent;
   double? lower_percent;
-
+ String? c_service;
   ColorCircle(
-      {@required this.myColor, this.S, this.lower_percent, this.upper_percent});
+      {@required this.myColor, this.S, this.lower_percent, this.upper_percent,this.c_service});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -4980,11 +4990,17 @@ class ColorCircle extends CustomPainter {
     paint1.color = Color(0xFF48cb01);
     paint1.style = PaintingStyle.fill;
 
-    if (S! > upper_percent!) {
+   
+
+    if(c_service != 'Y'){
+       paint1.color = Color(0xFFfe0000);
+    }else{
+     if (S! > upper_percent!) {
       paint1.color = Color(0xFF9cc833);
     }
     if (S! <= lower_percent!) {
       paint1.color = Color(0xFFfe0000);
+    }
     }
     var path = new Path();
     path.moveTo(30, -0);
