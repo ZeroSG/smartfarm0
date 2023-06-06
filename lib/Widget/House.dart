@@ -364,7 +364,7 @@ late  DateTime? dateTime1_;
                 unselectedLabelColor: Color.fromARGB(255, 74, 74, 74),
                 tabs: [
                   Tab(
-                    text: 'Inrake&Order',
+                    text: 'Intake&Order',
                   ),
                   Tab(
                     text: 'Climate',
