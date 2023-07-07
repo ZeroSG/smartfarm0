@@ -23,8 +23,10 @@ class House extends StatefulWidget {
   List<dynamic>? HOUSE; // data HOUSE
   int? farmnum, cropnum2, cropnum1, cropnum; // farm id
   int? numIndex; // numder หน้า house
+  String? farmname;
   House(
       {Key? key,
+      this.farmname,
       this.Token,
       this.User,
       this.Password,
@@ -402,7 +404,7 @@ late  DateTime? dateTime1_;
                       HOUSEname: sHOUSE,
                       Feed: feed,
                     ),
-                    Climate(Token: widget.Token),
+                    Climate(Token: widget.Token,HOUSEname: sHOUSE,farmname:widget.farmname, ),
                     Weight(
                         Token: widget.Token,
                         num: num,

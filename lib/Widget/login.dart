@@ -208,8 +208,8 @@ class _LoginState extends State<Login> {
                       child: Column(children: [
                         Container(
                           margin: EdgeInsets.only(top: 30),
-                          height: screenH! * 0.4,
-                          width: screenW! * 1,
+                          height: 300,
+                          width: 500,
                           decoration: BoxDecoration(
                             //  color: Colors.amberAccent
                             image: DecorationImage(

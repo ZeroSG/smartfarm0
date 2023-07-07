@@ -355,6 +355,7 @@ class _DrawerState extends State<Drawer1> {
                           cropnum2: cropnum2, //  farm [index]
                         ),
                         House(
+                           farmname:farmname, //ชื่อ farm
                             User: user, // Email
                             Password: password, // Password
                             Feed: widget.Feed, //  Feed
