@@ -15,8 +15,10 @@ class Climate extends StatefulWidget {
 }
 
 class _ClimateState extends State<Climate> {
-  bool loading1 = false;
-  bool loading2 = true;
+    bool loading1 = true;
+  bool loading2 = false;
+  // bool loading1 = false;
+  // bool loading2 = true;
   int num =0; 
   int levelClock1 = 0;
   late Timer _T1;
