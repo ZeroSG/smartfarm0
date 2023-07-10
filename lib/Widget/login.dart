@@ -207,15 +207,19 @@ class _LoginState extends State<Login> {
                     Center(
                       child: Column(children: [
                         Container(
+                     
                           margin: EdgeInsets.only(top: 30),
                           height: 300,
-                          width: 500,
-                          decoration: BoxDecoration(
-                            //  color: Colors.amberAccent
-                            image: DecorationImage(
-                                image: AssetImage("images/B2.png"),
-                                fit: BoxFit.fill),
-                          ),
+                          width: 450,
+                            color: Colors.black,
+                          // decoration: BoxDecoration(
+                          //        color: Colors.black,
+                          //   //  color: Colors.amberAccent
+                          //   // image: DecorationImage(
+                          //   //     image: AssetImage("images/B2.png"),
+                          //   //    ),
+                          // ),
+                          child: Image.asset("images/B2.png"),
                         )
                       ]),
                     ),
