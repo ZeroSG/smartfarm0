@@ -211,7 +211,7 @@ class _LoginState extends State<Login> {
                           margin: EdgeInsets.only(top: 30),
                           height: 300,
                           width: 450,
-                            color: Colors.black,
+                            // color: Colors.black,
                           // decoration: BoxDecoration(
                           //        color: Colors.black,
                           //   //  color: Colors.amberAccent
